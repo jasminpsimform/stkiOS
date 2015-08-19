@@ -10,4 +10,6 @@
 
 @interface STKBadgeView : UIView
 
+- (instancetype)initWithFrame:(CGRect)frame lineWidth:(CGFloat)lineWidth dotSize:(CGSize)dotSize;
+
 @end

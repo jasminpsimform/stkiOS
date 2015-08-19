@@ -8,16 +8,33 @@
 
 #import "STKBadgeView.h"
 
+@interface STKBadgeView()
+
+@property (nonatomic, assign) CGSize dotSize;
+@property (nonatomic, assign) CGFloat lineWidth;
+
+@end
+
 
 @implementation STKBadgeView
 
-
-- (instancetype)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame lineWidth:(CGFloat)lineWidth dotSize:(CGSize)dotSize
 {
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
         self.userInteractionEnabled = NO;
+        self.lineWidth = lineWidth;
+        self.dotSize = dotSize;
+    }
+    return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        [[NSException exceptionWithName:@"Init exeption" reason:@"Use initWithFrame:lineWidth:" userInfo:nil] raise];
     }
     return self;
 }
@@ -25,7 +42,7 @@
 
 - (void)drawRect:(CGRect)rect {
     // Drawing code
-    CGFloat lineWidth = 1.5;
+    CGFloat lineWidth = self.lineWidth;
     CGRect rectInsets = CGRectInset(rect,lineWidth,lineWidth);
     UIBezierPath *path =  [UIBezierPath bezierPathWithRoundedRect:rectInsets cornerRadius:CGRectGetHeight(rectInsets) / 2.0];
     [[UIColor redColor] setFill];
@@ -34,8 +51,8 @@
     [[UIColor whiteColor] setStroke];
     [path stroke];
     
-    CGFloat whiteDotWight = 3.0;
-    CGFloat whiteDotHeight = 3.0;
+    CGFloat whiteDotWight = self.dotSize.width;
+    CGFloat whiteDotHeight = self.dotSize.height;
     CGFloat whiteDotY = CGRectGetMidY(rectInsets) - (whiteDotHeight / 2.0);
     CGFloat whiteDotX = CGRectGetMidX(rectInsets) - (whiteDotWight / 2.0);
     

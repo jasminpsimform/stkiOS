@@ -51,7 +51,7 @@ static const CGFloat kBadgeViewPadding = 4.0;
 
     self.imageView.contentMode = UIViewContentModeCenter;
     
-    self.badgeView = [[STKBadgeView alloc] initWithFrame:CGRectMake(0, 0, 14.0, 14.0)];
+    self.badgeView = [[STKBadgeView alloc] initWithFrame:CGRectMake(0, 0, 20.0, 20.0) lineWidth:2.5 dotSize:CGSizeMake(4.0, 4.0)];
     self.badgeView.center = CGPointMake(CGRectGetMaxX(self.imageView.frame) - kBadgeViewPadding, CGRectGetMinY(self.imageView.frame) + kBadgeViewPadding);
     [self addSubview:self.badgeView];
     if ([STKStickersCache hasNewStickerPacks]) {

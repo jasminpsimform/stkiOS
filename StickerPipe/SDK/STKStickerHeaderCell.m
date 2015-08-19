@@ -34,7 +34,7 @@
         self.imageView.center = CGPointMake(self.contentView.bounds.size.width/2,self.contentView.bounds.size.height/2);
         [self.contentView addSubview:self.imageView];
         
-        self.dotView = [[STKBadgeView alloc] initWithFrame:CGRectMake(0, 0, 12.0, 12.0)];
+        self.dotView = [[STKBadgeView alloc] initWithFrame:CGRectMake(0, 0, 12.0, 12.0) lineWidth:1.0 dotSize:CGSizeMake(3.0, 3.0)];
 
         self.dotView.center = CGPointMake(CGRectGetMaxX(self.imageView.frame), CGRectGetMinY(self.imageView.frame));
 //        self.dotView.layer.cornerRadius = 3.0;
