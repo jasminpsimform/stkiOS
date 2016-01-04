@@ -586,6 +586,8 @@ StickerPipeTests.xctest */,
 				6EF264511B3C0F830099A657 /* Frameworks */,
 				6EF264521B3C0F830099A657 /* Resources */,
 				3818035BAD5BBEC0740E9E3A /* Copy Pods Resources */,
+				46050372AA804383AD6A6ECF /* Embed Pods Frameworks */,
+				9A0716E61C3ACD0A004D2ACF /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -622,7 +624,7 @@ StickerPipeTests.xctest */;
 		6EF2644C1B3C0F830099A657 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "908 Inc";
 				TargetAttributes = {
 					6EF264531B3C0F830099A657 = {
@@ -693,6 +695,34 @@ StickerPipeTests.xctest */;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		46050372AA804383AD6A6ECF /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9A0716E61C3ACD0A004D2ACF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" f4d67ff50acba128dfbcb3ef77390177c8c958d1 e9c7da794dc9cf3da680e351953b4918a719060964ee0ddd8e95f7f5892114a4";
 		};
 		CE9DB4273D6D7C917EA92818 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -817,6 +847,7 @@ StickerPipeTests.xctest */;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -892,6 +923,7 @@ StickerPipeTests.xctest */;
 				);
 				INFOPLIST_FILE = StickerPipe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.stickerpipe.demo;
 				PRODUCT_NAME = StickerPipe;
 				PROVISIONING_PROFILE = "";
 			};
@@ -911,6 +943,7 @@ StickerPipeTests.xctest */;
 				);
 				INFOPLIST_FILE = StickerPipe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.stickerpipe.demo;
 				PRODUCT_NAME = StickerPipe;
 				PROVISIONING_PROFILE = "";
 			};
@@ -930,6 +963,7 @@ StickerPipeTests.xctest */;
 				);
 				INFOPLIST_FILE = StickerPipeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "-08.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "StickerPipe\nStickerPipe\nStickerPipeTests";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StickerPipe.app/StickerPipe";
 			};
@@ -945,6 +979,7 @@ StickerPipeTests.xctest */;
 				);
 				INFOPLIST_FILE = StickerPipeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "-08.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "StickerPipe\nStickerPipe\nStickerPipeTests";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StickerPipe.app/StickerPipe";
 			};

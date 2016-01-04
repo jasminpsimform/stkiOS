@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 #import "STKStickersManager.h"
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 
 
 @interface AppDelegate ()
@@ -19,7 +21,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-
+    [Fabric with:@[[Crashlytics class]]];
+    
     [STKStickersManager initWitApiKey:@"72921666b5ff8651f374747bfefaf7b2"];
     
     return YES;
