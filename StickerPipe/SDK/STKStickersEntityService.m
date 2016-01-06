@@ -130,28 +130,24 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
     [self.apiService getStickersPackWithType:type success:^(id response, NSTimeInterval lastModifiedDate) {
         
         NSArray* serializedObjects = [weakSelf.serializer serializeStickerPacks:response[@"data"]];
-//        if (lastModifiedDate != [weakSelf lastModifiedDate]) {
+        if (lastModifiedDate != [weakSelf lastModifiedDate]) {
             [weakSelf.cacheEntity saveStickerPacks:serializedObjects];
             [weakSelf setLastModifiedDate:lastModifiedDate];
-//        }
-//        STKStickerPackObject *recentPack = weakSelf.cacheEntity.recentStickerPack;
-//        NSArray *packsWithRecent = nil;
-//        if (recentPack) {
-//            NSArray *recentPackArray = @[recentPack];
-//            packsWithRecent = [recentPackArray arrayByAddingObjectsFromArray:serializedObjects];
-//        } else {
-//            packsWithRecent = serializedObjects;
-//        }
-        //TODO:Refactoring
-        [weakSelf.cacheEntity getStickerPacks:^(NSArray *stickerPacks) {
-            if (completion) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    completion(stickerPacks);
-                });
-            }
-        }];
+        }
+        STKStickerPackObject *recentPack = weakSelf.cacheEntity.recentStickerPack;
+        NSArray *packsWithRecent = nil;
+        if (recentPack) {
+            NSArray *recentPackArray = @[recentPack];
+            packsWithRecent = [recentPackArray arrayByAddingObjectsFromArray:serializedObjects];
+        } else {
+            packsWithRecent = serializedObjects;
+        }
         [weakSelf setLastUpdateDate:[[NSDate date] timeIntervalSince1970]];
-
+        if (completion) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completion(packsWithRecent);
+            });
+        }
         
     } failure:^(NSError *error) {
         if (completion) {
@@ -159,6 +155,7 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
             completion(nil);
         }
     }];
+
 
 }
 
