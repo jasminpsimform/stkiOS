@@ -73,12 +73,7 @@
         self.imageView.image = self.originalImage;
         self.dotView.hidden = YES;
     } else {
-
-        if (stickerPack.isNew.boolValue) {
-            self.dotView.hidden = NO;
-        } else {
-            self.dotView.hidden = YES;
-        }
+        self.dotView.hidden = !stickerPack.isNew.boolValue;
 
         NSURL *iconUrl = [STKUtility tabImageUrlForPackName:stickerPack.packName];
         

@@ -344,12 +344,18 @@
 
 #pragma mark - Check
 
-+ (BOOL)hasNewStickerPacks {
+- (BOOL)hasNewStickerPacks {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[STKStickerPack entityName]];
+    NSUInteger allRecordsCount = [[NSManagedObjectContext stk_defaultContext] countForFetchRequest:request error:nil];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", STKStickerPackAttributes.isNew, @YES];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:STKStickerPackAttributes.order ascending:NO];
     request.predicate = predicate;
+    request.sortDescriptors = @[sortDescriptor];
+    request.fetchOffset = allRecordsCount - 3;
+    request.fetchLimit = 3;
     NSUInteger count = [[NSManagedObjectContext stk_defaultContext] countForFetchRequest:request error:nil];
-    return count > 0;
+    NSUInteger recentCount = [self recentStickerPack].stickers.count;
+    return count > 0 || recentCount == 0;
 }
 
 - (BOOL)isStickerPackDownloaded:(NSString*)packName {
