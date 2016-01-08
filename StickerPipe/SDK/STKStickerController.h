@@ -36,6 +36,9 @@
 
 @property (nonatomic, strong) UIColor *headerBackgroundColor;
 
+@property (nonatomic, strong) UITextView *textInputView;
+
+
 //@property (nonatomic, strong) UIColor *stickersShopTintColor;
 
 

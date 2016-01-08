@@ -65,6 +65,7 @@
     
     self.stickerController = [[STKStickerController alloc] init];
     self.stickerController.delegate = self;
+    self.stickerController.textInputView = self.inputTextView;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateStickersCache:) name:STKStickersCacheDidUpdateStickersNotification object:nil];
     

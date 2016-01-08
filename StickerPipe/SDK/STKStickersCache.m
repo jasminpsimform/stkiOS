@@ -18,7 +18,7 @@
 #import "STKUtility.h"
 #import "STKStickersNotificationConstants.h"
 
-
+static NSString *const recentName = @"Recent";
 
 @interface STKStickersCache()
 
@@ -288,8 +288,8 @@
                                                       context:self.backgroundContext];
         
             STKStickerPackObject *recentPack = [STKStickerPackObject new];
-            recentPack.packName = @"Recent";
-            recentPack.packTitle = @"Recent";
+            recentPack.packName = recentName;
+            recentPack.packTitle = recentName;
             recentPack.isNew = @NO;
             NSMutableArray *stickerObjects = [NSMutableArray new];
             for (STKSticker *sticker in stickers) {

@@ -20,6 +20,7 @@
 #import "STKPackDescriptionController.h"
 #import "STKStickerPackObject.h"
 #import "STKOrientationNavigationController.h"
+#import "STKShowStickerButton.h"
 
 //SIZES
 static const CGFloat kStickerHeaderItemHeight = 44.0;
@@ -41,6 +42,9 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
 @property (strong, nonatomic) UICollectionViewFlowLayout *stickersHeaderFlowLayout;
 @property (strong, nonatomic) STKStickerHeaderDelegateManager *stickersHeaderDelegateManager;
 @property (strong, nonatomic) UIButton *shopButton;
+@property (strong, nonatomic) STKShowStickerButton *keyboardButton;
+
+@property (assign, nonatomic) BOOL isKeyboardShowed;
 
 
 @property (strong, nonatomic) STKStickersEntityService *stickersService;
@@ -50,6 +54,8 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
 @end
 
 @implementation STKStickerController
+
+#pragma mark - Inits
 
 - (instancetype)init
 {
@@ -72,14 +78,30 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
         [self initStickerHeader];
         [self initStickersCollectionView];
         [self initShopButton];
+
         
         [self configureStickersViewsConstraints];
         
         [self reloadStickers];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(willHideKeyboard:)
+                                                     name:UIKeyboardWillHideNotification
+                                                   object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(didShowKeyboard:)
+                                                     name:UIKeyboardWillShowNotification
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storageUpdated:) name:STKStickersCacheDidUpdateStickersNotification object:nil];
+
     }
     return self;
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (void) initStickersCollectionView {
     
@@ -177,7 +199,6 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
     
 }
 
-
 - (void) configureStickersViewsConstraints {
     
     self.stickersHeaderCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -210,9 +231,13 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
                                                                                     options:0
                                                                                     metrics:nil
                                                                                       views:viewsDictionary];
+
+    
     [self.stickersHeaderCollectionView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[stickersHeaderCollectionView(44.0)]" options:0 metrics:nil views:viewsDictionary]];
     [self.shopButton addConstraints:heightConstraint];
     [self.shopButton addConstraints:widthConstraint];
+    
+
     
     [self.internalStickersView addConstraints:verticalShopButtonConstraints];
     [self.internalStickersView addConstraints:verticalHeaderConstraints];
@@ -222,8 +247,55 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
     
 }
 
+- (void)addKeyboardButtonConstraints {
+    self.keyboardButton.translatesAutoresizingMaskIntoConstraints = NO;
+    NSLayoutConstraint *width = [NSLayoutConstraint constraintWithItem:self.keyboardButton
+                                                             attribute:NSLayoutAttributeWidth
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:nil
+                                                             attribute:NSLayoutAttributeNotAnAttribute
+                                                            multiplier:1
+                                                              constant:38];
+    NSLayoutConstraint *height = [NSLayoutConstraint constraintWithItem:self.keyboardButton
+                                                             attribute:NSLayoutAttributeHeight
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:nil
+                                                             attribute:NSLayoutAttributeNotAnAttribute
+                                                            multiplier:1
+                                                              constant:38];
+    NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:self.keyboardButton
+                                                             attribute:NSLayoutAttributeTop
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:self.textInputView
+                                                             attribute:NSLayoutAttributeTop
+                                                            multiplier:1
+                                                              constant:0];
+    NSLayoutConstraint *right = [NSLayoutConstraint constraintWithItem:self.keyboardButton
+                                                               attribute:NSLayoutAttributeTrailing
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:self.textInputView
+                                                               attribute:NSLayoutAttributeTrailing
+                                                              multiplier:1
+                                                                constant:100                              ];
+    
+    [self.textInputView addConstraints:@[width, height, right,top]];
+    }
 
-#pragma mark - Action
+
+- (void)initKeyBoardButton {
+    self.keyboardButton = [STKShowStickerButton buttonWithType:UIButtonTypeSystem];
+    UIImage *buttonImage = [UIImage imageNamed:@"STKShowStickersIcon"];
+    
+    [self.keyboardButton setImage:buttonImage forState:UIControlStateNormal];
+    [self.keyboardButton addTarget:self action:@selector(keyboardButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    self.keyboardButton.badgeView.hidden = ![self.stickersService hasNewPacks];
+    [self.textInputView addSubview:self.keyboardButton];
+    [self addKeyboardButtonConstraints];
+
+}
+
+
+#pragma mark - Actions
 
 - (void)shopButtonAction:(UIButton*)shopButton {
     
@@ -236,6 +308,15 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
     [presenter presentViewController:navigationController animated:YES completion:nil];
 }
 
+- (void)keyboardButtonAction:(UIButton *)keyboardButton {
+    if (self.textInputView.inputView) {
+        [self hideStickersView];
+        
+    } else {
+        [self showStickersView];
+    }
+}
+
 
 #pragma mark - Reload
 
@@ -244,42 +325,62 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
 }
 
 - (void)reloadHeaderItemAtIndexPath:(NSIndexPath*)indexPath {
-    __weak typeof(self) wself = self;
-
-    [self.stickersService getStickerPacksWithType:nil completion:^(NSArray *stickerPacks) {
-        [wself.stickersHeaderDelegateManager setStickerPacks:stickerPacks];
-        [wself.stickersHeaderCollectionView reloadItemsAtIndexPaths:@[indexPath]];
-               [wself.stickersHeaderCollectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
-    } failure:^(NSError *error) {
-        
-    }];
+    NSArray *stickerPacks = self.stickersService.stickersArray;
+    [self.stickersHeaderDelegateManager setStickerPacks:stickerPacks];
+    [self.stickersHeaderCollectionView reloadItemsAtIndexPaths:@[indexPath]];
+    [self.stickersHeaderCollectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+    
+//    __weak typeof(self) wself = self;
+//
+//    [self.stickersService getStickerPacksWithType:nil completion:^(NSArray *stickerPacks) {
+//        [wself.stickersHeaderDelegateManager setStickerPacks:stickerPacks];
+//        [wself.stickersHeaderCollectionView reloadItemsAtIndexPaths:@[indexPath]];
+//               [wself.stickersHeaderCollectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+//    } failure:^(NSError *error) {
+//        
+  //  }];
 }
 
 - (void)reloadStickersHeader {
-    __weak  typeof(self) wself = self;
-
-    [self.stickersService getStickerPacksWithType:nil completion:^(NSArray *stickerPacks) {
-        [wself.stickersHeaderDelegateManager setStickerPacks:stickerPacks];
-        [wself.stickersHeaderCollectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:1 inSection:0]]];
-        NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForItem:wself.stickersDelegateManager.currentDisplayedSection inSection:0];
-        [wself.stickersHeaderCollectionView selectItemAtIndexPath:selectedIndexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
-    } failure:nil];
+    NSArray *stickerPacks = self.stickersService.stickersArray;
+    [self.stickersHeaderDelegateManager setStickerPacks:stickerPacks];
+    [self.stickersHeaderCollectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:1 inSection:0]]];
+    NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForItem:self.stickersDelegateManager.currentDisplayedSection inSection:0];
+    [self.stickersHeaderCollectionView selectItemAtIndexPath:selectedIndexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+    
+//    __weak  typeof(self) wself = self;
+//
+//    [self.stickersService getStickerPacksWithType:nil completion:^(NSArray *stickerPacks) {
+//        [wself.stickersHeaderDelegateManager setStickerPacks:stickerPacks];
+//        [wself.stickersHeaderCollectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:1 inSection:0]]];
+//        NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForItem:wself.stickersDelegateManager.currentDisplayedSection inSection:0];
+//        [wself.stickersHeaderCollectionView selectItemAtIndexPath:selectedIndexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+//    } failure:nil];
 }
 
 - (void)reloadStickers {
-    __weak typeof(self) weakSelf = self;
-    [self.stickersService getStickerPacksWithType:nil completion:^(NSArray *stickerPacks) {
-        [weakSelf.stickersDelegateManager setStickerPacksArray:stickerPacks];
-        [weakSelf.stickersHeaderDelegateManager setStickerPacks:stickerPacks];
-        [weakSelf.stickersCollectionView reloadData];
-        [weakSelf.stickersHeaderCollectionView reloadData];
-        weakSelf.stickersCollectionView.contentOffset = CGPointZero;
-        weakSelf.stickersDelegateManager.currentDisplayedSection = 0;
-        
-        [weakSelf setPackSelectedAtIndex:0];
-    } failure:^(NSError *error) {
-        
-    }];
+    NSArray *stickerPacks = self.stickersService.stickersArray;
+    [self.stickersDelegateManager setStickerPacksArray:stickerPacks];
+    [self.stickersHeaderDelegateManager setStickerPacks:stickerPacks];
+    [self.stickersCollectionView reloadData];
+    [self.stickersHeaderCollectionView reloadData];
+    self.stickersCollectionView.contentOffset = CGPointZero;
+    self.stickersDelegateManager.currentDisplayedSection = 0;
+    
+    [self setPackSelectedAtIndex:0];
+//    __weak typeof(self) weakSelf = self;
+//    [self.stickersService getStickerPacksWithType:nil completion:^(NSArray *stickerPacks) {
+//        [weakSelf.stickersDelegateManager setStickerPacksArray:stickerPacks];
+//        [weakSelf.stickersHeaderDelegateManager setStickerPacks:stickerPacks];
+//        [weakSelf.stickersCollectionView reloadData];
+//        [weakSelf.stickersHeaderCollectionView reloadData];
+//        weakSelf.stickersCollectionView.contentOffset = CGPointZero;
+//        weakSelf.stickersDelegateManager.currentDisplayedSection = 0;
+//        
+//        [weakSelf setPackSelectedAtIndex:0];
+//    } failure:^(NSError *error) {
+//        
+//    }];
 }
 
 
@@ -354,5 +455,56 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
     return _internalStickersView;
 }
 
+- (void)setTextInputView:(UITextView *)textInputView {
+    _textInputView = textInputView;
+    [_textInputView layoutSubviews];
+    [self initKeyBoardButton];
+}
 
+#pragma mark - Show/hide stickers
+
+- (void) showStickersView {
+    UIImage *buttonImage = [UIImage imageNamed:@"STKShowKeyboadIcon"];
+    
+    [self.keyboardButton setImage:buttonImage forState:UIControlStateNormal];
+    [self.keyboardButton setImage:buttonImage forState:UIControlStateHighlighted];
+    
+    self.textInputView.inputView = self.stickersView;
+    [self reloadStickersInputViews];
+}
+
+- (void) hideStickersView {
+    
+    UIImage *buttonImage = [UIImage imageNamed:@"STKShowStickersIcon"];
+    
+    [self.keyboardButton setImage:buttonImage forState:UIControlStateNormal];
+    [self.keyboardButton setImage:buttonImage forState:UIControlStateHighlighted];
+    
+    self.textInputView.inputView = nil;
+    
+    [self reloadStickersInputViews];
+}
+
+
+- (void) reloadStickersInputViews {
+    [self.textInputView reloadInputViews];
+    if (!self.isKeyboardShowed) {
+        [self.textInputView becomeFirstResponder];
+    }
+}
+
+#pragma mark - keyboard notifications
+
+- (void) didShowKeyboard:(NSNotification*)notification {
+    self.isKeyboardShowed = YES;
+}
+
+
+- (void)willHideKeyboard:(NSNotification*)notification {
+    self.isKeyboardShowed = NO;
+}
+
+- (void)storageUpdated:(NSNotification*)notification {
+    self.keyboardButton.badgeView.hidden = ![self.stickersService hasNewPacks];
+}
 @end
