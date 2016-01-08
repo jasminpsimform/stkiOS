@@ -5,9 +5,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "STKBadgeView.h"
 
 @interface STKShowStickerButton : UIButton
 
-
+@property (nonatomic, strong) STKBadgeView *badgeView;
 
 @end

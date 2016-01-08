@@ -4,54 +4,34 @@
 //
 
 #import "STKShowStickerButton.h"
-#import "STKStickersCache.h"
-#import "STKStickersNotificationConstants.h"
-#import "STKBadgeView.h"
 
 static const CGFloat kBadgeViewPadding = 4.0;
 
 @interface STKShowStickerButton()
-
-@property (nonatomic, strong) STKBadgeView *badgeView;
-@property (nonatomic, strong) STKStickersCache *cacheEntity;
 
 @end
 
 @implementation STKShowStickerButton
 
 - (void)awakeFromNib {
-    self.cacheEntity = [STKStickersCache new];
-    [self initDotView];
-    [self subscribe];
+    [self initBadgeView];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
    self = [super initWithFrame:frame];
     if (self) {
-        [self initDotView];
-        [self subscribe];
+        [self initBadgeView];
     }
 
     return self;
 }
 
-- (void)subscribe {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storageUpdated:) name:STKStickersCacheDidUpdateStickersNotification object:nil];
-}
-
-- (void)storageUpdated:(NSNotification*)notification {
-    self.badgeView.hidden = ![self.cacheEntity hasNewStickerPacks];
-}
-
-
-- (void)initDotView {
+- (void)initBadgeView {
 
     self.imageView.contentMode = UIViewContentModeCenter;
-    
     self.badgeView = [[STKBadgeView alloc] initWithFrame:CGRectMake(0, 0, 20.0, 20.0) lineWidth:2.5 dotSize:CGSizeMake(4.0, 4.0)];
     self.badgeView.center = CGPointMake(CGRectGetMaxX(self.imageView.frame) - kBadgeViewPadding, CGRectGetMinY(self.imageView.frame) + kBadgeViewPadding);
     [self addSubview:self.badgeView];
-    self.badgeView.hidden = ![self.cacheEntity hasNewStickerPacks];
 }
 
 - (void)layoutSubviews {
