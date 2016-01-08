@@ -13,6 +13,7 @@
 @interface STKStickersEntityService : NSObject
 
 @property (nonatomic, strong) NSArray *stickersArray;
+
 - (void)getStickerPacksWithType:(NSString*)type
                  completion:(void(^)(NSArray *stickerPacks))completion
                     failure:(void(^)(NSError *error))failure;
@@ -36,5 +37,8 @@
 - (void) deleteStickerPack:(STKStickerPackObject*) stickerPack;
 
 - (void) togglePackDisabling:(STKStickerPackObject*)pack;
+
+- (BOOL)hasRecentStickers;
+- (BOOL)hasNewPacks;
 
 @end

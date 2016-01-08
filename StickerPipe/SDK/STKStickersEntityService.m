@@ -15,6 +15,7 @@
 
 static NSString *const kLastModifiedDateKey = @"kLastModifiedDateKey";
 static NSString *const kLastUpdateIntervalKey = @"kLastUpdateIntervalKey";
+static NSString *const recentName = @"Recent";
 static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
 
 @interface STKStickersEntityService()
@@ -43,6 +44,9 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
     }
     return self;
 }
+
+
+#pragma mark - Get sticker packs
 
 - (void)getStickerPacksWithType:(NSString *)type
                  completion:(void (^)(NSArray *))completion
@@ -127,6 +131,8 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
     
 }
 
+#pragma mark - Update sticker packs
+
 - (void)updateStickerPacksWithType:(NSString*)type completion:(void(^)(NSArray *stickerPacks))completion {
     
     __weak typeof(self) weakSelf = self;
@@ -162,6 +168,7 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
 
 
 }
+#pragma mark ----------
 
 - (void)saveStickerPacks:(NSArray *)stickerPacks {
     [self.cacheEntity saveStickerPacks:stickerPacks];
@@ -182,6 +189,19 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
     
     [self.cacheEntity markStickerPack:pack disabled:!status];
     
+}
+
+- (BOOL)hasRecentStickers {
+    STKStickerPackObject *recentStickerPack = [self.cacheEntity recentStickerPack];
+    
+    return [recentStickerPack.stickers count] > 0;
+}
+
+- (BOOL)hasNewPacks {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", @"isNew", @YES];
+    NSArray *arr = self.stickersArray;
+    NSUInteger newsCount = [[arr filteredArrayUsingPredicate:predicate] count];
+    return newsCount > 0 || ![self hasRecentStickers];;
 }
 
 #pragma mark Check save delete
