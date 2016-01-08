@@ -36,6 +36,10 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
         self.cacheEntity = [[STKStickersCache alloc] init];
         self.serializer = [[STKStickersSerializer alloc] init];
         self.queue = dispatch_queue_create("com.stickers.service", DISPATCH_QUEUE_SERIAL);
+        __weak typeof(self) weakSelf = self;
+        [self getStickerPacksWithType:nil completion:^(NSArray *stickerPacks) {
+            weakSelf.stickersArray = stickerPacks;
+        } failure:nil];
     }
     return self;
 }
