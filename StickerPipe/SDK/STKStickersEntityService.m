@@ -48,6 +48,27 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
 
 #pragma mark - Get sticker packs
 
+- (void)loadStickerPacksFromCache:(NSString *)type
+                       completion:(void (^)(NSArray *))completion {
+    [self.cacheEntity getStickerPacks:^(NSArray *stickerPacks) {
+        if (stickerPacks.count == 0) {
+            [self updateStickerPacksWithType:type completion:^(NSArray *stickerPacks) {
+                if (completion) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        completion(stickerPacks);
+                    });
+                }
+            }];
+        } else {
+            if (completion) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completion(stickerPacks);
+                });
+            }
+        }
+    }];
+}
+
 - (void)getStickerPacksWithType:(NSString *)type
                  completion:(void (^)(NSArray *))completion
                     failure:(void (^)(NSError *))failure
@@ -58,27 +79,18 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
         NSTimeInterval lastUpdate = [self lastUpdateDate];
         NSTimeInterval timeSinceLastUpdate = [[NSDate date] timeIntervalSince1970] - lastUpdate;
         if (timeSinceLastUpdate > kUpdatesDelay) {
-            [weakSelf updateStickerPacksWithType:type completion:nil];
-        }
-        
-        [self.cacheEntity getStickerPacks:^(NSArray *stickerPacks) {
-            if (stickerPacks.count == 0) {
-                [weakSelf updateStickerPacksWithType:type completion:^(NSArray *stickerPacks) {
+            [weakSelf updateStickerPacksWithType:type completion:^(NSArray *stickerPacks) {
+                [weakSelf loadStickerPacksFromCache:type completion:^(NSArray *stickerPacks) {
                     if (completion) {
                         dispatch_async(dispatch_get_main_queue(), ^{
                             completion(stickerPacks);
                         });
                     }
                 }];
-            } else {
-                if (completion) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        completion(stickerPacks);
-                    });
-                }
-            }
-
-        }];
+            }];
+        } else {
+            [weakSelf loadStickerPacksFromCache:type completion:completion];
+        }
     });
 }
 
