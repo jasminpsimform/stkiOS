@@ -64,6 +64,7 @@
 		6EF264741B3C0F830099A657 /* StickerFactoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EF264731B3C0F830099A657 /* StickerFactoryTests.m */; };
 		806D796EC2F2167C25C0B150 /* STKPurchaseService.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D718A2F9D82D37A49B055 /* STKPurchaseService.m */; };
 		806D79ABFC65132E5C402108 /* STKShowStickerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D749D40E8611EB0FF05CA /* STKShowStickerButton.m */; };
+		9A0716E81C43DD6B004D2ACF /* Launch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A0716E71C43DD6B004D2ACF /* Launch.xib */; };
 		DF71B99FAA77DDC25C0F577E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 280EB363112837B81F052E19 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -199,6 +200,7 @@ StickerPipeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper
 		806D749D40E8611EB0FF05CA /* STKShowStickerButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKShowStickerButton.m; sourceTree = "<group>"; };
 		806D7A8AEE54902F6E8C3365 /* STKPurchaseService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKPurchaseService.h; sourceTree = "<group>"; };
 		806D7EF0BF486A7227F07BD2 /* STKShowStickerButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKShowStickerButton.h; sourceTree = "<group>"; };
+		9A0716E71C43DD6B004D2ACF /* Launch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Launch.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -514,6 +516,7 @@ StickerPipeTests.xctest */,
 				6EF264611B3C0F830099A657 /* Main.storyboard */,
 				6EF264641B3C0F830099A657 /* Images.xcassets */,
 				6EF264571B3C0F830099A657 /* Supporting Files */,
+				9A0716E71C43DD6B004D2ACF /* Launch.xib */,
 			);
 			path = StickerPipe;
 			sourceTree = "<group>";
@@ -667,6 +670,7 @@ StickerPipeTests.xctest */;
 				6EA356371B72581100D540F7 /* STKStickerSettingsCell.xib in Resources */,
 				6E310A3A1B68BA9000FB75D0 /* STKPackDescriptionController.xib in Resources */,
 				6E7E2A961B722A0C00DCAFC5 /* STKStickersSettingsViewController.xib in Resources */,
+				9A0716E81C43DD6B004D2ACF /* Launch.xib in Resources */,
 				6EF264651B3C0F830099A657 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
