@@ -12,9 +12,6 @@
 #import "STKPackDescriptionController.h"
 #import "STKShowStickerButton.h"
 #import <CommonCrypto/CommonDigest.h>
-#import "NSString+MD5.h"
-
-
 
 
 @interface STKChatViewController() <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, STKStickerControllerDelegate, STKPackDescriptionControllerDelegate>
@@ -22,8 +19,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextView *inputTextView;
 @property (weak, nonatomic) IBOutlet UIView *textInputPanel;
-
-@property (weak, nonatomic) IBOutlet STKShowStickerButton *changeInputViewButton;
 
 @property (assign, nonatomic) BOOL isKeyboardShowed;
 
@@ -70,7 +65,6 @@
     
     self.stickerController = [[STKStickerController alloc] init];
     self.stickerController.delegate = self;
-//    [self.stickerController.textInputView layoutSubviews];
     self.stickerController.textInputView = self.inputTextView;
 
     
@@ -140,49 +134,6 @@
     }];
 }
 
-- (IBAction)changeKeyboadViewAction:(UIButton*)button {
-        
-    if (self.inputTextView.inputView) {
-        [self hideStickersView];
-        
-    } else {
-        [self showStickersView];
-    }
-
-}
-
-#pragma mark - Show/hide stickers
-
-- (void) showStickersView {
-    UIImage *buttonImage = [UIImage imageNamed:@"STKShowKeyboadIcon"];
-    
-    [self.changeInputViewButton setImage:buttonImage forState:UIControlStateNormal];
-    [self.changeInputViewButton setImage:buttonImage forState:UIControlStateHighlighted];
-    
-    self.inputTextView.inputView = self.stickerController.stickersView;
-    [self reloadStickersInputViews];
-}
-
-- (void) hideStickersView {
-    
-    UIImage *buttonImage = [UIImage imageNamed:@"STKShowStickersIcon"];
-    
-    [self.changeInputViewButton setImage:buttonImage forState:UIControlStateNormal];
-    [self.changeInputViewButton setImage:buttonImage forState:UIControlStateHighlighted];
-    
-    self.inputTextView.inputView = nil;
-    
-    [self reloadStickersInputViews];
-}
-
-
-- (void) reloadStickersInputViews {
-    [self.inputTextView reloadInputViews];
-    if (!self.isKeyboardShowed) {
-        [self.inputTextView becomeFirstResponder];
-    }
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     id cell = [tableView cellForRowAtIndexPath:indexPath];
     if ([cell isKindOfClass:[STKChatStickerCell class]]) {
@@ -249,9 +200,6 @@
 
 - (void) textViewDidTap:(UITapGestureRecognizer*) gestureRecognizer {
     [self.inputTextView becomeFirstResponder];
-    if (self.stickerController.isStickerViewShowed) {
-        [self hideStickersView];
-    }
 }
 
 #pragma mark - Property
@@ -264,6 +212,5 @@
     }
     return _stickerController;
 }
-
 
 @end
