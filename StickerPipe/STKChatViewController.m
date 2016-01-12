@@ -11,6 +11,11 @@
 #import "STKStickerPipe.h"
 #import "STKPackDescriptionController.h"
 #import "STKShowStickerButton.h"
+#import <CommonCrypto/CommonDigest.h>
+#import "NSString+MD5.h"
+
+
+
 
 @interface STKChatViewController() <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, STKStickerControllerDelegate, STKPackDescriptionControllerDelegate>
 
@@ -65,11 +70,19 @@
     
     self.stickerController = [[STKStickerController alloc] init];
     self.stickerController.delegate = self;
+//    [self.stickerController.textInputView layoutSubviews];
     self.stickerController.textInputView = self.inputTextView;
+
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateStickersCache:) name:STKStickersCacheDidUpdateStickersNotification object:nil];
     
+    
 }
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [self.stickerController updateFrames];
+}
+
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -247,6 +260,7 @@
     if (!_stickerController) {
         _stickerController = [STKStickerController new];
         _stickerController.delegate = self;
+        _stickerController.textInputView = self.inputTextView;
     }
     return _stickerController;
 }

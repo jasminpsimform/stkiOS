@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KXI-Gp-cB2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="KXI-Gp-cB2">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <scenes>
         <!--Demo Chat-->
@@ -14,14 +14,14 @@
                         <viewControllerLayoutGuide type="bottom" id="JQM-oh-qW5"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="uP5-MA-l9y">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ala-hF-VUk">
-                                <rect key="frame" x="0.0" y="551" width="600" height="49"/>
+                                <rect key="frame" x="0.0" y="519" width="320" height="49"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ig2-vE-R0S">
-                                        <rect key="frame" x="554" y="8" width="38" height="32"/>
+                                        <rect key="frame" x="274" y="8" width="38" height="32"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <state key="normal" title="Send">
                                             <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -29,7 +29,7 @@
                                         </state>
                                     </button>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UEI-iu-DOR">
-                                        <rect key="frame" x="8" y="8" width="534" height="33"/>
+                                        <rect key="frame" x="8" y="8" width="254" height="33"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="33" id="cb2-Yx-HZ8"/>
@@ -40,64 +40,37 @@
                                             <outlet property="delegate" destination="klz-pk-6lW" id="T4Z-Ed-pT8"/>
                                         </connections>
                                     </textView>
-                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qMT-MU-Fai" customClass="STKShowStickerButton">
-                                        <rect key="frame" x="504" y="5" width="38" height="38"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="38" id="4nM-oR-pP5"/>
-                                            <constraint firstAttribute="height" constant="38" id="93S-cP-0zM"/>
-                                        </constraints>
-                                        <state key="normal" image="STKShowStickersIcon">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="changeKeyboadViewAction:" destination="klz-pk-6lW" eventType="touchUpInside" id="hoS-n3-ktM"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.96470588235294119" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="0Vq-z0-3vv"/>
-                                    <constraint firstItem="qMT-MU-Fai" firstAttribute="leading" secondItem="UEI-iu-DOR" secondAttribute="trailing" constant="-44" id="47u-j5-gSM"/>
                                     <constraint firstAttribute="centerY" secondItem="ig2-vE-R0S" secondAttribute="centerY" id="EKb-Cr-hHi"/>
                                     <constraint firstItem="UEI-iu-DOR" firstAttribute="top" secondItem="ala-hF-VUk" secondAttribute="top" constant="8" id="K0c-na-h6M"/>
-                                    <constraint firstItem="qMT-MU-Fai" firstAttribute="trailing" secondItem="UEI-iu-DOR" secondAttribute="trailing" id="MSU-ca-yHg"/>
-                                    <constraint firstItem="qMT-MU-Fai" firstAttribute="top" secondItem="ala-hF-VUk" secondAttribute="top" constant="14" id="SZf-ik-e99"/>
-                                    <constraint firstItem="qMT-MU-Fai" firstAttribute="centerY" secondItem="UEI-iu-DOR" secondAttribute="centerY" id="TtU-yT-htY"/>
                                     <constraint firstAttribute="trailing" secondItem="ig2-vE-R0S" secondAttribute="trailing" constant="8" id="W2H-Dr-1wl"/>
                                     <constraint firstItem="UEI-iu-DOR" firstAttribute="leading" secondItem="ala-hF-VUk" secondAttribute="leading" constant="8" id="WVC-01-mtL"/>
                                     <constraint firstAttribute="bottom" secondItem="UEI-iu-DOR" secondAttribute="bottom" constant="8" id="cnP-ga-way"/>
                                     <constraint firstItem="ig2-vE-R0S" firstAttribute="leading" secondItem="UEI-iu-DOR" secondAttribute="trailing" constant="12" id="jyN-ZS-cZT"/>
-                                    <constraint firstItem="qMT-MU-Fai" firstAttribute="leading" secondItem="UEI-iu-DOR" secondAttribute="trailing" constant="-27" id="nM6-Fh-fUZ"/>
-                                    <constraint firstAttribute="bottom" secondItem="qMT-MU-Fai" secondAttribute="bottom" constant="13" id="xY3-Rf-vkO"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="0Vq-z0-3vv"/>
-                                        <exclude reference="47u-j5-gSM"/>
-                                        <exclude reference="SZf-ik-e99"/>
-                                        <exclude reference="nM6-Fh-fUZ"/>
-                                        <exclude reference="xY3-Rf-vkO"/>
-                                    </mask>
-                                </variation>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="160" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Ia5-oU-XSp">
-                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="160" id="cYY-dQ-3W2" customClass="STKChatStickerCell">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="160"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cYY-dQ-3W2" id="zHO-0R-UvJ">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="77l-po-v5c">
-                                                    <rect key="frame" x="428" y="0.0" width="160" height="159.5"/>
+                                                    <rect key="frame" x="148" y="0.0" width="160" height="159.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="160" id="HMQ-zB-fs1"/>
                                                         <constraint firstAttribute="height" constant="160" id="i9g-ds-wJl"/>
                                                     </constraints>
                                                 </imageView>
                                                 <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jre-cg-nrc">
-                                                    <rect key="frame" x="383" y="69" width="21" height="22"/>
+                                                    <rect key="frame" x="103" y="69" width="21" height="22"/>
                                                     <state key="normal" image="STKDownloadIcon">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -137,7 +110,6 @@
                     <navigationItem key="navigationItem" title="Demo Chat" id="UNQ-G8-HQD"/>
                     <connections>
                         <outlet property="bottomViewConstraint" destination="1Mo-za-2Xq" id="CCL-6Y-EUU"/>
-                        <outlet property="changeInputViewButton" destination="qMT-MU-Fai" id="OjH-kP-EH3"/>
                         <outlet property="inputTextView" destination="UEI-iu-DOR" id="w8J-PG-Yd1"/>
                         <outlet property="tableView" destination="Ia5-oU-XSp" id="x5Z-OE-v4Z"/>
                         <outlet property="textInputPanel" destination="ala-hF-VUk" id="B9k-ro-T9z"/>
@@ -146,7 +118,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cdv-o1-OIz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1901" y="290"/>
+            <point key="canvasLocation" x="1013.8666666666667" y="274.5333333333333"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="dpY-Tn-s11">
@@ -164,11 +136,10 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NSK-vt-dzn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1089" y="290"/>
+            <point key="canvasLocation" x="580.79999999999995" y="274.5333333333333"/>
         </scene>
     </scenes>
     <resources>
         <image name="STKDownloadIcon" width="21" height="21"/>
-        <image name="STKShowStickersIcon" width="21" height="21"/>
     </resources>
 </document>

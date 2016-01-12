@@ -32,6 +32,7 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
 
 @interface STKStickerController() <STKPackDescriptionControllerDelegate>
 
+@property (strong, nonatomic) UIView *keyboardButtonSuperView;
 @property (strong, nonatomic) UIView *internalStickersView;
 
 @property (strong, nonatomic) UICollectionView *stickersCollectionView;
@@ -78,7 +79,7 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
         [self initStickerHeader];
         [self initStickersCollectionView];
         [self initShopButton];
-
+        
         
         [self configureStickersViewsConstraints];
         
@@ -94,7 +95,7 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
                                                      name:UIKeyboardWillShowNotification
                                                    object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storageUpdated:) name:STKStickersCacheDidUpdateStickersNotification object:nil];
-
+        
     }
     return self;
 }
@@ -145,10 +146,10 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
 
 - (void)initShopButton {
     self.shopButton = [UIButton buttonWithType:UIButtonTypeSystem];
-
+    
     [self.shopButton setImage:[UIImage imageNamed:@"STKMoreIcon"] forState:UIControlStateNormal];
     [self.shopButton setImage:[UIImage imageNamed:@"STKMoreIcon"] forState:UIControlStateHighlighted];
-
+    
     self.shopButton.titleLabel.font = [UIFont systemFontOfSize:20.0];
     [self.shopButton setTintColor:[STKUtility defaultOrangeColor]];
     
@@ -179,7 +180,7 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
         
         [weakSelf.stickersCollectionView setContentOffset:CGPointMake(weakSelf.stickersCollectionView.contentOffset.x, layoutRect.origin.y  - kStickersSectionPaddingTopBottom) animated:YES];
         weakSelf.stickersDelegateManager.currentDisplayedSection = indexPath.item;
-
+        
     }];
     
     self.stickersHeaderCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.stickersHeaderFlowLayout];
@@ -210,34 +211,34 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
                                       @"stickersCollectionView" : self.stickersCollectionView,
                                       @"shopButton" : self.shopButton};
     NSArray *verticalShopButtonConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[shopButton]"
-                                                                                    options:0
-                                                                                    metrics:nil
-                                                                                      views:viewsDictionary];
+                                                                                     options:0
+                                                                                     metrics:nil
+                                                                                       views:viewsDictionary];
     [self.internalStickersView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[shopButton]|" options:0 metrics:nil views:viewsDictionary]];
     
     NSArray *heightConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[shopButton(==44.0)]" options:0 metrics:nil views:viewsDictionary];
     NSArray *widthConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:[shopButton(==44.0)]" options:0 metrics:nil views:viewsDictionary];
     
     NSArray *horizontalHeaderConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[stickersHeaderCollectionView]-0-[shopButton]"
-                                                                                 options:0
-                                                                                 metrics:nil
-                                                                                   views:viewsDictionary];
-    NSArray *verticalHeaderConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[stickersHeaderCollectionView]-0-[stickersCollectionView]"
                                                                                    options:0
                                                                                    metrics:nil
                                                                                      views:viewsDictionary];
+    NSArray *verticalHeaderConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[stickersHeaderCollectionView]-0-[stickersCollectionView]"
+                                                                                 options:0
+                                                                                 metrics:nil
+                                                                                   views:viewsDictionary];
     NSArray *horizontalStickersConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[stickersCollectionView]|" options:0 metrics:nil views:viewsDictionary];
     NSArray *verticalStickersConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[stickersHeaderCollectionView]-0-[stickersCollectionView]|"
-                                                                                    options:0
-                                                                                    metrics:nil
-                                                                                      views:viewsDictionary];
-
+                                                                                   options:0
+                                                                                   metrics:nil
+                                                                                     views:viewsDictionary];
+    
     
     [self.stickersHeaderCollectionView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[stickersHeaderCollectionView(44.0)]" options:0 metrics:nil views:viewsDictionary]];
     [self.shopButton addConstraints:heightConstraint];
     [self.shopButton addConstraints:widthConstraint];
     
-
+    
     
     [self.internalStickersView addConstraints:verticalShopButtonConstraints];
     [self.internalStickersView addConstraints:verticalHeaderConstraints];
@@ -247,53 +248,67 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
     
 }
 
-- (void)addKeyboardButtonConstraints {
+- (void)addKeyboardButtonConstraintsToView:(UIView *)view {
     self.keyboardButton.translatesAutoresizingMaskIntoConstraints = NO;
+
     NSLayoutConstraint *width = [NSLayoutConstraint constraintWithItem:self.keyboardButton
                                                              attribute:NSLayoutAttributeWidth
                                                              relatedBy:NSLayoutRelationEqual
                                                                 toItem:nil
                                                              attribute:NSLayoutAttributeNotAnAttribute
                                                             multiplier:1
-                                                              constant:38];
+                                                              constant:33];
     NSLayoutConstraint *height = [NSLayoutConstraint constraintWithItem:self.keyboardButton
-                                                             attribute:NSLayoutAttributeHeight
-                                                             relatedBy:NSLayoutRelationEqual
-                                                                toItem:nil
-                                                             attribute:NSLayoutAttributeNotAnAttribute
-                                                            multiplier:1
-                                                              constant:38];
-    NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:self.keyboardButton
-                                                             attribute:NSLayoutAttributeTop
-                                                             relatedBy:NSLayoutRelationEqual
-                                                                toItem:self.textInputView
-                                                             attribute:NSLayoutAttributeTop
-                                                            multiplier:1
-                                                              constant:0];
+                                                              attribute:NSLayoutAttributeHeight
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:nil
+                                                              attribute:NSLayoutAttributeNotAnAttribute
+                                                             multiplier:1
+                                                               constant:33];
+
     NSLayoutConstraint *right = [NSLayoutConstraint constraintWithItem:self.keyboardButton
-                                                               attribute:NSLayoutAttributeTrailing
-                                                               relatedBy:NSLayoutRelationEqual
-                                                                  toItem:self.textInputView
-                                                               attribute:NSLayoutAttributeTrailing
-                                                              multiplier:1
-                                                                constant:100                              ];
+                                                            attribute:NSLayoutAttributeRight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:view
+                                                            attribute:NSLayoutAttributeRight
+                                                           multiplier:1
+                                                             constant:0];
     
-    [self.textInputView addConstraints:@[width, height, right,top]];
-    }
+    NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:self.keyboardButton
+                                                           attribute:NSLayoutAttributeTop
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:view
+                                                           attribute:NSLayoutAttributeTop
+                                                          multiplier:1
+                                                            constant:0];
+
+    [view addConstraints:@[width, height, right,top
+                                         ]];
+}
 
 
 - (void)initKeyBoardButton {
     self.keyboardButton = [STKShowStickerButton buttonWithType:UIButtonTypeSystem];
     UIImage *buttonImage = [UIImage imageNamed:@"STKShowStickersIcon"];
-    
+    // self.keyboardButton.frame = CGRectMake(100, 0, 38, 38);
     [self.keyboardButton setImage:buttonImage forState:UIControlStateNormal];
     [self.keyboardButton addTarget:self action:@selector(keyboardButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    self.keyboardButton.tintColor = [UIColor grayColor];
     self.keyboardButton.badgeView.hidden = ![self.stickersService hasNewPacks];
-    [self.textInputView addSubview:self.keyboardButton];
-    [self addKeyboardButtonConstraints];
-
+    
+    CGRect frame = CGRectMake(0, 0, self.textInputView.contentSize.width, 33);
+    UIView *view = [[UIView alloc]initWithFrame:frame];
+    [view addSubview:self.keyboardButton];
+    [self.textInputView addSubview:view];
+    [self addKeyboardButtonConstraintsToView:view];
+    self.keyboardButtonSuperView = view;
 }
 
+- (void)updateFrames {
+    CGRect frame = CGRectMake(0, 0, self.textInputView.contentSize.width, 33);
+    self.keyboardButtonSuperView.frame = frame;
+    [self.keyboardButton layoutIfNeeded];
+}
 
 #pragma mark - Actions
 
@@ -330,15 +345,15 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
     [self.stickersHeaderCollectionView reloadItemsAtIndexPaths:@[indexPath]];
     [self.stickersHeaderCollectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
     
-//    __weak typeof(self) wself = self;
-//
-//    [self.stickersService getStickerPacksWithType:nil completion:^(NSArray *stickerPacks) {
-//        [wself.stickersHeaderDelegateManager setStickerPacks:stickerPacks];
-//        [wself.stickersHeaderCollectionView reloadItemsAtIndexPaths:@[indexPath]];
-//               [wself.stickersHeaderCollectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
-//    } failure:^(NSError *error) {
-//        
-  //  }];
+    //    __weak typeof(self) wself = self;
+    //
+    //    [self.stickersService getStickerPacksWithType:nil completion:^(NSArray *stickerPacks) {
+    //        [wself.stickersHeaderDelegateManager setStickerPacks:stickerPacks];
+    //        [wself.stickersHeaderCollectionView reloadItemsAtIndexPaths:@[indexPath]];
+    //               [wself.stickersHeaderCollectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+    //    } failure:^(NSError *error) {
+    //
+    //  }];
 }
 
 - (void)reloadStickersHeader {
@@ -348,14 +363,14 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
     NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForItem:self.stickersDelegateManager.currentDisplayedSection inSection:0];
     [self.stickersHeaderCollectionView selectItemAtIndexPath:selectedIndexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
     
-//    __weak  typeof(self) wself = self;
-//
-//    [self.stickersService getStickerPacksWithType:nil completion:^(NSArray *stickerPacks) {
-//        [wself.stickersHeaderDelegateManager setStickerPacks:stickerPacks];
-//        [wself.stickersHeaderCollectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:1 inSection:0]]];
-//        NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForItem:wself.stickersDelegateManager.currentDisplayedSection inSection:0];
-//        [wself.stickersHeaderCollectionView selectItemAtIndexPath:selectedIndexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
-//    } failure:nil];
+    //    __weak  typeof(self) wself = self;
+    //
+    //    [self.stickersService getStickerPacksWithType:nil completion:^(NSArray *stickerPacks) {
+    //        [wself.stickersHeaderDelegateManager setStickerPacks:stickerPacks];
+    //        [wself.stickersHeaderCollectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:1 inSection:0]]];
+    //        NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForItem:wself.stickersDelegateManager.currentDisplayedSection inSection:0];
+    //        [wself.stickersHeaderCollectionView selectItemAtIndexPath:selectedIndexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+    //    } failure:nil];
 }
 
 - (void)reloadStickers {
@@ -368,19 +383,19 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
     self.stickersDelegateManager.currentDisplayedSection = 0;
     
     [self setPackSelectedAtIndex:0];
-//    __weak typeof(self) weakSelf = self;
-//    [self.stickersService getStickerPacksWithType:nil completion:^(NSArray *stickerPacks) {
-//        [weakSelf.stickersDelegateManager setStickerPacksArray:stickerPacks];
-//        [weakSelf.stickersHeaderDelegateManager setStickerPacks:stickerPacks];
-//        [weakSelf.stickersCollectionView reloadData];
-//        [weakSelf.stickersHeaderCollectionView reloadData];
-//        weakSelf.stickersCollectionView.contentOffset = CGPointZero;
-//        weakSelf.stickersDelegateManager.currentDisplayedSection = 0;
-//        
-//        [weakSelf setPackSelectedAtIndex:0];
-//    } failure:^(NSError *error) {
-//        
-//    }];
+    //    __weak typeof(self) weakSelf = self;
+    //    [self.stickersService getStickerPacksWithType:nil completion:^(NSArray *stickerPacks) {
+    //        [weakSelf.stickersDelegateManager setStickerPacksArray:stickerPacks];
+    //        [weakSelf.stickersHeaderDelegateManager setStickerPacks:stickerPacks];
+    //        [weakSelf.stickersCollectionView reloadData];
+    //        [weakSelf.stickersHeaderCollectionView reloadData];
+    //        weakSelf.stickersCollectionView.contentOffset = CGPointZero;
+    //        weakSelf.stickersDelegateManager.currentDisplayedSection = 0;
+    //
+    //        [weakSelf setPackSelectedAtIndex:0];
+    //    } failure:^(NSError *error) {
+    //
+    //    }];
 }
 
 
@@ -390,7 +405,7 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
 - (void)setPackSelectedAtIndex:(NSInteger)index {
     if ([self.stickersHeaderCollectionView numberOfItemsInSection:0] - 1 >= index) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
-
+        
         STKStickerPackObject *stickerPack = [self.stickersHeaderDelegateManager itemAtIndexPath:indexPath];
         if (stickerPack.isNew.boolValue) {
             stickerPack.isNew = @NO;
@@ -399,7 +414,7 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
         }
         [self.stickersHeaderCollectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionCenteredHorizontally];
     }
-
+    
 }
 
 #pragma mark - STKPackDescriptionControllerDelegate
@@ -426,7 +441,7 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
     NSArray *packNames = [STKUtility trimmedPackNameAndStickerNameWithMessage:packMessage];
     NSString *packName = packNames.firstObject;
     return [self.stickersService isPackDownloaded:packName];
-
+    
 }
 
 #pragma mark - Colors
@@ -444,7 +459,7 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
 - (BOOL)isStickerViewShowed {
     
     BOOL isShowed = self.internalStickersView.superview != nil;
-
+    
     return isShowed;
 }
 
@@ -457,7 +472,7 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
 
 - (void)setTextInputView:(UITextView *)textInputView {
     _textInputView = textInputView;
-    [_textInputView layoutSubviews];
+//    [_textInputView layoutSubviews];
     [self initKeyBoardButton];
 }
 

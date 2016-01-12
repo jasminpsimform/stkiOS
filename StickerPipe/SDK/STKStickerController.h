@@ -41,6 +41,7 @@
 
 //@property (nonatomic, strong) UIColor *stickersShopTintColor;
 
+- (void)updateFrames;
 
 - (void)reloadStickersView;
 

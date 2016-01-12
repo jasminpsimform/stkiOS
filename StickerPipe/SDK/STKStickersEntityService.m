@@ -16,6 +16,7 @@
 static NSString *const kLastModifiedDateKey = @"kLastModifiedDateKey";
 static NSString *const kLastUpdateIntervalKey = @"kLastUpdateIntervalKey";
 static NSString *const recentName = @"Recent";
+static NSUInteger const firstNewStickers = 3;
 static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
 
 @interface STKStickersEntityService()
@@ -210,10 +211,15 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
 }
 
 - (BOOL)hasNewPacks {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", @"isNew", @YES];
     NSArray *arr = self.stickersArray;
-    NSUInteger newsCount = [[arr filteredArrayUsingPredicate:predicate] count];
-    return newsCount > 0 || ![self hasRecentStickers];;
+    NSUInteger newsCount = 0;
+    for (int i = 0; i < firstNewStickers + 1; i++) {
+        STKStickerPackObject *stickerPack = arr[i];
+        if (stickerPack.isNew.boolValue) {
+            newsCount ++;
+        }
+    }
+    return ![self hasRecentStickers] || newsCount > 0;
 }
 
 #pragma mark Check save delete
