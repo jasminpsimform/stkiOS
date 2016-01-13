@@ -13,6 +13,8 @@
 #import "STKUtility.h"
 #import "STKStickerSettingsCell.h"
 #import "STKPackDescriptionController.h"
+#import "STKStickersNotificationConstants.h"
+
 
 @interface STKStickersSettingsViewController () <UITableViewDelegate>
 
@@ -89,8 +91,9 @@
     [dataSoruce enumerateObjectsUsingBlock:^(STKStickerPackObject* obj, NSUInteger idx, BOOL *stop) {
         obj.order = @(idx);
     }];
-    
-    [self.service saveStickerPacks:[NSArray arrayWithArray:dataSoruce]];
+    NSArray *reorderedPacks = [NSArray arrayWithArray:dataSoruce];
+    self.service.stickersArray = reorderedPacks;
+    [self.service saveStickerPacks:reorderedPacks];
 }
 
 - (void) updateStickerPacks {
@@ -122,6 +125,7 @@
         self.editBarButton.title = @"Done";
     } else {
         self.editBarButton.title = @"Edit";
+        [[NSNotificationCenter defaultCenter]postNotificationName:STKStickersReorderStickersNotification object:self];
     }
 }
 

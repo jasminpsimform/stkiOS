@@ -58,6 +58,13 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
 
 #pragma mark - Inits
 
+- (void)loadStickerPacks
+{
+    [self.stickersService getStickerPacksWithType:nil completion:^(NSArray *stickerPacks) {
+        self.stickersService.stickersArray = stickerPacks;
+    } failure:nil];
+}
+
 - (instancetype)init
 {
     self = [super init];
@@ -75,6 +82,7 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
         if (CGRectEqualToRect(self.internalStickersView.frame, CGRectZero) && [UIDevice currentDevice].systemVersion.floatValue < 8.0) {
             self.internalStickersView.frame = CGRectMake(1, 1, 1, 1);
         }
+        [self loadStickerPacks];
         
         [self initStickerHeader];
         [self initStickersCollectionView];
@@ -96,8 +104,13 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
                                                    object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storageUpdated:) name:STKStickersCacheDidUpdateStickersNotification object:nil];
         
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateStickers) name:STKStickersReorderStickersNotification object:nil];
     }
     return self;
+}
+
+- (void)updateStickers {
+    [self loadStickerPacks];
 }
 
 - (void)dealloc {

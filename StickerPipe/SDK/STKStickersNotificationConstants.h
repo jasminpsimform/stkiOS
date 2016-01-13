@@ -10,6 +10,8 @@
 
 extern NSString *const STKStickersCacheDidUpdateStickersNotification;
 
+extern NSString *const STKStickersReorderStickersNotification;
+
 @interface STKStickersNotificationConstants : NSObject
 
 @end

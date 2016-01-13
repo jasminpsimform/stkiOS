@@ -11,6 +11,9 @@
 
 NSString *const STKStickersCacheDidUpdateStickersNotification = @"STKStickersCacheDidUpdateStickersNotification";
 
+NSString *const STKStickersReorderStickersNotification =
+    @"STKStickersReorderStickersNotification";
+
 @implementation STKStickersNotificationConstants
 
 @end
