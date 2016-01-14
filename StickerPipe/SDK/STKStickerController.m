@@ -62,6 +62,7 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
 {
     [self.stickersService getStickerPacksWithType:nil completion:^(NSArray *stickerPacks) {
         self.stickersService.stickersArray = stickerPacks;
+        self.keyboardButton.badgeView.hidden = ![self.stickersService hasNewPacks];
     } failure:nil];
 }
 
@@ -303,7 +304,6 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
 - (void)initKeyBoardButton {
     self.keyboardButton = [STKShowStickerButton buttonWithType:UIButtonTypeSystem];
     UIImage *buttonImage = [UIImage imageNamed:@"STKShowStickersIcon"];
-    // self.keyboardButton.frame = CGRectMake(100, 0, 38, 38);
     [self.keyboardButton setImage:buttonImage forState:UIControlStateNormal];
     [self.keyboardButton addTarget:self action:@selector(keyboardButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     self.keyboardButton.tintColor = [UIColor grayColor];
