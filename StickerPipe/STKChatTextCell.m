@@ -8,7 +8,7 @@
 
 #import "STKChatTextCell.h"
 
-@implementation STKChatTextTableViewCell
+@implementation STKChatTextCell
 
 - (void)awakeFromNib {
     // Initialization code

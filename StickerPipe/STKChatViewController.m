@@ -8,6 +8,7 @@
 
 #import "STKChatViewController.h"
 #import "STKChatStickerCell.h"
+#import "STKChatTextCell.h"
 #import "STKStickerPipe.h"
 #import "STKPackDescriptionController.h"
 #import "STKShowStickerButton.h"
@@ -19,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextView *inputTextView;
 @property (weak, nonatomic) IBOutlet UIView *textInputPanel;
+@property (weak, nonatomic) IBOutlet UIButton *sendButton;
 
 @property (assign, nonatomic) BOOL isKeyboardShowed;
 
@@ -28,6 +30,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomViewConstraint;
 
 @property (strong, nonatomic) STKStickerController *stickerController;
+
+- (IBAction)sendClicked:(id)sender;
 
 @end
 
@@ -66,6 +70,8 @@
     self.stickerController = [[STKStickerController alloc] init];
     self.stickerController.delegate = self;
     self.stickerController.textInputView = self.inputTextView;
+    
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
 
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateStickersCache:) name:STKStickersCacheDidUpdateStickersNotification object:nil];
@@ -134,15 +140,6 @@
     }];
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    id cell = [tableView cellForRowAtIndexPath:indexPath];
-    if ([cell isKindOfClass:[STKChatStickerCell class]]) {
-        
-        [self.stickerController showPackInfoControllerWithStickerMessage:self.dataSource[indexPath.row]];
-    }
-    
-}
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -151,17 +148,38 @@
     
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    STKChatStickerCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell"];
-    
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *message = self.dataSource[indexPath.row];
     
     if ([STKStickersManager isStickerMessage:message]) {
-        [cell fillWithStickerMessage:message downloaded:[self.stickerController isStickerPackDownloaded:message]];
-    }
+        STKChatStickerCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell"];
 
-    return cell;
+        [cell fillWithStickerMessage:message downloaded:[self.stickerController isStickerPackDownloaded:message]];
+        return cell;
+    } else {
+        STKChatTextCell *cell = [self.tableView
+                                          dequeueReusableCellWithIdentifier:@"textCell"];
+
+        [cell fillWithTextMessage:message];
+        return cell;
+    }
+    return nil;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    id cell = [tableView cellForRowAtIndexPath:indexPath];
+    if ([cell isKindOfClass:[STKChatStickerCell class]]) {
+        [self.stickerController showPackInfoControllerWithStickerMessage:self.dataSource[indexPath.row]];
+    }
+    
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+     NSString *message = self.dataSource[indexPath.row];
+    return ([STKStickersManager isStickerMessage:message]) ? 160 : 40;
 }
 
 #pragma mark - STKStickerControllerDelegate
@@ -169,17 +187,20 @@
 - (void)stickerController:(STKStickerController *)stickerController didSelectStickerWithMessage:(NSString *)message {
     STKChatStickerCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell"];
     [cell fillWithStickerMessage:message downloaded:[self.stickerController isStickerPackDownloaded:message]];
+    [self addMessage:message];
+}
+
+- (UIViewController *)stickerControllerViewControllerForPresentingModalView {
+    return self;
+}
+
+- (void)addMessage:(NSString *)message {
     [self.tableView beginUpdates];
     [self.dataSource addObject:message];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.dataSource.count - 1 inSection:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
     [self.tableView endUpdates];
     [self scrollTableViewToBottom];
-    
-}
-
-- (UIViewController *)stickerControllerViewControllerForPresentingModalView {
-    return self;
 }
 
 #pragma mark - STKPackDescriptionControllerDelegate
@@ -193,6 +214,7 @@
 
 
 - (void)textViewDidChange:(UITextView *)textView  {
+    self.sendButton.enabled = textView.text.length > 0;
     self.textViewHeightConstraint.constant = textView.contentSize.height;
 }
 
@@ -213,4 +235,13 @@
     return _stickerController;
 }
 
+#pragma mark - Actions
+
+- (void)sendClicked:(id)sender {
+    if (self.inputTextView.text.length > 0) {
+        [self addMessage:self.inputTextView.text];
+        self.inputTextView.text = @"";
+    }
+    
+}
 @end
