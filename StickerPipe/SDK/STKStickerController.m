@@ -442,6 +442,7 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
 #pragma mark - Presenting
 
 -(void)showPackInfoControllerWithStickerMessage:(NSString*)message {
+    [self hideStickersView];
     STKPackDescriptionController *vc = [[STKPackDescriptionController alloc] initWithNibName:@"STKPackDescriptionController" bundle:nil];
     vc.stickerMessage = message;
     vc.delegate = self;

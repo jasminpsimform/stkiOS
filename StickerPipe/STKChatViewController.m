@@ -12,8 +12,6 @@
 #import "STKStickerPipe.h"
 #import "STKPackDescriptionController.h"
 #import "STKShowStickerButton.h"
-#import <CommonCrypto/CommonDigest.h>
-
 
 @interface STKChatViewController() <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, STKStickerControllerDelegate, STKPackDescriptionControllerDelegate>
 
