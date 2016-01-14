@@ -25,5 +25,7 @@
 
 + (BOOL) isStickerMessage:(NSString*) message;
 
++ (void)setStartTimeInterval;
+
 
 @end

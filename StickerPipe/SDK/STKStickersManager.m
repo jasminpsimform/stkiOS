@@ -12,6 +12,7 @@
 #import "STKAnalyticService.h"
 #import "STKApiKeyManager.h"
 #import "STKCoreDataService.h"
+#import "STKStickersConstants.h"
 
 NSString *const kUserKeyDefaultsKey = @"kUserKeyDefaultsKey";
 
@@ -105,6 +106,14 @@ NSString *const kUserKeyDefaultsKey = @"kUserKeyDefaultsKey";
 
 + (NSString *)userKey {
     return [[NSUserDefaults standardUserDefaults] stringForKey:kUserKeyDefaultsKey];
+}
+
+#pragma mark - Srart time interval
+
++ (void)setStartTimeInterval {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setDouble:0 forKey:kLastUpdateIntervalKey];
+    [defaults synchronize];
 }
 
 @end

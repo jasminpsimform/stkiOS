@@ -11,6 +11,9 @@
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 
+NSString *const apiKey = @"72921666b5ff8651f374747bfefaf7b2";
+
+NSString *const testIOSKey = @"f06190d9d63cd2f4e7b124612f63c56c";
 
 @interface AppDelegate ()
 
@@ -23,7 +26,8 @@
     // Override point for customization after application launch.
     [Fabric with:@[[Crashlytics class]]];
     
-    [STKStickersManager initWitApiKey:@"72921666b5ff8651f374747bfefaf7b2"];
+    [STKStickersManager initWitApiKey: apiKey];
+    [STKStickersManager setStartTimeInterval];
     
     return YES;
 }
