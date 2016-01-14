@@ -16,7 +16,7 @@
 #import "STKSticker.h"
 #import "STKAnalyticService.h"
 #import "STKUtility.h"
-#import "STKStickersNotificationConstants.h"
+#import "STKStickersConstants.h"
 
 static NSString *const recentName = @"Recent";
 
@@ -230,11 +230,10 @@ static NSString *const recentName = @"Recent";
         dispatch_async(dispatch_get_main_queue(), ^{
             response(result);
         });
+        
     }
     
 }
-
-
 
 - (void)getStickerPacks:(void(^)(NSArray *stickerPacks))response {
     

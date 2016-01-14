@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 908 Inc. All rights reserved.
 //
 
-#import "STKStickersNotificationConstants.h"
+#import "STKStickersConstants.h"
 
 
 NSString *const STKStickersCacheDidUpdateStickersNotification = @"STKStickersCacheDidUpdateStickersNotification";
@@ -14,6 +14,10 @@ NSString *const STKStickersCacheDidUpdateStickersNotification = @"STKStickersCac
 NSString *const STKStickersReorderStickersNotification =
     @"STKStickersReorderStickersNotification";
 
-@implementation STKStickersNotificationConstants
+NSString *const kLastUpdateIntervalKey =
+    @"kLastUpdateIntervalKey";
+
+
+@implementation STKStickersConstants
 
 @end

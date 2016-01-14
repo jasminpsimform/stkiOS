@@ -12,6 +12,9 @@ extern NSString *const STKStickersCacheDidUpdateStickersNotification;
 
 extern NSString *const STKStickersReorderStickersNotification;
 
-@interface STKStickersNotificationConstants : NSObject
+extern NSString *const kLastUpdateIntervalKey;
+
+
+@interface STKStickersConstants : NSObject
 
 @end

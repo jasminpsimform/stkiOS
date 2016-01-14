@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "STKStickersNotificationConstants.h"
+#import "STKStickersConstants.h"
 
 @class STKStickerController;
 

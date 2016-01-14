@@ -13,7 +13,7 @@
 #import "STKUtility.h"
 #import "STKStickerSettingsCell.h"
 #import "STKPackDescriptionController.h"
-#import "STKStickersNotificationConstants.h"
+#import "STKStickersConstants.h"
 
 
 @interface STKStickersSettingsViewController () <UITableViewDelegate>
