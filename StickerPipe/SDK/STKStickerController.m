@@ -326,7 +326,8 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
 #pragma mark - Actions
 
 - (void)shopButtonAction:(UIButton*)shopButton {
-    
+    [self hideStickersView];
+
     STKStickersSettingsViewController *vc = [[STKStickersSettingsViewController alloc] initWithNibName:@"STKStickersSettingsViewController" bundle:nil];
     
     STKOrientationNavigationController *navigationController = [[STKOrientationNavigationController alloc] initWithRootViewController:vc];
@@ -485,7 +486,6 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
 
 - (void)setTextInputView:(UITextView *)textInputView {
     _textInputView = textInputView;
-//    [_textInputView layoutSubviews];
     [self initKeyBoardButton];
 }
 
