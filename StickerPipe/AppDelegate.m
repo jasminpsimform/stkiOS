@@ -10,6 +10,7 @@
 #import "STKStickersManager.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
+#import "NSString+MD5.h"
 
 NSString *const apiKey = @"72921666b5ff8651f374747bfefaf7b2";
 
@@ -22,12 +23,20 @@ NSString *const testIOSKey = @"f06190d9d63cd2f4e7b124612f63c56c";
 @implementation AppDelegate
 
 
+- (NSString *)userId {
+    UIDevice *device = [UIDevice currentDevice];
+    NSString  *currentDeviceId = [[device identifierForVendor] UUIDString];
+    NSString * appVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    return [[currentDeviceId stringByAppendingString:appVersionString] MD5Digest];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
     // Override point for customization after application launch.
     [Fabric with:@[[Crashlytics class]]];
-    
-    [STKStickersManager initWitApiKey: apiKey];
+    [STKStickersManager initWitApiKey: testIOSKey];
     [STKStickersManager setStartTimeInterval];
+    [STKStickersManager setUserKey:[self userId]];
     
     return YES;
 }

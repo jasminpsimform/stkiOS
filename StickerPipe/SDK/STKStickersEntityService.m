@@ -144,8 +144,9 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
 - (void)updateStickerPacksWithType:(NSString*)type completion:(void(^)(NSArray *stickerPacks))completion {
     
     __weak typeof(self) weakSelf = self;
-    
-    [self.apiService getStickersPackWithType:type success:^(id response, NSTimeInterval lastModifiedDate) {
+
+    [self.apiService getStickersPacksForUserWithSuccess:^(id response,
+                                                           NSTimeInterval lastModifiedDate) {
         
         NSArray* serializedObjects = [weakSelf.serializer serializeStickerPacks:response[@"data"]];
         if (lastModifiedDate != [weakSelf lastModifiedDate]) {
