@@ -14,6 +14,7 @@ extern NSString *const STKStickersReorderStickersNotification;
 
 extern NSString *const kLastUpdateIntervalKey;
 
+extern NSString *const kUserKeyDefaultsKey;
 
 @interface STKStickersConstants : NSObject
 

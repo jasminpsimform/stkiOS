@@ -17,6 +17,8 @@ NSString *const STKStickersReorderStickersNotification =
 NSString *const kLastUpdateIntervalKey =
     @"kLastUpdateIntervalKey";
 
+NSString *const kUserKeyDefaultsKey =
+@"kUserKeyDefaultsKey";
 
 @implementation STKStickersConstants
 

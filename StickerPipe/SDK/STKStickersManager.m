@@ -14,7 +14,6 @@
 #import "STKCoreDataService.h"
 #import "STKStickersConstants.h"
 
-NSString *const kUserKeyDefaultsKey = @"kUserKeyDefaultsKey";
 
 @interface STKStickersManager()
 
