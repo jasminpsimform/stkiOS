@@ -318,7 +318,7 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
 }
 
 - (void)updateFrames {
-    CGRect frame = CGRectMake(0, 0, self.textInputView.contentSize.width, 33);
+    CGRect frame = CGRectMake(0, 0, self.textInputView.frame.size.width, 33);
     self.keyboardButtonSuperView.frame = frame;
     [self.keyboardButton layoutIfNeeded];
 }
