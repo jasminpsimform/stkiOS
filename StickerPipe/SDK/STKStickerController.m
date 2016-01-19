@@ -358,16 +358,6 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
     [self.stickersHeaderDelegateManager setStickerPacks:stickerPacks];
     [self.stickersHeaderCollectionView reloadItemsAtIndexPaths:@[indexPath]];
     [self.stickersHeaderCollectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
-    
-    //    __weak typeof(self) wself = self;
-    //
-    //    [self.stickersService getStickerPacksWithType:nil completion:^(NSArray *stickerPacks) {
-    //        [wself.stickersHeaderDelegateManager setStickerPacks:stickerPacks];
-    //        [wself.stickersHeaderCollectionView reloadItemsAtIndexPaths:@[indexPath]];
-    //               [wself.stickersHeaderCollectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
-    //    } failure:^(NSError *error) {
-    //
-    //  }];
 }
 
 - (void)reloadStickersHeader {
@@ -376,15 +366,6 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
     [self.stickersHeaderCollectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:1 inSection:0]]];
     NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForItem:self.stickersDelegateManager.currentDisplayedSection inSection:0];
     [self.stickersHeaderCollectionView selectItemAtIndexPath:selectedIndexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
-    
-    //    __weak  typeof(self) wself = self;
-    //
-    //    [self.stickersService getStickerPacksWithType:nil completion:^(NSArray *stickerPacks) {
-    //        [wself.stickersHeaderDelegateManager setStickerPacks:stickerPacks];
-    //        [wself.stickersHeaderCollectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:1 inSection:0]]];
-    //        NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForItem:wself.stickersDelegateManager.currentDisplayedSection inSection:0];
-    //        [wself.stickersHeaderCollectionView selectItemAtIndexPath:selectedIndexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
-    //    } failure:nil];
 }
 
 - (void)reloadStickers {
@@ -397,24 +378,9 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
     self.stickersDelegateManager.currentDisplayedSection = 0;
     
     [self setPackSelectedAtIndex:0];
-    //    __weak typeof(self) weakSelf = self;
-    //    [self.stickersService getStickerPacksWithType:nil completion:^(NSArray *stickerPacks) {
-    //        [weakSelf.stickersDelegateManager setStickerPacksArray:stickerPacks];
-    //        [weakSelf.stickersHeaderDelegateManager setStickerPacks:stickerPacks];
-    //        [weakSelf.stickersCollectionView reloadData];
-    //        [weakSelf.stickersHeaderCollectionView reloadData];
-    //        weakSelf.stickersCollectionView.contentOffset = CGPointZero;
-    //        weakSelf.stickersDelegateManager.currentDisplayedSection = 0;
-    //
-    //        [weakSelf setPackSelectedAtIndex:0];
-    //    } failure:^(NSError *error) {
-    //
-    //    }];
 }
 
-
 #pragma mark - Selection
-
 
 - (void)setPackSelectedAtIndex:(NSInteger)index {
     if ([self.stickersHeaderCollectionView numberOfItemsInSection:0] - 1 >= index) {
