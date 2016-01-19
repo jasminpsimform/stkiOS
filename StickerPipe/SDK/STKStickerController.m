@@ -179,6 +179,7 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
     self.stickersHeaderFlowLayout = [[UICollectionViewFlowLayout alloc] init];
     self.stickersHeaderFlowLayout.itemSize = CGSizeMake(kStickerHeaderItemWidth, kStickerHeaderItemHeight);
     self.stickersHeaderFlowLayout.minimumInteritemSpacing = 0;
+    self.stickersHeaderFlowLayout.minimumLineSpacing = 0;
     self.stickersHeaderFlowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
     self.stickersHeaderDelegateManager = [STKStickerHeaderDelegateManager new];
