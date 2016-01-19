@@ -76,16 +76,6 @@
     
     BOOL isStickerMessage = [predicate evaluateWithObject:message];
     
-    STKAnalyticService *service = [STKAnalyticService sharedService];
-    
-    if (isStickerMessage) {
-        
-        [service sendEventWithCategory:STKAnalyticMessageCategory action:STKAnalyticActionCheck label:@"Stickers count" value:@(1)];
-        
-    } else {
-        [service sendEventWithCategory:STKAnalyticMessageCategory action:STKAnalyticActionCheck label:@"Events count" value:@(1)];
-    }
-    
     return isStickerMessage;
 }
 

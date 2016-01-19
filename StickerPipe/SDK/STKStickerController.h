@@ -55,6 +55,6 @@
 
 - (void)setColorForStickersHeaderPlaceholderColor:(UIColor*) color;
 
-
+- (void)textMessageSent:(NSString *)message;
 
 @end

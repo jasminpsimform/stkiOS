@@ -236,9 +236,12 @@
 #pragma mark - Actions
 
 - (void)sendClicked:(id)sender {
-    if (self.inputTextView.text.length > 0) {
-        [self addMessage:self.inputTextView.text];
+    NSString *message = self.inputTextView.text;
+    if (message.length > 0) {
+        [self addMessage:message];
+        [self.stickerController textMessageSent:message];
         self.inputTextView.text = @"";
+        self.textViewHeightConstraint.constant = 33;
     }
     
 }

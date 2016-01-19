@@ -21,6 +21,7 @@
 #import "STKStickerPackObject.h"
 #import "STKOrientationNavigationController.h"
 #import "STKShowStickerButton.h"
+#import "STKAnalyticService.h"
 
 //SIZES
 static const CGFloat kStickerHeaderItemHeight = 44.0;
@@ -135,6 +136,7 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
     
     [self.stickersDelegateManager setDidSelectSticker:^(STKStickerObject *sticker) {
         [weakSelf.stickersService incrementStickerUsedCountWithID:sticker.stickerID];
+        [[STKAnalyticService sharedService] sendEventWithCategory:STKAnalyticMessageCategory action:STKAnalyticActionSend label:STKMessageStickerLabel value:nil];
         if ([weakSelf.delegate respondsToSelector:@selector(stickerController:didSelectStickerWithMessage:)]) {
             [weakSelf.delegate stickerController:weakSelf didSelectStickerWithMessage:sticker.stickerMessage];
         }
@@ -265,7 +267,7 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
 
 - (void)addKeyboardButtonConstraintsToView:(UIView *)view {
     self.keyboardButton.translatesAutoresizingMaskIntoConstraints = NO;
-
+    
     NSLayoutConstraint *width = [NSLayoutConstraint constraintWithItem:self.keyboardButton
                                                              attribute:NSLayoutAttributeWidth
                                                              relatedBy:NSLayoutRelationEqual
@@ -280,14 +282,14 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
                                                               attribute:NSLayoutAttributeNotAnAttribute
                                                              multiplier:1
                                                                constant:33];
-
+    
     NSLayoutConstraint *right = [NSLayoutConstraint constraintWithItem:self.keyboardButton
-                                                            attribute:NSLayoutAttributeRight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:view
-                                                            attribute:NSLayoutAttributeRight
-                                                           multiplier:1
-                                                             constant:0];
+                                                             attribute:NSLayoutAttributeRight
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:view
+                                                             attribute:NSLayoutAttributeRight
+                                                            multiplier:1
+                                                              constant:0];
     
     NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:self.keyboardButton
                                                            attribute:NSLayoutAttributeTop
@@ -296,9 +298,9 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
                                                            attribute:NSLayoutAttributeTop
                                                           multiplier:1
                                                             constant:0];
-
+    
     [view addConstraints:@[width, height, right,top
-                                         ]];
+                           ]];
 }
 
 
@@ -328,7 +330,7 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
 
 - (void)shopButtonAction:(UIButton*)shopButton {
     [self hideStickersView];
-
+    
     STKStickersSettingsViewController *vc = [[STKStickersSettingsViewController alloc] initWithNibName:@"STKStickersSettingsViewController" bundle:nil];
     
     STKOrientationNavigationController *navigationController = [[STKOrientationNavigationController alloc] initWithRootViewController:vc];
@@ -502,5 +504,11 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
 
 - (void)storageUpdated:(NSNotification*)notification {
     self.keyboardButton.badgeView.hidden = ![self.stickersService hasNewPacks];
+}
+
+#pragma mark -------
+- (void)textMessageSent:(NSString *)message {
+    [[STKAnalyticService sharedService] sendEventWithCategory:STKAnalyticMessageCategory action:STKAnalyticActionSend label:STKMessageTextLabel value:nil];
+    
 }
 @end
