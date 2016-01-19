@@ -19,11 +19,15 @@ extern NSString *const STKAnalyticDevCategory;
 extern NSString *const STKAnalyticActionCheck;
 extern NSString *const STKAnalyticActionInstall;
 extern NSString *const STKAnalyticActionError;
+extern NSString *const STKAnalyticActionSend;
+
 
 
 //Labels
 extern NSString *const STKStickersCountLabel;
 extern NSString *const STKEventsCountLabel;
+extern NSString *const STKMessageTextLabel;
+extern NSString *const STKMessageStickerLabel;
 
 
 

@@ -28,11 +28,13 @@ NSString *const STKAnalyticDevCategory = @"dev";
 NSString *const STKAnalyticActionCheck = @"check";
 NSString *const STKAnalyticActionInstall = @"install";
 NSString *const STKAnalyticActionError = @"error";
-
+NSString *const STKAnalyticActionSend = @"send";
 
 //labels
 NSString *const STKStickersCountLabel = @"Stickers count";
 NSString *const STKEventsCountLabel = @"Events count";
+NSString *const STKMessageTextLabel = @"text";
+NSString *const STKMessageStickerLabel = @"sticker";
 
 //Custom Dimension indexes
 static const NSInteger kAPIKeyIndex = 1;
@@ -138,7 +140,7 @@ static const NSInteger kMemoryCacheObjectsCount = 20;
                         value:(NSNumber*)value
 {
     
-#ifndef DEBUG
+//#ifndef DEBUG
     __weak typeof(self) weakSelf = self;
     [self.backgroundContext performBlock:^{
         
@@ -195,7 +197,7 @@ static const NSInteger kMemoryCacheObjectsCount = 20;
         }
     }];
     
-#endif
+//#endif
     
 }
 
