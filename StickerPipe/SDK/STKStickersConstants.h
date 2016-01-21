@@ -16,6 +16,8 @@ extern NSString *const kLastUpdateIntervalKey;
 
 extern NSString *const kUserKeyDefaultsKey;
 
+extern NSString *const kLocalizationDefaultsKey;
+
 @interface STKStickersConstants : NSObject
 
 @end

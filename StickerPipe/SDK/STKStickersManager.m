@@ -97,6 +97,16 @@
     return [[NSUserDefaults standardUserDefaults] stringForKey:kUserKeyDefaultsKey];
 }
 
+#pragma mark - Localization 
+
++ (void)setLocalization:(NSString *)localization {
+    [[NSUserDefaults standardUserDefaults] setObject:localization forKey:kLocalizationDefaultsKey];
+}
+
++ (NSString *)localization {
+    return [[NSUserDefaults standardUserDefaults] stringForKey:kLocalizationDefaultsKey];
+}
+
 #pragma mark - Srart time interval
 
 + (void)setStartTimeInterval {

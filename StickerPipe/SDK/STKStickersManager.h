@@ -15,8 +15,10 @@
 + (void) initWitApiKey:(NSString*) apiKey;
 
 + (void)setUserKey:(NSString *)userKey;
-
 + (NSString *)userKey;
+
++ (void)setLocalization:(NSString *)localization;
++ (NSString *)localization;
 
 - (void) getStickerForMessage:(NSString*) message
                      progress:(void(^)(double progress)) progress

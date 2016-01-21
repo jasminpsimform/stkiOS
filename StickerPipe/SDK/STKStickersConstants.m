@@ -20,6 +20,9 @@ NSString *const kLastUpdateIntervalKey =
 NSString *const kUserKeyDefaultsKey =
 @"kUserKeyDefaultsKey";
 
+NSString *const kLocalizationDefaultsKey =
+@"kLocalizationDefaultsKey";
+
 @implementation STKStickersConstants
 
 @end
