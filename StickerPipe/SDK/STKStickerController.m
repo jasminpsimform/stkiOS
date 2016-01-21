@@ -148,7 +148,7 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
     self.stickersCollectionView.delaysContentTouches = NO;
     self.stickersCollectionView.showsHorizontalScrollIndicator = NO;
     self.stickersCollectionView.showsVerticalScrollIndicator = NO;
-    self.stickersCollectionView.backgroundColor = [UIColor clearColor];
+    self.stickersCollectionView.backgroundColor = [UIColor colorWithRed:250/255.0 green:250/255.0 blue:250/255.0 alpha:1.0];
     [self.stickersCollectionView registerClass:[STKStickerViewCell class] forCellWithReuseIdentifier:@"STKStickerViewCell"];
     [self.stickersCollectionView registerClass:[STKEmptyRecentCell class] forCellWithReuseIdentifier:@"STKEmptyRecentCell"];
     [self.stickersCollectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"UICollectionReusableView"];

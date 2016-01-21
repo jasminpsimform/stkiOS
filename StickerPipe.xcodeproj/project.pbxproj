@@ -281,12 +281,9 @@ StickerPipeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper
 		6E5F5A431B5E37360036214B /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				6E776D671B4BB6B00001FBB6 /* STKStickerViewCell.h */,
-				6E776D681B4BB6B00001FBB6 /* STKStickerViewCell.m */,
-				6E85192C1B4D7B0700808338 /* STKStickerHeaderCell.h */,
-				6E85192D1B4D7B0700808338 /* STKStickerHeaderCell.m */,
-				6EDE15BE1B6FA6600024B6DC /* STKEmptyRecentCell.h */,
-				6EDE15BF1B6FA6600024B6DC /* STKEmptyRecentCell.m */,
+				9A54ED7E1C511AA50038CEDB /* EmptyCtickerCell */,
+				9A54ED7D1C511A8E0038CEDB /* StickerHeaderCell */,
+				9A54ED7C1C511A7D0038CEDB /* StickerCell */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -593,6 +590,33 @@ StickerPipeTests.xctest */,
 			name = TextCell;
 			sourceTree = "<group>";
 		};
+		9A54ED7C1C511A7D0038CEDB /* StickerCell */ = {
+			isa = PBXGroup;
+			children = (
+				6E776D671B4BB6B00001FBB6 /* STKStickerViewCell.h */,
+				6E776D681B4BB6B00001FBB6 /* STKStickerViewCell.m */,
+			);
+			name = StickerCell;
+			sourceTree = "<group>";
+		};
+		9A54ED7D1C511A8E0038CEDB /* StickerHeaderCell */ = {
+			isa = PBXGroup;
+			children = (
+				6E85192C1B4D7B0700808338 /* STKStickerHeaderCell.h */,
+				6E85192D1B4D7B0700808338 /* STKStickerHeaderCell.m */,
+			);
+			name = StickerHeaderCell;
+			sourceTree = "<group>";
+		};
+		9A54ED7E1C511AA50038CEDB /* EmptyCtickerCell */ = {
+			isa = PBXGroup;
+			children = (
+				6EDE15BE1B6FA6600024B6DC /* STKEmptyRecentCell.h */,
+				6EDE15BF1B6FA6600024B6DC /* STKEmptyRecentCell.m */,
+			);
+			name = EmptyCtickerCell;
+			sourceTree = "<group>";
+		};
 		9A58E6491C4E3BF200DD0A29 /* StickersController */ = {
 			isa = PBXGroup;
 			children = (
@@ -614,8 +638,8 @@ StickerPipeTests.xctest */,
 		9A58E64B1C4E3C2E00DD0A29 /* StickerHeaderDelegateManager */ = {
 			isa = PBXGroup;
 			children = (
-				6E5F5A4E1B5E9A970036214B /* STKStickerHeaderDelegateManager.m */,
 				6E5F5A4D1B5E9A970036214B /* STKStickerHeaderDelegateManager.h */,
+				6E5F5A4E1B5E9A970036214B /* STKStickerHeaderDelegateManager.m */,
 			);
 			name = StickerHeaderDelegateManager;
 			sourceTree = "<group>";

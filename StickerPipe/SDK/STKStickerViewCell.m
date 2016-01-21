@@ -29,6 +29,7 @@
         self.stickerImageView.center = CGPointMake(self.contentView.bounds.size.width/2,self.contentView.bounds.size.height/2);
         self.stickerImageView.contentMode = UIViewContentModeRedraw;
         [self addSubview:self.stickerImageView];
+        self.backgroundColor = [UIColor colorWithRed:250/255.0 green:250/255.0 blue:250/255.0 alpha:1.0];
     }
     return self;
 }

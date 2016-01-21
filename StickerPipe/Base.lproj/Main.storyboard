@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="KXI-Gp-cB2">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <scenes>
@@ -54,7 +55,7 @@
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="160" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Ia5-oU-XSp">
                                 <rect key="frame" x="0.0" y="64" width="320" height="455"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="160" id="cYY-dQ-3W2" customClass="STKChatStickerCell">
                                         <rect key="frame" x="0.0" y="22" width="320" height="160"/>
@@ -85,6 +86,7 @@
                                                 <constraint firstItem="77l-po-v5c" firstAttribute="leading" secondItem="jre-cg-nrc" secondAttribute="trailing" constant="24" id="zHk-Yl-QN2"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="downloadButton" destination="jre-cg-nrc" id="BkZ-ct-g0k"/>
                                             <outlet property="stickerImageView" destination="77l-po-v5c" id="hpL-kU-QVZ"/>
@@ -111,6 +113,7 @@
                                                 <constraint firstItem="Fld-rv-rsb" firstAttribute="leading" secondItem="aDH-fd-zwB" secondAttribute="leading" constant="14" id="v52-CJ-WRt"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="textMessage" destination="Fld-rv-rsb" id="KTW-Ju-xhe"/>
                                         </connections>

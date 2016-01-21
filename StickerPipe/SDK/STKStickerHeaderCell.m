@@ -46,7 +46,7 @@
 
 - (void)setSelected:(BOOL)selected {
     if (selected) {
-        self.backgroundColor = self.selectionColor ? self.selectionColor : [UIColor whiteColor];
+        self.backgroundColor = self.selectionColor ? self.selectionColor : [UIColor colorWithRed:250/255.0 green:250/255.0 blue:250/255.0 alpha:1.0];
         self.imageView.image = self.originalImage;
     }
     else {
@@ -66,7 +66,6 @@
 }
 
 - (void)configWithStickerPack:(STKStickerPackObject *)stickerPack placeholder:(UIImage *)placeholder placeholderTintColor:(UIColor *)placeholderTintColor{
-    
     //TODO:Refactoring
     if ([stickerPack.packName isEqualToString:@"Recent"]) {
         self.originalImage = [UIImage imageNamed:@"STKRecentIcon"];
