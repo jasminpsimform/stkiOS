@@ -22,14 +22,19 @@
 NSString *const STKAnalyticMessageCategory = @"message";
 NSString *const STKAnalyticStickerCategory = @"sticker";
 NSString *const STKAnalyticPackCategory = @"pack";
+NSString *const STKAnalyticDevCategory = @"dev";
 
 //Actions
 NSString *const STKAnalyticActionCheck = @"check";
 NSString *const STKAnalyticActionInstall = @"install";
+NSString *const STKAnalyticActionError = @"error";
+NSString *const STKAnalyticActionSend = @"send";
 
 //labels
 NSString *const STKStickersCountLabel = @"Stickers count";
 NSString *const STKEventsCountLabel = @"Events count";
+NSString *const STKMessageTextLabel = @"text";
+NSString *const STKMessageStickerLabel = @"sticker";
 
 //Custom Dimension indexes
 static const NSInteger kAPIKeyIndex = 1;
@@ -83,7 +88,7 @@ static const NSInteger kMemoryCacheObjectsCount = 20;
         
 #if DEBUG
         [GAI sharedInstance].dryRun = YES;
-        [[GAI sharedInstance].logger setLogLevel:kGAILogLevelVerbose];
+//        [[GAI sharedInstance].logger setLogLevel:kGAILogLevelVerbose];
 
 #endif
         self.tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-1113296-76"];
@@ -114,6 +119,19 @@ static const NSInteger kMemoryCacheObjectsCount = 20;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillResignActiveNotification object:nil];
 }
 
+- (void)sendDevEventWithCategory:(NSString*)category
+                          action:(NSString*)action
+                           label:(NSString*)label
+                           value:(NSNumber*)value {
+    
+#ifndef DEBUG
+
+    [self sendGoogleAnalyticsEventWithCategory:category action:action label:label value:value];
+    
+#endif
+    
+}
+
 #pragma mark - Events
 
 - (void)sendEventWithCategory:(NSString*)category
@@ -122,11 +140,12 @@ static const NSInteger kMemoryCacheObjectsCount = 20;
                         value:(NSNumber*)value
 {
     
-#ifndef DEBUG
+//#ifndef DEBUG
     __weak typeof(self) weakSelf = self;
     [self.backgroundContext performBlock:^{
         
         STKStatistic *statistic = nil;
+        
         
         if ([category isEqualToString:STKAnalyticMessageCategory]) {
             NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[STKStatistic entityName]];
@@ -153,7 +172,9 @@ static const NSInteger kMemoryCacheObjectsCount = 20;
             [weakSelf sendGoogleAnalyticsEventWithCategory:category action:action label:label value:value];
         }
         
-
+        
+        
+        
         //TODO: REFACTORING
 
         statistic.category = category;
@@ -176,7 +197,7 @@ static const NSInteger kMemoryCacheObjectsCount = 20;
         }
     }];
     
-#endif
+//#endif
     
 }
 

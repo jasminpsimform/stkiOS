@@ -18,8 +18,20 @@
 
 @property (nonatomic, strong) NSNumber *packID;
 
-@property (nonatomic, assign) NSNumber *price;
+@property (nonatomic, strong) NSNumber *price;
 
 @property (nonatomic, strong) NSArray *stickers;
+
+@property (nonatomic, strong) NSNumber *disabled;
+
+@property (nonatomic, strong) NSNumber *order;
+
+@property (nonatomic, strong) NSString *packDescription;
+
+@property (nonatomic, strong) NSNumber *isNew;
+
+@property (nonatomic, strong) NSString *bannerUrl;
+
+@property (nonatomic, strong) NSString *productID;
 
 @end

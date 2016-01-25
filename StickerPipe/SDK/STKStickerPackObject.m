@@ -10,6 +10,7 @@
 #import "STKSticker.h"
 #import "STKStickerPack.h"
 #import "STKStickerObject.h"
+#import "STKUtility.h"
 
 @implementation STKStickerPackObject
 
@@ -19,13 +20,18 @@
     if (self) {
         self.artist = serverResponse[@"artist"];
         NSString *packName = serverResponse[@"pack_name"];
+        NSString *density = [STKUtility scaleString];
+        NSDictionary *banners = serverResponse[@"banners"];
+        self.bannerUrl = banners[density];
+        
         self.packName = packName;
         self.packTitle = serverResponse[@"title"];
         self.packID = serverResponse[@"pack_id"];
         self.price = serverResponse[@"price"];
+        self.packDescription = serverResponse[@"description"];
+        self.productID = serverResponse[@"product_id"];
         NSMutableArray *stickersArray = [NSMutableArray array];
         NSArray *stickers = serverResponse[@"stickers"];
-//        @autoreleasepool {
             for (NSDictionary *sticker in stickers) {
                 STKStickerObject *stickerObject = [[STKStickerObject alloc] init];
                 stickerObject.stickerID = sticker[@"id"];
@@ -34,7 +40,6 @@
                 stickerObject.stickerMessage = [NSString stringWithFormat:@"[[%@_%@]]", packName, stickerName];
                 [stickersArray addObject:stickerObject];
             }
-//        }
 
         self.stickers = [NSArray arrayWithArray:stickersArray];
     }
@@ -50,12 +55,21 @@
         self.packTitle = stickerPack.packTitle;
         self.packID = stickerPack.packID;
         self.price = stickerPack.price;
+        self.packDescription = stickerPack.packDescription;
+        self.disabled = stickerPack.disabled;
+        self.order = stickerPack.order;
+        self.isNew = stickerPack.isNew;
+        self.bannerUrl = stickerPack.bannerUrl;
+        self.productID = stickerPack.productID;
         NSMutableArray *stickersArray = [NSMutableArray array];
-        for (STKSticker *sticker in stickerPack.stickers) {
-            
-            STKStickerObject *stickerObject = [[STKStickerObject alloc] initWithSticker:sticker];
-            [stickersArray addObject:stickerObject];
+        @autoreleasepool {
+            for (STKSticker *sticker in stickerPack.stickers) {
+
+                STKStickerObject *stickerObject = [[STKStickerObject alloc] initWithSticker:sticker];
+                [stickersArray addObject:stickerObject];
+            }
         }
+
         self.stickers = [NSArray arrayWithArray:stickersArray];
     }
     return self;
@@ -65,7 +79,7 @@
 #pragma mark - Description
 
 - (NSString*) stringForDescription {
-    return [NSString stringWithFormat:@"%@/n Artist: %@/n packName: %@/n Pack title: %@/n packID: %@/n price: %@", [super description], self.artist, self.packName, self.packTitle, self.packID, self.price];
+    return [NSString stringWithFormat:@"%@\n Artist: %@\n packName: %@\n Pack title: %@\n packID: %@\n price: %@\n Disabled: %@\n Order: %@", [super description], self.artist, self.packName, self.packTitle, self.packID, self.price,self.disabled, self.order];
 }
 
 - (NSString *)description {

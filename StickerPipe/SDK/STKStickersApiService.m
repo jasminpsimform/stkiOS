@@ -1,3 +1,4 @@
+
 //
 //  STKStickersApiClient.m
 //  StickerFactory
@@ -11,6 +12,8 @@
 #import "STKUUIDManager.h"
 #import "STKApiKeyManager.h"
 #import "STKUtility.h"
+
+static NSString *const packsURL = @"packs";
 
 @implementation STKStickersApiService
 
@@ -26,6 +29,37 @@
 }
 
 
+- (void)getStickersPacksForUserWithSuccess:(void (^)(id response, NSTimeInterval lastModifiedDate))success
+                        failure:(void (^)(NSError *error))failure {
+    
+    [self.sessionManager GET:packsURL parameters:nil
+                     success:^(NSURLSessionDataTask *task, id responseObject) {
+                         
+                         NSHTTPURLResponse *response = ((NSHTTPURLResponse *)[task response]);
+                         NSTimeInterval timeInterval = 0;
+                         if ([response respondsToSelector:@selector(allHeaderFields)]) {
+                             NSDictionary *headers = [response allHeaderFields];
+                             timeInterval = [headers[@"Last-Modified"] doubleValue];
+                         }
+                         
+                         if ([responseObject[@"data"] count] == 0) {
+                             STKLog(@"get empty stickers pack JSON");
+                         }
+                         
+                         if (success) {
+                             success(responseObject, timeInterval);
+                         }
+                     }
+                     failure:^(NSURLSessionDataTask *task, NSError *error) {
+                         if (failure) {
+                             dispatch_async(dispatch_get_main_queue(), ^{
+                                 failure(error);
+                             });
+                         }
+                     }];
+
+}
+
 - (void)getStickersPackWithType:(NSString*)type
                         success:(void (^)(id response, NSTimeInterval lastModifiedDate))success
                         failure:(void (^)(NSError *error))failure {
@@ -35,7 +69,7 @@
         parameters = @{@"type" : type};
     }
 
-    [self.sessionManager GET:@"client-packs" parameters:parameters
+    [self.sessionManager GET:packsURL parameters:parameters
                      success:^(NSURLSessionDataTask *task, id responseObject) {
                          
                          NSHTTPURLResponse *response = ((NSHTTPURLResponse *)[task response]);
@@ -54,15 +88,30 @@
                          }
                      }
                      failure:^(NSURLSessionDataTask *task, NSError *error) {
-//                                 NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
-//                                 NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
                          if (failure) {
                              dispatch_async(dispatch_get_main_queue(), ^{
                                  failure(error);
                              });
                          }
                      }];
+}
+
+
+- (void)getStickerPackWithName:(NSString *)packName
+                       success:(void (^)(id))success
+                       failure:(void (^)(NSError *))failure
+{
+    NSString *route = [NSString stringWithFormat:@"pack/%@", packName];
     
+    [self.sessionManager GET:route parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
 }
 
 @end

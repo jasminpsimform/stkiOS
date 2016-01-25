@@ -31,4 +31,20 @@
     
 }
 
++ (UIImage *)convertImageToGrayScale:(UIImage *)image {
+    
+    CIImage *beginImage = [CIImage imageWithCGImage:image.CGImage];
+    CIFilter *filter = [CIFilter filterWithName:@"CIPhotoEffectTonal"];
+    [filter setValue:beginImage forKey:@"inputImage"];
+    CIImage *output = [filter outputImage];
+    
+    CIContext *context = [CIContext contextWithOptions:nil];
+    CGImageRef cgiimage = [context createCGImage:output fromRect:output.extent];
+    UIImage *newImage = [UIImage imageWithCGImage:cgiimage];
+    
+    CGImageRelease(cgiimage);
+    
+    return newImage;
+}
+
 @end

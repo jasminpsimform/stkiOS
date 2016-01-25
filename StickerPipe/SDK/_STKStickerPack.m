@@ -5,10 +5,16 @@
 
 const struct STKStickerPackAttributes STKStickerPackAttributes = {
 	.artist = @"artist",
+	.bannerUrl = @"bannerUrl",
+	.disabled = @"disabled",
+	.isNew = @"isNew",
+	.order = @"order",
+	.packDescription = @"packDescription",
 	.packID = @"packID",
 	.packName = @"packName",
 	.packTitle = @"packTitle",
 	.price = @"price",
+	.productID = @"productID",
 };
 
 const struct STKStickerPackRelationships STKStickerPackRelationships = {
@@ -41,6 +47,21 @@ const struct STKStickerPackRelationships STKStickerPackRelationships = {
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 
+	if ([key isEqualToString:@"disabledValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"disabled"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
+	if ([key isEqualToString:@"isNewValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"isNew"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
+	if ([key isEqualToString:@"orderValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"order"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
 	if ([key isEqualToString:@"packIDValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"packID"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -56,6 +77,70 @@ const struct STKStickerPackRelationships STKStickerPackRelationships = {
 }
 
 @dynamic artist;
+
+@dynamic bannerUrl;
+
+@dynamic disabled;
+
+- (BOOL)disabledValue {
+	NSNumber *result = [self disabled];
+	return [result boolValue];
+}
+
+- (void)setDisabledValue:(BOOL)value_ {
+	[self setDisabled:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveDisabledValue {
+	NSNumber *result = [self primitiveDisabled];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveDisabledValue:(BOOL)value_ {
+	[self setPrimitiveDisabled:[NSNumber numberWithBool:value_]];
+}
+
+@dynamic isNew;
+
+- (BOOL)isNewValue {
+	NSNumber *result = [self isNew];
+	return [result boolValue];
+}
+
+- (void)setIsNewValue:(BOOL)value_ {
+	[self setIsNew:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveIsNewValue {
+	NSNumber *result = [self primitiveIsNew];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveIsNewValue:(BOOL)value_ {
+	[self setPrimitiveIsNew:[NSNumber numberWithBool:value_]];
+}
+
+@dynamic order;
+
+- (int32_t)orderValue {
+	NSNumber *result = [self order];
+	return [result intValue];
+}
+
+- (void)setOrderValue:(int32_t)value_ {
+	[self setOrder:[NSNumber numberWithInt:value_]];
+}
+
+- (int32_t)primitiveOrderValue {
+	NSNumber *result = [self primitiveOrder];
+	return [result intValue];
+}
+
+- (void)setPrimitiveOrderValue:(int32_t)value_ {
+	[self setPrimitiveOrder:[NSNumber numberWithInt:value_]];
+}
+
+@dynamic packDescription;
 
 @dynamic packID;
 
@@ -100,6 +185,8 @@ const struct STKStickerPackRelationships STKStickerPackRelationships = {
 - (void)setPrimitivePriceValue:(float)value_ {
 	[self setPrimitivePrice:[NSNumber numberWithFloat:value_]];
 }
+
+@dynamic productID;
 
 @dynamic stickers;
 

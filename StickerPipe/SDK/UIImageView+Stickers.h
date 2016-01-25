@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 typedef void(^STKCompletionBlock)(NSError *error, UIImage *stickerImage);
-typedef void(^STKDownloadingProgressBlock)(NSInteger receivedSize, NSInteger expectedSize);
+typedef void(^STKDownloadingProgressBlock)(NSTimeInterval progress);
 
 @interface UIImageView (Stickers)
 

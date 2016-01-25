@@ -10,15 +10,31 @@
 
 @class STKStickerObject, STKStickerPackObject;
 
+
 @interface STKStickersCache : NSObject
 
-- (void) saveStickerPacks:(NSArray*) stickerPacks;
+- (void)saveStickerPacks:(NSArray*) stickerPacks;
 
-- (void) getStickerPacks:(void(^)(NSArray *stickerPacks))response;
+- (void)saveDisabledStickerPack:(STKStickerPackObject*)stickerPack;
+
+- (void)updateStickerPack:(STKStickerPackObject *)stickerPackObject;
+
+- (void)deleteStickerPacks:(NSArray*) stickerPacks;
+
+- (STKStickerPackObject*)getStickerPackWithPackName:(NSString*)packName;
+
+- (void)getStickerPacksIgnoringRecent:(void(^)(NSArray *stickerPacks))response;
+
+- (void)getStickerPacks:(void(^)(NSArray *stickerPacks))response;
 
 - (STKStickerPackObject*)recentStickerPack;
 
-- (void) incrementUsedCountWithStickerID:(NSNumber*)stickerID;
+- (BOOL)isStickerPackDownloaded:(NSString*)packName;
 
+- (BOOL)hasNewStickerPacks;
+
+- (void)incrementUsedCountWithStickerID:(NSNumber*)stickerID;
+
+- (void)markStickerPack:(STKStickerPackObject*)pack disabled:(BOOL)disabled;
 
 @end

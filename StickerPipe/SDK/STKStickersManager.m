@@ -7,46 +7,57 @@
 //
 
 #import "STKStickersManager.h"
-#import <SDWebImageManager.h>
+#import <DFImageManagerKit.h>
 #import "STKUtility.h"
 #import "STKAnalyticService.h"
 #import "STKApiKeyManager.h"
-
-//Colors
-
-static UIColor *displayedPlaceholderColor;
-static UIColor *panelPlaceholderColor;
-static UIColor *panelHeaderPlaceholderColor;
+#import "STKCoreDataService.h"
+#import "STKStickersConstants.h"
 
 
 @interface STKStickersManager()
 
-@property (strong, nonatomic) SDWebImageManager *imageManager;
 
 @end
 
 @implementation STKStickersManager
 
-- (void)getStickerForMessage:(NSString *)message progress:(void (^)(NSInteger, NSInteger))progress success:(void (^)(UIImage *))success failure:(void (^)(NSError *, NSString *))failure {
+- (void)getStickerForMessage:(NSString *)message progress:(void (^)(double))progressBlock success:(void (^)(UIImage *))success failure:(void (^)(NSError *, NSString *))failure {
     
     if ([self.class isStickerMessage:message]) {
         NSURL *stickerUrl = [STKUtility imageUrlForStikerMessage:message];
         
-        [self.imageManager downloadImageWithURL:stickerUrl
-                                        options:0
-                                       progress:progress
-                                      completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-                                          if (error) {
-                                              if (failure) {
-                                                  failure(error, nil);
-                                                  STKLog(@"Cannot download sticker from STKStickerManager");
-                                              }
-                                          } else {
-                                              if (success) {
-                                                  success(image);
-                                              }
-                                          }
-                                      }];
+        DFImageRequestOptions *options = [DFImageRequestOptions new];
+        options.allowsClipping = YES;
+        options.progressHandler = ^(double progress){
+            // Observe progress
+            if (progressBlock) {
+                progressBlock(progress);
+            }
+        };
+        
+        DFImageRequest *request = [DFImageRequest requestWithResource:stickerUrl targetSize:CGSizeMake(160.f, 160.f) contentMode:DFImageContentModeAspectFit options:options];
+                
+        DFImageTask *task =[[DFImageManager sharedManager] imageTaskForRequest:request completion:^(UIImage *image, NSDictionary *info) {
+            NSError *error = info[DFImageInfoErrorKey];
+            if (error) {
+                if (failure) {
+                    failure(error, error.localizedDescription);
+                }
+            } else {
+                if (success) {
+                    success(image);
+                }
+            }
+            
+            if (error.code != -1) {
+                STKLog(@"Failed loading from category: %@ %@", error.localizedDescription, @"ddd");
+            }
+
+        }];
+        
+        [task resume];
+        
     } else {
         if (failure) {
             NSError *error = [NSError errorWithDomain:@"It's not a sticker" code:999 userInfo:nil];
@@ -65,68 +76,43 @@ static UIColor *panelHeaderPlaceholderColor;
     
     BOOL isStickerMessage = [predicate evaluateWithObject:message];
     
-    STKAnalyticService *service = [STKAnalyticService sharedService];
-    
-    if (isStickerMessage) {
-        
-        [service sendEventWithCategory:STKAnalyticMessageCategory action:STKAnalyticActionCheck label:@"Stickers count" value:@(1)];
-        
-    } else {
-        [service sendEventWithCategory:STKAnalyticMessageCategory action:STKAnalyticActionCheck label:@"Events count" value:@(1)];
-    }
-    
     return isStickerMessage;
 }
 
 
 #pragma mark - ApiKey
 
-+(void)initWitApiKey:(NSString *)apiKey {
++ (void)initWitApiKey:(NSString *)apiKey {
     [STKApiKeyManager setApiKey:apiKey];
-    
-    [SDWebImageManager sharedManager].imageDownloader.downloadTimeout = 60.0;
-    [[SDWebImageManager sharedManager].imageDownloader setMaxConcurrentDownloads:6];
+    [STKCoreDataService setupCoreData];
 }
 
-#pragma mark - Properties
+#pragma mark - User key
 
-- (SDWebImageManager *)imageManager {
-    
-    return [SDWebImageManager sharedManager];
++ (void)setUserKey:(NSString *)userKey {
+    [[NSUserDefaults standardUserDefaults] setObject:userKey forKey:kUserKeyDefaultsKey];
 }
 
-#pragma mark - Set Colors
-
-+ (void)setColorForDisplayedStickerPlaceholder:(UIColor *)color {
-    if (displayedPlaceholderColor != color) {
-        displayedPlaceholderColor = color;
-    }
++ (NSString *)userKey {
+    return [[NSUserDefaults standardUserDefaults] stringForKey:kUserKeyDefaultsKey];
 }
 
-+ (void)setColorForPanelHeaderPlaceholderColor:(UIColor *)color {
-    if (panelHeaderPlaceholderColor != color) {
-        panelHeaderPlaceholderColor = color;
-    }
+#pragma mark - Localization 
+
++ (void)setLocalization:(NSString *)localization {
+    [[NSUserDefaults standardUserDefaults] setObject:localization forKey:kLocalizationDefaultsKey];
 }
 
-+ (void)setColorForPanelPlaceholder:(UIColor *)color {
-    if (panelPlaceholderColor != color) {
-        panelPlaceholderColor = color;
-    }
++ (NSString *)localization {
+    return [[NSUserDefaults standardUserDefaults] stringForKey:kLocalizationDefaultsKey];
 }
 
-#pragma mark - Get Colors
+#pragma mark - Srart time interval
 
-+ (UIColor *)displayedStickerPlaceholderColor {
-    return displayedPlaceholderColor;
-}
-
-+ (UIColor *)panelPlaceholderColor {
-    return panelPlaceholderColor;
-}
-
-+ (UIColor *)panelHeaderPlaceholderColor {
-    return panelHeaderPlaceholderColor;
++ (void)setStartTimeInterval {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setDouble:0 forKey:kLastUpdateIntervalKey];
+    [defaults synchronize];
 }
 
 @end

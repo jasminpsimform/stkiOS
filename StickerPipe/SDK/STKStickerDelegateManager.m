@@ -7,14 +7,10 @@
 //
 
 #import "STKStickerDelegateManager.h"
-#import <UIKit/UIKit.h>
-#import "STKStickerCell.h"
+#import "STKStickerViewCell.h"
 #import "STKStickersSeparator.h"
-#import "STKStickersCache.h"
-#import "STKStickersApiService.h"
 #import "STKStickerPackObject.h"
 #import "STKStickerObject.h"
-#import "STKStickersManager.h"
 
 typedef enum {
     
@@ -22,7 +18,6 @@ typedef enum {
     STKStickerPanelScrollDirectionBottom
     
 } STKStickerPanelScrollDirection;
-
 
 
 @interface STKStickerDelegateManager()
@@ -65,21 +60,32 @@ typedef enum {
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section
 {
-    
     STKStickerPackObject *stickerPack = self.stickerPacks[section];
+    if (stickerPack.stickers.count == 0 && [stickerPack.packName isEqualToString:@"Recent"]) {
+        //Empty cell
+        return 1;
+    }
     return stickerPack.stickers.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    STKStickerCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"STKStickerPanelCell" forIndexPath:indexPath];
+    id cell = nil;
     
-    STKStickerPackObject *stickerPack = self.self.stickerPacks[indexPath.section];
+    STKStickerPackObject *stickerPack = self.stickerPacks[indexPath.section];
+    if (stickerPack.stickers.count == 0 && [stickerPack.packName isEqualToString:@"Recent"]) {
+        
+        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"STKEmptyRecentCell" forIndexPath:indexPath];
+        
+    } else {
+       cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"STKStickerViewCell" forIndexPath:indexPath];
+        
+        STKStickerObject *sticker = stickerPack.stickers[indexPath.item];
+        [cell configureWithStickerMessage:sticker.stickerMessage placeholder:self.stickerPlaceholderImage placeholderColor:self.placeholderColor];
+    }
     
-    STKStickerObject *sticker = stickerPack.stickers[indexPath.item];
-    
-    [cell configureWithStickerMessage:sticker.stickerMessage placeholder:self.stickerPlaceholderImage placeholderColor:self.placeholderColor];
+
     
     return cell;
 }
@@ -103,10 +109,28 @@ typedef enum {
     
     
     STKStickerPackObject *stickerPack = self.stickerPacks[indexPath.section];
-    STKStickerObject *sticker = stickerPack.stickers[indexPath.item];
-    
-    self.didSelectSticker(sticker);
-    
+    if (stickerPack.stickers.count > 0) {
+        STKStickerObject *sticker = stickerPack.stickers[indexPath.item];
+        if (sticker) {
+            self.didSelectSticker(sticker);
+        }
+    }
+
+}
+
+#pragma mark - UICollectionViewDelegateFlowLayout
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    STKStickerPackObject *pack = self.stickerPacks[indexPath.section];
+    if ([pack.packName isEqualToString:@"Recent"] && pack.stickers.count == 0) {
+        
+        UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout*)collectionViewLayout;
+        
+        return CGSizeMake(self.collectionView.frame.size.width - (layout.sectionInset.left + layout.sectionInset.right), 100.0);
+        
+    } else {
+        return CGSizeMake(80.0, 80.0);
+    }
 }
 
 #pragma mark - UIScrollViewDelegate

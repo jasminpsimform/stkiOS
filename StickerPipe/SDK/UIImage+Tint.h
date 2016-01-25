@@ -11,5 +11,6 @@
 @interface UIImage (Tint)
 
 - (UIImage*) imageWithImageTintColor:(UIColor*) color;
++ (UIImage *)convertImageToGrayScale:(UIImage *)image;
 
 @end

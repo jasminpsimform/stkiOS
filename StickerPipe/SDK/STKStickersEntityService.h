@@ -8,12 +8,37 @@
 
 #import <Foundation/Foundation.h>
 
+@class STKStickerPackObject;
+
 @interface STKStickersEntityService : NSObject
+
+@property (nonatomic, strong) NSArray *stickersArray;
 
 - (void)getStickerPacksWithType:(NSString*)type
                  completion:(void(^)(NSArray *stickerPacks))completion
                     failure:(void(^)(NSError *error))failure;
 
-- (void) incrementStickerUsedCountWithID:(NSNumber*)stickerID;
+- (void)incrementStickerUsedCountWithID:(NSNumber*)stickerID;
+
+- (void)getStickerPacksIgnoringRecentWithType:(NSString*)type
+                                   completion:(void(^)(NSArray *stickerPacks))completion
+                                      failure:(void(^)(NSError *error))failre;
+
+- (void) getPackWithMessage:(NSString*)message completion:(void(^)(STKStickerPackObject* stickerPack, BOOL isDownloaded))completion;
+
+- (BOOL)isPackDownloaded:(NSString*)packName;
+
+- (void) saveStickerPack:(STKStickerPackObject*)stickerPack;
+
+- (void) saveStickerPacks:(NSArray*)stickerPacks;
+
+- (void)updateStickerPackInCache:(STKStickerPackObject *)stickerPackObject;
+
+- (void) deleteStickerPack:(STKStickerPackObject*) stickerPack;
+
+- (void) togglePackDisabling:(STKStickerPackObject*)pack;
+
+- (BOOL)hasRecentStickers;
+- (BOOL)hasNewPacks;
 
 @end

@@ -9,13 +9,16 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+@class STKStickerPackObject;
+
 @interface STKStickerHeaderDelegateManager : NSObject <UICollectionViewDataSource, UICollectionViewDelegate>
 
-@property (copy, nonatomic) void(^didSelectRow)(NSIndexPath *indexPath);
+@property (copy, nonatomic) void(^didSelectRow)(NSIndexPath *indexPath, STKStickerPackObject *stickerPackObject);
 @property (strong, nonatomic) UIImage *placeholderImage;
 @property (strong, nonatomic) UIColor *placeholderHeadercolor;
 
 
 - (void)setStickerPacks:(NSArray *)stickerPacks;
+- (STKStickerPackObject*)itemAtIndexPath:(NSIndexPath*)indexPath;
 
 @end

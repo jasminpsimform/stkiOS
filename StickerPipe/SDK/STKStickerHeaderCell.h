@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class STKStickerPackObject;
+
 @interface STKStickerHeaderCell : UICollectionViewCell
 
 @property (strong, nonatomic) UIColor *selectionColor;
 
-- (void) configWithStickerPackName:(NSString*)name placeholder:(UIImage*)placeholder placeholderTintColor:(UIColor*)placeholderTintColor;
+- (void)configWithStickerPack:(STKStickerPackObject *)stickerPack placeholder:(UIImage *)placeholder placeholderTintColor:(UIColor*)placeholderTintColor;
 
 @end

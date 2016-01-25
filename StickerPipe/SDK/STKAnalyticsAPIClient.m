@@ -13,6 +13,8 @@
 #import "STKUUIDManager.h"
 #import "STKApiKeyManager.h"
 
+static NSString * const statisticUrl = @"track-statistic";
+
 @implementation STKAnalyticsAPIClient
 
 - (instancetype)init
@@ -32,17 +34,19 @@
         [array addObject:[statistic dictionary]];
     }
     
-    [self.sessionManager POST:@"track-statistic" parameters:array success:^(NSURLSessionDataTask *task, id responseObject) {
-        if (success) {
-            success(responseObject);
-        }
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-//        NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
-//        NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
-        if (failure) {
-            failure(error);
-        }
-    }];
+    if (array.count > 0) {
+        [self.sessionManager POST:statisticUrl parameters:array success:^(NSURLSessionDataTask *task, id responseObject) {
+            if (success) {
+                success(responseObject);
+            }
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            //        NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+            //        NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+            if (failure) {
+                failure(error);
+            }
+        }];
+    }
     
 }
 

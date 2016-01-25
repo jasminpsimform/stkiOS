@@ -7,11 +7,11 @@
 //
 
 #import "STKUtility.h"
-#import <UIKit/UIKit.h>
+#import "STKAnalyticService.h"
 
 
-NSString *const STKUtilityAPIUrl = @"http://api.stickerpipe.com/stk/";
-
+//NSString *const STKUtilityAPIUrl = @"https://api.stickerpipe.com/stk/";
+NSString *const STKUtilityAPIUrl = @"http://work.stk.908.vc/stk/";
 
 @implementation STKUtility
 
@@ -47,9 +47,20 @@ NSString *const STKUtilityAPIUrl = @"http://api.stickerpipe.com/stk/";
     
     NSString *density = [self scaleString];
     
-    NSString *urlSting = [NSString stringWithFormat:@"%@/tab_icon_%@.png",name, density];
+    NSString *urlString = [NSString stringWithFormat:@"%@/tab_icon_%@.png",name, density];
     
-    NSURL *url = [NSURL URLWithString:urlSting relativeToURL:[NSURL URLWithString:STKUtilityAPIUrl]];
+    NSURL *url = [NSURL URLWithString:urlString relativeToURL:[NSURL URLWithString:STKUtilityAPIUrl]];
+    
+    return url;
+}
+
++ (NSURL *)mainImageUrlForPackName:(NSString *)name {
+    
+    NSString *density = [self scaleString];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/main_icon_%@.png",name, density];
+    
+    NSURL *url = [NSURL URLWithString:urlString relativeToURL:[NSURL URLWithString:STKUtilityAPIUrl]];
     
     return url;
 }
@@ -64,7 +75,7 @@ NSString *const STKUtilityAPIUrl = @"http://api.stickerpipe.com/stk/";
     return url;
 }
 
-+ (NSString*) scaleString {
++ (NSString*)scaleString {
     
     NSInteger scale =  (NSInteger)[[UIScreen mainScreen]scale];
     
@@ -90,24 +101,34 @@ NSString *const STKUtilityAPIUrl = @"http://api.stickerpipe.com/stk/";
 
 #pragma mark - Colors
 
-+ (UIColor*) defaultGrayColor {
-    return [UIColor colorWithRed:0.9 green:0.9 blue:0.92 alpha:1];
++ (UIColor*)defaultOrangeColor {
+    return [UIColor colorWithRed:1 green:0.34 blue:0.13 alpha:1];
+}
+
++ (UIColor*)defaultGreyColor {
+    return [UIColor colorWithRed:229.0/255.0 green:229.0/255.0 blue:234.0/255.0 alpha:1];
+}
+
++ (UIColor*) defaultPlaceholderGrayColor {
+    return [UIColor colorWithRed:142.0/255.0 green:142.0/255.0 blue:147.0/255.0 alpha:1];
 }
 
 #pragma mark - STKLog
 
 void STKLog(NSString *format, ...) {
-
-#if DEBUG
     
     va_list argumentList;
     va_start(argumentList, format);
-    
+#if DEBUG
+
     NSLogv(format, argumentList);
+#endif
+    NSString *log = [[NSString alloc] initWithFormat:format arguments:argumentList];
+    
+    [[STKAnalyticService sharedService] sendDevEventWithCategory:STKAnalyticDevCategory action:STKAnalyticActionError label:log value:nil];
     
     va_end(argumentList);
     
-#endif
 }
 
 

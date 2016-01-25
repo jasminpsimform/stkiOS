@@ -24,11 +24,18 @@
 
 - (NSArray*)serializeStickerPacks:(NSArray *)stickerPacks {
     NSMutableArray *packObjects = [NSMutableArray new];
-    for (NSDictionary *dictionary in stickerPacks) {
-        STKStickerPackObject *object = [[STKStickerPackObject alloc] initWithServerResponse:dictionary];
+    for (int i =0; i <stickerPacks.count; i++) {
+        STKStickerPackObject *object = [self serializeStickerPack:stickerPacks[i]];
+        object.order = @(i);
         [packObjects addObject:object];
     }
     return [NSArray arrayWithArray:packObjects];
+}
+
+- (STKStickerPackObject*) serializeStickerPack:(NSDictionary*)stickerPackResponse {
+    
+    STKStickerPackObject *object = [[STKStickerPackObject alloc] initWithServerResponse:stickerPackResponse];
+    return object;
 }
 
 @end

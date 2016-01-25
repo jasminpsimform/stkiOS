@@ -8,12 +8,21 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "STKStickersConstants.h"
 
 @class STKStickerController;
 
 @protocol STKStickerControllerDelegate <NSObject>
 
-- (void) stickerController:(STKStickerController*)stickerController didSelectStickerWithMessage:(NSString*)message;
+@required
+- (void)stickerController:(STKStickerController*)stickerController didSelectStickerWithMessage:(NSString*)message;
+
+//View controller for presenting modal controllers
+- (UIViewController*)stickerControllerViewControllerForPresentingModalView;
+
+@optional
+
+- (void)stickerControllerDidChangePackStatus:(STKStickerController*)stickerController;
 
 @end
 
@@ -21,19 +30,31 @@
 
 @property (weak, nonatomic) id<STKStickerControllerDelegate> delegate;
 
-@property (strong, nonatomic, readonly) UIView *stickersView;
+@property (nonatomic, strong, readonly) UIView *stickersView;
 
-@property (assign, nonatomic, readonly) BOOL isStickerViewShowed;
+@property (nonatomic, assign, readonly) BOOL isStickerViewShowed;
 
-@property (assign, nonatomic) UIColor *headerBackgroundColor;
+@property (nonatomic, strong) UIColor *headerBackgroundColor;
 
+@property (nonatomic, strong) UITextView *textInputView;
+
+
+//@property (nonatomic, strong) UIColor *stickersShopTintColor;
+
+- (void)updateFrames;
+
+- (void)reloadStickersView;
+
+- (BOOL)isStickerPackDownloaded:(NSString*)packMessage;
+
+- (void)showPackInfoControllerWithStickerMessage:(NSString*)message;
 
 //Color settings. Default is light gray
 
-- (void) setColorForStickersPlaceholder:(UIColor*) color;
+- (void)setColorForStickersPlaceholder:(UIColor*) color;
 
-- (void) setColorForStickersHeaderPlaceholderColor:(UIColor*) color;
+- (void)setColorForStickersHeaderPlaceholderColor:(UIColor*) color;
 
-
+- (void)textMessageSent:(NSString *)message;
 
 @end
