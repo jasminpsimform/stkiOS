@@ -18,6 +18,6 @@ Pod::Spec.new do |s|
   s.dependency       'Fabric'
   s.dependency       'Crashlytics'
   s.dependency       'MD5Digest', '~> 1.1'
-  s.resources       = ['StickerPipe/SDK/Media.xcassets', 'StickerPipe/SDK/*.{xcdatamodeld}' ]
+  s.resources       = ['StickerPipe/SDK/Media.xcassets', 'StickerPipe/SDK/*.{xcdatamodeld}','StickerPipe/SDK/StickerPipe.xcassets']
 
 end
