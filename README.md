@@ -21,6 +21,8 @@ Add API key in your AppDelegate.m
 
 ```objc
 [STKStickersManager initWitApiKey:@"API_KEY"];
+[STKStickersManager setStartTimeInterval];
+[STKStickersManager setUserKey:@"USER_ID"];
 ```
 
 Use category for UIImageView for display sticker
@@ -37,8 +39,7 @@ Init STKStickerController and add stickersView like inputView for your UITextVie
 @property (strong, nonatomic) STKStickerController *stickerController;
 
 
-self.inputTextView.inputView = self.stickerController.stickersView;
-[self reloadStickersInputViews];
+ self.stickerController.textInputView = self.inputTextView;
 ```
 Use delegate method for reciving sticker messages from sticker view controller
 
@@ -49,6 +50,15 @@ Use delegate method for reciving sticker messages from sticker view controller
     
 }
 ```
+## Layout sticker fames 
+
+```objc
+- (void)viewDidLayoutSubviews {
+[super viewDidLayoutSubviews];
+[self.stickerController updateFrames];
+}
+```
+
 ## Сustomizations
 
 **You can change default placeholders color:**
