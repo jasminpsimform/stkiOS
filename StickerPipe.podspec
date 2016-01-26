@@ -9,7 +9,10 @@ Pod::Spec.new do |s|
   s.license         = "Apache License, Version 2.0"
   s.author          = "908 Inc."
   s.source          = { :git => 'https://github.com/908Inc/stkiOS.git', :tag => s.version }
-  s.source_files    = "StickerPipe/SDK/*.{h,m, xib}"
+  s.source_files    = "StickerPipe/SDK/*.{h,m}"
+  s.resource_bundles = {
+     'StickerPipe' => ['StickerPipe/SDK/*.xib']
+ }
   s.framework       = 'CoreData'
   s.requires_arc    = true
   s.dependency       'AFNetworking', '~> 2.0'
