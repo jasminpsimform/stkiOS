@@ -10,9 +10,7 @@ Pod::Spec.new do |s|
   s.author          = "908 Inc."
   s.source          = { :git => 'https://github.com/908Inc/stkiOS.git', :tag => s.version }
   s.source_files    = "StickerPipe/SDK/*.{h,m}"
-  s.resource_bundles = {
-     'StickerPipe' => ['StickerPipe/SDK/*.xib']
- }
+
   s.framework       = 'CoreData'
   s.requires_arc    = true
   s.dependency       'AFNetworking', '~> 2.0'
@@ -21,6 +19,6 @@ Pod::Spec.new do |s|
   s.dependency       'Fabric'
   s.dependency       'Crashlytics'
   s.dependency       'MD5Digest', '~> 1.1'
-  s.resources       = ['StickerPipe/SDK/Media.xcassets', 'StickerPipe/SDK/*.{xcdatamodeld}','StickerPipe/SDK/StickerPipe.xcassets']
+  s.resources       = ['StickerPipe/SDK/Media.xcassets', 'StickerPipe/SDK/*.{xcdatamodeld}','StickerPipe/SDK/StickerPipe.xcassets', 'StickerPipe/SDK/*.xib']
 
 end
