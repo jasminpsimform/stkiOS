@@ -6,9 +6,9 @@
 //  Copyright © 2016 908 Inc. All rights reserved.
 //
 
-#import "IosJsInterface.h"
+#import "STKStickersShopJsInterface.h"
 
-@implementation IosJsInterface
+@implementation STKStickersShopJsInterface
 
 - (void)showCollections {
     NSLog(@"showCollections");

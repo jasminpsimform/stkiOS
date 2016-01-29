@@ -17,6 +17,6 @@
 
 @end
 
-@interface IosJsInterface : NSObject <IosJs>
+@interface STKStickersShopJsInterface : NSObject <IosJs>
 
 @end
