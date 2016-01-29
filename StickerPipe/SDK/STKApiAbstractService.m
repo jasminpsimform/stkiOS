@@ -12,6 +12,8 @@
 #import "STKUUIDManager.h"
 #import "STKStickersManager.h"
 #import "STKStickersConstants.h"
+#import "NSString+MD5.h"
+
 
 NSString *const STKApiVersion = @"v1";
 NSString *const STKBaseApiUrl = @"https://api.stickerpipe.com/api";
@@ -29,11 +31,7 @@ NSString *const STKBaseApiUrl = @"https://api.stickerpipe.com/api";
         
         AFJSONRequestSerializer *serializer = [AFJSONRequestSerializer serializer];
         
-        NSString *userKey = [STKStickersManager userKey];
-        if (userKey) {
-            [serializer setValue:userKey forHTTPHeaderField:@"UserID"];
-        }
-        
+        [serializer setValue:[self userId] forHTTPHeaderField:@"UserID"];
         [serializer setValue:STKApiVersion forHTTPHeaderField:@"ApiVersion"];
         [serializer setValue:@"iOS" forHTTPHeaderField:@"Platform"];
         [serializer setValue:[STKUUIDManager generatedDeviceToken] forHTTPHeaderField:@"DeviceId"];
@@ -52,6 +50,14 @@ NSString *const STKBaseApiUrl = @"https://api.stickerpipe.com/api";
     NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
     
     return (locale) ? locale : language;
+}
+
+- (NSString *)userId {
+    
+    NSString *userKey = [STKStickersManager userKey];
+    NSString *hashUserKey = [[userKey stringByAppendingString:[STKApiKeyManager apiKey]] MD5Digest];
+    
+    return hashUserKey;
 }
 
 
