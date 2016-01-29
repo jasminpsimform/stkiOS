@@ -66,6 +66,8 @@
 		806D79ABFC65132E5C402108 /* STKShowStickerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D749D40E8611EB0FF05CA /* STKShowStickerButton.m */; };
 		9A0716E81C43DD6B004D2ACF /* Launch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A0716E71C43DD6B004D2ACF /* Launch.xib */; };
 		9A1F16A41C47EBF500C22F73 /* STKChatTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1F16A31C47EBF500C22F73 /* STKChatTextCell.m */; };
+		9AF866E31C5A1570002A555B /* STKStickersShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AF866E11C5A1570002A555B /* STKStickersShopViewController.m */; };
+		9AF866E41C5A1570002A555B /* STKStickersShopViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF866E21C5A1570002A555B /* STKStickersShopViewController.xib */; };
 		DF71B99FAA77DDC25C0F577E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 280EB363112837B81F052E19 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -204,6 +206,9 @@ StickerPipeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper
 		9A0716E71C43DD6B004D2ACF /* Launch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Launch.xib; sourceTree = "<group>"; };
 		9A1F16A21C47EBF500C22F73 /* STKChatTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKChatTextCell.h; sourceTree = "<group>"; };
 		9A1F16A31C47EBF500C22F73 /* STKChatTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKChatTextCell.m; sourceTree = "<group>"; };
+		9AF866E01C5A1570002A555B /* STKStickersShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STKStickersShopViewController.h; path = StickersShop/STKStickersShopViewController.h; sourceTree = "<group>"; };
+		9AF866E11C5A1570002A555B /* STKStickersShopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STKStickersShopViewController.m; path = StickersShop/STKStickersShopViewController.m; sourceTree = "<group>"; };
+		9AF866E21C5A1570002A555B /* STKStickersShopViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = STKStickersShopViewController.xib; path = StickersShop/STKStickersShopViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -310,7 +315,7 @@ StickerPipeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper
 			name = Parsers;
 			sourceTree = "<group>";
 		};
-		6E7E2A911B7229DE00DCAFC5 /* Shop */ = {
+		6E7E2A911B7229DE00DCAFC5 /* Collections */ = {
 			isa = PBXGroup;
 			children = (
 				6EA356311B72569E00D540F7 /* Cell */,
@@ -322,7 +327,7 @@ StickerPipeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper
 				6E2C2D2D1B84A76A009714CD /* STKOrientationNavigationController.h */,
 				6E2C2D2E1B84A76A009714CD /* STKOrientationNavigationController.m */,
 			);
-			name = Shop;
+			name = Collections;
 			sourceTree = "<group>";
 		};
 		6E9012601B567C5E00A5FCAE /* STKStickerPack */ = {
@@ -455,7 +460,8 @@ StickerPipeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper
 		6EDC5EE41B4173D600EBB034 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				6E7E2A911B7229DE00DCAFC5 /* Shop */,
+				9AF866DF1C5A14A8002A555B /* Shop */,
+				6E7E2A911B7229DE00DCAFC5 /* Collections */,
 				6E310A351B68B9B600FB75D0 /* PacksDescription */,
 				6EB287CB1B666D5200E9A2A5 /* Services */,
 				6EADF3861B46B475008005E9 /* STKStickersManager.h */,
@@ -662,6 +668,16 @@ StickerPipeTests.xctest */,
 			name = StickersSeparator;
 			sourceTree = "<group>";
 		};
+		9AF866DF1C5A14A8002A555B /* Shop */ = {
+			isa = PBXGroup;
+			children = (
+				9AF866E01C5A1570002A555B /* STKStickersShopViewController.h */,
+				9AF866E11C5A1570002A555B /* STKStickersShopViewController.m */,
+				9AF866E21C5A1570002A555B /* STKStickersShopViewController.xib */,
+			);
+			name = Shop;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -749,6 +765,7 @@ StickerPipeTests.xctest */;
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AF866E41C5A1570002A555B /* STKStickersShopViewController.xib in Resources */,
 				6EF264631B3C0F830099A657 /* Main.storyboard in Resources */,
 				6EADF3611B46B3CE008005E9 /* StickerPipe.xcassets in Resources */,
 				6E310A3C1B68EE4D00FB75D0 /* STKPackDescriptionHeader.xib in Resources */,
@@ -884,6 +901,7 @@ StickerPipeTests.xctest */;
 				6EDE15BD1B6F95120024B6DC /* STKStickersConstants.m in Sources */,
 				806D796EC2F2167C25C0B150 /* STKPurchaseService.m in Sources */,
 				806D79ABFC65132E5C402108 /* STKShowStickerButton.m in Sources */,
+				9AF866E31C5A1570002A555B /* STKStickersShopViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
