@@ -7,43 +7,54 @@
 //
 
 #import "STKStickersShopViewController.h"
-#import <AFNetworking/AFNetworking.h>
 #import "UIWebView+AFNetworking.h"
 #import "STKUtility.h"
 #import "STKStickersManager.h"
 #import "STKApiKeyManager.h"
 #import "STKUUIDManager.h"
 
-#import "STKStickersShopApiService.h"
+#import "STKStickersShopJsInterface.h"
+
+#import <JavaScriptCore/JavaScriptCore.h>
+
+static NSString * const mainUrl = @"http://work.stk.908.vc/api/v1/web?";
 
 @interface STKStickersShopViewController () <UIWebViewDelegate>
 
+@property (nonatomic, strong) STKStickersShopJsInterface *jsInterface;
 @end
 
 @implementation STKStickersShopViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    [self loadStickersShop];
+}
+
+- (NSURLRequest *)shopRequest {
+    NSString *uri = @"http://demo.stickerpipe.com/work/demo/libs/store/js/stickerPipeStore.js";
     
-    NSURL *url = [NSURL URLWithString:@"http://api.stickerpipe.com/api/v1/web?"];
+    NSString *urlstr = [NSString stringWithFormat:@"%@uri=%@&apiKey=%@&platform=IOS&userId=%@&density=%@&priceB=0.99%20%24&priceC=1.99%20%24", mainUrl, uri, [STKApiKeyManager apiKey], [STKStickersManager userKey], [STKUtility scaleString]];
+    
+    NSURL *url =[NSURL URLWithString:urlstr];
+   return [NSURLRequest requestWithURL:url];
+}
 
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setValue:@"text/html; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:@"v1" forHTTPHeaderField:@"ApiVersion"];
-    [request addValue:@"JS" forHTTPHeaderField:@"Platform"];
-    [request addValue:[STKApiKeyManager apiKey] forHTTPHeaderField:@"ApiKey"];
-    [request addValue:[STKStickersManager userKey] forHTTPHeaderField:@"userId"];
-    [request addValue:[STKUtility scaleString] forHTTPHeaderField:@"density"];
-    [request addValue:@"UAH9.99" forHTTPHeaderField:@"priceB"];
-    [request addValue:@"UAH19.99" forHTTPHeaderField:@"priceC"];
-
-
-    [self.stickersShopWebView loadRequest:request progress:nil success:^NSString * _Nonnull(NSHTTPURLResponse * _Nonnull response, NSString * _Nonnull HTML) {
+- (void)loadStickersShop {
+     [self.stickersShopWebView loadRequest:[self shopRequest] progress:nil success:^NSString * _Nonnull(NSHTTPURLResponse * _Nonnull response, NSString * _Nonnull HTML) {
         return HTML;
     } failure:^(NSError * error) {
         NSLog(@"%@", error.localizedDescription);
-
+        
     }];
+}
+
+- (STKStickersShopJsInterface *)jsInterface {
+    if (!_jsInterface) {
+        _jsInterface = [STKStickersShopJsInterface new];
+    }
+    return _jsInterface;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -52,6 +63,17 @@
 }
 
 #pragma mark - UIWebviewDelegate
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    JSContext *context = [webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
+    
+    
+    [context setExceptionHandler:^(JSContext *context, JSValue *value) {
+        NSLog(@"WEB JS: %@", value);
+    }];
+
+    context[@"IosJsInterface"] = self.jsInterface;
+}
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     
