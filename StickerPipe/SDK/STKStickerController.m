@@ -43,7 +43,7 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
 @property (strong, nonatomic) UICollectionView *stickersHeaderCollectionView;
 @property (strong, nonatomic) UICollectionViewFlowLayout *stickersHeaderFlowLayout;
 @property (strong, nonatomic) STKStickerHeaderDelegateManager *stickersHeaderDelegateManager;
-@property (strong, nonatomic) UIButton *shopButton;
+@property (strong, nonatomic) UIButton *collectionsButton;
 @property (strong, nonatomic) STKShowStickerButton *keyboardButton;
 
 @property (assign, nonatomic) BOOL isKeyboardShowed;
@@ -88,7 +88,7 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
         
         [self initStickerHeader];
         [self initStickersCollectionView];
-        [self initShopButton];
+        [self initCollectionsButton];
         
         
         [self configureStickersViewsConstraints];
@@ -160,20 +160,20 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
     [self.internalStickersView addSubview:self.stickersCollectionView];
 }
 
-- (void)initShopButton {
-    self.shopButton = [UIButton buttonWithType:UIButtonTypeSystem];
+- (void)initCollectionsButton {
+    self.collectionsButton = [UIButton buttonWithType:UIButtonTypeSystem];
     
-    [self.shopButton setImage:[UIImage imageNamed:@"STKMoreIcon"] forState:UIControlStateNormal];
-    [self.shopButton setImage:[UIImage imageNamed:@"STKMoreIcon"] forState:UIControlStateHighlighted];
+    [self.collectionsButton setImage:[UIImage imageNamed:@"STKMoreIcon"] forState:UIControlStateNormal];
+    [self.collectionsButton setImage:[UIImage imageNamed:@"STKMoreIcon"] forState:UIControlStateHighlighted];
     
-    self.shopButton.titleLabel.font = [UIFont systemFontOfSize:20.0];
-    [self.shopButton setTintColor:[STKUtility defaultOrangeColor]];
+    self.collectionsButton.titleLabel.font = [UIFont systemFontOfSize:20.0];
+    [self.collectionsButton setTintColor:[STKUtility defaultOrangeColor]];
     
-    [self.shopButton addTarget:self action:@selector(shopButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.collectionsButton addTarget:self action:@selector(collectionsButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     
-    self.shopButton.backgroundColor = self.headerBackgroundColor ? self.headerBackgroundColor : [STKUtility defaultGreyColor];
+    self.collectionsButton.backgroundColor = self.headerBackgroundColor ? self.headerBackgroundColor : [STKUtility defaultGreyColor];
     
-    [self.internalStickersView addSubview:self.shopButton];
+    [self.internalStickersView addSubview:self.collectionsButton];
 }
 
 - (void) initStickerHeader {
@@ -221,22 +221,22 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
     
     self.stickersHeaderCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
     self.stickersCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.shopButton.translatesAutoresizingMaskIntoConstraints = NO;
+    self.collectionsButton.translatesAutoresizingMaskIntoConstraints = NO;
     
     NSDictionary *viewsDictionary = @{@"stickersHeaderCollectionView" : self.stickersHeaderCollectionView,
                                       @"stickersView" : self.internalStickersView,
                                       @"stickersCollectionView" : self.stickersCollectionView,
-                                      @"shopButton" : self.shopButton};
-    NSArray *verticalShopButtonConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[shopButton]"
+                                      @"collectionsButton" : self.collectionsButton};
+    NSArray *verticalCollectionsButtonConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[collectionsButton]"
                                                                                      options:0
                                                                                      metrics:nil
                                                                                        views:viewsDictionary];
-    [self.internalStickersView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[shopButton]|" options:0 metrics:nil views:viewsDictionary]];
+    [self.internalStickersView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[collectionsButton]|" options:0 metrics:nil views:viewsDictionary]];
     
-    NSArray *heightConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[shopButton(==44.0)]" options:0 metrics:nil views:viewsDictionary];
-    NSArray *widthConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:[shopButton(==44.0)]" options:0 metrics:nil views:viewsDictionary];
+    NSArray *heightConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[collectionsButton(==44.0)]" options:0 metrics:nil views:viewsDictionary];
+    NSArray *widthConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:[collectionsButton(==44.0)]" options:0 metrics:nil views:viewsDictionary];
     
-    NSArray *horizontalHeaderConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[stickersHeaderCollectionView]-0-[shopButton]"
+    NSArray *horizontalHeaderConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[stickersHeaderCollectionView]-0-[collectionsButton]"
                                                                                    options:0
                                                                                    metrics:nil
                                                                                      views:viewsDictionary];
@@ -252,12 +252,12 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
     
     
     [self.stickersHeaderCollectionView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[stickersHeaderCollectionView(44.0)]" options:0 metrics:nil views:viewsDictionary]];
-    [self.shopButton addConstraints:heightConstraint];
-    [self.shopButton addConstraints:widthConstraint];
+    [self.collectionsButton addConstraints:heightConstraint];
+    [self.collectionsButton addConstraints:widthConstraint];
     
     
     
-    [self.internalStickersView addConstraints:verticalShopButtonConstraints];
+    [self.internalStickersView addConstraints:verticalCollectionsButtonConstraints];
     [self.internalStickersView addConstraints:verticalHeaderConstraints];
     [self.internalStickersView addConstraints:verticalStickersConstraints];
     [self.internalStickersView addConstraints:horizontalHeaderConstraints];
@@ -328,7 +328,7 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
 
 #pragma mark - Actions
 
-- (void)shopButtonAction:(UIButton*)shopButton {
+- (void)collectionsButtonAction:(UIButton*)collectionsButton {
     [self hideStickersView];
     
     STKStickersSettingsViewController *vc = [[STKStickersSettingsViewController alloc] initWithNibName:@"STKStickersSettingsViewController" bundle:nil];
