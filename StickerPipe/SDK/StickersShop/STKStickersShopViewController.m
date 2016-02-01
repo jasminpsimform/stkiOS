@@ -28,8 +28,11 @@ static NSString * const mainUrl = @"http://work.stk.908.vc/api/v1/web?";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     [self loadStickersShop];
+    [self setUpButtons];
+    self.navigationController.navigationBar.tintColor = [STKUtility defaultOrangeColor];
+
 }
 
 - (NSURLRequest *)shopRequest {
@@ -38,11 +41,11 @@ static NSString * const mainUrl = @"http://work.stk.908.vc/api/v1/web?";
     NSString *urlstr = [NSString stringWithFormat:@"%@uri=%@&apiKey=%@&platform=IOS&userId=%@&density=%@&priceB=0.99%20%24&priceC=1.99%20%24", mainUrl, uri, [STKApiKeyManager apiKey], [STKStickersManager userKey], [STKUtility scaleString]];
     
     NSURL *url =[NSURL URLWithString:urlstr];
-   return [NSURLRequest requestWithURL:url];
+    return [NSURLRequest requestWithURL:url];
 }
 
 - (void)loadStickersShop {
-     [self.stickersShopWebView loadRequest:[self shopRequest] progress:nil success:^NSString * _Nonnull(NSHTTPURLResponse * _Nonnull response, NSString * _Nonnull HTML) {
+    [self.stickersShopWebView loadRequest:[self shopRequest] progress:nil success:^NSString * _Nonnull(NSHTTPURLResponse * _Nonnull response, NSString * _Nonnull HTML) {
         return HTML;
     } failure:^(NSError * error) {
         NSLog(@"%@", error.localizedDescription);
@@ -62,6 +65,18 @@ static NSString * const mainUrl = @"http://work.stk.908.vc/api/v1/web?";
     // Dispose of any resources that can be recreated.
 }
 
+- (void) setUpButtons {
+    UIBarButtonItem *closeBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(closeAction:)];
+    
+    self.navigationItem.leftBarButtonItem = closeBarButton;
+}
+
+#pragma mark - Actions
+
+- (IBAction)closeAction:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark - UIWebviewDelegate
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
@@ -71,7 +86,7 @@ static NSString * const mainUrl = @"http://work.stk.908.vc/api/v1/web?";
     [context setExceptionHandler:^(JSContext *context, JSValue *value) {
         NSLog(@"WEB JS: %@", value);
     }];
-
+    
     context[@"IosJsInterface"] = self.jsInterface;
 }
 
