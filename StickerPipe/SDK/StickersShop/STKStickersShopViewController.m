@@ -45,6 +45,7 @@ static NSString * const mainUrl = @"http://work.stk.908.vc/api/v1/web?";
 }
 
 - (void)loadStickersShop {
+    [self setJSContext];
     [self.stickersShopWebView loadRequest:[self shopRequest] progress:nil success:^NSString * _Nonnull(NSHTTPURLResponse * _Nonnull response, NSString * _Nonnull HTML) {
         return HTML;
     } failure:^(NSError * error) {
@@ -65,10 +66,20 @@ static NSString * const mainUrl = @"http://work.stk.908.vc/api/v1/web?";
     // Dispose of any resources that can be recreated.
 }
 
-- (void) setUpButtons {
+- (void)setUpButtons {
     UIBarButtonItem *closeBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(closeAction:)];
     
     self.navigationItem.leftBarButtonItem = closeBarButton;
+}
+
+- (void)setJSContext {
+    JSContext *context = [self.stickersShopWebView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
+    
+    [context setExceptionHandler:^(JSContext *context, JSValue *value) {
+        NSLog(@"WEB JS: %@", value);
+    }];
+    
+    context[@"IosJsInterface"] = self.jsInterface;
 }
 
 #pragma mark - Actions
@@ -78,17 +89,6 @@ static NSString * const mainUrl = @"http://work.stk.908.vc/api/v1/web?";
 }
 
 #pragma mark - UIWebviewDelegate
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-    JSContext *context = [webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
-    
-    
-    [context setExceptionHandler:^(JSContext *context, JSValue *value) {
-        NSLog(@"WEB JS: %@", value);
-    }];
-    
-    context[@"IosJsInterface"] = self.jsInterface;
-}
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     
