@@ -11,6 +11,7 @@
 #import "STKStickersConstants.h"
 
 @class STKStickerController;
+@class STKShowStickerButton;
 
 @protocol STKStickerControllerDelegate <NSObject>
 
@@ -38,6 +39,7 @@
 
 @property (nonatomic, strong) UITextView *textInputView;
 
+@property (strong, nonatomic) STKShowStickerButton *keyboardButton;
 
 //@property (nonatomic, strong) UIColor *stickersShopTintColor;
 

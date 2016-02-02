@@ -44,7 +44,6 @@ static const CGFloat kStickersSectionPaddingRightLeft = 16.0;
 @property (strong, nonatomic) UICollectionViewFlowLayout *stickersHeaderFlowLayout;
 @property (strong, nonatomic) STKStickerHeaderDelegateManager *stickersHeaderDelegateManager;
 @property (strong, nonatomic) UIButton *shopButton;
-@property (strong, nonatomic) STKShowStickerButton *keyboardButton;
 
 @property (assign, nonatomic) BOOL isKeyboardShowed;
 
