@@ -254,30 +254,27 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     [self.keyboardButton layoutIfNeeded];
 }
 
-#pragma mark - Actions
-
-- (void)collectionsButtonAction:(UIButton*)collectionsButton {
+- (void)showModalViewController:(UIViewController *)viewController {
     [self hideStickersView];
     
-    STKStickersSettingsViewController *vc = [[STKStickersSettingsViewController alloc] initWithNibName:@"STKStickersSettingsViewController" bundle:nil];
-    
-    STKOrientationNavigationController *navigationController = [[STKOrientationNavigationController alloc] initWithRootViewController:vc];
+    STKOrientationNavigationController *navigationController = [[STKOrientationNavigationController alloc] initWithRootViewController:viewController];
     
     UIViewController *presenter = [self.delegate stickerControllerViewControllerForPresentingModalView];
     
     [presenter presentViewController:navigationController animated:YES completion:nil];
 }
 
+#pragma mark - Actions
+
+- (void)collectionsButtonAction:(UIButton*)collectionsButton {
+    STKStickersSettingsViewController *vc = [[STKStickersSettingsViewController alloc] initWithNibName:@"STKStickersSettingsViewController" bundle:nil];
+    [self showModalViewController:vc];
+}
+
 - (void)stickersShopButtonAction:(id)sender {
-    [self hideStickersView];
-    
     STKStickersShopViewController *vc = [[STKStickersShopViewController alloc] initWithNibName:@"STKStickersShopViewController" bundle:nil];
     
-    STKOrientationNavigationController *navigationController = [[STKOrientationNavigationController alloc] initWithRootViewController:vc];
-    
-    UIViewController *presenter = [self.delegate stickerControllerViewControllerForPresentingModalView];
-    
-    [presenter presentViewController:navigationController animated:YES completion:nil];
+    [self showModalViewController:vc];
 }
 
 - (void)keyboardButtonAction:(UIButton *)keyboardButton {
