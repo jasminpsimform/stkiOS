@@ -7,19 +7,22 @@
 //
 
 #import "STKStickersShopJsInterface.h"
+#import "STKStickersConstants.h"
 
 @implementation STKStickersShopJsInterface
 
 - (void)showCollections {
-    NSLog(@"showCollections");
+//    [[NSNotificationCenter defaultCenter] postNotificationName:STKShowStickersCollectionsNotification object:self];
+    NSLog(@"showCollections!!!!!!!!!!");
 }
 
 - (void)purchasePack:(NSString *)packTitle :(NSString *)packName :(NSString *)packPrice {
+    NSLog(@"purchasePack");
     
 }
 
 - (void)setInProgress:(BOOL)show {
-    
+    NSLog(@"setInProgress %d", show);
 }
 
 @end
