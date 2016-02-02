@@ -106,6 +106,7 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storageUpdated:) name:STKStickersCacheDidUpdateStickersNotification object:nil];
         
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateStickers) name:STKStickersReorderStickersNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showCollections) name:STKShowStickersCollectionsNotification object:nil];
     }
     return self;
 }
@@ -275,6 +276,7 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     STKStickersShopViewController *vc = [[STKStickersShopViewController alloc] initWithNibName:@"STKStickersShopViewController" bundle:nil];
     
     [self showModalViewController:vc];
+    
 }
 
 - (void)keyboardButtonAction:(UIButton *)keyboardButton {
@@ -350,13 +352,21 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 
 #pragma mark - Presenting
 
--(void)showPackInfoControllerWithStickerMessage:(NSString*)message {
+- (void)showPackInfoControllerWithStickerMessage:(NSString*)message {
     [self hideStickersView];
     STKPackDescriptionController *vc = [[STKPackDescriptionController alloc] initWithNibName:@"STKPackDescriptionController" bundle:nil];
     vc.stickerMessage = message;
     vc.delegate = self;
     UIViewController *presentViewController = [self.delegate stickerControllerViewControllerForPresentingModalView];
     [presentViewController presentViewController:vc animated:YES completion:nil];
+}
+
+- (void)showCollections {
+    [self hideStickersView];
+    UIViewController *presentViewController = [self.delegate stickerControllerViewControllerForPresentingModalView];
+    [presentViewController dismissViewControllerAnimated:YES completion:nil];
+   
+    [self collectionsButtonAction:nil];
 }
 
 #pragma mark - Checks

@@ -10,6 +10,8 @@
 
 extern NSString *const STKStickersCacheDidUpdateStickersNotification;
 
+extern NSString *const STKShowStickersCollectionsNotification;
+
 extern NSString *const STKStickersReorderStickersNotification;
 
 extern NSString *const kLastUpdateIntervalKey;
