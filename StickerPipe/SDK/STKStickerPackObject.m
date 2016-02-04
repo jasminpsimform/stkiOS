@@ -34,7 +34,7 @@
         NSArray *stickers = serverResponse[@"stickers"];
             for (NSDictionary *sticker in stickers) {
                 STKStickerObject *stickerObject = [[STKStickerObject alloc] init];
-                stickerObject.stickerID = sticker[@"id"];
+                stickerObject.stickerID = sticker[@"content_id"];
                 NSString *stickerName = sticker[@"name"];
                 stickerObject.stickerName = stickerName;
                 stickerObject.stickerMessage = [NSString stringWithFormat:@"[[%@_%@]]", packName, stickerName];
