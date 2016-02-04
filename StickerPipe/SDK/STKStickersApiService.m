@@ -13,7 +13,7 @@
 #import "STKApiKeyManager.h"
 #import "STKUtility.h"
 
-static NSString *const packsURL = @"packs";
+static NSString *const packsURL = @"shop/my";
 
 @implementation STKStickersApiService
 
@@ -32,7 +32,9 @@ static NSString *const packsURL = @"packs";
 - (void)getStickersPacksForUserWithSuccess:(void (^)(id response, NSTimeInterval lastModifiedDate))success
                         failure:(void (^)(NSError *error))failure {
     
-    [self.sessionManager GET:packsURL parameters:nil
+    NSDictionary *params = @{@"purchase_type": @"free"};
+    
+    [self.sessionManager GET:packsURL parameters:params
                      success:^(NSURLSessionDataTask *task, id responseObject) {
                          
                          NSHTTPURLResponse *response = ((NSHTTPURLResponse *)[task response]);
@@ -104,6 +106,23 @@ static NSString *const packsURL = @"packs";
     NSString *route = [NSString stringWithFormat:@"pack/%@", packName];
     
     [self.sessionManager GET:route parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+}
+
+- (void)loadStickerPackWithName:(NSString *)packName
+                       success:(void (^)(id))success
+                       failure:(void (^)(NSError *))failure
+{
+    NSString *route = [NSString stringWithFormat:@"packs/%@", packName];
+    
+    [self.sessionManager POST:route parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         if (success) {
             success(responseObject);
         }

@@ -17,4 +17,8 @@
                        success:(void (^)(id response))success
                        failure:(void (^)(NSError *error))failure;
 
+- (void)loadStickerPackWithName:(NSString *)packName
+                        success:(void (^)(id))success
+                        failure:(void (^)(NSError *))failure;
+
 @end
