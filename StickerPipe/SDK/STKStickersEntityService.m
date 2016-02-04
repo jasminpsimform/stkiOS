@@ -46,28 +46,62 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
 
 - (void)loadStickerPacksFromCache:(NSString *)type
                        completion:(void (^)(NSArray *))completion {
+    __weak typeof(self) weakSelf = self;
+
     [self.cacheEntity getStickerPacks:^(NSArray *stickerPacks) {
         if (stickerPacks.count == 0) {
             [self updateStickerPacksWithType:type completion:^(NSArray *stickerPacks) {
-                if (completion) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        completion(stickerPacks);
-                    });
-                }
+                [weakSelf loadStickersForPacks:stickerPacks completion:^(NSArray *stickerPacks) {
+                     completion(stickerPacks);
+                }];
+//                if (completion) {
+//                    dispatch_async(dispatch_get_main_queue(), ^{
+//                        completion(stickerPacks);
+//                    });
+//                }
             }];
         } else {
-            if (completion) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    completion(stickerPacks);
-                });
-            }
+            [weakSelf loadStickersForPacks:stickerPacks completion:^(NSArray *stickerPacks) {
+                completion(stickerPacks);
+            }];
+//            if (completion) {
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    completion(stickerPacks);
+//                });
+//            }
         }
     }];
 }
 
+- (void)loadStickersForPacks:(NSArray *)packs completion:(void (^)(NSArray *))completion{
+    
+    __weak typeof(self) weakSelf = self;
+    
+    if (packs.count > 1) {
+        for (int i = 1; i < packs.count; i ++) {
+            STKStickerPackObject *pack = packs[i];
+            if (pack.stickers.count == 0) {
+                [self.apiService loadStickerPackWithName:pack.packName success:^(id response) {
+                    NSDictionary *serverPack = response[@"data"];
+                    STKStickerPackObject *object = [weakSelf.serializer serializeStickerPack:serverPack];
+                    pack.stickers = object.stickers;
+                    [self.cacheEntity updateStickerPack:pack];
+                } failure:^(NSError *error) {
+                   
+                }];
+            }
+            if (i == packs.count - 1) {
+               dispatch_async(dispatch_get_main_queue(), ^{
+                completion(packs);
+               });
+            }
+        }
+    }
+}
+
 - (void)getStickerPacksWithType:(NSString *)type
-                 completion:(void (^)(NSArray *))completion
-                    failure:(void (^)(NSError *))failure
+                     completion:(void (^)(NSArray *))completion
+                        failure:(void (^)(NSError *))failure
 {
     
     __weak typeof(self) weakSelf = self;
@@ -92,17 +126,17 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
 
 
 -(void)getPackWithMessage:(NSString *)message completion:(void (^)(STKStickerPackObject *, BOOL))completion {
-
+    
     NSArray *separaredStickerNames = [STKUtility trimmedPackNameAndStickerNameWithMessage:message];
     NSString *packName = [[separaredStickerNames firstObject] lowercaseString];
-
+    
     STKStickerPackObject *stickerPackObject =  [self.cacheEntity getStickerPackWithPackName:packName];
     if (!stickerPackObject) {
-
+        
         __weak typeof(self) weakSelf = self;
-
+        
         [self.apiService getStickerPackWithName:packName success:^(id response) {
-
+            
             NSDictionary *serverPack = response[@"data"];
             STKStickerPackObject *object = [weakSelf.serializer serializeStickerPack:serverPack];
             //TODO:Refactoring
@@ -110,14 +144,14 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
                 [weakSelf.cacheEntity saveDisabledStickerPack:object];
                 object.disabled = @YES;
             }
-
+            
             if (completion) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     completion(object, NO);
                 });
             }
         } failure:^(NSError *error) {
-
+            
         }];
     } else {
         if (completion) {
@@ -126,7 +160,7 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
             });
         }
     }
-
+    
 }
 
 - (void)getStickerPacksIgnoringRecentWithType:(NSString *)type completion:(void (^)(NSArray *))completion failure:(void (^)(NSError *))failre {
@@ -144,15 +178,15 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
 - (void)updateStickerPacksWithType:(NSString*)type completion:(void(^)(NSArray *stickerPacks))completion {
     
     __weak typeof(self) weakSelf = self;
-
+    
     [self.apiService getStickersPacksForUserWithSuccess:^(id response,
-                                                           NSTimeInterval lastModifiedDate) {
+                                                          NSTimeInterval lastModifiedDate) {
         
         NSArray* serializedObjects = [weakSelf.serializer serializeStickerPacks:response[@"data"]];
-        if (lastModifiedDate != [weakSelf lastModifiedDate]) {
-            [weakSelf.cacheEntity saveStickerPacks:serializedObjects];
-            [weakSelf setLastModifiedDate:lastModifiedDate];
-        }
+        // if (lastModifiedDate != [weakSelf lastModifiedDate]) {
+        [weakSelf.cacheEntity saveStickerPacks:serializedObjects];
+        [weakSelf setLastModifiedDate:lastModifiedDate];
+        //  }
         STKStickerPackObject *recentPack = weakSelf.cacheEntity.recentStickerPack;
         NSArray *packsWithRecent = nil;
         if (recentPack) {
@@ -174,8 +208,8 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
             completion(nil);
         }
     }];
-
-
+    
+    
 }
 #pragma mark ----------
 
@@ -222,8 +256,8 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
 #pragma mark Check save delete
 
 - (BOOL)isPackDownloaded:(NSString*)packName {
- 
-   return [self.cacheEntity isStickerPackDownloaded:packName];
+    
+    return [self.cacheEntity isStickerPackDownloaded:packName];
 }
 
 - (void)saveStickerPack:(STKStickerPackObject *)stickerPack {
