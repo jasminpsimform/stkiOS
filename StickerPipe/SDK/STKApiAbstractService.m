@@ -15,7 +15,7 @@
 #import "NSString+MD5.h"
 
 
-NSString *const STKApiVersion = @"v1";
+NSString *const STKApiVersion = @"v2";
 //NSString *const STKBaseApiUrl = @"https://api.stickerpipe.com/api";
 NSString *const STKBaseApiUrl = @"http://work.stk.908.vc/api";
 
