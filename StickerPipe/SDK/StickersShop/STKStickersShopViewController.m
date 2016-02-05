@@ -41,6 +41,7 @@ static NSString * const mainUrl = @"http://work.stk.908.vc/api/v1/web?";
 - (void)packDownloaded:(NSNotification *)notification {
     dispatch_sync(dispatch_get_main_queue(), ^{
         [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.JsInterface.onPackDownloaded()"];
+        [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.JsInterface.reload()"];
     });
 }
 
