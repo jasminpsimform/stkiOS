@@ -12,6 +12,7 @@
 #import "STKStickersManager.h"
 #import "STKApiKeyManager.h"
 #import "STKUUIDManager.h"
+#import "STKStickersConstants.h"
 
 #import "STKStickersShopJsInterface.h"
 
@@ -32,7 +33,15 @@ static NSString * const mainUrl = @"http://work.stk.908.vc/api/v1/web?";
     [self loadStickersShop];
     [self setUpButtons];
     self.navigationController.navigationBar.tintColor = [STKUtility defaultOrangeColor];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(packDownloaded:) name:STKStickerPackDownloadedNotification object:nil];
 
+}
+
+- (void)packDownloaded:(NSNotification *)notification {
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.JsInterface.onPackDownloaded()"];
+    });
 }
 
 - (NSURLRequest *)shopRequest {
@@ -73,6 +82,7 @@ static NSString * const mainUrl = @"http://work.stk.908.vc/api/v1/web?";
 }
 
 - (void)setJSContext {
+   
     JSContext *context = [self.stickersShopWebView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
     
     [context setExceptionHandler:^(JSContext *context, JSValue *value) {
@@ -91,6 +101,7 @@ static NSString * const mainUrl = @"http://work.stk.908.vc/api/v1/web?";
 #pragma mark - UIWebviewDelegate
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    
+    NSLog(@"webview load fail!!!!");
 }
+
 @end

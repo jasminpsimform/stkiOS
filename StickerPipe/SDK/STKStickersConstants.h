@@ -14,6 +14,8 @@ extern NSString *const STKShowStickersCollectionsNotification;
 
 extern NSString *const STKStickersReorderStickersNotification;
 
+extern NSString *const STKStickerPackDownloadedNotification;
+
 extern NSString *const kLastUpdateIntervalKey;
 
 extern NSString *const kUserKeyDefaultsKey;

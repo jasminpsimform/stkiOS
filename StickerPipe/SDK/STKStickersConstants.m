@@ -17,6 +17,9 @@ NSString *const STKShowStickersCollectionsNotification =
 NSString *const STKStickersReorderStickersNotification =
     @"STKStickersReorderStickersNotification";
 
+NSString *const STKStickerPackDownloadedNotification =
+    @"STKStickerPackDownloadedNotification";
+
 NSString *const kLastUpdateIntervalKey =
     @"kLastUpdateIntervalKey";
 
