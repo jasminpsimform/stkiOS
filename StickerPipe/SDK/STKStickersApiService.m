@@ -30,11 +30,9 @@ static NSString *const packsURL = @"shop/my";
 
 
 - (void)getStickersPacksForUserWithSuccess:(void (^)(id response, NSTimeInterval lastModifiedDate))success
-                        failure:(void (^)(NSError *error))failure {
+                                   failure:(void (^)(NSError *error))failure {
     
-    NSDictionary *params = @{@"purchase_type": @"free"};
-    
-    [self.sessionManager GET:packsURL parameters:params
+    [self.sessionManager GET:packsURL parameters:nil
                      success:^(NSURLSessionDataTask *task, id responseObject) {
                          
                          NSHTTPURLResponse *response = ((NSHTTPURLResponse *)[task response]);
@@ -59,7 +57,7 @@ static NSString *const packsURL = @"shop/my";
                              });
                          }
                      }];
-
+    
 }
 
 - (void)getStickersPackWithType:(NSString*)type
@@ -70,7 +68,7 @@ static NSString *const packsURL = @"shop/my";
     if (type) {
         parameters = @{@"type" : type};
     }
-
+    
     [self.sessionManager GET:packsURL parameters:parameters
                      success:^(NSURLSessionDataTask *task, id responseObject) {
                          
@@ -78,15 +76,15 @@ static NSString *const packsURL = @"shop/my";
                          NSTimeInterval timeInterval = 0;
                          if ([response respondsToSelector:@selector(allHeaderFields)]) {
                              NSDictionary *headers = [response allHeaderFields];
-                            timeInterval = [headers[@"Last-Modified"] doubleValue];
+                             timeInterval = [headers[@"Last-Modified"] doubleValue];
                          }
-
+                         
                          if ([responseObject[@"data"] count] == 0) {
                              STKLog(@"get empty stickers pack JSON");
                          }
                          
                          if (success) {
-                            success(responseObject, timeInterval);
+                             success(responseObject, timeInterval);
                          }
                      }
                      failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -117,8 +115,8 @@ static NSString *const packsURL = @"shop/my";
 }
 
 - (void)loadStickerPackWithName:(NSString *)packName
-                       success:(void (^)(id))success
-                       failure:(void (^)(NSError *))failure
+                        success:(void (^)(id))success
+                        failure:(void (^)(NSError *))failure
 {
     NSString *route = [NSString stringWithFormat:@"packs/%@", packName];
     
