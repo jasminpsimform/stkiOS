@@ -30,8 +30,7 @@ NSString *const STKBaseApiUrl = @"http://work.stk.908.vc/api";
         
         
         AFJSONRequestSerializer *serializer = [AFJSONRequestSerializer serializer];
-        
-        [serializer setValue:[self userId] forHTTPHeaderField:@"UserID"];
+        [serializer setValue:[STKStickersManager userKey] forHTTPHeaderField:@"UserID"];
         [serializer setValue:STKApiVersion forHTTPHeaderField:@"ApiVersion"];
         [serializer setValue:@"iOS" forHTTPHeaderField:@"Platform"];
         [serializer setValue:[STKUUIDManager generatedDeviceToken] forHTTPHeaderField:@"DeviceId"];
@@ -51,14 +50,5 @@ NSString *const STKBaseApiUrl = @"http://work.stk.908.vc/api";
     
     return (locale) ? locale : language;
 }
-
-- (NSString *)userId {
-    
-    NSString *userKey = [STKStickersManager userKey];
-    NSString *hashUserKey = [[userKey stringByAppendingString:[STKApiKeyManager apiKey]] MD5Digest];
-    
-    return hashUserKey;
-}
-
 
 @end

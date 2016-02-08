@@ -13,7 +13,7 @@
 #import "STKApiKeyManager.h"
 #import "STKCoreDataService.h"
 #import "STKStickersConstants.h"
-
+#import "NSString+MD5.h"
 
 @interface STKStickersManager()
 
@@ -37,7 +37,7 @@
         };
         
         DFImageRequest *request = [DFImageRequest requestWithResource:stickerUrl targetSize:CGSizeMake(160.f, 160.f) contentMode:DFImageContentModeAspectFit options:options];
-                
+        
         DFImageTask *task =[[DFImageManager sharedManager] imageTaskForRequest:request completion:^(UIImage *image, NSDictionary *info) {
             NSError *error = info[DFImageInfoErrorKey];
             if (error) {
@@ -53,7 +53,7 @@
             if (error.code != -1) {
                 STKLog(@"Failed loading from category: %@ %@", error.localizedDescription, @"ddd");
             }
-
+            
         }];
         
         [task resume];
@@ -64,7 +64,7 @@
             failure(error, @"It's not a sticker");
         }
     }
-
+    
 }
 
 #pragma mark - Validation
@@ -90,14 +90,16 @@
 #pragma mark - User key
 
 + (void)setUserKey:(NSString *)userKey {
-    [[NSUserDefaults standardUserDefaults] setObject:userKey forKey:kUserKeyDefaultsKey];
+    
+    NSString *hashUserKey = [[userKey stringByAppendingString:[STKApiKeyManager apiKey]] MD5Digest];
+    [[NSUserDefaults standardUserDefaults] setObject:hashUserKey forKey:kUserKeyDefaultsKey];
 }
 
 + (NSString *)userKey {
     return [[NSUserDefaults standardUserDefaults] stringForKey:kUserKeyDefaultsKey];
 }
 
-#pragma mark - Localization 
+#pragma mark - Localization
 
 + (void)setLocalization:(NSString *)localization {
     [[NSUserDefaults standardUserDefaults] setObject:localization forKey:kLocalizationDefaultsKey];
