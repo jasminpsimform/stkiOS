@@ -13,6 +13,7 @@
 #import "STKApiKeyManager.h"
 #import "STKUtility.h"
 
+
 static NSString *const packsURL = @"shop/my";
 
 @implementation STKStickersApiService
@@ -119,8 +120,9 @@ static NSString *const packsURL = @"shop/my";
                         failure:(void (^)(NSError *))failure
 {
     NSString *route = [NSString stringWithFormat:@"packs/%@", packName];
-    
-    [self.sessionManager POST:route parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+    NSDictionary *params = @{@"purchase_type": @"free"};
+
+    [self.sessionManager POST:route parameters:params success:^(NSURLSessionDataTask *task, id responseObject) {
         if (success) {
             success(responseObject);
         }
