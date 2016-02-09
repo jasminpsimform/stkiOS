@@ -13,6 +13,8 @@
 #import "STKApiKeyManager.h"
 #import "STKUUIDManager.h"
 #import "STKStickersConstants.h"
+#import "STKStickersApiService.h"
+
 
 #import "STKStickersShopJsInterface.h"
 
@@ -20,9 +22,11 @@
 
 static NSString * const mainUrl = @"http://work.stk.908.vc/api/v1/web?";
 
-@interface STKStickersShopViewController () <UIWebViewDelegate>
+@interface STKStickersShopViewController () <UIWebViewDelegate, STKStickersShopJsInterfaceDelegate>
 
 @property (nonatomic, strong) STKStickersShopJsInterface *jsInterface;
+@property(nonatomic, strong) STKStickersApiService *apiService;
+
 @end
 
 @implementation STKStickersShopViewController
@@ -34,12 +38,12 @@ static NSString * const mainUrl = @"http://work.stk.908.vc/api/v1/web?";
     [self setUpButtons];
     self.navigationController.navigationBar.tintColor = [STKUtility defaultOrangeColor];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(packDownloaded:) name:STKStickerPackDownloadedNotification object:nil];
-
+    self.jsInterface.delegate = self;
+    self.apiService = [STKStickersApiService new];
 }
 
-- (void)packDownloaded:(NSNotification *)notification {
-    dispatch_sync(dispatch_get_main_queue(), ^{
+- (void)packDownloaded {
+    dispatch_async(dispatch_get_main_queue(), ^{
         [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.JsInterface.onPackDownloaded()"];
         [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.JsInterface.reload()"];
     });
@@ -83,7 +87,7 @@ static NSString * const mainUrl = @"http://work.stk.908.vc/api/v1/web?";
 }
 
 - (void)setJSContext {
-   
+    
     JSContext *context = [self.stickersShopWebView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
     
     [context setExceptionHandler:^(JSContext *context, JSValue *value) {
@@ -105,4 +109,29 @@ static NSString * const mainUrl = @"http://work.stk.908.vc/api/v1/web?";
     NSLog(@"webview load fail!!!!");
 }
 
+#pragma mark - STKStickersShopJsInterfaceDelegate
+
+- (void)showCollectionsView {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self dismissViewControllerAnimated:YES completion:^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:STKShowStickersCollectionsNotification object:self];
+        }];
+    });
+}
+
+- (void)purchasePack:(NSString *)packTitle withName:(NSString *)packName andPrice:(NSString *)packPrice {
+    __weak typeof(self) wself = self;
+    
+    [self.apiService loadStickerPackWithName:packName success:^(id response) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:STKStickerPackDownloadedNotification object:self userInfo:@{@"packDict": response[@"data"]}];
+        [wself packDownloaded];
+        
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
+- (void)setInProgress:(BOOL)show {
+    self.activity.hidden = !show;
+}
 @end

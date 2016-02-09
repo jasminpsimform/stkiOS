@@ -8,44 +8,25 @@
 
 #import "STKStickersShopJsInterface.h"
 #import "STKStickersConstants.h"
-#import "STKStickersApiService.h"
-#import "STKStickersConstants.h"
-
-@interface STKStickersShopJsInterface()
-
-@property(nonatomic, strong) STKStickersApiService *apiService;
-
-@end
 
 @implementation STKStickersShopJsInterface
 
-- (id)init {
-    self = [super init];
-    if (self) {
-        self.apiService = [STKStickersApiService new];
-    }
-    return self;
-}
-
 - (void)showCollections {
-//    [[NSNotificationCenter defaultCenter] postNotificationName:STKShowStickersCollectionsNotification object:self];
-    NSLog(@"showCollections!!!!!!!!!!");
+    if ([self.delegate respondsToSelector:@selector(showCollectionsView)]) {
+        [self.delegate showCollectionsView];
+    }
 }
 
 - (void)purchasePack:(NSString *)packTitle :(NSString *)packName :(NSString *)packPrice {
-    NSLog(@"purchasePack");
-    [self.apiService loadStickerPackWithName:packName success:^(id response) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:STKStickerPackDownloadedNotification object:self userInfo:@{@"packDict": response[@"data"]}];
-        
-    } failure:^(NSError *error) {
-        
-    }];
-    
-    
+    if ([self.delegate respondsToSelector:@selector(purchasePack: withName: andPrice:)]) {
+        [self.delegate purchasePack:packTitle withName:packName andPrice:packPrice];
+    }
 }
 
 - (void)setInProgress:(BOOL)show {
-    NSLog(@"setInProgress %d", show);
+    if ([self.delegate respondsToSelector:@selector(setInProgress:)]) {
+        [self.delegate setInProgress:show];
+    }
 }
 
 @end

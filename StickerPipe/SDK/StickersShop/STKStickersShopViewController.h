@@ -11,4 +11,5 @@
 @interface STKStickersShopViewController : UIViewController
 
 @property (nonatomic, weak) IBOutlet UIWebView *stickersShopWebView;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *activity;
 @end

@@ -17,6 +17,19 @@
 
 @end
 
+@protocol STKStickersShopJsInterfaceDelegate <NSObject>
+@required
+- (void)showCollectionsView;
+- (void)purchasePack:(NSString *)packTitle withName:(NSString *)packName
+            andPrice:(NSString *)packPrice;
+- (void)setInProgress:(BOOL)show;
+
+@end
+
 @interface STKStickersShopJsInterface : NSObject <IosJs>
+
+@property (nonatomic, strong) id <STKStickersShopJsInterfaceDelegate> delegate;
+
+
 
 @end
