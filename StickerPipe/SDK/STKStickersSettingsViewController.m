@@ -61,7 +61,7 @@
     
     self.dataSource.moveBlock = ^(NSIndexPath *fromIndexPath, NSIndexPath *toIndexPath) {
       
-        [wself reorderPacks];
+       // [wself reorderPacks];
         
     };
 
@@ -121,16 +121,22 @@
 
 - (IBAction)editAction:(id)sender {
     [self.tableView setEditing:!self.tableView.editing animated:YES];
+    self.editBarButton.title = (self.tableView.isEditing) ? @"Done" : @"Edit";
     if (self.tableView.editing) {
         self.editBarButton.title = @"Done";
     } else {
         self.editBarButton.title = @"Edit";
-        [[NSNotificationCenter defaultCenter]postNotificationName:STKStickersReorderStickersNotification object:self];
+          [self reorderPacks];
+      
     }
 }
 
 - (IBAction)closeAction:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        if (!self.tableView.isEditing) {
+            [[NSNotificationCenter defaultCenter]postNotificationName:STKStickersReorderStickersNotification object:self];
+        }
+    } ];
 }
 
 
