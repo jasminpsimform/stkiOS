@@ -75,6 +75,23 @@ static NSString *const recentName = @"Recent";
     }];
 }
 
+- (void)saveStickerPack:(STKStickerPackObject *)stickerPack {
+    
+    STKStickerPack *stickerModel = [self stickerModelFormStickerObject:stickerPack context:self.backgroundContext];
+    for (STKStickerObject *stickerObject in stickerPack.stickers) {
+        STKSticker *sticker = [self stickerModelWithID:stickerObject.stickerID context:self.backgroundContext];
+        sticker.stickerName = stickerObject.stickerName;
+        sticker.stickerID = stickerObject.stickerID;
+        sticker.stickerMessage = stickerObject.stickerMessage;
+        sticker.usedCount = stickerObject.usedCount;
+        if (sticker) {
+            [stickerModel addStickersObject:sticker];
+        }
+    }
+    
+    [self.backgroundContext save:nil];
+    
+}
 
 - (void)saveDisabledStickerPack:(STKStickerPackObject *)stickerPack {
 

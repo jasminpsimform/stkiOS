@@ -15,6 +15,8 @@
 
 - (void)saveStickerPacks:(NSArray*) stickerPacks;
 
+- (void)saveStickerPack:(STKStickerPackObject *)stickerPack;
+
 - (void)saveDisabledStickerPack:(STKStickerPackObject*)stickerPack;
 
 - (void)updateStickerPack:(STKStickerPackObject *)stickerPackObject;
