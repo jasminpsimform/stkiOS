@@ -22,6 +22,8 @@
 
 static NSString * const mainUrl = @"http://work.stk.908.vc/api/v1/web?";
 
+static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/stickerPipeStore.js";
+
 @interface STKStickersShopViewController () <UIWebViewDelegate, STKStickersShopJsInterfaceDelegate>
 
 @property (nonatomic, strong) STKStickersShopJsInterface *jsInterface;
@@ -50,9 +52,8 @@ static NSString * const mainUrl = @"http://work.stk.908.vc/api/v1/web?";
 }
 
 - (NSURLRequest *)shopRequest {
-    NSString *uri = @"http://demo.stickerpipe.com/work/demo/libs/store/js/stickerPipeStore.js";
     
-    NSString *urlstr = [NSString stringWithFormat:@"%@uri=%@&apiKey=%@&platform=IOS&userId=%@&density=%@&priceB=0.99%20%24&priceC=1.99%20%24", mainUrl, uri, [STKApiKeyManager apiKey], [STKStickersManager userKey], [STKUtility scaleString]];
+    NSString *urlstr = [NSString stringWithFormat:@"%@uri=%@&apiKey=%@&platform=IOS&userId=%@&density=%@&priceB=0.99&priceC=1.99", mainUrl, uri, [STKApiKeyManager apiKey], [STKStickersManager userKey], [STKUtility scaleString]];
     
     NSURL *url =[NSURL URLWithString:urlstr];
     return [NSURLRequest requestWithURL:url];
