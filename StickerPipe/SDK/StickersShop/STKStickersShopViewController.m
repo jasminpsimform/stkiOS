@@ -26,8 +26,9 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 
 @interface STKStickersShopViewController () <UIWebViewDelegate, STKStickersShopJsInterfaceDelegate>
 
-@property (nonatomic, strong) STKStickersShopJsInterface *jsInterface;
+@property(nonatomic, strong) STKStickersShopJsInterface *jsInterface;
 @property(nonatomic, strong) STKStickersApiService *apiService;
+@property(nonatomic, strong) UIAlertController *alertController;
 
 @end
 
@@ -42,6 +43,8 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     
     self.jsInterface.delegate = self;
     self.apiService = [STKStickersApiService new];
+    
+    [self initErrorAlert];
 }
 
 - (void)packDownloaded {
@@ -65,7 +68,7 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
         return HTML;
     } failure:^(NSError * error) {
         NSLog(@"%@", error.localizedDescription);
-        
+        [self showError];
     }];
 }
 
@@ -108,6 +111,7 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     NSLog(@"webview load fail!!!!");
+    [self showError];
 }
 
 #pragma mark - STKStickersShopJsInterfaceDelegate
@@ -135,4 +139,27 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 - (void)setInProgress:(BOOL)show {
     self.activity.hidden = !show;
 }
+
+#pragma mark - AlertController
+
+- (void)initErrorAlert {
+    self.alertController = [UIAlertController alertControllerWithTitle:@"No internet connection" message:@"Reload?" preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
+    [self.alertController addAction:cancelAction];
+    
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self loadStickersShop];
+    }];
+    [self.alertController addAction:okAction];
+}
+
+- (void)showError {
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8) {
+        [self presentViewController:self.alertController animated:YES completion:nil];
+    }
+}
+
 @end
