@@ -12,9 +12,9 @@
 #import "STKStickersSerializer.h"
 #import "STKStickerPackObject.h"
 #import "STKUtility.h"
+#import "STKStickersConstants.h"
 
 static NSString *const kLastModifiedDateKey = @"kLastModifiedDateKey";
-static NSString *const kLastUpdateIntervalKey = @"kLastUpdateIntervalKey";
 static NSString *const recentName = @"Recent";
 static NSUInteger const firstNewStickers = 3;
 static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
@@ -38,8 +38,16 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
         self.cacheEntity = [[STKStickersCache alloc] init];
         self.serializer = [[STKStickersSerializer alloc] init];
         self.queue = dispatch_queue_create("com.stickers.service", DISPATCH_QUEUE_SERIAL);
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(packDownloaded:) name:STKStickerPackDownloadedNotification object:nil];
     }
     return self;
+}
+
+- (void)packDownloaded:(NSNotification *)notification {
+    NSDictionary *pack = notification.userInfo[@"packDict"];
+    STKStickerPackObject *object = [self.serializer serializeStickerPack:pack];
+    [self.stickersArray arrayByAddingObject:object];
+    [self.cacheEntity saveStickerPack:object]; 
 }
 
 #pragma mark - Get sticker packs
