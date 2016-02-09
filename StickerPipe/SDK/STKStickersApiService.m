@@ -133,4 +133,23 @@ static NSString *const packsURL = @"shop/my";
     }];
 }
 
+
+- (void)deleteStickerPackWithName:(NSString *)packName
+                        success:(void (^)(id))success
+                        failure:(void (^)(NSError *))failure
+{
+    NSString *route = [NSString stringWithFormat:@"packs/%@", packName];
+    
+    [self.sessionManager DELETE:route parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+}
+
+
 @end

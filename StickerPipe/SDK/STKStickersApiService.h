@@ -21,4 +21,8 @@
                         success:(void (^)(id))success
                         failure:(void (^)(NSError *))failure;
 
+- (void)deleteStickerPackWithName:(NSString *)packName
+                          success:(void (^)(id))success
+                          failure:(void (^)(NSError *))failure;
+
 @end
