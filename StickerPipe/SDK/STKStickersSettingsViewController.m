@@ -8,6 +8,7 @@
 
 #import "STKStickersSettingsViewController.h"
 #import "STKStickersEntityService.h"
+#import "STKStickersApiService.h"
 #import "STKTableViewDataSource.h"
 #import "STKStickerPackObject.h"
 #import "STKUtility.h"
@@ -20,6 +21,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) STKStickersEntityService *service;
+@property (strong, nonatomic) STKStickersApiService *apiService;
 @property (strong, nonatomic) STKTableViewDataSource *dataSource;
 @property (strong, nonatomic) UIBarButtonItem *editBarButton;
 
@@ -38,6 +40,7 @@
     }];
     
     self.service = [STKStickersEntityService new];
+    self.apiService = [STKStickersApiService new];
     
     self.tableView.dataSource = self.dataSource;
     self.tableView.delegate = self;
@@ -47,24 +50,28 @@
     [self updateStickerPacks];
     
     [self setUpButtons];
-
-
+    
+    
     
     self.navigationController.navigationBar.tintColor = [STKUtility defaultOrangeColor];
     
     __weak typeof(self) wself = self;
     
     self.dataSource.deleteBlock = ^(NSIndexPath *indexPath,STKStickerPackObject* item) {
-        [wself.service togglePackDisabling:item];
-        [wself updateStickerPacks];
+        [wself.apiService deleteStickerPackWithName:item.packName success:^(id response) {
+            [wself.service togglePackDisabling:item];
+            [wself updateStickerPacks];
+        } failure:^(NSError *error) {
+            
+        }];
     };
     
     self.dataSource.moveBlock = ^(NSIndexPath *fromIndexPath, NSIndexPath *toIndexPath) {
-      
+        
         [wself reorderPacks];
         
     };
-
+    
 }
 
 - (NSUInteger)supportedInterfaceOrientations {
@@ -83,7 +90,7 @@
     self.editBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editAction:)];
     
     self.navigationItem.rightBarButtonItem = self.editBarButton;
-
+    
 }
 
 - (void) reorderPacks {
@@ -120,7 +127,7 @@
 
 - (IBAction)editAction:(id)sender {
     [self.tableView setEditing:!self.tableView.editing animated:YES];
-    self.editBarButton.title = (self.tableView.editing) ? @"Done" : @"Edit";    
+    self.editBarButton.title = (self.tableView.editing) ? @"Done" : @"Edit";
 }
 
 - (IBAction)closeAction:(id)sender {
