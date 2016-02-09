@@ -78,6 +78,7 @@ static NSString *const recentName = @"Recent";
 - (void)saveStickerPack:(STKStickerPackObject *)stickerPack {
     
     STKStickerPack *stickerModel = [self stickerModelFormStickerObject:stickerPack context:self.backgroundContext];
+    stickerModel.isNew = @YES;
     for (STKStickerObject *stickerObject in stickerPack.stickers) {
         STKSticker *sticker = [self stickerModelWithID:stickerObject.stickerID context:self.backgroundContext];
         sticker.stickerName = stickerObject.stickerName;
