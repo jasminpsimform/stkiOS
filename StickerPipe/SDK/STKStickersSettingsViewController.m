@@ -116,21 +116,16 @@
     
 }
 
-
 #pragma mark - Actions
 
 - (IBAction)editAction:(id)sender {
     [self.tableView setEditing:!self.tableView.editing animated:YES];
-    if (self.tableView.editing) {
-        self.editBarButton.title = @"Done";
-    } else {
-        self.editBarButton.title = @"Edit";
-        [[NSNotificationCenter defaultCenter]postNotificationName:STKStickersReorderStickersNotification object:self];
-    }
+    self.editBarButton.title = (self.tableView.editing) ? @"Done" : @"Edit";    
 }
 
 - (IBAction)closeAction:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+    [[NSNotificationCenter defaultCenter]postNotificationName:STKStickersReorderStickersNotification object:self];
 }
 
 
