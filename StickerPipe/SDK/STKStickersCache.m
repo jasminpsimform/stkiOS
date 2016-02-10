@@ -212,6 +212,7 @@ static NSString *const recentName = @"Recent";
     stickerPack.isNew = stickerPackObject.isNew;
     stickerPack.bannerUrl = stickerPackObject.bannerUrl;
     stickerPack.productID = stickerPackObject.productID;
+    stickerPack.order = stickerPackObject.order;
     return stickerPack;
 }
 

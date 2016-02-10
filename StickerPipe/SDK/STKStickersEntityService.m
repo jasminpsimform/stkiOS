@@ -46,6 +46,12 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
 - (void)packDownloaded:(NSNotification *)notification {
     NSDictionary *pack = notification.userInfo[@"packDict"];
     STKStickerPackObject *object = [self.serializer serializeStickerPack:pack];
+    object.order = 0;
+    for (int i = 1; i < self.stickersArray.count - 1; i++) {
+        STKStickerPackObject *pack = self.stickersArray[i];
+        pack.order = @(pack.order.integerValue + 1);
+    }
+    
     [self.stickersArray arrayByAddingObject:object];
     [self.cacheEntity saveStickerPack:object]; 
 }
@@ -239,7 +245,6 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
     pack.disabled = @(!status);
     
     [self.cacheEntity markStickerPack:pack disabled:!status];
-    
 }
 
 - (BOOL)hasRecentStickers {
