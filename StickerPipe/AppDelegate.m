@@ -38,6 +38,9 @@ NSString *const testIOSKey = @"f06190d9d63cd2f4e7b124612f63c56c";
     [STKStickersManager setStartTimeInterval];
     [STKStickersManager setUserKey:[self userId]];
     
+    [STKStickersManager setPriceBWithLabel:@"0.99%20USD" andValue:0.99f];
+    [STKStickersManager setPriceCwithLabel:@"1.99%20USD" andValue:1.99f];
+    
     return YES;
 }
 

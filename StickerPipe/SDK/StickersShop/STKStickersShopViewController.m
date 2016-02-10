@@ -56,7 +56,7 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 
 - (NSURLRequest *)shopRequest {
     
-    NSString *urlstr = [NSString stringWithFormat:@"%@uri=%@&apiKey=%@&platform=IOS&userId=%@&density=%@&priceB=0.99&priceC=1.99", mainUrl, uri, [STKApiKeyManager apiKey], [STKStickersManager userKey], [STKUtility scaleString]];
+    NSString *urlstr = [NSString stringWithFormat:@"%@uri=%@&apiKey=%@&platform=IOS&userId=%@&density=%@&priceB=%@&priceC=%@", mainUrl, uri, [STKApiKeyManager apiKey], [STKStickersManager userKey], [STKUtility scaleString], [STKStickersManager priceBLabel], [STKStickersManager priceCLabel]];
     
     NSURL *url =[NSURL URLWithString:urlstr];
     return [NSURLRequest requestWithURL:url];
@@ -67,7 +67,6 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     [self.stickersShopWebView loadRequest:[self shopRequest] progress:nil success:^NSString * _Nonnull(NSHTTPURLResponse * _Nonnull response, NSString * _Nonnull HTML) {
         return HTML;
     } failure:^(NSError * error) {
-        NSLog(@"%@", error.localizedDescription);
         [self showError];
     }];
 }
@@ -110,7 +109,6 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 #pragma mark - UIWebviewDelegate
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    NSLog(@"webview load fail!!!!");
     [self showError];
 }
 
