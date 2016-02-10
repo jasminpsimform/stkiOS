@@ -72,25 +72,16 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 {
     self = [super init];
     if (self) {
-        self.internalStickersView = [[[NSBundle mainBundle] loadNibNamed:@"STKStickersView" owner:self options:nil] firstObject];
-        self.internalStickersView.backgroundColor = [UIColor whiteColor];
         
         self.stickersService = [STKStickersEntityService new];
-        
-        
-        self.internalStickersView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-        self.internalStickersView.clipsToBounds = YES;
-        
-        //iOS 7 FIX
-        if (CGRectEqualToRect(self.internalStickersView.frame, CGRectZero) && [UIDevice currentDevice].systemVersion.floatValue < 8.0) {
-            self.internalStickersView.frame = CGRectMake(1, 1, 1, 1);
-        }
+        [self setupInternalStickersView];
         
         [self loadStickerPacks];
         
         [self initStickerHeader];
         [self initStickersCollectionView];
-        [self initCollectionsButton];
+        [self initHeaderButton:self.collectionsButton];
+        [self initHeaderButton:self.stickersShopButton];
         
         [self reloadStickers];
         
@@ -152,10 +143,11 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     self.stickersDelegateManager.collectionView = self.stickersCollectionView;
 }
 
-- (void)initCollectionsButton {
-    [self.collectionsButton setTintColor:[STKUtility defaultOrangeColor]];
-    self.collectionsButton.backgroundColor = self.headerBackgroundColor ? self.headerBackgroundColor : [STKUtility defaultGreyColor];
+- (void)initHeaderButton:(UIButton *)button {
+    [button setTintColor:[STKUtility defaultOrangeColor]];
+    button.backgroundColor = self.headerBackgroundColor ? self.headerBackgroundColor : [STKUtility defaultGreyColor];
 }
+
 
 - (void) initStickerHeader {
     self.stickersHeaderDelegateManager = [STKStickerHeaderDelegateManager new];
@@ -196,7 +188,8 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     }
     [self initStickerHeader];
     [self initStickersCollectionView];
-    [self initCollectionsButton];
+    [self initHeaderButton:self.collectionsButton];
+    [self initHeaderButton:self.stickersShopButton];
     
 }
 
