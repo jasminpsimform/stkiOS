@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="STKStickerController">
@@ -44,17 +44,6 @@
                         <action selector="collectionsButtonAction:" destination="-1" eventType="touchUpInside" id="fb8-gD-B28"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7jD-2I-ugX">
-                    <rect key="frame" x="276" y="0.0" width="44" height="44"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="44" id="ZCo-te-txb"/>
-                        <constraint firstAttribute="width" constant="44" id="pWk-rG-lJV"/>
-                    </constraints>
-                    <state key="normal" title="+"/>
-                    <connections>
-                        <action selector="stickersShopButtonAction:" destination="-1" eventType="touchUpInside" id="w6a-AE-gf1"/>
-                    </connections>
-                </button>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" delaysContentTouches="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Ldw-kQ-X5c">
                     <rect key="frame" x="0.0" y="44" width="320" height="276"/>
                     <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
@@ -65,6 +54,18 @@
                         <inset key="sectionInset" minX="16" minY="12" maxX="16" maxY="12"/>
                     </collectionViewFlowLayout>
                 </collectionView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7jD-2I-ugX">
+                    <rect key="frame" x="276" y="0.0" width="44" height="44"/>
+                    <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="ZCo-te-txb"/>
+                        <constraint firstAttribute="width" constant="44" id="pWk-rG-lJV"/>
+                    </constraints>
+                    <state key="normal" image="STKShopIcon"/>
+                    <connections>
+                        <action selector="stickersShopButtonAction:" destination="-1" eventType="touchUpInside" id="w6a-AE-gf1"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -85,5 +86,6 @@
     </objects>
     <resources>
         <image name="STKMoreIcon" width="22" height="22"/>
+        <image name="STKShopIcon" width="21" height="21"/>
     </resources>
 </document>
