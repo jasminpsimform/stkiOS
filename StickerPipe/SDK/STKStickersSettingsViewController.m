@@ -47,11 +47,7 @@
     
     self.navigationItem.title = @"Stickers";
     
-    [self updateStickerPacks];
-    
     [self setUpButtons];
-    
-    
     
     self.navigationController.navigationBar.tintColor = [STKUtility defaultOrangeColor];
     
@@ -72,6 +68,11 @@
         
     };
     
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self updateStickerPacks];
 }
 
 - (NSUInteger)supportedInterfaceOrientations {
