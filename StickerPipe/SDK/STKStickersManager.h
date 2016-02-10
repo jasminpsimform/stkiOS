@@ -29,5 +29,15 @@
 
 + (void)setStartTimeInterval;
 
++ (void)setPriceBWithLabel:(NSString *)priceLabel
+                  andValue:(CGFloat)priceValue;
 
++ (NSString *)priceBLabel;
++ (CGFloat)priceBValue;
+
++ (void)setPriceCwithLabel:(NSString *)priceLabel
+                  andValue:( CGFloat)priceValue;
+
++ (NSString *)priceCLabel;
++ (CGFloat)priceCValue;
 @end

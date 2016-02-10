@@ -22,6 +22,14 @@ extern NSString *const kUserKeyDefaultsKey;
 
 extern NSString *const kLocalizationDefaultsKey;
 
+extern NSString *const kPriceBLabel;
+
+extern NSString *const kPriceBValue;
+
+extern NSString *const kPriceCLabel;
+
+extern NSString *const kPriceCValue;
+
 @interface STKStickersConstants : NSObject
 
 @end

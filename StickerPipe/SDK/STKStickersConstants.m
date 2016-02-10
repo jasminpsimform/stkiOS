@@ -29,6 +29,19 @@ NSString *const kUserKeyDefaultsKey =
 NSString *const kLocalizationDefaultsKey =
 @"kLocalizationDefaultsKey";
 
+NSString *const kPriceBLabel =
+@"kPriceBLabel";
+
+NSString *const kPriceBValue =
+@"kPriceBValue";
+
+NSString *const kPriceCLabel =
+@"kPriceBLabel";
+
+NSString *const kPriceCValue =
+@"kPriceBValue";
+
+
 @implementation STKStickersConstants
 
 @end

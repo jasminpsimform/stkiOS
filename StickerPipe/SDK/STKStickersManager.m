@@ -117,4 +117,37 @@
     [defaults synchronize];
 }
 
+#pragma mark - Prices
+
++ (void)setPriceBWithLabel:(NSString *)priceLabel
+        andValue:(CGFloat)priceValue {
+    [[NSUserDefaults standardUserDefaults] setObject:priceLabel forKey:kPriceBLabel];
+    [[NSUserDefaults standardUserDefaults] setFloat:priceValue forKey:kPriceBValue];
+}
+
++ (NSString *)priceBLabel {
+    return [[NSUserDefaults standardUserDefaults] stringForKey:kPriceBLabel];
+}
+
++ (CGFloat)priceBValue {
+    return [[NSUserDefaults standardUserDefaults] floatForKey:kPriceBValue];
+}
+
++ (void)setPriceCwithLabel:(NSString *)priceLabel
+        andValue:(CGFloat)priceValue {
+    [[NSUserDefaults standardUserDefaults] setObject:priceLabel forKey:kPriceCLabel];
+    [[NSUserDefaults standardUserDefaults] setFloat:priceValue forKey:kPriceCValue];
+}
+
++ (NSString *)priceCLabel {
+    NSString *s = [[NSUserDefaults standardUserDefaults] stringForKey:kPriceCLabel];
+    
+    return [[NSUserDefaults standardUserDefaults] stringForKey:kPriceCLabel];
+}
+
++ (CGFloat)priceCValue {
+    return [[NSUserDefaults standardUserDefaults] floatForKey:kPriceCValue];
+}
+
+
 @end
