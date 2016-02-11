@@ -55,8 +55,14 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 }
 
 - (NSURLRequest *)shopRequest {
+    NSMutableString *urlstr = [NSMutableString stringWithFormat:@"%@uri=%@&apiKey=%@&platform=IOS&userId=%@&density=%@&priceB=%@&priceC=%@#", mainUrl, uri, [STKApiKeyManager apiKey], [STKStickersManager userKey], [STKUtility scaleString], [STKStickersManager priceBLabel],
+                        [STKStickersManager priceCLabel]];
     
-    NSString *urlstr = [NSString stringWithFormat:@"%@uri=%@&apiKey=%@&platform=IOS&userId=%@&density=%@&priceB=%@&priceC=%@", mainUrl, uri, [STKApiKeyManager apiKey], [STKStickersManager userKey], [STKUtility scaleString], [STKStickersManager priceBLabel], [STKStickersManager priceCLabel]];
+    if (self.packName) {
+        [urlstr appendString:[NSString stringWithFormat:@"packs/%@", self.packName]];
+    } else {
+         [urlstr appendString:@"store"];
+    }
     
     NSURL *url =[NSURL URLWithString:urlstr];
     return [NSURLRequest requestWithURL:url];

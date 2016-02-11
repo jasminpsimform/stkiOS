@@ -13,7 +13,8 @@
 #import "STKStickerPackObject.h"
 #import "STKUtility.h"
 #import "STKStickerSettingsCell.h"
-#import "STKPackDescriptionController.h"
+
+#import "STKStickersShopViewController.h"
 #import "STKStickersConstants.h"
 
 
@@ -117,9 +118,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     STKStickerPackObject *stickerPack = [self.dataSource itemAtIndexPath:indexPath];
-    STKPackDescriptionController *descriptionController = [[STKPackDescriptionController alloc] initWithNibName:@"STKPackDescriptionController" bundle:nil];
-    descriptionController.stickerMessage = [stickerPack.stickers.firstObject stickerMessage];
-    [self.navigationController pushViewController:descriptionController animated:YES];
+    
+    STKStickersShopViewController *shopViewController = [[STKStickersShopViewController alloc] initWithNibName:@"STKStickersShopViewController" bundle:nil];
+    shopViewController.packName = stickerPack.packName;
+    [self.navigationController pushViewController:shopViewController animated:YES];
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
 }

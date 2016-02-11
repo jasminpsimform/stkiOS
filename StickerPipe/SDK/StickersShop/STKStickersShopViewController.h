@@ -12,4 +12,6 @@
 
 @property (nonatomic, weak) IBOutlet UIWebView *stickersShopWebView;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *activity;
+
+@property (nonatomic, strong) NSString *packName;
 @end
