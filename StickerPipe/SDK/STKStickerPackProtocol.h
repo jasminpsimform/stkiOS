@@ -20,6 +20,8 @@
 
 @property (nonatomic, strong) NSNumber *price;
 
+@property (nonatomic, strong) NSString *pricePoint;
+
 @property (nonatomic, strong) NSArray *stickers;
 
 @property (nonatomic, strong) NSNumber *disabled;

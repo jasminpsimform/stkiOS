@@ -14,6 +14,7 @@ extern const struct STKStickerPackAttributes {
 	__unsafe_unretained NSString *packName;
 	__unsafe_unretained NSString *packTitle;
 	__unsafe_unretained NSString *price;
+    __unsafe_unretained NSString *pricePoint;
 	__unsafe_unretained NSString *productID;
 } STKStickerPackAttributes;
 
@@ -83,6 +84,8 @@ extern const struct STKStickerPackRelationships {
 @property (nonatomic, strong) NSString* packTitle;
 
 //- (BOOL)validatePackTitle:(id*)value_ error:(NSError**)error_;
+
+@property (nonatomic, strong) NSString* pricePoint;
 
 @property (nonatomic, strong) NSNumber* price;
 
@@ -157,6 +160,9 @@ extern const struct STKStickerPackRelationships {
 
 - (NSString*)primitivePackTitle;
 - (void)setPrimitivePackTitle:(NSString*)value;
+
+- (NSString*)primitivePricePoint;
+- (void)setPrimitivePricePoint:(NSString*)value;
 
 - (NSNumber*)primitivePrice;
 - (void)setPrimitivePrice:(NSNumber*)value;

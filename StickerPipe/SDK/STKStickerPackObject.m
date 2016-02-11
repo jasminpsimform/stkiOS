@@ -27,6 +27,7 @@
         self.packName = packName;
         self.packTitle = serverResponse[@"title"];
         self.packID = serverResponse[@"pack_id"];
+        self.pricePoint = serverResponse[@"pricepoint"];
         self.price = serverResponse[@"price"];
         self.packDescription = serverResponse[@"description"];
         self.productID = serverResponse[@"product_id"];
@@ -54,6 +55,7 @@
         self.packName = stickerPack.packName;
         self.packTitle = stickerPack.packTitle;
         self.packID = stickerPack.packID;
+        self.pricePoint = stickerPack.pricePoint;
         self.price = stickerPack.price;
         self.packDescription = stickerPack.packDescription;
         self.disabled = stickerPack.disabled;
