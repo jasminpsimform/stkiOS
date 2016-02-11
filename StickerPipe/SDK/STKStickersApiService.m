@@ -16,6 +16,8 @@
 
 static NSString *const packsURL = @"shop/my";
 
+
+
 @implementation STKStickersApiService
 
 - (instancetype)init
@@ -115,13 +117,13 @@ static NSString *const packsURL = @"shop/my";
     }];
 }
 
-- (void)loadStickerPackWithName:(NSString *)packName
+- (void)loadStickerPackWithName:(NSString *)packName andPricePoint:(NSString *)pricePoint
                         success:(void (^)(id))success
                         failure:(void (^)(NSError *))failure
 {
     NSString *route = [NSString stringWithFormat:@"packs/%@", packName];
-    NSDictionary *params = @{@"purchase_type": @"free"};
-
+    NSDictionary *params = @{@"purchase_type": [self purchaseType:pricePoint]};
+    
     [self.sessionManager POST:route parameters:params success:^(NSURLSessionDataTask *task, id responseObject) {
         if (success) {
             success(responseObject);
@@ -133,10 +135,20 @@ static NSString *const packsURL = @"shop/my";
     }];
 }
 
+- (NSString *)purchaseType:(NSString *)pricePoint {
+    if ([pricePoint isEqualToString:@"A"]) {
+        return @"free";
+    } else if ([pricePoint isEqualToString:@"B"]) {
+        return @"subscription";
+    } else if ([pricePoint isEqualToString:@"C"]) {
+        return @"oneoff";
+    }
+    return @"";
+}
 
 - (void)deleteStickerPackWithName:(NSString *)packName
-                        success:(void (^)(id))success
-                        failure:(void (^)(NSError *))failure
+                          success:(void (^)(id))success
+                          failure:(void (^)(NSError *))failure
 {
     NSString *route = [NSString stringWithFormat:@"packs/%@", packName];
     

@@ -95,7 +95,7 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
         for (int i = 1; i < packs.count; i ++) {
             STKStickerPackObject *pack = packs[i];
             if (pack.stickers.count == 0) {
-                [self.apiService loadStickerPackWithName:pack.packName success:^(id response) {
+                [self.apiService loadStickerPackWithName:pack.packName andPricePoint:pack.pricePoint success:^(id response) {
                     NSDictionary *serverPack = response[@"data"];
                     STKStickerPackObject *object = [weakSelf.serializer serializeStickerPack:serverPack];
                     pack.stickers = object.stickers;

@@ -17,7 +17,7 @@
                        success:(void (^)(id response))success
                        failure:(void (^)(NSError *error))failure;
 
-- (void)loadStickerPackWithName:(NSString *)packName
+- (void)loadStickerPackWithName:(NSString *)packName andPricePoint:(NSString *)pricePoint
                         success:(void (^)(id))success
                         failure:(void (^)(NSError *))failure;
 

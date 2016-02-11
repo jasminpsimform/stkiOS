@@ -125,7 +125,7 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 - (void)purchasePack:(NSString *)packTitle withName:(NSString *)packName andPrice:(NSString *)packPrice {
     __weak typeof(self) wself = self;
     
-    [self.apiService loadStickerPackWithName:packName success:^(id response) {
+    [self.apiService loadStickerPackWithName:packName andPricePoint:packPrice success:^(id response) {
         [[NSNotificationCenter defaultCenter] postNotificationName:STKStickerPackDownloadedNotification object:self userInfo:@{@"packDict": response[@"data"]}];
         [wself packDownloaded];
         
