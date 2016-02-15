@@ -36,10 +36,10 @@ NSString *const kPriceBValue =
 @"kPriceBValue";
 
 NSString *const kPriceCLabel =
-@"kPriceBLabel";
+@"kPriceCLabel";
 
 NSString *const kPriceCValue =
-@"kPriceBValue";
+@"kPriceCValue";
 
 
 @implementation STKStickersConstants
