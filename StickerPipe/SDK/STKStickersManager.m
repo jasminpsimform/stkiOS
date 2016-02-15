@@ -140,14 +140,23 @@
 }
 
 + (NSString *)priceCLabel {
-    NSString *s = [[NSUserDefaults standardUserDefaults] stringForKey:kPriceCLabel];
-    
     return [[NSUserDefaults standardUserDefaults] stringForKey:kPriceCLabel];
 }
 
 + (CGFloat)priceCValue {
     return [[NSUserDefaults standardUserDefaults] floatForKey:kPriceCValue];
 }
+
+#pragma mark - Subscriber
+
++ (void)setUserIsSubscriber:(BOOL)isSubscriber {
+    [[NSUserDefaults standardUserDefaults] setBool:isSubscriber forKey:kIsSubscriber] ;
+}
+
++ (BOOL)isSubscriber {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kIsSubscriber];
+}
+
 
 
 @end

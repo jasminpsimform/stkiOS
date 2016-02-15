@@ -30,6 +30,8 @@ extern NSString *const kPriceCLabel;
 
 extern NSString *const kPriceCValue;
 
+extern NSString *const kIsSubscriber;
+
 @interface STKStickersConstants : NSObject
 
 @end

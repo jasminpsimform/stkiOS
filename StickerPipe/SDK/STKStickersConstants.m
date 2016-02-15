@@ -41,6 +41,9 @@ NSString *const kPriceCLabel =
 NSString *const kPriceCValue =
 @"kPriceCValue";
 
+NSString *const kIsSubscriber =
+@"kIsSubscriber";
+
 
 @implementation STKStickersConstants
 

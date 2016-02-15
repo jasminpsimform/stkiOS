@@ -40,4 +40,8 @@
 
 + (NSString *)priceCLabel;
 + (CGFloat)priceCValue;
+
++ (void)setUserIsSubscriber:(BOOL)isSubscriber;
++ (BOOL)isSubscriber;
+
 @end
