@@ -14,7 +14,7 @@
 #import "STKUUIDManager.h"
 #import "STKStickersConstants.h"
 #import "STKStickersApiService.h"
-
+#import "STKPurchaseService.h"
 
 #import "STKStickersShopJsInterface.h"
 
@@ -28,6 +28,7 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 
 @property(nonatomic, strong) STKStickersShopJsInterface *jsInterface;
 @property(nonatomic, strong) STKStickersApiService *apiService;
+
 @property(nonatomic, strong) UIAlertController *alertController;
 
 @end
@@ -45,6 +46,10 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     self.apiService = [STKStickersApiService new];
     
     [self initErrorAlert];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchaseFailed) name:STKPurchaseFailedNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchaseSucceeded:) name:STKPurchaseSucceededNotification object:nil];
 }
 
 - (void)packDownloaded {
@@ -56,12 +61,12 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 
 - (NSURLRequest *)shopRequest {
     NSMutableString *urlstr = [NSMutableString stringWithFormat:@"%@uri=%@&apiKey=%@&platform=IOS&userId=%@&density=%@&priceB=%@&priceC=%@#", mainUrl, uri, [STKApiKeyManager apiKey], [STKStickersManager userKey], [STKUtility scaleString], [STKStickersManager priceBLabel],
-                        [STKStickersManager priceCLabel]];
+                               [STKStickersManager priceCLabel]];
     
     if (self.packName) {
         [urlstr appendString:[NSString stringWithFormat:@"packs/%@", self.packName]];
     } else {
-         [urlstr appendString:@"store"];
+        [urlstr appendString:@"store"];
     }
     
     NSURL *url =[NSURL URLWithString:urlstr];
@@ -83,6 +88,10 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     }
     return _jsInterface;
 }
+
+//- (void)dealloc {
+//    [[NSNotificationCenter defaultCenter] removeObserver:self];
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -128,16 +137,23 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     });
 }
 
-- (void)purchasePack:(NSString *)packTitle withName:(NSString *)packName andPrice:(NSString *)packPrice {
-    __weak typeof(self) wself = self;
+- (void)purchasePack:(NSString *)packTitle withName:(NSString *)packName
+            andPrice:(NSString *)packPrice {
     
-    [self.apiService loadStickerPackWithName:packName andPricePoint:packPrice success:^(id response) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:STKStickerPackDownloadedNotification object:self userInfo:@{@"packDict": response[@"data"]}];
-        [wself packDownloaded];
-        
-    } failure:^(NSError *error) {
-        
-    }];
+    if ([packPrice isEqualToString:@"A"] || ([packPrice isEqualToString:@"B"] && [STKStickersManager isSubscriber])) {
+        __weak typeof(self) wself = self;
+             
+        [self.apiService loadStickerPackWithName:packName andPricePoint:packPrice success:^(id response) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:STKStickerPackDownloadedNotification object:self userInfo:@{@"packDict": response[@"data"]}];
+            [wself packDownloaded];
+            
+        } failure:^(NSError *error) {
+            
+        }];
+    } else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:STKPurchasePackNotification object:self userInfo:@{@"packName":packName, @"packPrice":packPrice}];
+    }
+    
 }
 
 - (void)setInProgress:(BOOL)show {
@@ -164,6 +180,18 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8) {
         [self presentViewController:self.alertController animated:YES completion:nil];
     }
+}
+
+#pragma mark - purchses
+
+- (void)purchaseSucceeded:(NSNotification *)notification {
+    
+}
+
+- (void)purchaseFailed {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.JsInterface.hideActionProgress()"];
+    });
 }
 
 @end
