@@ -11,6 +11,7 @@
 #import <AFNetworking.h>
 #import "STKUUIDManager.h"
 #import "STKApiKeyManager.h"
+#import "STKStickersManager.h"
 #import "STKUtility.h"
 
 
@@ -35,7 +36,7 @@ static NSString *const packsURL = @"shop/my";
 - (void)getStickersPacksForUserWithSuccess:(void (^)(id response, NSTimeInterval lastModifiedDate))success
                                    failure:(void (^)(NSError *error))failure {
     
-    [self.sessionManager GET:packsURL parameters:nil
+    [self.getSessionManager GET:packsURL parameters:nil
                      success:^(NSURLSessionDataTask *task, id responseObject) {
                          
                          NSHTTPURLResponse *response = ((NSHTTPURLResponse *)[task response]);
@@ -139,7 +140,7 @@ static NSString *const packsURL = @"shop/my";
     if ([pricePoint isEqualToString:@"A"]) {
         return @"free";
     } else if ([pricePoint isEqualToString:@"B"]) {
-        return @"subscription";
+        return ([STKStickersManager isSubscriber]) ? @"subscription" : @"oneoff";
     } else if ([pricePoint isEqualToString:@"C"]) {
         return @"oneoff";
     }

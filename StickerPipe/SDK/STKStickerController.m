@@ -98,15 +98,11 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
         
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateStickers) name:STKStickersReorderStickersNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showCollections) name:STKShowStickersCollectionsNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(packDownloaded:) name:STKStickerPackDownloadedNotification object:nil];
         
     }
     return self;
 }
 
-- (void)packDownloaded:(NSNotification *)notification {
-    NSLog(@"packDownloaded !!!!!!!!");
-}
 
 - (void)updateStickers {
     [self loadStickerPacks];
@@ -460,4 +456,5 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     [[STKAnalyticService sharedService] sendEventWithCategory:STKAnalyticMessageCategory action:STKAnalyticActionSend label:STKMessageTextLabel value:nil];
     
 }
+
 @end
