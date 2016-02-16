@@ -19,6 +19,7 @@ extern NSString *const STKBaseApiUrl;
 @interface STKApiAbstractService : NSObject
 
 @property (strong, nonatomic) AFHTTPSessionManager *sessionManager;
+@property (strong, nonatomic) AFHTTPSessionManager *getSessionManager;
 
 
 @end

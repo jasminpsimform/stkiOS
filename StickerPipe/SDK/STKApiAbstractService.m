@@ -27,20 +27,34 @@ NSString *const STKBaseApiUrl = @"http://work.stk.908.vc/api";
     if (self) {
         NSString *baseUrl = [NSString stringWithFormat:@"%@/%@", STKBaseApiUrl, STKApiVersion];
         self.sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseUrl]];
+        self.getSessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseUrl]];
+        self.sessionManager.requestSerializer = [self baseSerializer];
         
-        
-        AFJSONRequestSerializer *serializer = [AFJSONRequestSerializer serializer];
-        [serializer setValue:[STKStickersManager userKey] forHTTPHeaderField:@"UserID"];
-        [serializer setValue:STKApiVersion forHTTPHeaderField:@"ApiVersion"];
-        [serializer setValue:@"iOS" forHTTPHeaderField:@"Platform"];
-        [serializer setValue:[STKUUIDManager generatedDeviceToken] forHTTPHeaderField:@"DeviceId"];
-        [serializer setValue:[STKApiKeyManager apiKey] forHTTPHeaderField:@"ApiKey"];
-        [serializer setValue:[[NSBundle mainBundle] bundleIdentifier] forHTTPHeaderField:@"Package"];
-        [serializer setValue:[self localization] forHTTPHeaderField:@"Localization"];
-        
-        self.sessionManager.requestSerializer = serializer;
+        self.getSessionManager.requestSerializer = [self getSerializer];
     }
     return self;
+}
+
+- (AFJSONRequestSerializer *)baseSerializer {
+    
+    AFJSONRequestSerializer *serializer = [AFJSONRequestSerializer serializer];
+    [serializer setValue:[STKStickersManager userKey] forHTTPHeaderField:@"UserID"];
+    [serializer setValue:STKApiVersion forHTTPHeaderField:@"ApiVersion"];
+    [serializer setValue:@"iOS" forHTTPHeaderField:@"Platform"];
+    [serializer setValue:[STKUUIDManager generatedDeviceToken] forHTTPHeaderField:@"DeviceId"];
+    [serializer setValue:[STKApiKeyManager apiKey] forHTTPHeaderField:@"ApiKey"];
+    [serializer setValue:[[NSBundle mainBundle] bundleIdentifier] forHTTPHeaderField:@"Package"];
+    [serializer setValue:[self localization] forHTTPHeaderField:@"Localization"];
+    
+    return serializer;
+}
+
+- (AFJSONRequestSerializer *)getSerializer {
+    AFJSONRequestSerializer *serializer = [self baseSerializer];
+    NSNumber *isSubscriber = [NSNumber numberWithBool:[STKStickersManager isSubscriber]];
+    [serializer setValue:[isSubscriber stringValue] forHTTPHeaderField:@"is_subscriber"];
+    
+    return serializer;
 }
 
 - (NSString *)localization {
