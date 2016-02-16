@@ -14,7 +14,6 @@ typedef void (^STKPurchaseFailureBlock)(NSError *error);
 
 @interface STKPurchaseService : NSObject
 
-
 - (BOOL)isPurchasedProductWithIdentifier:(NSString *)identifier;
 
 - (void)purchaseProductWithIdentifier:(NSString *)productIdentifier
@@ -22,5 +21,8 @@ typedef void (^STKPurchaseFailureBlock)(NSError *error);
                               failure:(STKPurchaseFailureBlock)failure;
 
 - (void)requestProductsWithIdentifiers:(NSSet *)identifiers completion:(STKProductsBlock)completion;
+
+- (void)purchaseSucceedForPack:(NSString *)packName withPrice:(NSString *)packPrice;
+- (void)purchaseFailed;
 
 @end

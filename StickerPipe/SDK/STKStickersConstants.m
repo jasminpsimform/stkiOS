@@ -20,6 +20,15 @@ NSString *const STKStickersReorderStickersNotification =
 NSString *const STKStickerPackDownloadedNotification =
     @"STKStickerPackDownloadedNotification";
 
+NSString *const STKPurchasePackNotification =
+    @"STKPurchasePackNotification";
+
+NSString *const STKPurchaseSucceededNotification =
+    @"STKPurchaseSucceededNotification";
+
+NSString *const STKPurchaseFailedNotification =
+    @"STKPurchaseFailedNotification";
+
 NSString *const kLastUpdateIntervalKey =
     @"kLastUpdateIntervalKey";
 
