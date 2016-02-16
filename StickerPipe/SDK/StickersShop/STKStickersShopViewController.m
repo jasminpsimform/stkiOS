@@ -15,10 +15,13 @@
 #import "STKStickersConstants.h"
 #import "STKStickersApiService.h"
 #import "STKPurchaseService.h"
+#import "STKStickersPurchaseService.h"
+
 
 #import "STKStickersShopJsInterface.h"
 
 #import <JavaScriptCore/JavaScriptCore.h>
+#import <StoreKit/StoreKit.h>
 
 static NSString * const mainUrl = @"http://work.stk.908.vc/api/v1/web?";
 
@@ -28,6 +31,9 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 
 @property(nonatomic, strong) STKStickersShopJsInterface *jsInterface;
 @property(nonatomic, strong) STKStickersApiService *apiService;
+@property(nonatomic, strong) STKStickersPurchaseService *stickersPurchaseService;
+
+@property(nonatomic, strong) NSMutableArray *prices;
 
 @property(nonatomic, strong) UIAlertController *alertController;
 
@@ -38,7 +44,10 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self loadStickersShop];
+    self.prices = [NSMutableArray new];
+    [self loadShopPrices];
+    
+//    [self loadStickersShop];
     [self setUpButtons];
     self.navigationController.navigationBar.tintColor = [STKUtility defaultOrangeColor];
     
@@ -50,6 +59,8 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchaseFailed) name:STKPurchaseFailedNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchaseSucceeded:) name:STKPurchaseSucceededNotification object:nil];
+    
+
 }
 
 - (void)packDownloaded {
@@ -59,9 +70,25 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     });
 }
 
+- (void)loadShopPrices {
+    if ([self.stickersPurchaseService hasInAppProductIds]) {
+        [self.stickersPurchaseService requestProductsWithIdentifier:[STKStickersManager productIdentifiers] completion:^(NSArray *stickerPacks) {
+            for (SKProduct *product in stickerPacks) {
+                [self.prices addObject:[product.price stringValue]];
+            }
+            [self loadStickersShop];
+        }];
+    
+    }
+    else {
+       self.prices =  [[NSMutableArray alloc] initWithArray: @[[STKStickersManager priceBLabel], [STKStickersManager priceCLabel]]];
+          [self loadStickersShop];
+    }
+}
+
 - (NSURLRequest *)shopRequest {
-    NSMutableString *urlstr = [NSMutableString stringWithFormat:@"%@uri=%@&apiKey=%@&platform=IOS&userId=%@&density=%@&priceB=%@&priceC=%@#", mainUrl, uri, [STKApiKeyManager apiKey], [STKStickersManager userKey], [STKUtility scaleString], [STKStickersManager priceBLabel],
-                               [STKStickersManager priceCLabel]];
+    NSMutableString *urlstr = [NSMutableString stringWithFormat:@"%@uri=%@&apiKey=%@&platform=IOS&userId=%@&density=%@&priceB=%@&priceC=%@#", mainUrl, uri, [STKApiKeyManager apiKey], [STKStickersManager userKey], [STKUtility scaleString], [self.prices firstObject],
+                               [self.prices lastObject]];
     
     if (self.packName) {
         [urlstr appendString:[NSString stringWithFormat:@"packs/%@", self.packName]];
@@ -89,9 +116,15 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     return _jsInterface;
 }
 
-//- (void)dealloc {
-//    [[NSNotificationCenter defaultCenter] removeObserver:self];
-//}
+- (STKStickersPurchaseService *)stickersPurchaseService {
+    if (!_stickersPurchaseService) {
+        _stickersPurchaseService = [STKStickersPurchaseService new];
+    }
+    return _stickersPurchaseService;
+}
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -151,6 +184,7 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
             
         }];
     } else {
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:STKPurchasePackNotification object:self userInfo:@{@"packName":packName, @"packPrice":packPrice}];
     }
     

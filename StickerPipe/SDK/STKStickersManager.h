@@ -44,4 +44,7 @@
 + (void)setUserIsSubscriber:(BOOL)isSubscriber;
 + (BOOL)isSubscriber;
 
++ (void)setProductIdentifiers:(NSArray *)productIds;
++ (NSArray *)productIdentifiers;
+
 @end

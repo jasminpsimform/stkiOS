@@ -33,25 +33,28 @@ NSString *const kLastUpdateIntervalKey =
     @"kLastUpdateIntervalKey";
 
 NSString *const kUserKeyDefaultsKey =
-@"kUserKeyDefaultsKey";
+    @"kUserKeyDefaultsKey";
 
 NSString *const kLocalizationDefaultsKey =
-@"kLocalizationDefaultsKey";
+    @"kLocalizationDefaultsKey";
 
 NSString *const kPriceBLabel =
-@"kPriceBLabel";
+    @"kPriceBLabel";
 
 NSString *const kPriceBValue =
-@"kPriceBValue";
+    @"kPriceBValue";
 
 NSString *const kPriceCLabel =
-@"kPriceCLabel";
+    @"kPriceCLabel";
 
 NSString *const kPriceCValue =
-@"kPriceCValue";
+    @"kPriceCValue";
 
 NSString *const kIsSubscriber =
-@"kIsSubscriber";
+    @"kIsSubscriber";
+
+NSString *const kProductIdentifers =
+    @"kProductIdentifers";
 
 
 @implementation STKStickersConstants

@@ -157,6 +157,16 @@
     return [[NSUserDefaults standardUserDefaults] boolForKey:kIsSubscriber];
 }
 
+#pragma mark - Product ids
+
++ (void)setProductIdentifiers:(NSArray *)productIds {
+    [[NSUserDefaults standardUserDefaults] setObject:productIds forKey:kProductIdentifers];
+}
+
++ (NSArray *)productIdentifiers {
+    return [[NSUserDefaults standardUserDefaults] arrayForKey:kProductIdentifers];
+}
+
 
 
 @end
