@@ -11,6 +11,7 @@
 #import "STKUtility.h"
 #import "STKStickersManager.h"
 #import "STKApiKeyManager.h"
+#import "STKInAppProductsManager.h"
 #import "STKUUIDManager.h"
 #import "STKStickersConstants.h"
 #import "STKStickersApiService.h"
@@ -71,8 +72,8 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 }
 
 - (void)loadShopPrices {
-    if ([self.stickersPurchaseService hasInAppProductIds]) {
-        [self.stickersPurchaseService requestProductsWithIdentifier:[STKStickersManager productIdentifiers] completion:^(NSArray *stickerPacks) {
+    if ([STKInAppProductsManager hasProductIds]) {
+        [self.stickersPurchaseService requestProductsWithIdentifier:[STKInAppProductsManager productIds] completion:^(NSArray *stickerPacks) {
             for (SKProduct *product in stickerPacks) {
                 [self.prices addObject:[product.price stringValue]];
             }
@@ -188,11 +189,11 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     if ([packPrice isEqualToString:@"A"] || ([packPrice isEqualToString:@"B"] && [STKStickersManager isSubscriber])) {
         
         [self loadPackWithName:packName andPrice:packPrice];
-       
+        
     } else {
         
-        if ([self.stickersPurchaseService hasInAppProductIds]) {
-            [self.stickersPurchaseService purchaseProductWithIdentifier:packName packName:packName andPackPrice:packPrice];
+        if ([STKInAppProductsManager hasProductIds]) {
+            [self.stickersPurchaseService purchaseProductWithPackName:packName andPackPrice:packPrice];
         } else {
             [[NSNotificationCenter defaultCenter] postNotificationName:STKPurchasePackNotification object:self userInfo:@{@"packName":packName, @"packPrice":packPrice}];
         }
@@ -230,10 +231,10 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 #pragma mark - purchses
 
 - (void)purchaseSucceeded:(NSNotification *)notification {
-
+    
     NSString *packName = notification.userInfo[@"packName"];
     NSString *packPrice = notification.userInfo[@"packPrice"];
-
+    
     [self loadPackWithName:packName andPrice:packPrice];
 }
 

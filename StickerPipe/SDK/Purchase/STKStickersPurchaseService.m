@@ -8,6 +8,7 @@
 
 #import "STKStickersPurchaseService.h"
 #import "STKStickersManager.h"
+#import "STKInAppProductsManager.h"
 
 #import <RMStore/RMStore.h>
 #import "RMStoreKeychainPersistence.h"
@@ -34,10 +35,6 @@
     return self;
 }
 
-- (BOOL)hasInAppProductIds {
-    return [STKStickersManager productIdentifiers];
-}
-
 - (void)requestProductsWithIdentifier:(NSArray *)productIds
                            completion:(void(^) (NSArray *))completion{
     NSSet *product = [NSSet setWithArray:productIds];
@@ -49,15 +46,15 @@
     }];
 }
 
-- (void)purchaseProductWithIdentifier:(NSString *)productId packName:(NSString *)packName
-                         andPackPrice:(NSString *)packPrice {
+- (void)purchaseProductWithPackName:(NSString *)packName
+                       andPackPrice:(NSString *)packPrice {
     
     __weak typeof(self) wself = self;
     
-    [[RMStore defaultStore] addPayment:productId success:^(SKPaymentTransaction *transaction) {
+    [[RMStore defaultStore] addPayment:[STKInAppProductsManager productIdWithPackPrice:packPrice] success:^(SKPaymentTransaction *transaction) {
         NSLog(@"purchase complete");
-       // const BOOL consumed = [wself.persistence consumeProductOfIdentifier:productId];
-
+        // const BOOL consumed = [wself.persistence consumeProductOfIdentifier:productId];
+        
         [wself purchaseSucceedForPack:packName withPrice:packPrice];
         
     } failure:^(SKPaymentTransaction *transaction, NSError *error) {

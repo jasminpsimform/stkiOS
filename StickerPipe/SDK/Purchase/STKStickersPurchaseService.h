@@ -10,11 +10,9 @@
 
 @interface STKStickersPurchaseService : NSObject
 
-- (BOOL) hasInAppProductIds;
-
 - (void)requestProductsWithIdentifier:(NSArray *)productIds
                            completion:(void(^) (NSArray *))completion;
 
-- (void)purchaseProductWithIdentifier:(NSString *)productId packName:(NSString *)packName
+- (void)purchaseProductWithPackName:(NSString *)packName
                          andPackPrice:(NSString *)packPrice;
 @end

@@ -17,7 +17,7 @@
 + (void)setPriceCproductId:(NSString *)priceCproductId;
 + (NSString *)priceCProductId;
 
-- (NSString *)productIdWithPackPrice:(NSString *)packPrice;
++ (NSString *)productIdWithPackPrice:(NSString *)packPrice;
 
 + (BOOL)hasProductIds;
 
