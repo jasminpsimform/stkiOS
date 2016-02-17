@@ -67,6 +67,7 @@
 		9A0716E81C43DD6B004D2ACF /* Launch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A0716E71C43DD6B004D2ACF /* Launch.xib */; };
 		9A1F16A41C47EBF500C22F73 /* STKChatTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1F16A31C47EBF500C22F73 /* STKChatTextCell.m */; };
 		9A6150741C731C5800E46A2C /* STKStickersPurchaseService.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6150731C731C5800E46A2C /* STKStickersPurchaseService.m */; };
+		9A6150771C74817E00E46A2C /* STKInAppProductsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6150761C74817E00E46A2C /* STKInAppProductsManager.m */; };
 		9AF866E31C5A1570002A555B /* STKStickersShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AF866E11C5A1570002A555B /* STKStickersShopViewController.m */; };
 		9AF866E41C5A1570002A555B /* STKStickersShopViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF866E21C5A1570002A555B /* STKStickersShopViewController.xib */; };
 		9AF866EF1C5BA4FD002A555B /* STKStickersShopJsInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AF866EE1C5BA4FD002A555B /* STKStickersShopJsInterface.m */; };
@@ -211,6 +212,8 @@ StickerPipeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper
 		9A1F16A31C47EBF500C22F73 /* STKChatTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKChatTextCell.m; sourceTree = "<group>"; };
 		9A6150721C731C5800E46A2C /* STKStickersPurchaseService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STKStickersPurchaseService.h; path = Purchase/STKStickersPurchaseService.h; sourceTree = "<group>"; };
 		9A6150731C731C5800E46A2C /* STKStickersPurchaseService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STKStickersPurchaseService.m; path = Purchase/STKStickersPurchaseService.m; sourceTree = "<group>"; };
+		9A6150751C74817E00E46A2C /* STKInAppProductsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKInAppProductsManager.h; sourceTree = "<group>"; };
+		9A6150761C74817E00E46A2C /* STKInAppProductsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKInAppProductsManager.m; sourceTree = "<group>"; };
 		9AF866E01C5A1570002A555B /* STKStickersShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STKStickersShopViewController.h; path = StickersShop/STKStickersShopViewController.h; sourceTree = "<group>"; };
 		9AF866E11C5A1570002A555B /* STKStickersShopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STKStickersShopViewController.m; path = StickersShop/STKStickersShopViewController.m; sourceTree = "<group>"; };
 		9AF866E21C5A1570002A555B /* STKStickersShopViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = STKStickersShopViewController.xib; path = StickersShop/STKStickersShopViewController.xib; sourceTree = "<group>"; };
@@ -266,6 +269,8 @@ StickerPipeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper
 				6EADF3631B46B3FD008005E9 /* STKApiKeyManager.m */,
 				6EADF3641B46B3FD008005E9 /* STKUUIDManager.h */,
 				6EADF3651B46B3FD008005E9 /* STKUUIDManager.m */,
+				9A6150751C74817E00E46A2C /* STKInAppProductsManager.h */,
+				9A6150761C74817E00E46A2C /* STKInAppProductsManager.m */,
 			);
 			name = IdentityService;
 			sourceTree = "<group>";
@@ -895,6 +900,7 @@ StickerPipeTests.xctest */;
 				6E9012681B56941500A5FCAE /* StickerModel.xcdatamodeld in Sources */,
 				6EADF36A1B46B40F008005E9 /* STKAnalyticService.m in Sources */,
 				6EDE15C01B6FA6600024B6DC /* STKEmptyRecentCell.m in Sources */,
+				9A6150771C74817E00E46A2C /* STKInAppProductsManager.m in Sources */,
 				6E310A381B68B9E300FB75D0 /* STKPackDescriptionController.m in Sources */,
 				6EADF3661B46B3FD008005E9 /* STKApiKeyManager.m in Sources */,
 				6E5F5A4C1B5E96A20036214B /* STKStickerController.m in Sources */,
