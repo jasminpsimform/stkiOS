@@ -11,6 +11,7 @@
 #import "STKUtility.h"
 #import "STKAnalyticService.h"
 #import "STKApiKeyManager.h"
+#import "STKInAppProductsManager.h"
 #import "STKCoreDataService.h"
 #import "STKStickersConstants.h"
 #import "NSString+MD5.h"
@@ -157,16 +158,11 @@
     return [[NSUserDefaults standardUserDefaults] boolForKey:kIsSubscriber];
 }
 
-#pragma mark - Product ids
+#pragma mark - In-app product ids
 
-+ (void)setProductIdentifiers:(NSArray *)productIds {
-    [[NSUserDefaults standardUserDefaults] setObject:productIds forKey:kProductIdentifers];
++ (void)setPriceBProductId:(NSString *)priceBProductId andPriceCProductId:(NSString *)priceCProductId {
+    [STKInAppProductsManager setPriceBproductId:priceBProductId];
+    [STKInAppProductsManager setPriceCproductId:priceCProductId];
 }
-
-+ (NSArray *)productIdentifiers {
-    return [[NSUserDefaults standardUserDefaults] arrayForKey:kProductIdentifers];
-}
-
-
 
 @end

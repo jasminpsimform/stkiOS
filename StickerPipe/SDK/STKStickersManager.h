@@ -44,7 +44,6 @@
 + (void)setUserIsSubscriber:(BOOL)isSubscriber;
 + (BOOL)isSubscriber;
 
-+ (void)setProductIdentifiers:(NSArray *)productIds;
-+ (NSArray *)productIdentifiers;
++ (void)setPriceBProductId:(NSString *)priceBProductId andPriceCProductId:(NSString *)priceCProductId;
 
 @end

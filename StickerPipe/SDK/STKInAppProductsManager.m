@@ -33,7 +33,7 @@ static NSString *priceCProductIdentifier;
     return priceCProductIdentifier;
 }
 
-- (NSString *)productIdWithPackPrice:(NSString *)packPrice {
++ (NSString *)productIdWithPackPrice:(NSString *)packPrice {
    
     if ([packPrice isEqualToString:@"B"]) {
         return priceBProductIdentifier;
