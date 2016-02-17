@@ -47,7 +47,7 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     self.prices = [NSMutableArray new];
     [self loadShopPrices];
     
-//    [self loadStickersShop];
+    //    [self loadStickersShop];
     [self setUpButtons];
     self.navigationController.navigationBar.tintColor = [STKUtility defaultOrangeColor];
     
@@ -60,7 +60,7 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchaseSucceeded:) name:STKPurchaseSucceededNotification object:nil];
     
-
+    
 }
 
 - (void)packDownloaded {
@@ -78,11 +78,11 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
             }
             [self loadStickersShop];
         }];
-    
+        
     }
     else {
-       self.prices =  [[NSMutableArray alloc] initWithArray: @[[STKStickersManager priceBLabel], [STKStickersManager priceCLabel]]];
-          [self loadStickersShop];
+        self.prices =  [[NSMutableArray alloc] initWithArray: @[[STKStickersManager priceBLabel], [STKStickersManager priceCLabel]]];
+        [self loadStickersShop];
     }
 }
 
@@ -148,6 +148,18 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     context[@"IosJsInterface"] = self.jsInterface;
 }
 
+- (void)loadPackWithName:(NSString *)packName andPrice:(NSString *)packPrice {
+    __weak typeof(self) wself = self;
+    
+    [self.apiService loadStickerPackWithName:packName andPricePoint:packPrice success:^(id response) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:STKStickerPackDownloadedNotification object:self userInfo:@{@"packDict": response[@"data"]}];
+        [wself packDownloaded];
+        
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
 #pragma mark - Actions
 
 - (IBAction)closeAction:(id)sender {
@@ -174,21 +186,20 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
             andPrice:(NSString *)packPrice {
     
     if ([packPrice isEqualToString:@"A"] || ([packPrice isEqualToString:@"B"] && [STKStickersManager isSubscriber])) {
-        __weak typeof(self) wself = self;
-             
-        [self.apiService loadStickerPackWithName:packName andPricePoint:packPrice success:^(id response) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:STKStickerPackDownloadedNotification object:self userInfo:@{@"packDict": response[@"data"]}];
-            [wself packDownloaded];
-            
-        } failure:^(NSError *error) {
-            
-        }];
+        
+        [self loadPackWithName:packName andPrice:packPrice];
+       
     } else {
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:STKPurchasePackNotification object:self userInfo:@{@"packName":packName, @"packPrice":packPrice}];
+        if ([self.stickersPurchaseService hasInAppProductIds]) {
+            [self.stickersPurchaseService purchaseProductWithIdentifier:packName packName:packName andPackPrice:packPrice];
+        } else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:STKPurchasePackNotification object:self userInfo:@{@"packName":packName, @"packPrice":packPrice}];
+        }
     }
     
 }
+
 
 - (void)setInProgress:(BOOL)show {
     self.activity.hidden = !show;
@@ -219,7 +230,11 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 #pragma mark - purchses
 
 - (void)purchaseSucceeded:(NSNotification *)notification {
-    
+
+    NSString *packName = notification.userInfo[@"packName"];
+    NSString *packPrice = notification.userInfo[@"packPrice"];
+
+    [self loadPackWithName:packName andPrice:packPrice];
 }
 
 - (void)purchaseFailed {

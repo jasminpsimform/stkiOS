@@ -27,6 +27,9 @@
     if (!self) {
         return nil;
     }
+    RMStore *store = [RMStore defaultStore];
+    [store addStoreObserver:self];
+    self.persistence = store.transactionPersistor;
     
     return self;
 }
@@ -46,12 +49,16 @@
     }];
 }
 
-- (void)purchaseProductWithIdentifier:(NSString *)productId {
+- (void)purchaseProductWithIdentifier:(NSString *)productId packName:(NSString *)packName
+                         andPackPrice:(NSString *)packPrice {
     
     __weak typeof(self) wself = self;
     
     [[RMStore defaultStore] addPayment:productId success:^(SKPaymentTransaction *transaction) {
         NSLog(@"purchase complete");
+       // const BOOL consumed = [wself.persistence consumeProductOfIdentifier:productId];
+
+        [wself purchaseSucceedForPack:packName withPrice:packPrice];
         
     } failure:^(SKPaymentTransaction *transaction, NSError *error) {
         NSLog(@"purchase failed");

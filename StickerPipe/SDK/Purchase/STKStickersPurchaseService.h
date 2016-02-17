@@ -15,4 +15,6 @@
 - (void)requestProductsWithIdentifier:(NSArray *)productIds
                            completion:(void(^) (NSArray *))completion;
 
+- (void)purchaseProductWithIdentifier:(NSString *)productId packName:(NSString *)packName
+                         andPackPrice:(NSString *)packPrice;
 @end
