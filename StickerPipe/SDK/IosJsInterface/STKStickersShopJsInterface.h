@@ -14,15 +14,21 @@
 - (void)showCollections;
 - (void)purchasePack:(NSString *)packTitle :(NSString *)packName :(NSString *)packPrice;
 - (void)setInProgress:(BOOL)show;
+- (void)removePack:(NSString *)packName;
 
 @end
 
 @protocol STKStickersShopJsInterfaceDelegate <NSObject>
+
 @required
 - (void)showCollectionsView;
 - (void)purchasePack:(NSString *)packTitle withName:(NSString *)packName
             andPrice:(NSString *)packPrice;
 - (void)setInProgress:(BOOL)show;
+
+@optional
+
+- (void)removePack:(NSString *)packName;
 
 @end
 

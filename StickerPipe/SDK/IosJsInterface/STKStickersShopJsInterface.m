@@ -29,4 +29,10 @@
     }
 }
 
+- (void)removePack:(NSString *)packName {
+    if ([self.delegate respondsToSelector:@selector(removePack:)]) {
+        [self.delegate removePack:packName];
+    }
+}
+
 @end
