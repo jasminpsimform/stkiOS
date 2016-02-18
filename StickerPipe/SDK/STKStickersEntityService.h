@@ -14,6 +14,8 @@
 
 @property (nonatomic, strong) NSArray *stickersArray;
 
+@property BOOL hasNewModifiedPacks;
+
 - (void)getStickerPacksWithType:(NSString*)type
                  completion:(void(^)(NSArray *stickerPacks))completion
                     failure:(void(^)(NSError *error))failure;
@@ -27,6 +29,7 @@
 - (void) getPackWithMessage:(NSString*)message completion:(void(^)(STKStickerPackObject* stickerPack, BOOL isDownloaded))completion;
 
 - (STKStickerPackObject *)getStickerPackWithName:(NSString *)packName;
+
 - (BOOL)isPackDownloaded:(NSString*)packName;
 
 - (void) saveStickerPack:(STKStickerPackObject*)stickerPack;

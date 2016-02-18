@@ -53,7 +53,7 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
     }
     
     [self.stickersArray arrayByAddingObject:object];
-    [self.cacheEntity saveStickerPack:object]; 
+    [self.cacheEntity saveStickerPack:object];
 }
 
 #pragma mark - Get sticker packs
@@ -61,28 +61,19 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
 - (void)loadStickerPacksFromCache:(NSString *)type
                        completion:(void (^)(NSArray *))completion {
     __weak typeof(self) weakSelf = self;
-
+    
     [self.cacheEntity getStickerPacks:^(NSArray *stickerPacks) {
         if (stickerPacks.count == 0) {
             [self updateStickerPacksWithType:type completion:^(NSArray *stickerPacks) {
                 [weakSelf loadStickersForPacks:stickerPacks completion:^(NSArray *stickerPacks) {
-                     completion(stickerPacks);
+                    completion(stickerPacks);
                 }];
-//                if (completion) {
-//                    dispatch_async(dispatch_get_main_queue(), ^{
-//                        completion(stickerPacks);
-//                    });
-//                }
-            }];
+                    }];
         } else {
             [weakSelf loadStickersForPacks:stickerPacks completion:^(NSArray *stickerPacks) {
                 completion(stickerPacks);
             }];
-//            if (completion) {
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//                    completion(stickerPacks);
-//                });
-//            }
+           
         }
     }];
 }
@@ -101,13 +92,13 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
                     pack.stickers = object.stickers;
                     [self.cacheEntity updateStickerPack:pack];
                 } failure:^(NSError *error) {
-                   
+                    
                 }];
             }
             if (i == packs.count - 1) {
-               dispatch_async(dispatch_get_main_queue(), ^{
-                completion(packs);
-               });
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completion(packs);
+                });
             }
         }
     }
@@ -203,7 +194,15 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
         NSArray* serializedObjects = [weakSelf.serializer serializeStickerPacks:response[@"data"]];
         // if (lastModifiedDate != [weakSelf lastModifiedDate]) {
         [weakSelf.cacheEntity saveStickerPacks:serializedObjects];
-        [weakSelf setLastModifiedDate:lastModifiedDate];
+        if (lastModifiedDate > [weakSelf lastModifiedDate]) {
+            self.hasNewModifiedPacks = YES;
+            [weakSelf setLastModifiedDate:lastModifiedDate];
+        }
+        else  {
+            self.hasNewModifiedPacks = NO;
+        }
+        
+        //  [weakSelf setLastModifiedDate:lastModifiedDate];
         //  }
         STKStickerPackObject *recentPack = weakSelf.cacheEntity.recentStickerPack;
         NSArray *packsWithRecent = nil;
@@ -226,9 +225,8 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
             completion(nil);
         }
     }];
-    
-    
 }
+
 #pragma mark ----------
 
 - (void)saveStickerPacks:(NSArray *)stickerPacks {
@@ -309,5 +307,6 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setDouble:lastModifiedDate forKey:kLastModifiedDateKey];
 }
+
 
 @end
