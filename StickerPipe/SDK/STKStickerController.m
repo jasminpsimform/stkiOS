@@ -38,7 +38,7 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 @property (weak, nonatomic) IBOutlet UICollectionView *stickersHeaderCollectionView;
 
 @property (weak, nonatomic) IBOutlet UIButton *collectionsButton;
-@property (weak, nonatomic) IBOutlet UIButton *stickersShopButton;
+@property (weak, nonatomic) IBOutlet STKShowStickerButton *stickersShopButton;
 @property (weak, nonatomic) IBOutlet UICollectionView *stickersCollectionView;
 
 @property (strong, nonatomic) STKStickerDelegateManager *stickersDelegateManager;
@@ -65,6 +65,7 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     [self.stickersService getStickerPacksWithType:nil completion:^(NSArray *stickerPacks) {
         self.stickersService.stickersArray = stickerPacks;
         self.keyboardButton.badgeView.hidden = ![self.stickersService hasNewPacks];
+        self.stickersShopButton.badgeView.hidden = !self.stickersService.hasNewModifiedPacks;
     } failure:nil];
 }
 
@@ -168,7 +169,8 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     [self.stickersHeaderCollectionView registerClass:[STKStickerHeaderCell class] forCellWithReuseIdentifier:@"STKStickerPanelHeaderCell"];
     
     self.stickersHeaderCollectionView.backgroundColor = self.headerBackgroundColor ? self.headerBackgroundColor : [STKUtility defaultGreyColor];
-    
+
+    self.stickersShopButton.badgeView.hidden = !self.stickersService.hasNewModifiedPacks;
 }
 
 - (void)setupInternalStickersView {

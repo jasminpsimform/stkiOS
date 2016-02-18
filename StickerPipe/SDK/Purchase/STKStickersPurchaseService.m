@@ -21,15 +21,23 @@
 
 @end
 
+
 @implementation STKStickersPurchaseService
+- (void)configureStore {
+    
+    _persistence = [[RMStoreKeychainPersistence alloc] init];
+    [RMStore defaultStore].transactionPersistor = _persistence;
+}
 
 - (id)init {
     self = [super init];
     if (!self) {
         return nil;
     }
+    [self configureStore];
     RMStore *store = [RMStore defaultStore];
     [store addStoreObserver:self];
+    
     self.persistence = store.transactionPersistor;
     
     return self;
@@ -53,7 +61,8 @@
     
     [[RMStore defaultStore] addPayment:[STKInAppProductsManager productIdWithPackPrice:packPrice] success:^(SKPaymentTransaction *transaction) {
         NSLog(@"purchase complete");
-        // const BOOL consumed = [wself.persistence consumeProductOfIdentifier:productId];
+        BOOL consumed = [wself.persistence consumeProductOfIdentifier:
+                         [STKInAppProductsManager productIdWithPackPrice:packPrice]];
         
         [wself purchaseSucceedForPack:packName withPrice:packPrice];
         
