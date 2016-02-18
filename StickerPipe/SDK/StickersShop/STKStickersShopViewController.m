@@ -17,7 +17,7 @@
 #import "STKStickersApiService.h"
 #import "STKPurchaseService.h"
 #import "STKStickersPurchaseService.h"
-
+#import "STKStickersEntityService.h"
 
 #import "STKStickersShopJsInterface.h"
 
@@ -33,6 +33,7 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 @property(nonatomic, strong) STKStickersShopJsInterface *jsInterface;
 @property(nonatomic, strong) STKStickersApiService *apiService;
 @property(nonatomic, strong) STKStickersPurchaseService *stickersPurchaseService;
+@property(nonatomic, strong) STKStickersEntityService *entityService;
 
 @property(nonatomic, strong) NSMutableArray *prices;
 
@@ -48,7 +49,6 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     self.prices = [NSMutableArray new];
     [self loadShopPrices];
     
-    //    [self loadStickersShop];
     [self setUpButtons];
     self.navigationController.navigationBar.tintColor = [STKUtility defaultOrangeColor];
     
@@ -60,8 +60,6 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchaseFailed) name:STKPurchaseFailedNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchaseSucceeded:) name:STKPurchaseSucceededNotification object:nil];
-    
-    
 }
 
 - (void)packDownloaded {
@@ -123,6 +121,14 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     }
     return _stickersPurchaseService;
 }
+
+- (STKStickersEntityService *)entityService {
+    if (!_entityService) {
+        _entityService = [STKStickersEntityService new];
+    }
+    return _entityService;
+}
+
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
@@ -201,9 +207,20 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     
 }
 
-
 - (void)setInProgress:(BOOL)show {
     self.activity.hidden = !show;
+}
+
+- (void)removePack:(NSString *)packName {
+    
+    __weak typeof(self) wself = self;
+
+    [self.apiService deleteStickerPackWithName:packName success:^(id response) {
+        STKStickerPackObject *stickerPack = [wself.entityService getStickerPackWithName:packName];
+        [wself.entityService togglePackDisabling:stickerPack];
+    } failure:^(NSError *error) {
+        
+    }];
 }
 
 #pragma mark - AlertController
