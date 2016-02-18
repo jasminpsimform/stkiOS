@@ -187,6 +187,10 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
     
 }
 
+- (STKStickerPackObject *)getStickerPackWithName:(NSString *)packName {
+    return [self.cacheEntity getStickerPackWithPackName:packName];
+}
+
 #pragma mark - Update sticker packs
 
 - (void)updateStickerPacksWithType:(NSString*)type completion:(void(^)(NSArray *stickerPacks))completion {

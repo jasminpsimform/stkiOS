@@ -26,6 +26,7 @@
 
 - (void) getPackWithMessage:(NSString*)message completion:(void(^)(STKStickerPackObject* stickerPack, BOOL isDownloaded))completion;
 
+- (STKStickerPackObject *)getStickerPackWithName:(NSString *)packName;
 - (BOOL)isPackDownloaded:(NSString*)packName;
 
 - (void) saveStickerPack:(STKStickerPackObject*)stickerPack;
