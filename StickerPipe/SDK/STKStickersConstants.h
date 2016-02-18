@@ -22,6 +22,8 @@ extern NSString *const STKPurchaseSucceededNotification;
 
 extern NSString *const STKPurchaseFailedNotification;
 
+extern NSString *const STKShowPackNotification;
+
 extern NSString *const kLastUpdateIntervalKey;
 
 extern NSString *const kUserKeyDefaultsKey;
@@ -37,8 +39,6 @@ extern NSString *const kPriceCLabel;
 extern NSString *const kPriceCValue;
 
 extern NSString *const kIsSubscriber;
-
-extern NSString *const kProductIdentifers;
 
 
 @interface STKStickersConstants : NSObject

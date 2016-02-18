@@ -29,6 +29,9 @@ NSString *const STKPurchaseSucceededNotification =
 NSString *const STKPurchaseFailedNotification =
     @"STKPurchaseFailedNotification";
 
+NSString *const STKShowPackNotification =
+    @"STKShowPackNotification";
+
 NSString *const kLastUpdateIntervalKey =
     @"kLastUpdateIntervalKey";
 
@@ -52,9 +55,6 @@ NSString *const kPriceCValue =
 
 NSString *const kIsSubscriber =
     @"kIsSubscriber";
-
-NSString *const kProductIdentifers =
-    @"kProductIdentifers";
 
 
 @implementation STKStickersConstants

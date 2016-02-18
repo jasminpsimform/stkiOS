@@ -45,4 +45,6 @@
 - (BOOL)hasRecentStickers;
 - (BOOL)hasNewPacks;
 
+- (NSInteger)indexOfPackWithName:(NSString *)packName;
+
 @end

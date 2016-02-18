@@ -100,6 +100,8 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateStickers) name:STKStickersReorderStickersNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showCollections) name:STKShowStickersCollectionsNotification object:nil];
         
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showPack:) name:STKShowPackNotification object:nil];
+        
     }
     return self;
 }
@@ -364,6 +366,15 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     [presentViewController dismissViewControllerAnimated:YES completion:nil];
    
     [self collectionsButtonAction:nil];
+}
+
+- (void)showPack:(NSNotification *)notification {
+    NSString *packName = notification.userInfo[@"packName"];
+    
+    NSUInteger stickerIndex = [self.stickersService indexOfPackWithName:packName];
+    [self showStickersView];
+    [self setPackSelectedAtIndex:stickerIndex];
+    [self.stickersHeaderDelegateManager collectionView:self.stickersHeaderCollectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow:stickerIndex inSection:0]];
 }
 
 #pragma mark - Checks

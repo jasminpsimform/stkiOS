@@ -13,6 +13,7 @@
 #import "STKStickerPackObject.h"
 #import "STKUtility.h"
 #import "STKStickersConstants.h"
+#import "STKStickerPack.h"
 
 static NSString *const kLastModifiedDateKey = @"kLastModifiedDateKey";
 static NSString *const recentName = @"Recent";
@@ -201,9 +202,7 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
         else  {
             self.hasNewModifiedPacks = NO;
         }
-        
-        //  [weakSelf setLastModifiedDate:lastModifiedDate];
-        //  }
+
         STKStickerPackObject *recentPack = weakSelf.cacheEntity.recentStickerPack;
         NSArray *packsWithRecent = nil;
         if (recentPack) {
@@ -307,6 +306,19 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setDouble:lastModifiedDate forKey:kLastModifiedDateKey];
 }
+
+#pragma mark -----
+
+- (NSInteger)indexOfPackWithName:(NSString *)packName {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", STKStickerPackAttributes.packName, packName];
+    STKStickerPackObject *stickerPack  = [[self.stickersArray filteredArrayUsingPredicate:predicate] firstObject];
+    
+    NSUInteger stickerIndex = [self.stickersArray indexOfObject:stickerPack];
+
+    return stickerIndex;
+}
+
+
 
 
 @end

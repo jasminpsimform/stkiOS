@@ -15,6 +15,7 @@
 - (void)purchasePack:(NSString *)packTitle :(NSString *)packName :(NSString *)packPrice;
 - (void)setInProgress:(BOOL)show;
 - (void)removePack:(NSString *)packName;
+- (void)showPack:(NSString *)packName;
 
 @end
 
@@ -25,6 +26,7 @@
 - (void)purchasePack:(NSString *)packTitle withName:(NSString *)packName
             andPrice:(NSString *)packPrice;
 - (void)setInProgress:(BOOL)show;
+- (void)showPack:(NSString *)packName;
 
 @optional
 

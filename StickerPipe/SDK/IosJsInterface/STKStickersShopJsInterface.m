@@ -35,4 +35,10 @@
     }
 }
 
+- (void)showPack:(NSString *)packName {
+    if ([self.delegate respondsToSelector:@selector(showPack:)]) {
+        [self.delegate showPack:packName];
+    }
+}
+
 @end

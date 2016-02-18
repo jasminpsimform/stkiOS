@@ -223,6 +223,14 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     }];
 }
 
+- (void)showPack:(NSString *)packName {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self dismissViewControllerAnimated:YES completion:^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:STKShowPackNotification object:self userInfo:@{@"packName": packName}];
+        }];
+    });
+}
+
 #pragma mark - AlertController
 
 - (void)initErrorAlert {
