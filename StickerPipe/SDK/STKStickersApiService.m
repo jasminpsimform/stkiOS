@@ -37,30 +37,27 @@ static NSString *const packsURL = @"shop/my";
                                    failure:(void (^)(NSError *error))failure {
     
     [self.getSessionManager GET:packsURL parameters:nil
-                     success:^(NSURLSessionDataTask *task, id responseObject) {
-                         
-                         NSHTTPURLResponse *response = ((NSHTTPURLResponse *)[task response]);
-                         NSTimeInterval timeInterval = 0;
-                         if ([response respondsToSelector:@selector(allHeaderFields)]) {
-                             NSDictionary *headers = [response allHeaderFields];
-                             timeInterval = [headers[@"Last-Modified"] doubleValue];
-                         }
-                         
-                         if ([responseObject[@"data"] count] == 0) {
-                             STKLog(@"get empty stickers pack JSON");
-                         }
-                         
-                         if (success) {
-                             success(responseObject, timeInterval);
-                         }
-                     }
-                     failure:^(NSURLSessionDataTask *task, NSError *error) {
-                         if (failure) {
-                             dispatch_async(dispatch_get_main_queue(), ^{
-                                 failure(error);
-                             });
-                         }
-                     }];
+                        success:^(NSURLSessionDataTask *task, id responseObject) {
+                            
+                            NSTimeInterval timeInterval = 0;
+                            
+                            timeInterval = [responseObject[@"meta"][@"shop_last_modified"] doubleValue];
+                            
+                            if ([responseObject[@"data"] count] == 0) {
+                                STKLog(@"get empty stickers pack JSON");
+                            }
+                            
+                            if (success) {
+                                success(responseObject, timeInterval);
+                            }
+                        }
+                        failure:^(NSURLSessionDataTask *task, NSError *error) {
+                            if (failure) {
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    failure(error);
+                                });
+                            }
+                        }];
     
 }
 
