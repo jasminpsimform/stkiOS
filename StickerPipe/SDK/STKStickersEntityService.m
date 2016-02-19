@@ -45,16 +45,21 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
 }
 
 - (void)packDownloaded:(NSNotification *)notification {
+   
     NSDictionary *pack = notification.userInfo[@"packDict"];
-    STKStickerPackObject *object = [self.serializer serializeStickerPack:pack];
-    object.order = 0;
-    for (int i = 1; i < self.stickersArray.count - 1; i++) {
-        STKStickerPackObject *pack = self.stickersArray[i];
-        pack.order = @(pack.order.integerValue + 1);
-    }
-    
-    [self.stickersArray arrayByAddingObject:object];
-    [self.cacheEntity saveStickerPack:object];
+    __weak typeof(self) weakSelf = self;
+
+    [self getStickerPacksIgnoringRecentWithType:nil completion:^(NSArray *stickerPacks) {
+        STKStickerPackObject *object = [weakSelf.serializer serializeStickerPack:pack];
+            object.order = @(0);
+            for (int i = 0; i < stickerPacks.count; i++) {
+                STKStickerPackObject *pack = stickerPacks[i];
+                pack.order = @(pack.order.integerValue + 1);
+            }
+        NSArray *array = [stickerPacks arrayByAddingObject:object];
+        weakSelf.stickersArray = array;
+        [self saveStickerPacks:array];
+    } failure:nil];
 }
 
 #pragma mark - Get sticker packs
