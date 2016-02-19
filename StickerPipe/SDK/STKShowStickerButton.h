@@ -10,5 +10,5 @@
 @interface STKShowStickerButton : UIButton
 
 @property (nonatomic, strong) STKBadgeView *badgeView;
-
+@property (nonatomic, strong) IBInspectable UIColor *badgeBorderColor;
 @end

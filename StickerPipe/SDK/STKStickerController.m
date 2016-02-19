@@ -77,6 +77,7 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
         self.stickersService = [STKStickersEntityService new];
         [self setupInternalStickersView];
         
+        
         [self loadStickerPacks];
         
         [self initStickerHeader];
@@ -176,6 +177,8 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 }
 
 - (void)setupInternalStickersView {
+    self.stickersShopButton.badgeBorderColor = [STKUtility defaultGreyColor];
+
     self.internalStickersView = [[[NSBundle mainBundle] loadNibNamed:@"STKStickersView" owner:self options:nil] firstObject];
     
     
@@ -186,6 +189,7 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     if (CGRectEqualToRect(self.internalStickersView.frame, CGRectZero) && [UIDevice currentDevice].systemVersion.floatValue < 8.0) {
         self.internalStickersView.frame = CGRectMake(1, 1, 1, 1);
     }
+    
     [self initStickerHeader];
     [self initStickersCollectionView];
     [self initHeaderButton:self.collectionsButton];
