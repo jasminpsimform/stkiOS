@@ -91,7 +91,7 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
                                [self.prices lastObject]];
     
     if (self.packName) {
-        [urlstr appendString:[NSString stringWithFormat:@"packs/%@", self.packName]];
+        [urlstr appendString:[NSString stringWithFormat:@"/packs/%@", self.packName]];
     } else {
         [urlstr appendString:@"/store"];
     }
