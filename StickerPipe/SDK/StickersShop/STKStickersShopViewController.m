@@ -24,7 +24,6 @@
 #import <JavaScriptCore/JavaScriptCore.h>
 #import <StoreKit/StoreKit.h>
 
-static NSString * const mainUrl = @"http://work.stk.908.vc/api/v1/web?";
 static NSString * const mainUrl = @"http://work.stk.908.vc/api/v2/web?";
 
 static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/stickerPipeStore.js";
@@ -215,10 +214,13 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 - (void)removePack:(NSString *)packName {
     
     __weak typeof(self) wself = self;
-
+    
     [self.apiService deleteStickerPackWithName:packName success:^(id response) {
         STKStickerPackObject *stickerPack = [wself.entityService getStickerPackWithName:packName];
         [wself.entityService togglePackDisabling:stickerPack];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.JsInterface.reload()"];
+        });
     } failure:^(NSError *error) {
         
     }];
