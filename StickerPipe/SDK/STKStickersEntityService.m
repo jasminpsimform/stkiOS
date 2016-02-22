@@ -52,6 +52,7 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
     [self getStickerPacksIgnoringRecentWithType:nil completion:^(NSArray *stickerPacks) {
         STKStickerPackObject *object = [weakSelf.serializer serializeStickerPack:pack];
             object.order = @(0);
+        object.disabled = @(NO);
             for (int i = 0; i < stickerPacks.count; i++) {
                 STKStickerPackObject *pack = stickerPacks[i];
                 pack.order = @(pack.order.integerValue + 1);

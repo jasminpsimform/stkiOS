@@ -28,6 +28,7 @@
         self.packTitle = serverResponse[@"title"];
         self.packID = serverResponse[@"pack_id"];
         self.pricePoint = serverResponse[@"pricepoint"];
+        self.disabled = ([serverResponse[@"user_status"] isEqualToString:@"active"]) ? @(NO) : @(YES);
         self.price = serverResponse[@"price"];
         self.packDescription = serverResponse[@"description"];
         self.productID = serverResponse[@"product_id"];

@@ -170,6 +170,7 @@ static NSString *const recentName = @"Recent";
     stickerPack.packDescription = stickerPackObject.packDescription;
     stickerPack.bannerUrl = stickerPackObject.bannerUrl;
     stickerPack.productID = stickerPackObject.productID;
+    stickerPack.disabled = stickerPackObject.disabled;
 
     if (stickerPack.isNew.boolValue == YES) {
         if (stickerPackObject.isNew) {
