@@ -11,6 +11,7 @@
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import "NSString+MD5.h"
+#import <SSKeychain/SSKeychain.h>
 
 NSString *const apiKey = @"72921666b5ff8651f374747bfefaf7b2";
 
@@ -22,10 +23,26 @@ NSString *const testIOSKey = @"f06190d9d63cd2f4e7b124612f63c56c";
 
 @implementation AppDelegate
 
+-(NSString *)getUniqueDeviceIdentifierAsString
+{
+    
+    NSString *appName=[[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleNameKey];
+    
+    NSString *strApplicationUUID = [SSKeychain passwordForService:appName account:@"incoding"];
+    if (strApplicationUUID == nil)
+    {
+        strApplicationUUID  = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+        [SSKeychain setPassword:strApplicationUUID forService:appName account:@"incoding"];
+    }
+    
+    return strApplicationUUID;
+}
+
 
 - (NSString *)userId {
-    UIDevice *device = [UIDevice currentDevice];
-    NSString  *currentDeviceId = [[device identifierForVendor] UUIDString];
+//    UIDevice *device = [UIDevice currentDevice];
+//    NSString  *currentDeviceId = [[device identifierForVendor] UUIDString];
+    NSString  *currentDeviceId = [self getUniqueDeviceIdentifierAsString];
     NSString * appVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     return [[currentDeviceId stringByAppendingString:appVersionString] MD5Digest];
 }
