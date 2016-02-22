@@ -18,6 +18,7 @@
 #import "STKPurchaseService.h"
 #import "STKStickersPurchaseService.h"
 #import "STKStickersEntityService.h"
+#import "SKProduct+STKStickerSKProduct.h"
 
 #import "STKStickersShopJsInterface.h"
 
@@ -73,7 +74,7 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     if ([STKInAppProductsManager hasProductIds]) {
         [self.stickersPurchaseService requestProductsWithIdentifier:[STKInAppProductsManager productIds] completion:^(NSArray *stickerPacks) {
             for (SKProduct *product in stickerPacks) {
-                [self.prices addObject:[product.price stringValue]];
+                [self.prices addObject:[product currencyString]];
             }
             [self loadStickersShop];
         }];
