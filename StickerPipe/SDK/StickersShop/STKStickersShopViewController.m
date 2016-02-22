@@ -142,6 +142,9 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     UIBarButtonItem *closeBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(closeAction:)];
     
     self.navigationItem.leftBarButtonItem = closeBarButton;
+    
+    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"STKSettingsIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(showCollections:)];
+    self.navigationItem.rightBarButtonItem = settingsButton;
 }
 
 - (void)setJSContext {
@@ -173,6 +176,12 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)showCollections:(id)sender {
+    
+    [self showCollections];
+    
+}
+
 #pragma mark - UIWebviewDelegate
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
@@ -182,11 +191,8 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 #pragma mark - STKStickersShopJsInterfaceDelegate
 
 - (void)showCollectionsView {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self dismissViewControllerAnimated:YES completion:^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:STKShowStickersCollectionsNotification object:self];
-        }];
-    });
+
+    [self showCollections];
 }
 
 - (void)purchasePack:(NSString *)packTitle withName:(NSString *)packName
@@ -251,10 +257,20 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     [self.alertController addAction:okAction];
 }
 
+#pragma mark - Show views
+
 - (void)showError {
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8) {
         [self presentViewController:self.alertController animated:YES completion:nil];
     }
+}
+
+- (void)showCollections {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self dismissViewControllerAnimated:YES completion:^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:STKShowStickersCollectionsNotification object:self];
+        }];
+    });
 }
 
 #pragma mark - purchses
