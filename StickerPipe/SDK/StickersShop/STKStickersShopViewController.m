@@ -219,6 +219,7 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
         STKStickerPackObject *stickerPack = [wself.entityService getStickerPackWithName:packName];
         [wself.entityService togglePackDisabling:stickerPack];
         dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter]postNotificationName:STKStickersReorderStickersNotification object:self];
             [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.JsInterface.reload()"];
         });
     } failure:^(NSError *error) {
