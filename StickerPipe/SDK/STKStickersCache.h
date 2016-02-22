@@ -39,4 +39,5 @@
 
 - (void)markStickerPack:(STKStickerPackObject*)pack disabled:(BOOL)disabled;
 
+- (BOOL)hasPackWithName:(NSString *)packName;
 @end

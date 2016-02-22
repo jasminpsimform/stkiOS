@@ -210,7 +210,7 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 - (void)purchasePack:(NSString *)packTitle withName:(NSString *)packName
             andPrice:(NSString *)packPrice {
     
-    if ([packPrice isEqualToString:@"A"] || ([packPrice isEqualToString:@"B"] && [STKStickersManager isSubscriber])) {
+    if ([packPrice isEqualToString:@"A"] || ([packPrice isEqualToString:@"B"] && [STKStickersManager isSubscriber]) || [self.entityService hasPackWithName:packName]) {
         
         [self loadPackWithName:packName andPrice:packPrice];
         

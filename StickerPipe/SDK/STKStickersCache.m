@@ -389,6 +389,15 @@ static NSString *const recentName = @"Recent";
     return downloaded;
 }
 
+- (BOOL)hasPackWithName:(NSString *)packName {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[STKStickerPack entityName]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", STKStickerPackAttributes.packName, packName];
+
+    request.predicate = predicate;
+    request.fetchLimit = 1;
+    NSUInteger count = [[NSManagedObjectContext stk_defaultContext] countForFetchRequest:request error:nil];
+    return count > 0;
+}
 
 #pragma mark - Properties
 

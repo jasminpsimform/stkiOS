@@ -1,3 +1,4 @@
+
 //
 //  STKStickersEntityService.m
 //  StickerPipe
@@ -92,7 +93,7 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
     if (packs.count > 1) {
         for (int i = 1; i < packs.count; i ++) {
             STKStickerPackObject *pack = packs[i];
-            if (pack.stickers.count == 0) {
+            if (pack.stickers.count == 0 && ![pack.disabled boolValue]) {
                 [self.apiService loadStickerPackWithName:pack.packName andPricePoint:pack.pricePoint success:^(id response) {
                     NSDictionary *serverPack = response[@"data"];
                     STKStickerPackObject *object = [weakSelf.serializer serializeStickerPack:serverPack];
@@ -324,7 +325,10 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
     return stickerIndex;
 }
 
+- (BOOL)hasPackWithName:(NSString *)packName {
 
+    return [self.cacheEntity hasPackWithName:packName];
+}
 
 
 @end

@@ -43,8 +43,10 @@
 - (void) togglePackDisabling:(STKStickerPackObject*)pack;
 
 - (BOOL)hasRecentStickers;
+
 - (BOOL)hasNewPacks;
 
+- (BOOL)hasPackWithName:(NSString *)packName;
 - (NSInteger)indexOfPackWithName:(NSString *)packName;
 
 @end
