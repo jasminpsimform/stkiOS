@@ -86,17 +86,19 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     }
 }
 
-- (NSURLRequest *)shopRequest {
+- (NSString *)shopUrlString {
     NSMutableString *urlstr = [NSMutableString stringWithFormat:@"%@uri=%@&apiKey=%@&platform=IOS&userId=%@&density=%@&priceB=%@&priceC=%@#", mainUrl, uri, [STKApiKeyManager apiKey], [STKStickersManager userKey], [STKUtility scaleString], [self.prices firstObject],
                                [self.prices lastObject]];
     
     if (self.packName) {
         [urlstr appendString:[NSString stringWithFormat:@"packs/%@", self.packName]];
     } else {
-        [urlstr appendString:@"store"];
+        [urlstr appendString:@"/store"];
     }
-    
-    NSURL *url =[NSURL URLWithString:urlstr];
+    return urlstr;
+}
+- (NSURLRequest *)shopRequest {
+    NSURL *url =[NSURL URLWithString:[self shopUrlString]];
     return [NSURLRequest requestWithURL:url];
 }
 
@@ -140,7 +142,7 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 }
 
 - (void)setUpButtons {
-    UIBarButtonItem *closeBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(closeAction:)];
+    UIBarButtonItem *closeBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(closeAction:)];
     
     self.navigationItem.leftBarButtonItem = closeBarButton;
     
@@ -174,7 +176,16 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 #pragma mark - Actions
 
 - (IBAction)closeAction:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    NSString *currentURL = [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.location.href"];
+    if ([currentURL isEqualToString:[self shopUrlString]]) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.JsInterface.goBack()"];
+        });
+    }
+    
 }
 
 - (IBAction)showCollections:(id)sender {
@@ -192,7 +203,7 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 #pragma mark - STKStickersShopJsInterfaceDelegate
 
 - (void)showCollectionsView {
-
+    
     [self showCollections];
 }
 
