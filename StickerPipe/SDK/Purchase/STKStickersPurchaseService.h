@@ -11,7 +11,8 @@
 @interface STKStickersPurchaseService : NSObject
 
 - (void)requestProductsWithIdentifier:(NSArray *)productIds
-                           completion:(void(^) (NSArray *))completion;
+                           completion:(void(^) (NSArray *))completion
+                              failure:(void(^)(NSError *error))failre;
 
 - (void)purchaseProductWithPackName:(NSString *)packName
                          andPackPrice:(NSString *)packPrice;

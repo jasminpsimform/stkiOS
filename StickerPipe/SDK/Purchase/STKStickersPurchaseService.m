@@ -44,19 +44,23 @@
 }
 
 - (void)requestProductsWithIdentifier:(NSArray *)productIds
-                           completion:(void(^) (NSArray *))completion{
+                           completion:(void(^) (NSArray *))completion
+                              failure:(void (^)(NSError *))failre{
     NSSet *product = [NSSet setWithArray:productIds];
     [[RMStore defaultStore] requestProducts:product success:^(NSArray *products, NSArray *invalidProductIdentifiers) {
         completion(products);
         NSLog(@"Products loaded");
     } failure:^(NSError *error) {
         NSLog(@"Something went wrong");
+        if (failre) {
+            failre(error);
+        }
     }];
 }
 
 - (void)purchaseProductWithPackName:(NSString *)packName
                        andPackPrice:(NSString *)packPrice {
-    
+     
     __weak typeof(self) wself = self;
     
     [[RMStore defaultStore] addPayment:[STKInAppProductsManager productIdWithPackPrice:packPrice] success:^(SKPaymentTransaction *transaction) {
