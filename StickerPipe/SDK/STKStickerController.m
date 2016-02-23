@@ -103,6 +103,8 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
         
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showPack:) name:STKShowPackNotification object:nil];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newPackDownloaded:) name:STKNewPackDownloadedNotification object:nil];
+        
     }
     return self;
 }
@@ -114,6 +116,20 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)newPackDownloaded:(NSNotification *)notification {
+    [self.stickersService getStickerPacksWithType:nil completion:^(NSArray *stickerPacks) {
+        self.stickersService.stickersArray = stickerPacks;
+        self.keyboardButton.badgeView.hidden = ![self.stickersService hasNewPacks];
+        self.stickersShopButton.badgeView.hidden = !self.stickersService.hasNewModifiedPacks;
+        NSString *packName = notification.userInfo[@"packName"];
+        NSUInteger stickerIndex = [self.stickersService indexOfPackWithName:packName];
+        [self showStickersView];
+        [self setPackSelectedAtIndex:stickerIndex];
+        [self.stickersHeaderDelegateManager collectionView:self.stickersHeaderCollectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow:stickerIndex inSection:0]];
+    } failure:nil];
+   
 }
 
 - (void) initStickersCollectionView {
@@ -374,7 +390,7 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 
 - (void)showPack:(NSNotification *)notification {
     NSString *packName = notification.userInfo[@"packName"];
-    
+//    [self updateStickers];
     NSUInteger stickerIndex = [self.stickersService indexOfPackWithName:packName];
     [self showStickersView];
     [self setPackSelectedAtIndex:stickerIndex];

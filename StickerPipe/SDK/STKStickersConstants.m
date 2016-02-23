@@ -32,6 +32,9 @@ NSString *const STKPurchaseFailedNotification =
 NSString *const STKShowPackNotification =
     @"STKShowPackNotification";
 
+NSString *const STKNewPackDownloadedNotification =
+    @"STKNewPackDownloadedNotification";
+
 NSString *const kLastUpdateIntervalKey =
     @"kLastUpdateIntervalKey";
 

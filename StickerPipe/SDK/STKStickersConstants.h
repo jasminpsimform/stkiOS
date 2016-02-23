@@ -24,6 +24,8 @@ extern NSString *const STKPurchaseFailedNotification;
 
 extern NSString *const STKShowPackNotification;
 
+extern NSString *const STKNewPackDownloadedNotification;
+
 extern NSString *const kLastUpdateIntervalKey;
 
 extern NSString *const kUserKeyDefaultsKey;

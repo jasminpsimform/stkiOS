@@ -64,6 +64,27 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
     } failure:nil];
 }
 
+- (void)downloadNewPack:(NSDictionary *)packDict
+              onSuccess:(void (^)(NSArray *))success {
+    
+    NSDictionary *pack = packDict;
+    __weak typeof(self) weakSelf = self;
+    
+    [self getStickerPacksIgnoringRecentWithType:nil completion:^(NSArray *stickerPacks) {
+        STKStickerPackObject *object = [weakSelf.serializer serializeStickerPack:pack];
+        object.order = @(0);
+        object.disabled = @(NO);
+        for (int i = 0; i < stickerPacks.count; i++) {
+            STKStickerPackObject *pack = stickerPacks[i];
+            pack.order = @(pack.order.integerValue + 1);
+        }
+        NSArray *array = [stickerPacks arrayByAddingObject:object];
+        weakSelf.stickersArray = array;
+        [self saveStickerPacks:array];
+        success(array);
+    } failure:nil];
+}
+
 #pragma mark - Get sticker packs
 
 - (void)loadStickerPacksFromCache:(NSString *)type

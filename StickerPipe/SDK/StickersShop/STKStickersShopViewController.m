@@ -19,6 +19,7 @@
 #import "STKStickersPurchaseService.h"
 #import "STKStickersEntityService.h"
 #import "SKProduct+STKStickerSKProduct.h"
+#import "STKStickerPackObject.h"
 
 #import "STKStickersShopJsInterface.h"
 
@@ -65,7 +66,6 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 
 - (void)packDownloaded {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.JsInterface.onPackDownloaded()"];
         [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.JsInterface.reload()"];
     });
 }
@@ -87,7 +87,7 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 }
 
 - (NSString *)shopUrlString {
-    NSMutableString *urlstr = [NSMutableString stringWithFormat:@"%@uri=%@&apiKey=%@&platform=IOS&userId=%@&density=%@&priceB=%@&priceC=%@#", mainUrl, uri, [STKApiKeyManager apiKey], [STKStickersManager userKey], [STKUtility scaleString], [self.prices firstObject],
+    NSMutableString *urlstr = [NSMutableString stringWithFormat:@"%@&apiKey=%@&platform=IOS&userId=%@&density=%@&priceB=%@&priceC=%@#", mainUrl, [STKApiKeyManager apiKey], [STKStickersManager userKey], [STKUtility scaleString], [self.prices firstObject],
                                [self.prices lastObject]];
     
     if (self.packName) {
@@ -165,8 +165,12 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     __weak typeof(self) wself = self;
     
     [self.apiService loadStickerPackWithName:packName andPricePoint:packPrice success:^(id response) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:STKStickerPackDownloadedNotification object:self userInfo:@{@"packDict": response[@"data"]}];
-        [wself packDownloaded];
+        [wself.entityService downloadNewPack:response[@"data"]
+                                   onSuccess:^(NSArray *stickerPacks) {
+            [wself dismissViewControllerAnimated:YES completion:^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:STKNewPackDownloadedNotification object:self userInfo:@{@"packName": packName, @"stickerPacks": stickerPacks}];
+             }];
+        }];
         
     } failure:^(NSError *error) {
         
