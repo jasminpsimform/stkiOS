@@ -78,6 +78,8 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
                 [self.prices addObject:[product currencyString]];
             }
             [self loadStickersShop];
+        } failure:^(NSError *error) {
+            [self showError:error.localizedDescription];
         }];
         
     }
@@ -88,14 +90,17 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 }
 
 - (NSString *)shopUrlString {
-    NSMutableString *urlstr = [NSMutableString stringWithFormat:@"%@&apiKey=%@&platform=IOS&userId=%@&density=%@&priceB=%@&priceC=%@&is_subscriber=%d#", mainUrl, [STKApiKeyManager apiKey], [STKStickersManager userKey], [STKUtility scaleString], [self.prices firstObject], [self.prices lastObject], [STKStickersManager isSubscriber]];
+    NSMutableString *urlstr = [NSMutableString stringWithFormat:@"%@&apiKey=%@&platform=IOS&userId=%@&density=%@&priceB=%@&priceC=%@&is_subscriber=%d", mainUrl, [STKApiKeyManager apiKey], [STKStickersManager userKey], [STKUtility scaleString], [self.prices firstObject], [self.prices lastObject], [STKStickersManager isSubscriber]];
+    
+    NSMutableString *escapedPath = [NSMutableString stringWithString: [urlstr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
     
     if (self.packName) {
-        [urlstr appendString:[NSString stringWithFormat:@"/packs/%@", self.packName]];
+        [escapedPath appendString:[NSString stringWithFormat:@"#/packs/%@", self.packName]];
     } else {
-        [urlstr appendString:@"/store"];
+        [escapedPath appendString:@"#/store"];
     }
-    return urlstr;
+   
+    return escapedPath;
 }
 - (NSURLRequest *)shopRequest {
     NSURL *url =[NSURL URLWithString:[self shopUrlString]];
@@ -107,7 +112,7 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     [self.stickersShopWebView loadRequest:[self shopRequest] progress:nil success:^NSString * _Nonnull(NSHTTPURLResponse * _Nonnull response, NSString * _Nonnull HTML) {
         return HTML;
     } failure:^(NSError * error) {
-        [self showError];
+        [self showError:error.localizedDescription];
     }];
 }
 
@@ -203,7 +208,7 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 #pragma mark - UIWebviewDelegate
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    [self showError];
+    [self showError:error.localizedDescription];
 }
 
 #pragma mark - STKStickersShopJsInterfaceDelegate
@@ -264,7 +269,7 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 #pragma mark - AlertController
 
 - (void)initErrorAlert {
-    self.alertController = [UIAlertController alertControllerWithTitle:@"No internet connection" message:@"Reload?" preferredStyle:UIAlertControllerStyleAlert];
+    self.alertController = [UIAlertController alertControllerWithTitle:@"" message:@"Reload?" preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         [self dismissViewControllerAnimated:YES completion:nil];
@@ -279,8 +284,9 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 
 #pragma mark - Show views
 
-- (void)showError {
+- (void)showError:(NSString *)errorMessage {
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8) {
+        self.alertController.message = errorMessage;
         [self presentViewController:self.alertController animated:YES completion:nil];
     }
 }
