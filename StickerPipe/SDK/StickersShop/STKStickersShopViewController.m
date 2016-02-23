@@ -67,7 +67,7 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 
 - (void)packDownloaded {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.JsInterface.reload()"];
+        [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.JsInterface.onPackPurchaseSuccess()"];
     });
 }
 
@@ -173,7 +173,9 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
         }];
         
     } failure:^(NSError *error) {
-        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.JsInterface.onPackPurchaseFail()"];
+        });
     }];
 }
 
@@ -242,10 +244,12 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
         [wself.entityService togglePackDisabling:stickerPack];
         dispatch_async(dispatch_get_main_queue(), ^{
             [[NSNotificationCenter defaultCenter]postNotificationName:STKStickersReorderStickersNotification object:self];
-            [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.JsInterface.reload()"];
+            [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.JsInterface.onPackRemoveSuccess()"];
         });
     } failure:^(NSError *error) {
-        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.JsInterface.onPackRemoveFail()"];
+        });
     }];
 }
 
@@ -301,7 +305,7 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 
 - (void)purchaseFailed {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.JsInterface.hideActionProgress()"];
+        [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.JsInterface.onPackPurchaseFail()"];
     });
 }
 
