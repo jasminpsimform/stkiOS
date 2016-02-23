@@ -26,7 +26,8 @@
 #import <JavaScriptCore/JavaScriptCore.h>
 #import <StoreKit/StoreKit.h>
 
-static NSString * const mainUrl = @"http://work.stk.908.vc/api/v2/web?";
+//static NSString * const mainUrl = @"http://work.stk.908.vc/api/v2/web?";
+static NSString * const mainUrl = @"http://api.stickerpipe.com/api/v2/web?";
 
 static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/stickerPipeStore.js";
 
@@ -87,8 +88,7 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 }
 
 - (NSString *)shopUrlString {
-    NSMutableString *urlstr = [NSMutableString stringWithFormat:@"%@&apiKey=%@&platform=IOS&userId=%@&density=%@&priceB=%@&priceC=%@#", mainUrl, [STKApiKeyManager apiKey], [STKStickersManager userKey], [STKUtility scaleString], [self.prices firstObject],
-                               [self.prices lastObject]];
+    NSMutableString *urlstr = [NSMutableString stringWithFormat:@"%@&apiKey=%@&platform=IOS&userId=%@&density=%@&priceB=%@&priceC=%@&is_subscriber=%d#", mainUrl, [STKApiKeyManager apiKey], [STKStickersManager userKey], [STKUtility scaleString], [self.prices firstObject], [self.prices lastObject], [STKStickersManager isSubscriber]];
     
     if (self.packName) {
         [urlstr appendString:[NSString stringWithFormat:@"/packs/%@", self.packName]];
