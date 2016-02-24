@@ -10,10 +10,9 @@
 #import "STKChatStickerCell.h"
 #import "STKChatTextCell.h"
 #import "STKStickerPipe.h"
-#import "STKPackDescriptionController.h"
 #import "STKShowStickerButton.h"
 
-@interface STKChatViewController() <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, STKStickerControllerDelegate, STKPackDescriptionControllerDelegate>
+@interface STKChatViewController() <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, STKStickerControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextView *inputTextView;
@@ -204,15 +203,7 @@
     [self scrollTableViewToBottom];
 }
 
-#pragma mark - STKPackDescriptionControllerDelegate
-
-- (void) packDescriptionControllerDidChangePakcStatus:(STKPackDescriptionController*)controller {
-    [self.tableView reloadData];
-}
-
-
 #pragma mark - UITextViewDelegate
-
 
 - (void)textViewDidChange:(UITextView *)textView  {
     self.sendButton.enabled = textView.text.length > 0;

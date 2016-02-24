@@ -372,12 +372,12 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 #pragma mark - Presenting
 
 - (void)showPackInfoControllerWithStickerMessage:(NSString*)message {
+    
     [self hideStickersView];
-    STKPackDescriptionController *vc = [[STKPackDescriptionController alloc] initWithNibName:@"STKPackDescriptionController" bundle:nil];
-    vc.stickerMessage = message;
-    vc.delegate = self;
-    UIViewController *presentViewController = [self.delegate stickerControllerViewControllerForPresentingModalView];
-    [presentViewController presentViewController:vc animated:YES completion:nil];
+    STKStickersShopViewController *vc = [[STKStickersShopViewController alloc] initWithNibName:@"STKStickersShopViewController" bundle:[NSBundle mainBundle]];
+    
+    vc.packName = [[STKUtility trimmedPackNameAndStickerNameWithMessage:message] firstObject];
+    [self showModalViewController:vc];
 }
 
 - (void)showCollections {
