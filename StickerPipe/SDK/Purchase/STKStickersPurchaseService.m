@@ -60,7 +60,7 @@
 
 - (void)purchaseProductWithPackName:(NSString *)packName
                        andPackPrice:(NSString *)packPrice {
-     
+    
     __weak typeof(self) wself = self;
     
     [[RMStore defaultStore] addPayment:[STKInAppProductsManager productIdWithPackPrice:packPrice] success:^(SKPaymentTransaction *transaction) {
@@ -72,7 +72,7 @@
         
     } failure:^(SKPaymentTransaction *transaction, NSError *error) {
         NSLog(@"purchase failed");
-        [wself purchaseFailed];
+        [wself purchaseFailedError:error];
     }];
     
 }
@@ -80,11 +80,14 @@
 #pragma mark - purchases
 
 - (void)purchaseSucceedForPack:(NSString *)packName withPrice:(NSString *)packPrice {
-    [[NSNotificationCenter defaultCenter] postNotificationName:STKPurchaseSucceededNotification object:self userInfo:@{@"packName": packName, @"packPrice": packPrice}];
+    if ([self.delegate respondsToSelector:@selector(purchaseSucceededWithPackName:andPackPrice:)]) {
+        [self.delegate purchaseSucceededWithPackName:packName andPackPrice:packPrice];
+    }
 }
-
-- (void)purchaseFailed {
-    [[NSNotificationCenter defaultCenter] postNotificationName:STKPurchaseFailedNotification object:self];
+- (void)purchaseFailedError:(NSError *)error {
+    if ([self.delegate respondsToSelector:@selector(purchaseFailedWithError:)]) {
+        [self.delegate purchaseFailedWithError:error];
+    }
 }
 
 @end

@@ -8,7 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol STKStickersPurchaseDelegate <NSObject>
+
+- (void)purchaseSucceededWithPackName:(NSString *)packName
+                        andPackPrice:(NSString *)packPrice;
+
+- (void)purchaseFailedWithError:(NSError *)error;
+
+@end
+
 @interface STKStickersPurchaseService : NSObject
+
+@property (nonatomic, strong) id<STKStickersPurchaseDelegate> delegate;
 
 - (void)requestProductsWithIdentifier:(NSArray *)productIds
                            completion:(void(^) (NSArray *))completion
