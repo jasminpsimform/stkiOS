@@ -32,6 +32,7 @@ static NSString * const mainUrl = @"http://api.stickerpipe.com/api/v2/web?";
 static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/stickerPipeStore.js";
 
 @interface STKStickersShopViewController () <UIWebViewDelegate, STKStickersShopJsInterfaceDelegate>
+@interface STKStickersShopViewController () <UIWebViewDelegate, STKStickersShopJsInterfaceDelegate, STKStickersPurchaseDelegate>
 
 @property(nonatomic, strong) STKStickersShopJsInterface *jsInterface;
 @property(nonatomic, strong) STKStickersApiService *apiService;
@@ -266,21 +267,17 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     });
 }
 
-#pragma mark - AlertController
+#pragma mark - Purchase service delegate
 
-- (void)initErrorAlert {
-    self.alertController = [UIAlertController alertControllerWithTitle:@"" message:@"Reload?" preferredStyle:UIAlertControllerStyleAlert];
+- (void)purchaseSucceededWithPackName:(NSString *)packName andPackPrice:(NSString *)packPrice {
     
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }];
-    [self.alertController addAction:cancelAction];
-    
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self loadStickersShop];
-    }];
-    [self.alertController addAction:okAction];
+    [self loadPackWithName:packName andPrice:packPrice];
 }
+
+- (void)purchaseFailedWithError:(NSError *)error {
+    [self purchaseFailedError:error];
+}
+
 
 #pragma mark - Show views
 
@@ -301,18 +298,14 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 
 #pragma mark - purchses
 
-- (void)purchaseSucceeded:(NSNotification *)notification {
-    
-    NSString *packName = notification.userInfo[@"packName"];
-    NSString *packPrice = notification.userInfo[@"packPrice"];
-    
-    [self loadPackWithName:packName andPrice:packPrice];
-}
-
-- (void)purchaseFailed {
+- (void)purchaseFailedError:(NSError *)error {
     dispatch_async(dispatch_get_main_queue(), ^{
+        if (error) {
+            [self showErrorAlertWithMessage:error.localizedDescription andOkAction:nil andCancelAction:nil];
+        }
         [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.JsInterface.onPackPurchaseFail()"];
     });
+
 }
 
 @end
