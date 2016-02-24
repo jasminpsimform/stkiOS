@@ -15,7 +15,7 @@
 #import "STKUUIDManager.h"
 #import "STKStickersConstants.h"
 #import "STKStickersApiService.h"
-#import "STKPurchaseService.h"
+//#import "STKPurchaseService.h"
 #import "STKStickersPurchaseService.h"
 #import "STKStickersEntityService.h"
 #import "SKProduct+STKStickerSKProduct.h"
@@ -31,7 +31,8 @@ static NSString * const mainUrl = @"http://api.stickerpipe.com/api/v2/web?";
 
 static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/stickerPipeStore.js";
 
-@interface STKStickersShopViewController () <UIWebViewDelegate, STKStickersShopJsInterfaceDelegate>
+static NSUInteger const productsCount = 2;
+
 @interface STKStickersShopViewController () <UIWebViewDelegate, STKStickersShopJsInterfaceDelegate, STKStickersPurchaseDelegate>
 
 @property(nonatomic, strong) STKStickersShopJsInterface *jsInterface;
@@ -40,8 +41,6 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 @property(nonatomic, strong) STKStickersEntityService *entityService;
 
 @property(nonatomic, strong) NSMutableArray *prices;
-
-@property(nonatomic, strong) UIAlertController *alertController;
 
 @end
 
@@ -57,13 +56,9 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     self.navigationController.navigationBar.tintColor = [STKUtility defaultOrangeColor];
     
     self.jsInterface.delegate = self;
+    self.stickersPurchaseService.delegate = self;
+    
     self.apiService = [STKStickersApiService new];
-    
-    [self initErrorAlert];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchaseFailed) name:STKPurchaseFailedNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchaseSucceeded:) name:STKPurchaseSucceededNotification object:nil];
 }
 
 - (void)packDownloaded {
@@ -74,13 +69,23 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 
 - (void)loadShopPrices {
     if ([STKInAppProductsManager hasProductIds]) {
+        __weak typeof(self) wself = self;
+        
         [self.stickersPurchaseService requestProductsWithIdentifier:[STKInAppProductsManager productIds] completion:^(NSArray *stickerPacks) {
-            for (SKProduct *product in stickerPacks) {
-                [self.prices addObject:[product currencyString]];
+            if (stickerPacks.count == productsCount) {
+                
+                for (SKProduct *product in stickerPacks) {
+                    [wself.prices addObject:[product currencyString]];
+                }
+                [wself loadStickersShop];
+                
+            } else {
+                [wself showErrorAlertWithMessage:@"Can't load products. Try again later" andOkAction:nil andCancelAction:^{
+                    [wself dismissViewControllerAnimated:YES completion:nil];
+                }];
             }
-            [self loadStickersShop];
         } failure:^(NSError *error) {
-            [self showError:error.localizedDescription];
+            [wself showErrorAlertWithMessage:error.localizedDescription andOkAction:nil andCancelAction:nil];
         }];
         
     }
@@ -100,7 +105,7 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     } else {
         [escapedPath appendString:@"#/store"];
     }
-   
+    
     return escapedPath;
 }
 - (NSURLRequest *)shopRequest {
@@ -113,7 +118,11 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     [self.stickersShopWebView loadRequest:[self shopRequest] progress:nil success:^NSString * _Nonnull(NSHTTPURLResponse * _Nonnull response, NSString * _Nonnull HTML) {
         return HTML;
     } failure:^(NSError * error) {
-        [self showError:error.localizedDescription];
+        [self showErrorAlertWithMessage:error.localizedDescription andOkAction:^{
+            [self loadStickersShop];
+        } andCancelAction:^{
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }];
     }];
 }
 
@@ -173,10 +182,10 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
     [self.apiService loadStickerPackWithName:packName andPricePoint:packPrice success:^(id response) {
         [wself.entityService downloadNewPack:response[@"data"]
                                    onSuccess:^(NSArray *stickerPacks) {
-            [wself dismissViewControllerAnimated:YES completion:^{
-                [[NSNotificationCenter defaultCenter] postNotificationName:STKNewPackDownloadedNotification object:self userInfo:@{@"packName": packName, @"stickerPacks": stickerPacks}];
-             }];
-        }];
+                                       [wself dismissViewControllerAnimated:YES completion:^{
+                                           [[NSNotificationCenter defaultCenter] postNotificationName:STKNewPackDownloadedNotification object:self userInfo:@{@"packName": packName, @"stickerPacks": stickerPacks}];
+                                       }];
+                                   }];
         
     } failure:^(NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -190,7 +199,7 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 - (IBAction)closeAction:(id)sender {
     
     NSString *currentURL = [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.location.href"];
-    if ([currentURL isEqualToString:[self shopUrlString]]) {
+    if ([currentURL isEqualToString:[self shopUrlString]] || [currentURL isEqualToString:@"about:blank"]) {
         [self dismissViewControllerAnimated:YES completion:nil];
     } else {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -209,7 +218,12 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 #pragma mark - UIWebviewDelegate
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    [self showError:error.localizedDescription];
+    // [self showError:error.localizedDescription];
+    [self showErrorAlertWithMessage:error.localizedDescription andOkAction:^{
+        [self loadStickersShop];
+    } andCancelAction:^{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
 }
 
 #pragma mark - STKStickersShopJsInterfaceDelegate
@@ -281,10 +295,30 @@ static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/s
 
 #pragma mark - Show views
 
-- (void)showError:(NSString *)errorMessage {
+- (void)showErrorAlertWithMessage:(NSString *)errorMessage
+                      andOkAction:(void(^)(void))completion
+                  andCancelAction:(void(^)(void))cancel {
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8) {
-        self.alertController.message = errorMessage;
-        [self presentViewController:self.alertController animated:YES completion:nil];
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
+        
+        if (completion) {
+            
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                completion();
+            }];
+            [alertController addAction:okAction];
+        }
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            if (cancel) {
+                cancel();
+            } else {
+                [alertController dismissViewControllerAnimated:YES completion:nil];
+            }
+        }];
+        [alertController addAction:cancelAction];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
     }
 }
 
