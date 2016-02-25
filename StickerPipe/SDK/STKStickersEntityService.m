@@ -130,6 +130,10 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
                 });
             }
         }
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion(packs);
+        });
     }
 }
 
