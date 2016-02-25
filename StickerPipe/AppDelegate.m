@@ -51,6 +51,7 @@ NSString *const testIOSKey = @"f06190d9d63cd2f4e7b124612f63c56c";
     // Override point for customization after application launch.
     [Fabric with:@[[Crashlytics class]]];
     [Crashlytics startWithAPIKey:@"0c5dc9cc90ca8deb6e4e375e9d1fbcc76d193c10"];
+    [CrashlyticsKit setUserIdentifier:[self userId]];
 
     [STKStickersManager initWitApiKey: apiKey];
     [STKStickersManager setStartTimeInterval];
