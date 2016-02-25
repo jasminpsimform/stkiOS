@@ -36,7 +36,9 @@ static NSString *const packsURL = @"shop/my";
 - (void)getStickersPacksForUserWithSuccess:(void (^)(id response, NSTimeInterval lastModifiedDate))success
                                    failure:(void (^)(NSError *error))failure {
     
-    [self.getSessionManager GET:packsURL parameters:nil
+    NSDictionary *params = @{@"is_subscriber": @([STKStickersManager isSubscriber])};
+    
+    [self.getSessionManager GET:packsURL parameters: params
                         success:^(NSURLSessionDataTask *task, id responseObject) {
                             
                             NSTimeInterval timeInterval = 0;
