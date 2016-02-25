@@ -293,7 +293,7 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 
 - (void)stickersShopButtonAction:(id)sender {
     STKStickersShopViewController *vc = [[STKStickersShopViewController alloc] initWithNibName:@"STKStickersShopViewController" bundle:nil];
-    
+    self.stickersService.hasNewModifiedPacks = NO;
     [self showModalViewController:vc];
     
 }
@@ -390,7 +390,6 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 
 - (void)showPack:(NSNotification *)notification {
     NSString *packName = notification.userInfo[@"packName"];
-//    [self updateStickers];
     NSUInteger stickerIndex = [self.stickersService indexOfPackWithName:packName];
     [self showStickersView];
     [self setPackSelectedAtIndex:stickerIndex];
@@ -468,6 +467,8 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
         [self.textInputView becomeFirstResponder];
     }
 }
+
+
 
 #pragma mark - keyboard notifications
 
