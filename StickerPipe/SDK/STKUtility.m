@@ -18,14 +18,14 @@ NSString *const STKUtilityAPIUrl = @"https://api.stickerpipe.com/stk/";
 
 #pragma mark -
 
-+ (NSURL*) imageUrlForStikerMessage:(NSString *)stickerMessage {
++ (NSURL*) imageUrlForStikerMessage:(NSString *)stickerMessage andDensity:(NSString *)density {
     
     
     NSArray *separaredStickerNames = [self trimmedPackNameAndStickerNameWithMessage:stickerMessage];
     NSString *packName = [[separaredStickerNames firstObject] lowercaseString];
     NSString *stickerName = [[separaredStickerNames lastObject] lowercaseString];
     
-    NSString *density = [self scaleString];
+  //  NSString *density = [self scaleString];
     
     NSString *urlString = [NSString stringWithFormat:@"%@/%@_%@.png", packName, stickerName, density];
     
@@ -73,6 +73,10 @@ NSString *const STKUtilityAPIUrl = @"https://api.stickerpipe.com/stk/";
     
     NSURL *url = [NSURL URLWithString:urlString relativeToURL:[NSURL URLWithString:STKUtilityAPIUrl]];
     return url;
+}
+
++(NSString*)maxDensity {
+    return @"xxhdpi";
 }
 
 + (NSString*)scaleString {
