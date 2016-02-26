@@ -11,11 +11,11 @@
 #import <objc/runtime.h>
 #import "UIImage+Tint.h"
 #import "STKStickersManager.h"
-#import <DFImageManagerKit.h>
+#import "STKImageManager.h"
 
 @interface UIImageView()
 
-@property (strong, nonatomic) DFImageTask *imageTask;
+@property (strong, nonatomic) STKImageManager *imageManager;
 
 @end
 
@@ -51,8 +51,6 @@
                           progress:(STKDownloadingProgressBlock)progressBlock
                         completion:(STKCompletionBlock)completion {
     
-    
-    NSURL *stickerUrl = [STKUtility imageUrlForStikerMessage:stickerMessage];
     UIImage *placeholderImage = nil;
     if (!placeholder) {
         UIImage *defaultPlaceholder = [UIImage imageNamed:@"STKStickerPlaceholder"];
@@ -69,56 +67,45 @@
     
     self.image = placeholderImage;
     [self setNeedsLayout];
+
+    __weak typeof(self) weakSelf = self;
     
-    DFImageRequestOptions *options = [DFImageRequestOptions new];
-    options.allowsClipping = YES;
-    options.progressHandler = ^(double progress){
-        // Observe progress
+    self.imageManager = [STKImageManager new];
+
+
+    [self.imageManager getImageForStickerMessage:stickerMessage
+                                      andDensity:[STKUtility scaleString] withProgress:^(NSTimeInterval progress) {
         if (progressBlock) {
             progressBlock(progress);
         }
-    };
-    
-    DFImageRequest *request = [DFImageRequest requestWithResource:stickerUrl targetSize:CGSizeZero contentMode:DFImageContentModeAspectFit options:options];
-    
-    __weak typeof(self) weakSelf = self;
-    
-    self.imageTask = [[DFImageManager sharedManager] imageTaskForRequest:request completion:^(UIImage *image, NSDictionary *info) {
-        NSError *error = info[DFImageInfoErrorKey];
-        
-        if (image) {
-            weakSelf.image = image;
-            [weakSelf setNeedsLayout];
-        } else {
-            if (error.code != -1) {
-                STKLog(@"Failed loading from category: %@", error.localizedDescription);
-            }
+    } andCompletion:^(NSError *error, UIImage *stickerImage) {
+        weakSelf.image = stickerImage;
+        [weakSelf setNeedsLayout];
+        if (error && error.code != -1) {
+            STKLog(@"Failed loading from category: %@", error.localizedDescription);
         }
         
-        if (completion) {
-            completion(error, image);
-        }
     }];
-    
-    [self.imageTask resume];
-    
 }
 
 #pragma mark - Properties
 
-- (DFImageTask *)imageTask {
-    return objc_getAssociatedObject(self, @selector(imageTask));
+- (STKImageManager *)imageManager {
+    return objc_getAssociatedObject(self, @selector(imageManager));
+    
 }
 
-- (void)setImageTask:(DFImageTask *)imageTask {
-     objc_setAssociatedObject(self, @selector(imageTask), imageTask, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setImageManager:(STKImageManager *)imageManager {
+     objc_setAssociatedObject(self, @selector(imageManager), imageManager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
+
 
 #pragma mark - Stop loading
 
 - (void)stk_cancelStickerLoading {
-    
-    [self.imageTask cancel];
+
+    [self.imageManager cancelLoading];
 }
+
 
 @end
