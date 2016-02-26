@@ -24,6 +24,8 @@
 #import "STKOrientationNavigationController.h"
 #import "STKShowStickerButton.h"
 #import "STKAnalyticService.h"
+#import "STKImageManager.h"
+#import "STKShareStickerUtility.h"
 
 //SIZES
 
@@ -47,7 +49,6 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 @property (strong, nonatomic) STKShowStickerButton *keyboardButton;
 
 @property (assign, nonatomic) BOOL isKeyboardShowed;
-
 
 @property (strong, nonatomic) STKStickersEntityService *stickersService;
 
@@ -109,7 +110,6 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     return self;
 }
 
-
 - (void)updateStickers {
     [self loadStickerPacks];
 }
@@ -147,6 +147,14 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
         if ([weakSelf.delegate respondsToSelector:@selector(stickerController:didSelectStickerWithMessage:)]) {
             [weakSelf.delegate stickerController:weakSelf didSelectStickerWithMessage:sticker.stickerMessage];
         }
+    }];
+    
+    [self.stickersDelegateManager setWillShareSticker:^(STKStickerObject *sticker) {
+        STKImageManager *imageManager = [STKImageManager new];
+        [imageManager getImageForStickerMessage:sticker.stickerMessage
+                                     andDensity:[STKUtility maxDensity] withProgress:nil andCompletion:^(NSError *error, UIImage *stickerImage) {
+            [[STKShareStickerUtility sharedInstance] sendImage:stickerImage inView:weakSelf.internalStickersView];
+        }];
     }];
     
     self.stickersCollectionView.dataSource = self.stickersDelegateManager;
@@ -295,6 +303,7 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     STKStickersShopViewController *vc = [[STKStickersShopViewController alloc] initWithNibName:@"STKStickersShopViewController" bundle:nil];
     self.stickersService.hasNewModifiedPacks = NO;
     [self showModalViewController:vc];
+    
     
 }
 

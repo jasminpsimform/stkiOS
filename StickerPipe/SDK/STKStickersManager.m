@@ -26,7 +26,7 @@
 - (void)getStickerForMessage:(NSString *)message progress:(void (^)(double))progressBlock success:(void (^)(UIImage *))success failure:(void (^)(NSError *, NSString *))failure {
     
     if ([self.class isStickerMessage:message]) {
-        NSURL *stickerUrl = [STKUtility imageUrlForStikerMessage:message];
+        NSURL *stickerUrl = [STKUtility imageUrlForStikerMessage:message andDensity:[STKUtility scaleString]];
         
         DFImageRequestOptions *options = [DFImageRequestOptions new];
         options.allowsClipping = YES;
