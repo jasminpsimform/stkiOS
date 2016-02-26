@@ -19,7 +19,7 @@ __strong static STKShareStickerUtility* instanceOf = nil;
 @implementation STKShareStickerUtility
 
 
-+ (STKShareStickerUtility *)sharesInstance {
++ (STKShareStickerUtility *)sharedInstance {
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{

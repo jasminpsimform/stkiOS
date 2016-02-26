@@ -11,7 +11,7 @@
 
 @interface STKShareStickerUtility : NSObject
 
-+ (STKShareStickerUtility *)sharesInstance;
++ (STKShareStickerUtility *)sharedInstance;
 
 - (void)sendImage:(UIImage*)image inView:(UIView*)view;
 
