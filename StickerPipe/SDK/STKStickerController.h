@@ -15,14 +15,18 @@
 @protocol STKStickerControllerDelegate <NSObject>
 
 @required
-- (void)stickerController:(STKStickerController*)stickerController didSelectStickerWithMessage:(NSString*)message;
 
 //View controller for presenting modal controllers
 - (UIViewController*)stickerControllerViewControllerForPresentingModalView;
 
 @optional
 
+- (void)stickerController:(STKStickerController*)stickerController didSelectStickerWithMessage:(NSString*)message;
+
 - (void)stickerControllerDidChangePackStatus:(STKStickerController*)stickerController;
+
+- (void)stickerController:(STKStickerController*)stickerController
+    willShareStickerWithMessage:(NSString *)message;
 
 @end
 
