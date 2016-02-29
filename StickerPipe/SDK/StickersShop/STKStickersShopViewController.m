@@ -90,13 +90,22 @@ static NSUInteger const productsCount = 2;
         
     }
     else {
-        self.prices =  [[NSMutableArray alloc] initWithArray: @[[STKStickersManager priceBLabel], [STKStickersManager priceCLabel]]];
+        if ([STKStickersManager priceBLabel] && [STKStickersManager priceCLabel] ) {
+            
+            self.prices =  [[NSMutableArray alloc] initWithArray: @[[STKStickersManager priceBLabel], [STKStickersManager priceCLabel]]];
+        }
         [self loadStickersShop];
     }
 }
 
 - (NSString *)shopUrlString {
-    NSMutableString *urlstr = [NSMutableString stringWithFormat:@"%@&apiKey=%@&platform=IOS&userId=%@&density=%@&priceB=%@&priceC=%@&is_subscriber=%d", mainUrl, [STKApiKeyManager apiKey], [STKStickersManager userKey], [STKUtility scaleString], [self.prices firstObject], [self.prices lastObject], [STKStickersManager isSubscriber]];
+    
+    NSMutableString *urlstr = [NSMutableString stringWithFormat:@"%@&apiKey=%@&platform=IOS&userId=%@&density=%@&is_subscriber=%d", mainUrl, [STKApiKeyManager apiKey], [STKStickersManager userKey], [STKUtility scaleString], [STKStickersManager isSubscriber]];
+  
+    if (self.prices.count > 0) {
+        [urlstr appendString: [NSMutableString stringWithFormat:
+                                          @"&priceB=%@&priceC=%@", [self.prices firstObject], [self.prices lastObject]]];
+    }
     
     NSMutableString *escapedPath = [NSMutableString stringWithString: [urlstr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
     
@@ -339,7 +348,7 @@ static NSUInteger const productsCount = 2;
         }
         [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.JsInterface.onPackPurchaseFail()"];
     });
-
+    
 }
 
 @end
