@@ -7,7 +7,6 @@
 //
 
 #import "STKStickersCache.h"
-#import <CoreData/CoreData.h>
 #import "NSManagedObjectContext+STKAdditions.h"
 #import "NSManagedObject+STKAdditions.h"
 #import "STKStickerPack.h"
@@ -19,13 +18,6 @@
 #import "STKStickersConstants.h"
 
 static NSString *const recentName = @"Recent";
-
-@interface STKStickersCache()
-
-@property (strong, nonatomic) NSManagedObjectContext *backgroundContext;
-@property (strong, nonatomic) NSManagedObjectContext *mainContext;
-
-@end
 
 @implementation STKStickersCache
 
@@ -51,11 +43,10 @@ static NSString *const recentName = @"Recent";
 
 #pragma mark - Saving
 
-- (void) saveStickerPacks:(NSArray *)stickerPacks {
-    
+- (NSError *)saveStickerPacks:(NSArray *)stickerPacks  {
     __weak typeof(self) weakSelf = self;
-    
-    [self.backgroundContext performBlock:^{
+    __block NSError *error;
+    [self.backgroundContext performBlockAndWait:^{
         NSArray *packIDs = [stickerPacks valueForKeyPath:@"@unionOfObjects.packID"];
         
         NSFetchRequest *requestForDelete = [NSFetchRequest fetchRequestWithEntityName:[STKStickerPack entityName]];
@@ -64,15 +55,16 @@ static NSString *const recentName = @"Recent";
         NSArray *objectsForDelete = [weakSelf.backgroundContext executeFetchRequest:requestForDelete error:nil];
         
         for (STKStickerPack *pack in objectsForDelete) {
-            [self.backgroundContext deleteObject:pack];
+            [weakSelf.backgroundContext deleteObject:pack];
         }
         for (STKStickerPackObject *object in stickerPacks) {
             STKStickerPack *stickerPack = [weakSelf stickerPackModelWithID:object.packID context:weakSelf.backgroundContext];
             [weakSelf fillStickerPack:stickerPack withObject:object];
             
         }
-        [weakSelf.backgroundContext save:nil];
+        [weakSelf.backgroundContext save:&error];
     }];
+    return error;
 }
 
 - (void)saveStickerPack:(STKStickerPackObject *)stickerPack {
@@ -137,25 +129,25 @@ static NSString *const recentName = @"Recent";
 
 #pragma mark - Delete
 
-- (void)deleteStickerPacks:(NSArray *)stickerPacks {
-    
-    __weak typeof(self) weakSelf = self;
-    
-    [self.mainContext performBlockAndWait:^{
-        NSArray *packIDs = [stickerPacks valueForKeyPath:@"@unionOfObjects.packID"];
-        
-        NSFetchRequest *requestForDelete = [NSFetchRequest fetchRequestWithEntityName:[STKStickerPack entityName]];
-        requestForDelete.predicate = [NSPredicate predicateWithFormat:@"%K in %@", STKStickerPackAttributes.packID, packIDs];
-        
-        NSArray *objectsForDelete = [weakSelf.mainContext executeFetchRequest:requestForDelete error:nil];
-        
-        for (STKStickerPack *pack in objectsForDelete) {
-            [weakSelf.mainContext deleteObject:pack];
-        }
-        [weakSelf.mainContext save:nil];
-    }];
-    
-}
+//- (void)deleteStickerPacks:(NSArray *)stickerPacks {
+//    
+//    __weak typeof(self) weakSelf = self;
+//    
+//    [self.mainContext performBlockAndWait:^{
+//        NSArray *packIDs = [stickerPacks valueForKeyPath:@"@unionOfObjects.packID"];
+//        
+//        NSFetchRequest *requestForDelete = [NSFetchRequest fetchRequestWithEntityName:[STKStickerPack entityName]];
+//        requestForDelete.predicate = [NSPredicate predicateWithFormat:@"%K in %@", STKStickerPackAttributes.packID, packIDs];
+//        
+//        NSArray *objectsForDelete = [weakSelf.mainContext executeFetchRequest:requestForDelete error:nil];
+//        
+//        for (STKStickerPack *pack in objectsForDelete) {
+//            [weakSelf.mainContext deleteObject:pack];
+//        }
+//        [weakSelf.mainContext save:nil];
+//    }];
+//    
+//}
 
 
 #pragma mark - FillItems
@@ -234,27 +226,30 @@ static NSString *const recentName = @"Recent";
 
 #pragma mark - Getters
 
-- (void)getStickerPacksIgnoringRecent:(void (^)(NSArray *))response {
+- (void)getStickerPacksIgnoringRecentForContext:(NSManagedObjectContext *)context
+                                       response:(void (^)(NSArray *))response {
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@ OR %K == nil", STKStickerPackAttributes.disabled, @NO, STKStickerPackAttributes.disabled];
-    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:STKStickerPackAttributes.order ascending:YES];
-    NSArray *stickerPacks = [STKStickerPack stk_findWithPredicate:predicate sortDescriptors:@[sortDescriptor] context:self.backgroundContext];
-    
-    NSMutableArray *result = [NSMutableArray array];
-    
-    for (STKStickerPack *pack in stickerPacks) {
-        STKStickerPackObject *stickerPackObject = [[STKStickerPackObject alloc] initWithStickerPack:pack];
-        if (stickerPackObject) {
-            [result addObject:stickerPackObject];
-        }
-    }
-    if (response) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            response(result);
-        });
+    if (context) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@ OR %K == nil", STKStickerPackAttributes.disabled, @NO, STKStickerPackAttributes.disabled];
+        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:STKStickerPackAttributes.order ascending:YES];
+        NSArray *stickerPacks = [STKStickerPack stk_findWithPredicate:predicate sortDescriptors:@[sortDescriptor] context:context];
         
+        NSMutableArray *result = [NSMutableArray array];
+        
+        for (STKStickerPack *pack in stickerPacks) {
+            STKStickerPackObject *stickerPackObject = [[STKStickerPackObject alloc] initWithStickerPack:pack];
+            if (stickerPackObject) {
+                [result addObject:stickerPackObject];
+            }
+        }
+        if (response) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                response(result);
+            });
+            
+        }
+
     }
-    
 }
 
 - (void)getAllPacksIgnoringRecent:(void (^)(NSArray *))response {
@@ -276,8 +271,8 @@ static NSString *const recentName = @"Recent";
     STKStickerPackObject *recentPack = [weakSelf recentStickerPack];
     
     NSMutableArray *result = [NSMutableArray array];
-    
-    [weakSelf getStickerPacksIgnoringRecent:^(NSArray *stickerPacks) {
+#warning Check recent stickers
+    [weakSelf getStickerPacksIgnoringRecentForContext:self.mainContext response:^(NSArray *stickerPacks) {
         
         if (recentPack) {
             [result insertObject:recentPack atIndex:0];
@@ -307,9 +302,9 @@ static NSString *const recentName = @"Recent";
 
 - (STKStickerPackObject*)recentStickerPack {
     
-     __block STKStickerPackObject *object = nil;
-    [self.backgroundContext performBlockAndWait:^{
-        
+//     __block STKStickerPackObject *object = nil;
+//    [self.mainContext performBlock:^{
+    
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K > 0 AND (%K.%K == NO OR %K.%K == nil)", STKStickerAttributes.usedCount, STKStickerRelationships.stickerPack, STKStickerPackAttributes.disabled,STKStickerRelationships.stickerPack, STKStickerPackAttributes.disabled];
         
         NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:STKStickerAttributes.usedCount
@@ -318,7 +313,7 @@ static NSString *const recentName = @"Recent";
         NSArray *stickers = [STKSticker stk_findWithPredicate:predicate
                                               sortDescriptors:@[sortDescriptor]
                                                    fetchLimit:12
-                                                      context:self.backgroundContext];
+                                                      context:self.mainContext];
         
             STKStickerPackObject *recentPack = [STKStickerPackObject new];
             recentPack.packName = recentName;
@@ -335,11 +330,11 @@ static NSString *const recentName = @"Recent";
             NSArray *sortedRecentStickers = [stickerObjects sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:STKStickerAttributes.usedCount ascending:NO]]];
             recentPack.stickers = sortedRecentStickers;
             
-            object = recentPack;
-    }];
+//            object = recentPack;
+//    }];
 
     
-    return object;
+    return recentPack;
 }
 
 #pragma mark - Change

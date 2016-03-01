@@ -7,13 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
 @class STKStickerObject, STKStickerPackObject;
 
 
 @interface STKStickersCache : NSObject
 
-- (void)saveStickerPacks:(NSArray*) stickerPacks;
+@property (strong, nonatomic) NSManagedObjectContext *backgroundContext;
+@property (strong, nonatomic) NSManagedObjectContext *mainContext;
+
+- (NSError *)saveStickerPacks:(NSArray*) stickerPacks;
 
 - (void)saveStickerPack:(STKStickerPackObject *)stickerPack;
 
@@ -21,11 +25,12 @@
 
 - (void)updateStickerPack:(STKStickerPackObject *)stickerPackObject;
 
-- (void)deleteStickerPacks:(NSArray*) stickerPacks;
+//- (void)deleteStickerPacks:(NSArray*) stickerPacks;
 
 - (STKStickerPackObject*)getStickerPackWithPackName:(NSString*)packName;
 
-- (void)getStickerPacksIgnoringRecent:(void(^)(NSArray *stickerPacks))response;
+- (void)getStickerPacksIgnoringRecentForContext:(NSManagedObjectContext *)context
+                                       response:(void (^)(NSArray *))response;
 
 - (void)getAllPacksIgnoringRecent:(void(^)(NSArray *stickerPacks))response;
 
