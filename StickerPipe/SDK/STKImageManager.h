@@ -2,7 +2,7 @@
 //  STKImageManager.h
 //  StickerPipe
 //
-//  Created by Olya Lutsyk on 2/26/16.
+//  Created by Olya Lutsyk on 3/1/16.
 //  Copyright © 2016 908 Inc. All rights reserved.
 //
 

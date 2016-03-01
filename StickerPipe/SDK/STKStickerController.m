@@ -25,7 +25,6 @@
 #import "STKShowStickerButton.h"
 #import "STKAnalyticService.h"
 #import "STKImageManager.h"
-#import "STKShareStickerUtility.h"
 
 //SIZES
 
@@ -147,14 +146,6 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
         if ([weakSelf.delegate respondsToSelector:@selector(stickerController:didSelectStickerWithMessage:)]) {
             [weakSelf.delegate stickerController:weakSelf didSelectStickerWithMessage:sticker.stickerMessage];
         }
-    }];
-    
-    [self.stickersDelegateManager setWillShareSticker:^(STKStickerObject *sticker) {
-        STKImageManager *imageManager = [STKImageManager new];
-        [imageManager getImageForStickerMessage:sticker.stickerMessage
-                                     andDensity:[STKUtility maxDensity] withProgress:nil andCompletion:^(NSError *error, UIImage *stickerImage) {
-            [[STKShareStickerUtility sharedInstance] sendImage:stickerImage inView:weakSelf.internalStickersView];
-        }];
     }];
     
     self.stickersCollectionView.dataSource = self.stickersDelegateManager;
