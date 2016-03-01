@@ -23,6 +23,17 @@
 
 
 @implementation STKStickersPurchaseService
+
++ (STKStickersPurchaseService *) sharedInstance {
+    static STKStickersPurchaseService *entity = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        entity = [[STKStickersPurchaseService alloc] init];
+    });
+    
+    return entity;
+}
+
 - (void)configureStore {
     
     _persistence = [[RMStoreKeychainPersistence alloc] init];
@@ -75,6 +86,12 @@
         [wself purchaseFailedError:error];
     }];
     
+}
+
+- (void)purchasInternalPackName:(NSString *)packName
+                       andPackPrice:(NSString *)packPrice {
+    [self purchaseSucceedForPack:packName withPrice:packPrice];
+
 }
 
 #pragma mark - purchases

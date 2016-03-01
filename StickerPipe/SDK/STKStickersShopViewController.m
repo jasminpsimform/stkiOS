@@ -37,7 +37,7 @@ static NSUInteger const productsCount = 2;
 
 @property(nonatomic, strong) STKStickersShopJsInterface *jsInterface;
 @property(nonatomic, strong) STKStickersApiService *apiService;
-@property(nonatomic, strong) STKStickersPurchaseService *stickersPurchaseService;
+//@property(nonatomic, strong) STKStickersPurchaseService *stickersPurchaseService;
 @property(nonatomic, strong) STKStickersEntityService *entityService;
 
 @property(nonatomic, strong) NSMutableArray *prices;
@@ -56,7 +56,8 @@ static NSUInteger const productsCount = 2;
     self.navigationController.navigationBar.tintColor = [STKUtility defaultOrangeColor];
     
     self.jsInterface.delegate = self;
-    self.stickersPurchaseService.delegate = self;
+//    self.stickersPurchaseService.delegate = self;
+    [STKStickersPurchaseService sharedInstance].delegate = self;
     
     self.apiService = [STKStickersApiService new];
 }
@@ -71,7 +72,8 @@ static NSUInteger const productsCount = 2;
     if ([STKInAppProductsManager hasProductIds]) {
         __weak typeof(self) wself = self;
         
-        [self.stickersPurchaseService requestProductsWithIdentifier:[STKInAppProductsManager productIds] completion:^(NSArray *stickerPacks) {
+//        [self.stickersPurchaseService requestProductsWithIdentifier:[STKInAppProductsManager productIds] completion:^(NSArray *stickerPacks) {
+        [[STKStickersPurchaseService sharedInstance] requestProductsWithIdentifier:[STKInAppProductsManager productIds] completion:^(NSArray *stickerPacks) {
             if (stickerPacks.count == productsCount) {
                 
                 for (SKProduct *product in stickerPacks) {
@@ -142,12 +144,12 @@ static NSUInteger const productsCount = 2;
     return _jsInterface;
 }
 
-- (STKStickersPurchaseService *)stickersPurchaseService {
-    if (!_stickersPurchaseService) {
-        _stickersPurchaseService = [STKStickersPurchaseService new];
-    }
-    return _stickersPurchaseService;
-}
+//- (STKStickersPurchaseService *)stickersPurchaseService {
+//    if (!_stickersPurchaseService) {
+//        _stickersPurchaseService = [STKStickersPurchaseService new];
+//    }
+//    return _stickersPurchaseService;
+//}
 
 - (STKStickersEntityService *)entityService {
     if (!_entityService) {
@@ -189,10 +191,11 @@ static NSUInteger const productsCount = 2;
     __weak typeof(self) wself = self;
     
     [self.apiService loadStickerPackWithName:packName andPricePoint:packPrice success:^(id response) {
-        [wself.entityService downloadNewPack:response[@"data"]
-                                   onSuccess:^(NSArray *stickerPacks) {
-                                       [wself dismissViewControllerAnimated:YES completion:^{
-                                           [[NSNotificationCenter defaultCenter] postNotificationName:STKNewPackDownloadedNotification object:self userInfo:@{@"packName": packName, @"stickerPacks": stickerPacks}];
+//        [wself.entityService downloadNewPack:response[@"data"]
+//                                   onSuccess:^(NSArray *stickerPacks) {
+        [wself.entityService downloadNewPack:response[@"data"] onSuccess:^{
+                                [wself dismissViewControllerAnimated:YES completion:^{
+                                           [[NSNotificationCenter defaultCenter] postNotificationName:STKNewPackDownloadedNotification object:self userInfo:@{@"packName": packName}];
                                        }];
                                    }];
         
@@ -252,7 +255,8 @@ static NSUInteger const productsCount = 2;
     } else {
         
         if ([STKInAppProductsManager hasProductIds]) {
-            [self.stickersPurchaseService purchaseProductWithPackName:packName andPackPrice:packPrice];
+//            [self.stickersPurchaseService purchaseProductWithPackName:packName andPackPrice:packPrice];
+       [[STKStickersPurchaseService sharedInstance] purchaseProductWithPackName:packName andPackPrice:packPrice];
         } else {
             [[NSNotificationCenter defaultCenter] postNotificationName:STKPurchasePackNotification object:self userInfo:@{@"packName":packName, @"packPrice":packPrice}];
         }

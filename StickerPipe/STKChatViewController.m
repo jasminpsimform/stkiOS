@@ -11,8 +11,13 @@
 #import "STKChatTextCell.h"
 #import "STKStickerPipe.h"
 #import "STKShowStickerButton.h"
+#import "STKStickersPurchaseService.h"
 
-@interface STKChatViewController() <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, STKStickerControllerDelegate>
+@interface STKChatViewController() <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, STKStickerControllerDelegate, UIAlertViewDelegate> {
+
+    NSString *packName;
+    NSString *packPrice;
+}
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextView *inputTextView;
@@ -57,7 +62,7 @@
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchasePack) name:STKPurchasePackNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchasePack:) name:STKPurchasePackNotification object:nil];
     
     
     //tap gesture
@@ -242,11 +247,37 @@
 
 #pragma mark - PurchasePack
 
-- (void)purchasePack {
+- (void)purchasePack:(NSNotification *)notification {
     
-    STKPurchaseService *purchaseService = [STKPurchaseService new];
-    [purchaseService purchaseFailed];
+    packName = notification.userInfo[@"packName"];
+    packPrice = notification.userInfo[@"packPrice"];
+
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"Purchase this stickers pack" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+    alertView.delegate = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+
+        [alertView show];
+    });
+//    STKPurchaseService *purchaseService = [STKPurchaseService new];
+//    [purchaseService purchaseFailed];
     
 }
+
+#pragma mark - Alert controller delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    switch (buttonIndex) {
+        case 0:
+            [[STKStickersPurchaseService sharedInstance] purchaseFailedError:nil];
+            break;
+        case 1:[[STKStickersPurchaseService sharedInstance] purchasInternalPackName:packName andPackPrice:packPrice];
+            
+        default:
+            break;
+    }
+    
+}
+
 
 @end

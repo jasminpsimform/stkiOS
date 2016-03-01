@@ -716,8 +716,8 @@ StickerPipeTests.xctest */,
 		9AF866F01C5BBB5E002A555B /* StickersShopVC */ = {
 			isa = PBXGroup;
 			children = (
-				9ABDDB291C845D9C00554561 /* STKStickersShopViewController.m */,
 				9ABDDB2A1C845D9C00554561 /* STKStickersShopViewController.h */,
+				9ABDDB291C845D9C00554561 /* STKStickersShopViewController.m */,
 				9ABDDB2B1C845D9C00554561 /* STKStickersShopViewController.xib */,
 			);
 			name = StickersShopVC;
