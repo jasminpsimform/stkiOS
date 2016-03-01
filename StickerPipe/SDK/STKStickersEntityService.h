@@ -28,9 +28,6 @@
 
 - (void) getPackWithMessage:(NSString*)message completion:(void(^)(STKStickerPackObject* stickerPack, BOOL isDownloaded))completion;
 
-//- (void)downloadNewPack:(NSDictionary *)packDict
-//              onSuccess:(void(^)(NSArray *stickerPacks))success;
-
 - (void)downloadNewPack:(NSDictionary *)packDict
               onSuccess:(void(^)(void))success;
 
