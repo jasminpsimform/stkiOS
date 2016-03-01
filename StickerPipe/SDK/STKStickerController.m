@@ -64,6 +64,10 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
         self.stickersService.stickersArray = stickerPacks;
         self.keyboardButton.badgeView.hidden = ![self.stickersService hasNewPacks];
         self.stickersShopButton.badgeView.hidden = !self.stickersService.hasNewModifiedPacks;
+        if (self.showStickersOnStart) {
+            [self showStickersView];
+        }
+        
     } failure:nil];
 }
 

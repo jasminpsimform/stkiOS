@@ -45,8 +45,9 @@
 
 @property (strong, nonatomic) STKShowStickerButton *keyboardButton;
 
-@property(nonatomic) CGRect stickersViewFrame;
+@property (nonatomic) CGRect stickersViewFrame;
 
+@property (nonatomic) BOOL showStickersOnStart;
 
 //@property (nonatomic, strong) UIColor *stickersShopTintColor;
 
