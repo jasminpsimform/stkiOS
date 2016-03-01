@@ -252,7 +252,7 @@
     packName = notification.userInfo[@"packName"];
     packPrice = notification.userInfo[@"packPrice"];
 
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"Purchase this stickers pack" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"Purchase this stickers pack?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
     alertView.delegate = self;
     dispatch_async(dispatch_get_main_queue(), ^{
 
