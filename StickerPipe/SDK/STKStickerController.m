@@ -45,8 +45,6 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 @property (strong, nonatomic) STKStickerDelegateManager *stickersDelegateManager;
 @property (strong, nonatomic) STKStickerHeaderDelegateManager *stickersHeaderDelegateManager;
 
-@property (strong, nonatomic) STKShowStickerButton *keyboardButton;
-
 @property (assign, nonatomic) BOOL isKeyboardShowed;
 
 @property (strong, nonatomic) STKStickersEntityService *stickersService;
@@ -196,8 +194,13 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 
     self.internalStickersView = [[[NSBundle mainBundle] loadNibNamed:@"STKStickersView" owner:self options:nil] firstObject];
     
+    if (self.stickersViewFrame.size.height > 0) {
+        self.internalStickersView.autoresizingMask = UIViewAutoresizingNone;
+        self.internalStickersView.frame = self.stickersViewFrame;
+    } else {
+        self.internalStickersView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    }
     
-    self.internalStickersView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     self.internalStickersView.clipsToBounds = YES;
     
     //iOS 7 FIX
