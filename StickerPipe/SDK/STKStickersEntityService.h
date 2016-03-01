@@ -41,7 +41,7 @@
 
 - (void)updateStickerPackInCache:(STKStickerPackObject *)stickerPackObject;
 
-- (void) deleteStickerPack:(STKStickerPackObject*) stickerPack;
+//- (void) deleteStickerPack:(STKStickerPackObject*) stickerPack;
 
 - (void) togglePackDisabling:(STKStickerPackObject*)pack;
 
