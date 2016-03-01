@@ -257,6 +257,18 @@ static NSString *const recentName = @"Recent";
     
 }
 
+- (void)getAllPacksIgnoringRecent:(void (^)(NSArray *))response {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != nil", STKStickerPackAttributes.disabled, @NO, STKStickerPackAttributes.disabled];
+    
+    NSArray *stickerPacks = [STKStickerPack stk_findWithPredicate:predicate sortDescriptors:nil context:self.mainContext];
+    if (response) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            response(stickerPacks);
+        });
+    }
+    
+}
+
 - (void)getStickerPacks:(void(^)(NSArray *stickerPacks))response {
     
     __weak typeof(self) weakSelf = self;
@@ -390,12 +402,14 @@ static NSString *const recentName = @"Recent";
 }
 
 - (BOOL)hasPackWithName:(NSString *)packName {
+    
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[STKStickerPack entityName]];
+        NSUInteger allRecordsCount = [[NSManagedObjectContext stk_defaultContext] countForFetchRequest:request error:nil];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", STKStickerPackAttributes.packName, packName];
 
     request.predicate = predicate;
-    request.fetchLimit = 1;
-    NSUInteger count = [[NSManagedObjectContext stk_defaultContext] countForFetchRequest:request error:nil];
+//    request.fetchLimit = 1;
+    NSUInteger count = [self.mainContext countForFetchRequest:request error:nil];
     return count > 0;
 }
 

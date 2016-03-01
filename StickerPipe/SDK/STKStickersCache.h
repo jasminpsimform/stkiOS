@@ -27,6 +27,9 @@
 
 - (void)getStickerPacksIgnoringRecent:(void(^)(NSArray *stickerPacks))response;
 
+- (void)getAllPacksIgnoringRecent:(void(^)(NSArray *stickerPacks))response;
+
+
 - (void)getStickerPacks:(void(^)(NSArray *stickerPacks))response;
 
 - (STKStickerPackObject*)recentStickerPack;
