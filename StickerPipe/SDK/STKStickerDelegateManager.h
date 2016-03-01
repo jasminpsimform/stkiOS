@@ -16,8 +16,6 @@
 //Callbacks
 @property (nonatomic, copy) void(^didChangeDisplayedSection)(NSInteger displayedSection);
 @property (nonatomic, copy) void(^didSelectSticker)(STKStickerObject* sticker);
-@property (nonatomic, copy) void(^willShareSticker)(STKStickerObject* sticker);
-
 
 @property (nonatomic, weak) UICollectionView *collectionView;
 

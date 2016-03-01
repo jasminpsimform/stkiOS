@@ -2,7 +2,7 @@
 //  STKImageManager.m
 //  StickerPipe
 //
-//  Created by Olya Lutsyk on 2/26/16.
+//  Created by Olya Lutsyk on 3/1/16.
 //  Copyright © 2016 908 Inc. All rights reserved.
 //
 
@@ -10,12 +10,10 @@
 #import "STKUtility.h"
 #import <objc/runtime.h>
 
-//__strong static DFImageTask* imageTask = nil;
-
 @implementation STKImageManager
 
 - (void)getImageForStickerMessage:(NSString *)stickerMessage andDensity:(NSString *)density withProgress:(STKDownloadingProgressBlock)progressBlock andCompletion:(STKCompletionBlock)completion {
-   
+    
     NSURL *stickerUrl = [STKUtility imageUrlForStikerMessage:stickerMessage andDensity:density];
     
     DFImageRequestOptions *options = [DFImageRequestOptions new];
@@ -37,7 +35,7 @@
         }
     }];
     [self.imageTask resume];
-
+    
 }
 
 - (DFImageTask *)imageTask {
