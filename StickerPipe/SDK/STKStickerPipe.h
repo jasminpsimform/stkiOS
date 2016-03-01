@@ -10,7 +10,8 @@
 #import "STKStickersManager.h"
 #import "UIImageView+Stickers.h"
 #import "STKStickerController.h"
-
+#import "STKStickersConstants.h"
+#import "STKPurchaseService.h"
 
 
 

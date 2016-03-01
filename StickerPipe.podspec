@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name            = 'StickerPipe'
-  s.version         = '2.0-beta1'
+  s.version         = '2.0.1'
   s.platform        = :ios, '7.0'
   s.summary         = 'Easy stickers SDK for integration in messangers.'
   s.homepage        = "https://github.com/908Inc/stkiOS"
@@ -19,6 +19,10 @@ Pod::Spec.new do |s|
   s.dependency       'Fabric'
   s.dependency       'Crashlytics'
   s.dependency       'MD5Digest', '~> 1.1'
+  s.dependency       'RMStore', '~> 0.7'
+  s.dependency       'RMStore/KeychainPersistence'
+  s.dependency       'RMStore/NSUserDefaultsPersistence'
+
   s.resources       = ['StickerPipe/SDK/Media.xcassets', 'StickerPipe/SDK/*.{xcdatamodeld}','StickerPipe/SDK/StickerPipe.xcassets', 'StickerPipe/SDK/*.xib']
 
 end

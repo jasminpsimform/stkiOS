@@ -27,6 +27,8 @@
         self.packName = packName;
         self.packTitle = serverResponse[@"title"];
         self.packID = serverResponse[@"pack_id"];
+        self.pricePoint = serverResponse[@"pricepoint"];
+        self.disabled = ([serverResponse[@"user_status"] isEqualToString:@"active"]) ? @(NO) : @(YES);
         self.price = serverResponse[@"price"];
         self.packDescription = serverResponse[@"description"];
         self.productID = serverResponse[@"product_id"];
@@ -34,7 +36,7 @@
         NSArray *stickers = serverResponse[@"stickers"];
             for (NSDictionary *sticker in stickers) {
                 STKStickerObject *stickerObject = [[STKStickerObject alloc] init];
-                stickerObject.stickerID = sticker[@"id"];
+                stickerObject.stickerID = sticker[@"content_id"];
                 NSString *stickerName = sticker[@"name"];
                 stickerObject.stickerName = stickerName;
                 stickerObject.stickerMessage = [NSString stringWithFormat:@"[[%@_%@]]", packName, stickerName];
@@ -54,6 +56,7 @@
         self.packName = stickerPack.packName;
         self.packTitle = stickerPack.packTitle;
         self.packID = stickerPack.packID;
+        self.pricePoint = stickerPack.pricePoint;
         self.price = stickerPack.price;
         self.packDescription = stickerPack.packDescription;
         self.disabled = stickerPack.disabled;

@@ -11,9 +11,10 @@
 #import "STKUtility.h"
 #import "STKAnalyticService.h"
 #import "STKApiKeyManager.h"
+#import "STKInAppProductsManager.h"
 #import "STKCoreDataService.h"
 #import "STKStickersConstants.h"
-
+#import "NSString+MD5.h"
 
 @interface STKStickersManager()
 
@@ -37,7 +38,7 @@
         };
         
         DFImageRequest *request = [DFImageRequest requestWithResource:stickerUrl targetSize:CGSizeMake(160.f, 160.f) contentMode:DFImageContentModeAspectFit options:options];
-                
+        
         DFImageTask *task =[[DFImageManager sharedManager] imageTaskForRequest:request completion:^(UIImage *image, NSDictionary *info) {
             NSError *error = info[DFImageInfoErrorKey];
             if (error) {
@@ -53,7 +54,7 @@
             if (error.code != -1) {
                 STKLog(@"Failed loading from category: %@ %@", error.localizedDescription, @"ddd");
             }
-
+            
         }];
         
         [task resume];
@@ -64,7 +65,7 @@
             failure(error, @"It's not a sticker");
         }
     }
-
+    
 }
 
 #pragma mark - Validation
@@ -90,14 +91,16 @@
 #pragma mark - User key
 
 + (void)setUserKey:(NSString *)userKey {
-    [[NSUserDefaults standardUserDefaults] setObject:userKey forKey:kUserKeyDefaultsKey];
+    
+    NSString *hashUserKey = [[userKey stringByAppendingString:[STKApiKeyManager apiKey]] MD5Digest];
+    [[NSUserDefaults standardUserDefaults] setObject:hashUserKey forKey:kUserKeyDefaultsKey];
 }
 
 + (NSString *)userKey {
     return [[NSUserDefaults standardUserDefaults] stringForKey:kUserKeyDefaultsKey];
 }
 
-#pragma mark - Localization 
+#pragma mark - Localization
 
 + (void)setLocalization:(NSString *)localization {
     [[NSUserDefaults standardUserDefaults] setObject:localization forKey:kLocalizationDefaultsKey];
@@ -113,6 +116,53 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setDouble:0 forKey:kLastUpdateIntervalKey];
     [defaults synchronize];
+}
+
+#pragma mark - Prices
+
++ (void)setPriceBWithLabel:(NSString *)priceLabel
+        andValue:(CGFloat)priceValue {
+    [[NSUserDefaults standardUserDefaults] setObject:priceLabel forKey:kPriceBLabel];
+    [[NSUserDefaults standardUserDefaults] setFloat:priceValue forKey:kPriceBValue];
+}
+
++ (NSString *)priceBLabel {
+    return [[NSUserDefaults standardUserDefaults] stringForKey:kPriceBLabel];
+}
+
++ (CGFloat)priceBValue {
+    return [[NSUserDefaults standardUserDefaults] floatForKey:kPriceBValue];
+}
+
++ (void)setPriceCwithLabel:(NSString *)priceLabel
+        andValue:(CGFloat)priceValue {
+    [[NSUserDefaults standardUserDefaults] setObject:priceLabel forKey:kPriceCLabel];
+    [[NSUserDefaults standardUserDefaults] setFloat:priceValue forKey:kPriceCValue];
+}
+
++ (NSString *)priceCLabel {
+    return [[NSUserDefaults standardUserDefaults] stringForKey:kPriceCLabel];
+}
+
++ (CGFloat)priceCValue {
+    return [[NSUserDefaults standardUserDefaults] floatForKey:kPriceCValue];
+}
+
+#pragma mark - Subscriber
+
++ (void)setUserIsSubscriber:(BOOL)isSubscriber {
+    [[NSUserDefaults standardUserDefaults] setBool:isSubscriber forKey:kIsSubscriber] ;
+}
+
++ (BOOL)isSubscriber {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kIsSubscriber];
+}
+
+#pragma mark - In-app product ids
+
++ (void)setPriceBProductId:(NSString *)priceBProductId andPriceCProductId:(NSString *)priceCProductId {
+    [STKInAppProductsManager setPriceBproductId:priceBProductId];
+    [STKInAppProductsManager setPriceCproductId:priceCProductId];
 }
 
 @end

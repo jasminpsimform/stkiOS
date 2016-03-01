@@ -13,26 +13,52 @@ Get the API key on the [StickerPipe](http://stickerpipe.com/)
 
 CocoaPods:
 ```ruby
-pod "StickerPipe", "~> 0.1"
+pod "StickerPipe", "~> 2.0.1"
 ```
-## Usage
+# Usage
+
+### API key 
 
 Add API key in your AppDelegate.m 
 
 ```objc
 [STKStickersManager initWitApiKey:@"API_KEY"];
 [STKStickersManager setStartTimeInterval];
+```
+
+### Users
+
+```objc
 [STKStickersManager setUserKey:@"USER_ID"];
 ```
 
-Use category for UIImageView for display sticker
+### Subscription 
 
+```objc
+    [STKStickersManager setUserIsSubscriber:NO];
+```
+
+
+### In-app purchase product identifiers 
+
+```objc
+   [STKStickersManager setPriceBProductId:@"com.priceB.example"         andPriceCProductId:@"com.priceC.example"];
+```
+
+### Internal currency
+
+ ```objc
+    [STKStickersManager setPriceBWithLabel:@"0.99 USD" andValue:0.99f];
+    [STKStickersManager setPriceCwithLabel:@"1.99 USD" andValue:1.99f];
+```
+Use category for UIImageView for display sticker
 ```objc
     if ([STKStickersManager isStickerMessage:message]) {
         [self.stickerImageView stk_setStickerWithMessage:message placeholder:nil placeholderColor:nil progress:nil completion:nil];
         
     }
 ```
+
 Init STKStickerController and add stickersView like inputView for your UITextView/UITextField
 
 ```objc
@@ -41,7 +67,9 @@ Init STKStickerController and add stickersView like inputView for your UITextVie
 
  self.stickerController.textInputView = self.inputTextView;
 ```
+
 Use delegate method for reciving sticker messages from sticker view controller
+
 
 ```objc
 - (void)stickerController:(STKStickerController *)stickerController didSelectStickerWithMessage:(NSString *)message {
@@ -50,6 +78,23 @@ Use delegate method for reciving sticker messages from sticker view controller
     
 }
 ```
+
+Use delegate method to set base controller for presenting modal controllers 
+
+```objc
+- (UIViewController *)stickerControllerViewControllerForPresentingModalView {
+    return self;
+}
+```
+
+### Text message send
+
+```objc
+    [self.stickerController textMessageSent:message];
+
+```
+
+
 ## Layout sticker fames 
 
 ```objc

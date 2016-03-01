@@ -14,6 +14,7 @@ const struct STKStickerPackAttributes STKStickerPackAttributes = {
 	.packName = @"packName",
 	.packTitle = @"packTitle",
 	.price = @"price",
+    .pricePoint = @"pricePoint",
 	.productID = @"productID",
 };
 
@@ -163,6 +164,8 @@ const struct STKStickerPackRelationships STKStickerPackRelationships = {
 }
 
 @dynamic packName;
+
+@dynamic pricePoint;
 
 @dynamic packTitle;
 

@@ -12,13 +12,14 @@
 
 @property (nonatomic, assign) CGSize dotSize;
 @property (nonatomic, assign) CGFloat lineWidth;
+@property (nonatomic, strong) UIColor *borderColor;
 
 @end
 
 
 @implementation STKBadgeView
 
-- (instancetype)initWithFrame:(CGRect)frame lineWidth:(CGFloat)lineWidth dotSize:(CGSize)dotSize
+- (instancetype)initWithFrame:(CGRect)frame lineWidth:(CGFloat)lineWidth dotSize:(CGSize)dotSize andBorderColor:(UIColor *)borderColor
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -26,6 +27,7 @@
         self.userInteractionEnabled = NO;
         self.lineWidth = lineWidth;
         self.dotSize = dotSize;
+        self.borderColor = borderColor;
     }
     return self;
 }
@@ -48,7 +50,7 @@
     [[UIColor redColor] setFill];
     [path fill];
     path.lineWidth = lineWidth;
-    [[UIColor whiteColor] setStroke];
+    [self.borderColor setStroke];
     [path stroke];
     
     CGFloat whiteDotWight = self.dotSize.width;

@@ -29,5 +29,21 @@
 
 + (void)setStartTimeInterval;
 
++ (void)setPriceBWithLabel:(NSString *)priceLabel
+                  andValue:(CGFloat)priceValue;
+
++ (NSString *)priceBLabel;
++ (CGFloat)priceBValue;
+
++ (void)setPriceCwithLabel:(NSString *)priceLabel
+                  andValue:( CGFloat)priceValue;
+
++ (NSString *)priceCLabel;
++ (CGFloat)priceCValue;
+
++ (void)setUserIsSubscriber:(BOOL)isSubscriber;
++ (BOOL)isSubscriber;
+
++ (void)setPriceBProductId:(NSString *)priceBProductId andPriceCProductId:(NSString *)priceCProductId;
 
 @end

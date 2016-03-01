@@ -10,10 +10,14 @@
 #import "STKChatStickerCell.h"
 #import "STKChatTextCell.h"
 #import "STKStickerPipe.h"
-#import "STKPackDescriptionController.h"
 #import "STKShowStickerButton.h"
+#import "STKStickersPurchaseService.h"
 
-@interface STKChatViewController() <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, STKStickerControllerDelegate, STKPackDescriptionControllerDelegate>
+@interface STKChatViewController() <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, STKStickerControllerDelegate, UIAlertViewDelegate> {
+
+    NSString *packName;
+    NSString *packPrice;
+}
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextView *inputTextView;
@@ -38,8 +42,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    self.dataSource = [@[@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_china]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bike]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_dontknow]]",@"[[flowers_flower1]]"] mutableCopy];
-
+    //    self.dataSource = [@[@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_china]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bike]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_dontknow]]",@"[[flowers_flower1]]"] mutableCopy];
+    
     self.dataSource = [@[@"[[sonya45_1774]]", @"[[sonya45_1778]]", @"[[stvalentinesday41_1609]]", @"[[stvalentinesday41_1624]]", @"[[sonya45_1776]]", @"[[sonya45_1844]]"] mutableCopy];
     self.inputTextView.layer.cornerRadius = 7.0;
     self.inputTextView.layer.borderWidth = 1.0;
@@ -58,12 +62,14 @@
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchasePack:) name:STKPurchasePackNotification object:nil];
+    
     
     //tap gesture
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(textViewDidTap:)];
     [self.inputTextView addGestureRecognizer:tapGesture];
-
+    
     [self scrollTableViewToBottom];
     
     self.stickerController = [[STKStickerController alloc] init];
@@ -71,7 +77,7 @@
     self.stickerController.textInputView = self.inputTextView;
     
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-
+    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateStickersCache:) name:STKStickersCacheDidUpdateStickersNotification object:nil];
     
@@ -113,7 +119,7 @@
     CGFloat animationDuration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue];
     
     self.bottomViewConstraint.constant = keyboardHeight;
-
+    
     
     [UIView animateWithDuration:animationDuration animations:^{
         [UIView setAnimationCurve:curve];
@@ -153,13 +159,13 @@
     
     if ([STKStickersManager isStickerMessage:message]) {
         STKChatStickerCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell"];
-
+        
         [cell fillWithStickerMessage:message downloaded:[self.stickerController isStickerPackDownloaded:message]];
         return cell;
     } else {
         STKChatTextCell *cell = [self.tableView
-                                          dequeueReusableCellWithIdentifier:@"textCell"];
-
+                                 dequeueReusableCellWithIdentifier:@"textCell"];
+        
         [cell fillWithTextMessage:message];
         return cell;
     }
@@ -177,7 +183,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-     NSString *message = self.dataSource[indexPath.row];
+    NSString *message = self.dataSource[indexPath.row];
     return ([STKStickersManager isStickerMessage:message]) ? 160 : 40;
 }
 
@@ -202,15 +208,7 @@
     [self scrollTableViewToBottom];
 }
 
-#pragma mark - STKPackDescriptionControllerDelegate
-
-- (void) packDescriptionControllerDidChangePakcStatus:(STKPackDescriptionController*)controller {
-    [self.tableView reloadData];
-}
-
-
 #pragma mark - UITextViewDelegate
-
 
 - (void)textViewDidChange:(UITextView *)textView  {
     self.sendButton.enabled = textView.text.length > 0;
@@ -247,4 +245,40 @@
     }
     
 }
+
+#pragma mark - PurchasePack
+
+- (void)purchasePack:(NSNotification *)notification {
+    
+    packName = notification.userInfo[@"packName"];
+    packPrice = notification.userInfo[@"packPrice"];
+
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"Purchase this stickers pack?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+    alertView.delegate = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+
+        [alertView show];
+    });
+//    STKPurchaseService *purchaseService = [STKPurchaseService new];
+//    [purchaseService purchaseFailed];
+    
+}
+
+#pragma mark - Alert controller delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    switch (buttonIndex) {
+        case 0:
+            [[STKStickersPurchaseService sharedInstance] purchaseFailedError:nil];
+            break;
+        case 1:[[STKStickersPurchaseService sharedInstance] purchasInternalPackName:packName andPackPrice:packPrice];
+            
+        default:
+            break;
+    }
+    
+}
+
+
 @end

@@ -15,6 +15,8 @@
 
 - (void)saveStickerPacks:(NSArray*) stickerPacks;
 
+- (void)saveStickerPack:(STKStickerPackObject *)stickerPack;
+
 - (void)saveDisabledStickerPack:(STKStickerPackObject*)stickerPack;
 
 - (void)updateStickerPack:(STKStickerPackObject *)stickerPackObject;
@@ -24,6 +26,9 @@
 - (STKStickerPackObject*)getStickerPackWithPackName:(NSString*)packName;
 
 - (void)getStickerPacksIgnoringRecent:(void(^)(NSArray *stickerPacks))response;
+
+- (void)getAllPacksIgnoringRecent:(void(^)(NSArray *stickerPacks))response;
+
 
 - (void)getStickerPacks:(void(^)(NSArray *stickerPacks))response;
 
@@ -37,4 +42,5 @@
 
 - (void)markStickerPack:(STKStickerPackObject*)pack disabled:(BOOL)disabled;
 
+- (BOOL)hasPackWithName:(NSString *)packName;
 @end

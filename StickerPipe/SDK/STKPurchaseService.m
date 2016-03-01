@@ -6,6 +6,7 @@
 #import "STKPurchaseService.h"
 #import <StoreKit/StoreKit.h>
 #import <DFImageManager/DFImageFetching.h>
+#import "STKStickersConstants.h"
 
 @interface STKPurchaseService() <SKProductsRequestDelegate, SKPaymentTransactionObserver>
 
@@ -188,6 +189,16 @@
 - (void) restorePurchaseWithCompletion:(STKRestoreCompletionBlock)completion {
     self.restoreCompletionBlock = completion;
     [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
+}
+
+#pragma mark - purchases
+
+- (void)purchaseSucceedForPack:(NSString *)packName withPrice:(NSString *)packPrice {
+    [[NSNotificationCenter defaultCenter] postNotificationName:STKPurchaseSucceededNotification object:self userInfo:@{@"packName": packName, @"packPrice": packPrice}];
+}
+
+- (void)purchaseFailed {
+    [[NSNotificationCenter defaultCenter] postNotificationName:STKPurchaseFailedNotification object:self];
 }
 
 @end

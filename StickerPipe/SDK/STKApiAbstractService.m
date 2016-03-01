@@ -15,7 +15,7 @@
 #import "NSString+MD5.h"
 
 
-NSString *const STKApiVersion = @"v1";
+NSString *const STKApiVersion = @"v2";
 NSString *const STKBaseApiUrl = @"https://api.stickerpipe.com/api";
 //NSString *const STKBaseApiUrl = @"http://work.stk.908.vc/api";
 
@@ -27,21 +27,34 @@ NSString *const STKBaseApiUrl = @"https://api.stickerpipe.com/api";
     if (self) {
         NSString *baseUrl = [NSString stringWithFormat:@"%@/%@", STKBaseApiUrl, STKApiVersion];
         self.sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseUrl]];
+        self.getSessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseUrl]];
+        self.sessionManager.requestSerializer = [self baseSerializer];
         
-        
-        AFJSONRequestSerializer *serializer = [AFJSONRequestSerializer serializer];
-        
-        [serializer setValue:[self userId] forHTTPHeaderField:@"UserID"];
-        [serializer setValue:STKApiVersion forHTTPHeaderField:@"ApiVersion"];
-        [serializer setValue:@"iOS" forHTTPHeaderField:@"Platform"];
-        [serializer setValue:[STKUUIDManager generatedDeviceToken] forHTTPHeaderField:@"DeviceId"];
-        [serializer setValue:[STKApiKeyManager apiKey] forHTTPHeaderField:@"ApiKey"];
-        [serializer setValue:[[NSBundle mainBundle] bundleIdentifier] forHTTPHeaderField:@"Package"];
-        [serializer setValue:[self localization] forHTTPHeaderField:@"Localization"];
-        
-        self.sessionManager.requestSerializer = serializer;
+        self.getSessionManager.requestSerializer = [self getSerializer];
     }
     return self;
+}
+
+- (AFJSONRequestSerializer *)baseSerializer {
+    
+    AFJSONRequestSerializer *serializer = [AFJSONRequestSerializer serializer];
+    [serializer setValue:[STKStickersManager userKey] forHTTPHeaderField:@"UserID"];
+    [serializer setValue:STKApiVersion forHTTPHeaderField:@"ApiVersion"];
+    [serializer setValue:@"iOS" forHTTPHeaderField:@"Platform"];
+    [serializer setValue:[STKUUIDManager generatedDeviceToken] forHTTPHeaderField:@"DeviceId"];
+    [serializer setValue:[STKApiKeyManager apiKey] forHTTPHeaderField:@"ApiKey"];
+    [serializer setValue:[[NSBundle mainBundle] bundleIdentifier] forHTTPHeaderField:@"Package"];
+    [serializer setValue:[self localization] forHTTPHeaderField:@"Localization"];
+    
+    return serializer;
+}
+
+- (AFJSONRequestSerializer *)getSerializer {
+    AFJSONRequestSerializer *serializer = [self baseSerializer];
+    NSNumber *isSubscriber = [NSNumber numberWithBool:[STKStickersManager isSubscriber]];
+    [serializer setValue:[isSubscriber stringValue] forHTTPHeaderField:@"is_subscriber"];
+    
+    return serializer;
 }
 
 - (NSString *)localization {
@@ -51,14 +64,5 @@ NSString *const STKBaseApiUrl = @"https://api.stickerpipe.com/api";
     
     return (locale) ? locale : language;
 }
-
-- (NSString *)userId {
-    
-    NSString *userKey = [STKStickersManager userKey];
-    NSString *hashUserKey = [[userKey stringByAppendingString:[STKApiKeyManager apiKey]] MD5Digest];
-    
-    return hashUserKey;
-}
-
 
 @end

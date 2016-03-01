@@ -11,6 +11,7 @@
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import "NSString+MD5.h"
+#import <SSKeychain/SSKeychain.h>
 
 NSString *const apiKey = @"72921666b5ff8651f374747bfefaf7b2";
 
@@ -22,10 +23,25 @@ NSString *const testIOSKey = @"f06190d9d63cd2f4e7b124612f63c56c";
 
 @implementation AppDelegate
 
+-(NSString *)getUniqueDeviceIdentifierAsString
+{
+    
+    NSString *appName=[[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleNameKey];
+    
+    NSString *strApplicationUUID = [SSKeychain passwordForService:appName account:@"incoding"];
+    if (strApplicationUUID == nil)
+    {
+        strApplicationUUID  = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+        [SSKeychain setPassword:strApplicationUUID forService:appName account:@"incoding"];
+    }
+    
+    return strApplicationUUID;
+}
+
 
 - (NSString *)userId {
-    UIDevice *device = [UIDevice currentDevice];
-    NSString  *currentDeviceId = [[device identifierForVendor] UUIDString];
+    
+    NSString  *currentDeviceId = [self getUniqueDeviceIdentifierAsString];
     NSString * appVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     return [[currentDeviceId stringByAppendingString:appVersionString] MD5Digest];
 }
@@ -34,9 +50,18 @@ NSString *const testIOSKey = @"f06190d9d63cd2f4e7b124612f63c56c";
 
     // Override point for customization after application launch.
     [Fabric with:@[[Crashlytics class]]];
+    [Crashlytics startWithAPIKey:@"0c5dc9cc90ca8deb6e4e375e9d1fbcc76d193c10"];
+    [CrashlyticsKit setUserIdentifier:[self userId]];
+
     [STKStickersManager initWitApiKey: apiKey];
     [STKStickersManager setStartTimeInterval];
     [STKStickersManager setUserKey:[self userId]];
+    
+//    [STKStickersManager setPriceBProductId:@"com.priceB.stickerPipe" andPriceCProductId:@"com.priceC.stickerPipe"];
+    [STKStickersManager setPriceBWithLabel:@"0.99 USD" andValue:0.99f];
+    [STKStickersManager setPriceCwithLabel:@"1.99 USD" andValue:1.99f];
+    
+    [STKStickersManager setUserIsSubscriber:NO];
     
     return YES;
 }

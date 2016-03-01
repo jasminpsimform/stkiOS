@@ -75,6 +75,24 @@ static NSString *const recentName = @"Recent";
     }];
 }
 
+- (void)saveStickerPack:(STKStickerPackObject *)stickerPack {
+    
+    STKStickerPack *stickerModel = [self stickerModelFormStickerObject:stickerPack context:self.backgroundContext];
+    stickerModel.isNew = @YES;
+    for (STKStickerObject *stickerObject in stickerPack.stickers) {
+        STKSticker *sticker = [self stickerModelWithID:stickerObject.stickerID context:self.backgroundContext];
+        sticker.stickerName = stickerObject.stickerName;
+        sticker.stickerID = stickerObject.stickerID;
+        sticker.stickerMessage = stickerObject.stickerMessage;
+        sticker.usedCount = stickerObject.usedCount;
+        if (sticker) {
+            [stickerModel addStickersObject:sticker];
+        }
+    }
+    
+    [self.backgroundContext save:nil];
+    
+}
 
 - (void)saveDisabledStickerPack:(STKStickerPackObject *)stickerPack {
 
@@ -147,10 +165,12 @@ static NSString *const recentName = @"Recent";
     stickerPack.packName = stickerPackObject.packName;
     stickerPack.packID = stickerPackObject.packID;
     stickerPack.price = stickerPackObject.price;
+    stickerPack.pricePoint = stickerPackObject.pricePoint;
     stickerPack.packTitle = stickerPackObject.packTitle;
     stickerPack.packDescription = stickerPackObject.packDescription;
     stickerPack.bannerUrl = stickerPackObject.bannerUrl;
     stickerPack.productID = stickerPackObject.productID;
+    stickerPack.disabled = stickerPackObject.disabled;
 
     if (stickerPack.isNew.boolValue == YES) {
         if (stickerPackObject.isNew) {
@@ -188,12 +208,14 @@ static NSString *const recentName = @"Recent";
     stickerPack.packName = stickerPackObject.packName;
     stickerPack.packID = stickerPackObject.packID;
     stickerPack.price = stickerPackObject.price;
+    stickerPack.pricePoint = stickerPackObject.pricePoint;
     stickerPack.packTitle = stickerPackObject.packTitle;
     stickerPack.packDescription = stickerPackObject.packDescription;
     stickerPack.disabled = stickerPackObject.disabled;
     stickerPack.isNew = stickerPackObject.isNew;
     stickerPack.bannerUrl = stickerPackObject.bannerUrl;
     stickerPack.productID = stickerPackObject.productID;
+    stickerPack.order = stickerPackObject.order;
     return stickerPack;
 }
 
@@ -231,6 +253,18 @@ static NSString *const recentName = @"Recent";
             response(result);
         });
         
+    }
+    
+}
+
+- (void)getAllPacksIgnoringRecent:(void (^)(NSArray *))response {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != nil", STKStickerPackAttributes.disabled, @NO, STKStickerPackAttributes.disabled];
+    
+    NSArray *stickerPacks = [STKStickerPack stk_findWithPredicate:predicate sortDescriptors:nil context:self.mainContext];
+    if (response) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            response(stickerPacks);
+        });
     }
     
 }
@@ -367,6 +401,17 @@ static NSString *const recentName = @"Recent";
     return downloaded;
 }
 
+- (BOOL)hasPackWithName:(NSString *)packName {
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[STKStickerPack entityName]];
+        NSUInteger allRecordsCount = [[NSManagedObjectContext stk_defaultContext] countForFetchRequest:request error:nil];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", STKStickerPackAttributes.packName, packName];
+
+    request.predicate = predicate;
+//    request.fetchLimit = 1;
+    NSUInteger count = [self.mainContext countForFetchRequest:request error:nil];
+    return count > 0;
+}
 
 #pragma mark - Properties
 

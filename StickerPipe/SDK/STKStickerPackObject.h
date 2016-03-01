@@ -22,6 +22,8 @@
 
 @property (nonatomic, strong) NSNumber *packID;
 
+@property (nonatomic, strong) NSString *pricePoint;
+
 @property (nonatomic, strong) NSNumber *price;
 
 @property (nonatomic, strong) NSArray *stickers;

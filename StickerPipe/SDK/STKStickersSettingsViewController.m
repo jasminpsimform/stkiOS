@@ -8,11 +8,13 @@
 
 #import "STKStickersSettingsViewController.h"
 #import "STKStickersEntityService.h"
+#import "STKStickersApiService.h"
 #import "STKTableViewDataSource.h"
 #import "STKStickerPackObject.h"
 #import "STKUtility.h"
 #import "STKStickerSettingsCell.h"
-#import "STKPackDescriptionController.h"
+
+#import "STKStickersShopViewController.h"
 #import "STKStickersConstants.h"
 
 
@@ -20,6 +22,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) STKStickersEntityService *service;
+@property (strong, nonatomic) STKStickersApiService *apiService;
 @property (strong, nonatomic) STKTableViewDataSource *dataSource;
 @property (strong, nonatomic) UIBarButtonItem *editBarButton;
 
@@ -38,33 +41,38 @@
     }];
     
     self.service = [STKStickersEntityService new];
+    self.apiService = [STKStickersApiService new];
     
     self.tableView.dataSource = self.dataSource;
     self.tableView.delegate = self;
     
     self.navigationItem.title = @"Stickers";
     
-    [self updateStickerPacks];
-    
     [self setUpButtons];
-
-
     
     self.navigationController.navigationBar.tintColor = [STKUtility defaultOrangeColor];
     
     __weak typeof(self) wself = self;
     
     self.dataSource.deleteBlock = ^(NSIndexPath *indexPath,STKStickerPackObject* item) {
-        [wself.service togglePackDisabling:item];
-        [wself updateStickerPacks];
+        [wself.apiService deleteStickerPackWithName:item.packName success:^(id response) {
+            [wself.service togglePackDisabling:item];
+            [wself updateStickerPacks];
+        } failure:^(NSError *error) {
+            
+        }];
     };
     
     self.dataSource.moveBlock = ^(NSIndexPath *fromIndexPath, NSIndexPath *toIndexPath) {
-      
-       // [wself reorderPacks];
         
+        [wself reorderPacks];
     };
+    
+}
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self updateStickerPacks];
 }
 
 - (NSUInteger)supportedInterfaceOrientations {
@@ -83,7 +91,7 @@
     self.editBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editAction:)];
     
     self.navigationItem.rightBarButtonItem = self.editBarButton;
-
+    
 }
 
 - (void) reorderPacks {
@@ -109,34 +117,24 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     STKStickerPackObject *stickerPack = [self.dataSource itemAtIndexPath:indexPath];
-    STKPackDescriptionController *descriptionController = [[STKPackDescriptionController alloc] initWithNibName:@"STKPackDescriptionController" bundle:nil];
-    descriptionController.stickerMessage = [stickerPack.stickers.firstObject stickerMessage];
-    [self.navigationController pushViewController:descriptionController animated:YES];
+    
+    STKStickersShopViewController *shopViewController = [[STKStickersShopViewController alloc] initWithNibName:@"STKStickersShopViewController" bundle:nil];
+    shopViewController.packName = stickerPack.packName;
+    [self.navigationController pushViewController:shopViewController animated:YES];
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
 }
-
 
 #pragma mark - Actions
 
 - (IBAction)editAction:(id)sender {
     [self.tableView setEditing:!self.tableView.editing animated:YES];
-    self.editBarButton.title = (self.tableView.isEditing) ? @"Done" : @"Edit";
-    if (self.tableView.editing) {
-        self.editBarButton.title = @"Done";
-    } else {
-        self.editBarButton.title = @"Edit";
-          [self reorderPacks];
-      
-    }
+    self.editBarButton.title = (self.tableView.editing) ? @"Done" : @"Edit";
 }
 
 - (IBAction)closeAction:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:^{
-        if (!self.tableView.isEditing) {
-            [[NSNotificationCenter defaultCenter]postNotificationName:STKStickersReorderStickersNotification object:self];
-        }
-    } ];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [[NSNotificationCenter defaultCenter]postNotificationName:STKStickersReorderStickersNotification object:self];
 }
 
 
