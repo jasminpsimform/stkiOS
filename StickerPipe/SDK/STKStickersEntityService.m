@@ -88,18 +88,21 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
     __weak typeof(self) weakSelf = self;
     
     [self.cacheEntity getStickerPacks:^(NSArray *stickerPacks) {
-        if (stickerPacks.count == 0) {
-            [self updateStickerPacksWithType:type completion:^(NSArray *stickerPacks) {
-                [weakSelf loadStickersForPacks:stickerPacks completion:^(NSArray *stickerPacks) {
-                    completion(stickerPacks);
-                }];
-                    }];
-        } else {
+        if (stickerPacks.count != 0) {
+            [weakSelf loadStickersForPacks:stickerPacks completion:^(NSArray *stickerPacks) {
+                completion(stickerPacks);
+            }];
+//            [self updateStickerPacksFromServerWithType:type completion:^(NSArray *stickerPacks) {
+//                [weakSelf loadStickersForPacks:stickerPacks completion:^(NSArray *stickerPacks) {
+//                    completion(stickerPacks);
+//                }];
+//                    }];
+        }/* else {
             [weakSelf loadStickersForPacks:stickerPacks completion:^(NSArray *stickerPacks) {
                 completion(stickerPacks);
             }];
            
-        }
+        }*/
     }];
 }
 
@@ -139,11 +142,12 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
 {
     
     __weak typeof(self) weakSelf = self;
-    dispatch_async(self.queue, ^{
+//    dispatch_async(self.queue, ^{
+#warning - Handle error, Split this method
         NSTimeInterval lastUpdate = [self lastUpdateDate];
         NSTimeInterval timeSinceLastUpdate = [[NSDate date] timeIntervalSince1970] - lastUpdate;
         if (timeSinceLastUpdate > kUpdatesDelay) {
-            [weakSelf updateStickerPacksWithType:type completion:^(NSArray *stickerPacks) {
+            [weakSelf updateStickerPacksFromServerWithType:type completion:^(NSError *error) {
                 [weakSelf loadStickerPacksFromCache:type completion:^(NSArray *stickerPacks) {
                     if (completion) {
                         dispatch_async(dispatch_get_main_queue(), ^{
@@ -155,7 +159,7 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
         } else {
             [weakSelf loadStickerPacksFromCache:type completion:completion];
         }
-    });
+//    });
 }
 
 
@@ -197,9 +201,12 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
     
 }
 
-- (void)getStickerPacksIgnoringRecentWithType:(NSString *)type completion:(void (^)(NSArray *))completion failure:(void (^)(NSError *))failre {
+- (void)getStickerPacksIgnoringRecentWithType:(NSString *)type
+                                   completion:(void (^)(NSArray *))completion
+                                      failure:(void (^)(NSError *))failre {
     
-    [self.cacheEntity getStickerPacksIgnoringRecent:^(NSArray *stickerPacks) {
+    [self.cacheEntity getStickerPacksIgnoringRecentForContext:self.cacheEntity.mainContext
+                                                     response:^(NSArray *stickerPacks) {
         if (completion) {
             completion(stickerPacks);
         }
@@ -213,43 +220,40 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
 
 #pragma mark - Update sticker packs
 
-- (void)updateStickerPacksWithType:(NSString*)type completion:(void(^)(NSArray *stickerPacks))completion {
+- (void)updateStickerPacksFromServerWithType:(NSString*)type completion:(void(^)(NSError *error))completion {
     
     __weak typeof(self) weakSelf = self;
     
     [self.apiService getStickersPacksForUserWithSuccess:^(id response,
                                                           NSTimeInterval lastModifiedDate) {
-        
-        NSArray* serializedObjects = [weakSelf.serializer serializeStickerPacks:response[@"data"]];
-        // if (lastModifiedDate != [weakSelf lastModifiedDate]) {
-        [weakSelf.cacheEntity saveStickerPacks:serializedObjects];
-        if (lastModifiedDate > [weakSelf lastModifiedDate]) {
-            self.hasNewModifiedPacks = YES;
-            [weakSelf setLastModifiedDate:lastModifiedDate];
-        }
-        else  {
-            self.hasNewModifiedPacks = NO;
-        }
-
-        STKStickerPackObject *recentPack = weakSelf.cacheEntity.recentStickerPack;
-        NSArray *packsWithRecent = nil;
-        if (recentPack) {
-            NSArray *recentPackArray = @[recentPack];
-            packsWithRecent = [recentPackArray arrayByAddingObjectsFromArray:serializedObjects];
-        } else {
-            packsWithRecent = serializedObjects;
-        }
-        [weakSelf setLastUpdateDate:[[NSDate date] timeIntervalSince1970]];
-        if (completion) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completion(packsWithRecent);
-            });
-        }
-        
+        dispatch_async(self.queue, ^{
+            NSArray* serializedObjects = [weakSelf.serializer serializeStickerPacks:response[@"data"]];
+            NSError *error = [weakSelf.cacheEntity saveStickerPacks:serializedObjects];
+            if (lastModifiedDate > [weakSelf lastModifiedDate]) {
+                self.hasNewModifiedPacks = YES;
+                [weakSelf setLastModifiedDate:lastModifiedDate];
+            } else  {
+                self.hasNewModifiedPacks = NO;
+            }
+            [weakSelf setLastUpdateDate:[[NSDate date] timeIntervalSince1970]];
+            if (completion) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completion(error);
+                });
+            }
+//        STKStickerPackObject *recentPack = weakSelf.cacheEntity.recentStickerPack;
+//        NSArray *packsWithRecent = nil;
+//        if (recentPack) {
+//            NSArray *recentPackArray = @[recentPack];
+//            packsWithRecent = [recentPackArray arrayByAddingObjectsFromArray:serializedObjects];
+//        } else {
+//            packsWithRecent = serializedObjects;
+//        }
+    });
     } failure:^(NSError *error) {
         if (completion) {
             //TODO:REfactoring
-            completion(nil);
+            completion(error);
         }
     }];
 }
@@ -305,9 +309,9 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
 - (void)saveStickerPack:(STKStickerPackObject *)stickerPack {
     [self.cacheEntity saveStickerPacks:@[stickerPack]];
 }
-- (void)deleteStickerPack:(STKStickerPackObject *)stickerPack {
-    [self.cacheEntity deleteStickerPacks:@[stickerPack]];
-}
+//- (void)deleteStickerPack:(STKStickerPackObject *)stickerPack {
+//    [self.cacheEntity deleteStickerPacks:@[stickerPack]];
+//}
 
 #pragma mark - LastUpdateTime
 
