@@ -56,7 +56,7 @@ static NSUInteger const productsCount = 2;
     self.navigationController.navigationBar.tintColor = [STKUtility defaultOrangeColor];
     
     self.jsInterface.delegate = self;
-//    self.stickersPurchaseService.delegate = self;
+    //    self.stickersPurchaseService.delegate = self;
     [STKStickersPurchaseService sharedInstance].delegate = self;
     
     self.apiService = [STKStickersApiService new];
@@ -72,7 +72,7 @@ static NSUInteger const productsCount = 2;
     if ([STKInAppProductsManager hasProductIds]) {
         __weak typeof(self) wself = self;
         
-//        [self.stickersPurchaseService requestProductsWithIdentifier:[STKInAppProductsManager productIds] completion:^(NSArray *stickerPacks) {
+        //        [self.stickersPurchaseService requestProductsWithIdentifier:[STKInAppProductsManager productIds] completion:^(NSArray *stickerPacks) {
         [[STKStickersPurchaseService sharedInstance] requestProductsWithIdentifier:[STKInAppProductsManager productIds] completion:^(NSArray *stickerPacks) {
             if (stickerPacks.count == productsCount) {
                 
@@ -103,10 +103,10 @@ static NSUInteger const productsCount = 2;
 - (NSString *)shopUrlString {
     
     NSMutableString *urlstr = [NSMutableString stringWithFormat:@"%@&apiKey=%@&platform=IOS&userId=%@&density=%@&is_subscriber=%d", mainUrl, [STKApiKeyManager apiKey], [STKStickersManager userKey], [STKUtility scaleString], [STKStickersManager isSubscriber]];
-  
+    
     if (self.prices.count > 0) {
         [urlstr appendString: [NSMutableString stringWithFormat:
-                                          @"&priceB=%@&priceC=%@", [self.prices firstObject], [self.prices lastObject]]];
+                               @"&priceB=%@&priceC=%@", [self.prices firstObject], [self.prices lastObject]]];
     }
     
     NSMutableString *escapedPath = [NSMutableString stringWithString: [urlstr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
@@ -191,13 +191,13 @@ static NSUInteger const productsCount = 2;
     __weak typeof(self) wself = self;
     
     [self.apiService loadStickerPackWithName:packName andPricePoint:packPrice success:^(id response) {
-//        [wself.entityService downloadNewPack:response[@"data"]
-//                                   onSuccess:^(NSArray *stickerPacks) {
+        //        [wself.entityService downloadNewPack:response[@"data"]
+        //                                   onSuccess:^(NSArray *stickerPacks) {
         [wself.entityService downloadNewPack:response[@"data"] onSuccess:^{
-                                [wself dismissViewControllerAnimated:YES completion:^{
-                                           [[NSNotificationCenter defaultCenter] postNotificationName:STKNewPackDownloadedNotification object:self userInfo:@{@"packName": packName}];
-                                       }];
-                                   }];
+            [wself dismissViewControllerAnimated:YES completion:^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:STKNewPackDownloadedNotification object:self userInfo:@{@"packName": packName}];
+            }];
+        }];
         
     } failure:^(NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -212,7 +212,9 @@ static NSUInteger const productsCount = 2;
     
     NSString *currentURL = [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.location.href"];
     if ([currentURL isEqualToString:[self shopUrlString]] || [currentURL isEqualToString:@"about:blank"]) {
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:STKCloseModalViewNotification object:self];
+        }];
     } else {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.JsInterface.goBack()"];
@@ -255,8 +257,8 @@ static NSUInteger const productsCount = 2;
     } else {
         
         if ([STKInAppProductsManager hasProductIds]) {
-//            [self.stickersPurchaseService purchaseProductWithPackName:packName andPackPrice:packPrice];
-       [[STKStickersPurchaseService sharedInstance] purchaseProductWithPackName:packName andPackPrice:packPrice];
+            //            [self.stickersPurchaseService purchaseProductWithPackName:packName andPackPrice:packPrice];
+            [[STKStickersPurchaseService sharedInstance] purchaseProductWithPackName:packName andPackPrice:packPrice];
         } else {
             [[NSNotificationCenter defaultCenter] postNotificationName:STKPurchasePackNotification object:self userInfo:@{@"packName":packName, @"packPrice":packPrice}];
         }
