@@ -125,6 +125,7 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
             }
             if (i == packs.count - 1) {
                 dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:STKStickersDownloadedNotification object:self];
                     completion(packs);
                 });
             }

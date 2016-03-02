@@ -38,6 +38,9 @@ NSString *const STKNewPackDownloadedNotification =
 NSString *const STKCloseModalViewNotification =
     @"STKCloseModalViewNotification";
 
+NSString *const STKStickersDownloadedNotification =
+    @"STKStickersDownloadedNotification";
+
 NSString *const kLastUpdateIntervalKey =
     @"kLastUpdateIntervalKey";
 
