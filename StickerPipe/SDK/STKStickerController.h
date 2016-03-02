@@ -49,6 +49,7 @@
 
 @property (nonatomic) BOOL showStickersOnStart;
 
+
 //@property (nonatomic, strong) UIColor *stickersShopTintColor;
 
 - (void)updateFrames;

@@ -213,6 +213,7 @@
 - (void)textViewDidChange:(UITextView *)textView  {
     self.sendButton.enabled = textView.text.length > 0;
     self.textViewHeightConstraint.constant = textView.contentSize.height;
+    self.stickerController.keyboardButton.hidden = textView.text.length > 0;
 }
 
 #pragma mark - Gesture

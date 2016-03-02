@@ -44,7 +44,7 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 
 @property (strong, nonatomic) STKStickerDelegateManager *stickersDelegateManager;
 @property (strong, nonatomic) STKStickerHeaderDelegateManager *stickersHeaderDelegateManager;
-
+@property (strong, nonatomic) UIButton *shopButton;
 @property (assign, nonatomic) BOOL isKeyboardShowed;
 
 @property (strong, nonatomic) STKStickersEntityService *stickersService;

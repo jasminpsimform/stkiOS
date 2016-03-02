@@ -66,7 +66,6 @@
     self.dataSource.moveBlock = ^(NSIndexPath *fromIndexPath, NSIndexPath *toIndexPath) {
         
         [wself reorderPacks];
-        
     };
     
 }
