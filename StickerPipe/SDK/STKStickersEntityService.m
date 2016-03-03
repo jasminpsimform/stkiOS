@@ -90,7 +90,9 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
     [self.cacheEntity getStickerPacks:^(NSArray *stickerPacks) {
         if (stickerPacks.count != 0) {
             [weakSelf loadStickersForPacks:stickerPacks completion:^(NSArray *stickerPacks) {
-                completion(stickerPacks);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completion(stickerPacks);
+                });
             }];
 //            [self updateStickerPacksFromServerWithType:type completion:^(NSArray *stickerPacks) {
 //                [weakSelf loadStickersForPacks:stickerPacks completion:^(NSArray *stickerPacks) {
@@ -119,16 +121,19 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
                     STKStickerPackObject *object = [weakSelf.serializer serializeStickerPack:serverPack];
                     pack.stickers = object.stickers;
                     [self.cacheEntity updateStickerPack:pack];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        completion(packs);
+                    });
                 } failure:^(NSError *error) {
                     
                 }];
             }
-            if (i == packs.count - 1) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [[NSNotificationCenter defaultCenter] postNotificationName:STKStickersDownloadedNotification object:self];
-                    completion(packs);
-                });
-            }
+//            if (i == packs.count - 1) {
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:STKStickersDownloadedNotification object:self];
+//                    completion(packs);
+//                });
+//            }
         }
     } else {
         dispatch_async(dispatch_get_main_queue(), ^{
