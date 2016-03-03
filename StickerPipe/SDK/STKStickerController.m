@@ -69,6 +69,19 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     } failure:nil];
 }
 
+
+- (void)loadStartPacks
+{
+    [self.stickersService getStickerPacksWithType:nil completion:^(NSArray *stickerPacks) {
+        self.stickersService.stickersArray = stickerPacks;
+        self.keyboardButton.badgeView.hidden = ![self.stickersService hasNewPacks];
+        self.stickersShopButton.badgeView.hidden = !self.stickersService.hasNewModifiedPacks;
+        if (self.isStickerViewShowed) {
+            [self showStickersView];
+        }
+    } failure:nil];
+}
+
 - (instancetype)init
 {
     self = [super init];
@@ -78,7 +91,8 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
         [self setupInternalStickersView];
         
         
-        [self loadStickerPacks];
+//        [self loadStickerPacks];
+        [self loadStartPacks];
         
         [self initStickerHeader];
         [self initStickersCollectionView];
