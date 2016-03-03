@@ -253,12 +253,20 @@ static NSString *const recentName = @"Recent";
 }
 
 - (void)getAllPacksIgnoringRecent:(void (^)(NSArray *))response {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != nil", STKStickerPackAttributes.disabled, @NO, STKStickerPackAttributes.disabled];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != nil", STKStickerPackAttributes.disabled];
     
     NSArray *stickerPacks = [STKStickerPack stk_findWithPredicate:predicate sortDescriptors:nil context:self.mainContext];
+    NSMutableArray *result = [NSMutableArray array];
+    
+    for (STKStickerPack *pack in stickerPacks) {
+        STKStickerPackObject *stickerPackObject = [[STKStickerPackObject alloc] initWithStickerPack:pack];
+        if (stickerPackObject) {
+            [result addObject:stickerPackObject];
+        }
+    }
     if (response) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            response(stickerPacks);
+            response(result);
         });
     }
     
