@@ -190,7 +190,7 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
         }
         NSIndexPath *newIndexPath = [NSIndexPath indexPathForItem:0 inSection:indexPath.item];
         CGRect layoutRect = [weakSelf.stickersCollectionView layoutAttributesForItemAtIndexPath:newIndexPath].frame;
-        if (stickerPack.stickers.count > 0) {
+        if (stickerPack.stickers.count > 0 || indexPath.item == 0) {
         [weakSelf.stickersCollectionView setContentOffset:CGPointMake(weakSelf.stickersCollectionView.contentOffset.x, layoutRect.origin.y  - kStickersSectionPaddingTopBottom) animated:YES];
         weakSelf.stickersDelegateManager.currentDisplayedSection = indexPath.item;
         }
