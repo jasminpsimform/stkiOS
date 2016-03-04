@@ -34,7 +34,6 @@ Add API key in your AppDelegate.m
 
 You have an ability to sell content via your internal currency, inApp purchases or provide via subscription model. We use price points for selling our content. Currently we have A, B and C price points. We use A to mark FREE content and B/C for the paid content. Basically B is equal to 0.99$ and C equal to 1.99$ but the actual price can be vary depend on the countries and others circumstances.
 
-![ios](purchase.png)
 
 To sell content via inApp purchases, you have to create products for B and C content at your iTunes Connect developer console and then set ids to sdk
 
