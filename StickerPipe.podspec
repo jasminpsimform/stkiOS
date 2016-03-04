@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.homepage        = "https://github.com/908Inc/stkiOS"
   s.license         = "Apache License, Version 2.0"
   s.author          = "908 Inc."
-  s.source          = { :git => 'https://github.com/908Inc/stkiOS.git', :tag => '0.2.1' }
+  s.source          = { :git => 'https://github.com/908Inc/stkiOS.git', :tag => s.version }
   s.source_files    = "StickerPipe/SDK/*.{h,m}"
 
   s.framework       = 'CoreData'
@@ -16,8 +16,6 @@ Pod::Spec.new do |s|
   s.dependency       'AFNetworking', '~> 2.0'
   s.dependency       'GoogleAnalytics', '~> 3.0'
   s.dependency       'DFImageManager', '~> 0.5.0'
-  s.dependency       'Fabric'
-  s.dependency       'Crashlytics'
   s.dependency       'MD5Digest', '~> 1.1'
   s.dependency       'RMStore', '~> 0.7'
   s.dependency       'RMStore/KeychainPersistence'
