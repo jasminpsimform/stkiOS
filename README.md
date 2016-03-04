@@ -32,18 +32,19 @@ Add API key in your AppDelegate.m
 [STKStickersManager setUserKey:@"USER_ID"];
 ```
 
-### Subscription 
+You have an ability to sell content via your internal currency, inApp purchases or provide via subscription model. We use price points for selling our content. Currently we have A, B and C price points. We use A to mark FREE content and B/C for the paid content. Basically B is equal to 0.99$ and C equal to 1.99$ but the actual price can be vary depend on the countries and others circumstances.
 
-```objc
-    [STKStickersManager setUserIsSubscriber:NO];
-```
+![ios](purchase.png)
 
+To sell content via inApp purchases, you have to create products for B and C content at your iTunes Connect developer console and then set ids to sdk
 
 ### In-app purchase product identifiers 
 
 ```objc
    [STKStickersManager setPriceBProductId:@"com.priceB.example"         andPriceCProductId:@"com.priceC.example"];
 ```
+To sell content via internal currency, you have to set your prices to sdk. This price labels will be showed at stickers shop, values you will received at callback from shop.
+
 
 ### Internal currency
 
@@ -51,13 +52,32 @@ Add API key in your AppDelegate.m
     [STKStickersManager setPriceBWithLabel:@"0.99 USD" andValue:0.99f];
     [STKStickersManager setPriceCwithLabel:@"1.99 USD" andValue:1.99f];
 ```
-Use category for UIImageView for display sticker
+
+ When your purchase was failed you have to call failed method:
+ ```objc
+ [[STKStickersPurchaseService sharedInstance] purchaseFailedError:error];
+ ```
+### Subscription 
+If you want to use subscription model, you need to set subscription flag to sdk, when user became or ceased to be subscriber(or premium user). After this, content with B price point be available for free for subscribers(premium users)
+
 ```objc
-    if ([STKStickersManager isStickerMessage:message]) {
-        [self.stickerImageView stk_setStickerWithMessage:message placeholder:nil placeholderColor:nil progress:nil completion:nil];
-        
-    }
+    [STKStickersManager setUserIsSubscriber:NO];
 ```
+
+You hava to subscribe on purchase notification
+ ```objc
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchasePack:) name:STKPurchasePackNotification object:nil];
+    
+- (void)purchasePack:(NSNotification *)notification {
+    packName = notification.userInfo[@"packName"];
+    packPrice = notification.userInfo[@"packPrice"];
+}
+ ```
+  When your purchase was succeeded you have to call success method:
+ ```objc
+ [[STKStickersPurchaseService sharedInstance] purchasInternalPackName:packName andPackPrice:packPrice];
+ ```
+
 
 Init STKStickerController and add stickersView like inputView for your UITextView/UITextField
 
