@@ -14,7 +14,6 @@ Pod::Spec.new do |s|
   s.framework       = 'CoreData'
   s.requires_arc    = true
   s.dependency       'AFNetworking', '~> 2.0'
-  s.dependency       'GoogleAnalytics', '~> 3.0'
   s.dependency       'DFImageManager', '~> 0.5.0'
   s.dependency       'MD5Digest', '~> 1.1'
   s.dependency       'RMStore', '~> 0.7'
