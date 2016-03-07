@@ -10,7 +10,7 @@
 #import "UIImageView+Stickers.h"
 #import "UIImage+Tint.h"
 #import "STKUtility.h"
-#import <DFImageManagerKit.h>
+#import "DFImageManagerKit.h"
 
 @interface STKStickerViewCell()
 

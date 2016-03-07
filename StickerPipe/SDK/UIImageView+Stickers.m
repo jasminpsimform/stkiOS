@@ -11,7 +11,7 @@
 #import <objc/runtime.h>
 #import "UIImage+Tint.h"
 #import "STKStickersManager.h"
-#import <DFImageManagerKit.h>
+#import "DFImageManagerKit.h"
 
 @interface UIImageView()
 

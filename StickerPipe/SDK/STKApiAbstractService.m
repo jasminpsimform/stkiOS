@@ -7,7 +7,7 @@
 //
 
 #import "STKApiAbstractService.h"
-#import <AFNetworking.h>
+#import <AFNetworking/AFNetworking.h>
 #import "STKApiKeyManager.h"
 #import "STKUUIDManager.h"
 #import "STKStickersManager.h"

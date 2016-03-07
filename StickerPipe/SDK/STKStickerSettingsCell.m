@@ -8,7 +8,7 @@
 
 #import "STKStickerSettingsCell.h"
 #import "STKStickerPackObject.h"
-#import <DFImageManagerKit.h>
+#import "DFImageManagerKit.h"
 #import "STKUtility.h"
 
 @implementation STKStickerSettingsCell

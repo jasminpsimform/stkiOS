@@ -7,7 +7,7 @@
 //
 
 #import "STKStickersManager.h"
-#import <DFImageManagerKit.h>
+#import "DFImageManagerKit.h"
 #import "STKUtility.h"
 #import "STKAnalyticService.h"
 #import "STKApiKeyManager.h"

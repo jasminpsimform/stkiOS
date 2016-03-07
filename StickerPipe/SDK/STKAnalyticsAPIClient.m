@@ -7,7 +7,7 @@
 //
 
 #import "STKAnalyticsAPIClient.h"
-#import <AFNetworking.h>
+#import <AFNetworking/AFNetworking.h>
 #import "STKStatistic.h"
 #import "STKUtility.h"
 #import "STKUUIDManager.h"

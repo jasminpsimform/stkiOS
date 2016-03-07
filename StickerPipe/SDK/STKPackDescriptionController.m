@@ -12,7 +12,7 @@
 #import "STKPackDescriptionHeader.h"
 #import "STKStickerPackObject.h"
 #import "STKStickerObject.h"
-#import <DFImageManagerKit.h>
+#import "DFImageManagerKit.h"
 #import <StoreKit/StoreKit.h>
 #import "STKUtility.h"
 #import "UIImage+Tint.h"
