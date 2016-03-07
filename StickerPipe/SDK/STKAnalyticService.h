@@ -40,9 +40,4 @@ extern NSString *const STKMessageStickerLabel;
                         label:(NSString*)label
                         value:(NSNumber*)value;
 
-- (void)sendDevEventWithCategory:(NSString*)category
-                          action:(NSString*)action
-                           label:(NSString*)label
-                           value:(NSNumber*)value;
-
 @end

@@ -12,9 +12,9 @@
 #import "NSManagedObjectContext+STKAdditions.h"
 #import "STKAnalyticsAPIClient.h"
 #import "NSManagedObject+STKAdditions.h"
-#import <GAI.h>
-#import <GAIDictionaryBuilder.h>
-#import <GAIFields.h>
+//#import <GAI.h>
+//#import <GAIDictionaryBuilder.h>
+//#import <GAIFields.h>
 #import "STKApiKeyManager.h"
 #import "STKUUIDManager.h"
 
@@ -37,9 +37,9 @@ NSString *const STKMessageTextLabel = @"text";
 NSString *const STKMessageStickerLabel = @"sticker";
 
 //Custom Dimension indexes
-static const NSInteger kAPIKeyIndex = 1;
-static const NSInteger kUUIDKeyIndex = 2;
-static const NSInteger kBundleIdentifierIndex = 3;
+//static const NSInteger kAPIKeyIndex = 1;
+//static const NSInteger kUUIDKeyIndex = 2;
+//static const NSInteger kBundleIdentifierIndex = 3;
 
 
 //Used with weak
@@ -54,7 +54,7 @@ static const NSInteger kMemoryCacheObjectsCount = 20;
 @property (assign, nonatomic) NSInteger objectCounter;
 @property (strong, nonatomic) NSManagedObjectContext *backgroundContext;
 @property (strong, nonatomic) STKAnalyticsAPIClient *analyticsApiClient;
-@property (strong, nonatomic) id<GAITracker> tracker;
+//@property (strong, nonatomic) id<GAITracker> tracker;
 
 @property (assign, nonatomic) NSInteger stickersEventCounter;
 @property (assign, nonatomic) NSInteger messageEventCounter;
@@ -82,24 +82,24 @@ static const NSInteger kMemoryCacheObjectsCount = 20;
         
         self.analyticsApiClient = [STKAnalyticsAPIClient new];
         
-        [GAI sharedInstance].trackUncaughtExceptions = YES;
-        
-        [GAI sharedInstance].dispatchInterval = 60;
-        
-#if DEBUG
-        [GAI sharedInstance].dryRun = YES;
-//        [[GAI sharedInstance].logger setLogLevel:kGAILogLevelVerbose];
-
-#endif
-        self.tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-1113296-76"];
-        
-        //Custom dimensions
-        [self.tracker set:[GAIFields customDimensionForIndex:kAPIKeyIndex]
-                    value:[STKApiKeyManager apiKey]];
-        [self.tracker set:[GAIFields customDimensionForIndex:kUUIDKeyIndex]
-                    value:[STKUUIDManager generatedDeviceToken]];
-        [self.tracker set:[GAIFields customDimensionForIndex:kBundleIdentifierIndex]
-                    value:[[NSBundle mainBundle] bundleIdentifier]];
+//        [GAI sharedInstance].trackUncaughtExceptions = YES;
+//        
+//        [GAI sharedInstance].dispatchInterval = 60;
+//        
+//#if DEBUG
+//        [GAI sharedInstance].dryRun = YES;
+////        [[GAI sharedInstance].logger setLogLevel:kGAILogLevelVerbose];
+//
+//#endif
+//        self.tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-1113296-76"];
+//        
+//        //Custom dimensions
+//        [self.tracker set:[GAIFields customDimensionForIndex:kAPIKeyIndex]
+//                    value:[STKApiKeyManager apiKey]];
+//        [self.tracker set:[GAIFields customDimensionForIndex:kUUIDKeyIndex]
+//                    value:[STKUUIDManager generatedDeviceToken]];
+//        [self.tracker set:[GAIFields customDimensionForIndex:kBundleIdentifierIndex]
+//                    value:[[NSBundle mainBundle] bundleIdentifier]];
 
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(applicationWillResignActive:)
@@ -119,18 +119,6 @@ static const NSInteger kMemoryCacheObjectsCount = 20;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillResignActiveNotification object:nil];
 }
 
-- (void)sendDevEventWithCategory:(NSString*)category
-                          action:(NSString*)action
-                           label:(NSString*)label
-                           value:(NSNumber*)value {
-    
-#ifndef DEBUG
-
-    [self sendGoogleAnalyticsEventWithCategory:category action:action label:label value:value];
-    
-#endif
-    
-}
 
 #pragma mark - Events
 
@@ -169,7 +157,6 @@ static const NSInteger kMemoryCacheObjectsCount = 20;
         if (!statistic) {
             statistic = [NSEntityDescription insertNewObjectForEntityForName:[STKStatistic entityName] inManagedObjectContext:weakSelf.backgroundContext];
             statistic.value = value;
-            [weakSelf sendGoogleAnalyticsEventWithCategory:category action:action label:label value:value];
         }
         
         
@@ -201,21 +188,6 @@ static const NSInteger kMemoryCacheObjectsCount = 20;
     
 }
 
-#pragma mark - Google analytic
-
-- (void) sendGoogleAnalyticsEventWithCategory:(NSString*)category
-                                       action:(NSString*)action
-                                        label:(NSString*)label
-                                        value:(NSNumber*)value
-{
-    GAIDictionaryBuilder *builder = [GAIDictionaryBuilder createEventWithCategory:category action:action label:label value:value];
-    NSDictionary*buildedDictionary = [builder build];
-    [self.tracker send:buildedDictionary];
-
-}
-
-
-
 #pragma mark - Notifications
 
 - (void)applicationWillResignActive:(NSNotification*) notification {
@@ -244,16 +216,7 @@ static const NSInteger kMemoryCacheObjectsCount = 20;
     }
     
     NSArray *events = [STKStatistic stk_findAllInContext:self.backgroundContext];
-    
-    for (STKStatistic *statistic in events) {
-        if ([statistic.category isEqualToString:STKAnalyticMessageCategory]) {
-            [self sendGoogleAnalyticsEventWithCategory:statistic.category action:statistic.action label:statistic.label value:statistic.value];
-        }
 
-    }
-    
-    //Sending analytics
-    [[GAI sharedInstance] dispatch];
     
     [self.analyticsApiClient sendStatistics:events success:^(id response) {
         

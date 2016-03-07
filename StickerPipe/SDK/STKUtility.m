@@ -123,9 +123,9 @@ void STKLog(NSString *format, ...) {
 
     NSLogv(format, argumentList);
 #endif
-    NSString *log = [[NSString alloc] initWithFormat:format arguments:argumentList];
-    
-    [[STKAnalyticService sharedService] sendDevEventWithCategory:STKAnalyticDevCategory action:STKAnalyticActionError label:log value:nil];
+//    NSString *log = [[NSString alloc] initWithFormat:format arguments:argumentList];
+//    
+//    [[STKAnalyticService sharedService] sendDevEventWithCategory:STKAnalyticDevCategory action:STKAnalyticActionError label:log value:nil];
     
     va_end(argumentList);
     
