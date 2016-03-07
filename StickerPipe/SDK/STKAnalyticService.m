@@ -12,9 +12,6 @@
 #import "NSManagedObjectContext+STKAdditions.h"
 #import "STKAnalyticsAPIClient.h"
 #import "NSManagedObject+STKAdditions.h"
-//#import <GAI.h>
-//#import <GAIDictionaryBuilder.h>
-//#import <GAIFields.h>
 #import "STKApiKeyManager.h"
 #import "STKUUIDManager.h"
 
@@ -36,12 +33,6 @@ NSString *const STKEventsCountLabel = @"Events count";
 NSString *const STKMessageTextLabel = @"text";
 NSString *const STKMessageStickerLabel = @"sticker";
 
-//Custom Dimension indexes
-//static const NSInteger kAPIKeyIndex = 1;
-//static const NSInteger kUUIDKeyIndex = 2;
-//static const NSInteger kBundleIdentifierIndex = 3;
-
-
 //Used with weak
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-variable"
@@ -54,7 +45,6 @@ static const NSInteger kMemoryCacheObjectsCount = 20;
 @property (assign, nonatomic) NSInteger objectCounter;
 @property (strong, nonatomic) NSManagedObjectContext *backgroundContext;
 @property (strong, nonatomic) STKAnalyticsAPIClient *analyticsApiClient;
-//@property (strong, nonatomic) id<GAITracker> tracker;
 
 @property (assign, nonatomic) NSInteger stickersEventCounter;
 @property (assign, nonatomic) NSInteger messageEventCounter;
@@ -81,25 +71,6 @@ static const NSInteger kMemoryCacheObjectsCount = 20;
     if (self) {
         
         self.analyticsApiClient = [STKAnalyticsAPIClient new];
-        
-//        [GAI sharedInstance].trackUncaughtExceptions = YES;
-//        
-//        [GAI sharedInstance].dispatchInterval = 60;
-//        
-//#if DEBUG
-//        [GAI sharedInstance].dryRun = YES;
-////        [[GAI sharedInstance].logger setLogLevel:kGAILogLevelVerbose];
-//
-//#endif
-//        self.tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-1113296-76"];
-//        
-//        //Custom dimensions
-//        [self.tracker set:[GAIFields customDimensionForIndex:kAPIKeyIndex]
-//                    value:[STKApiKeyManager apiKey]];
-//        [self.tracker set:[GAIFields customDimensionForIndex:kUUIDKeyIndex]
-//                    value:[STKUUIDManager generatedDeviceToken]];
-//        [self.tracker set:[GAIFields customDimensionForIndex:kBundleIdentifierIndex]
-//                    value:[[NSBundle mainBundle] bundleIdentifier]];
 
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(applicationWillResignActive:)
