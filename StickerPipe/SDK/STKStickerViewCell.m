@@ -54,7 +54,7 @@
     UIImage *coloredPlaceholder = [resultPlaceholder imageWithImageTintColor:colorForPlaceholder];
     
 //    NSURL *stickerUrl = [STKUtility imageUrlForStickerPanelWithMessage:stickerMessage];
-    NSURL *stickerUrl = [STKUtility imageUrlForStikerMessage:stickerMessage];
+    NSURL *stickerUrl = [STKUtility imageUrlForStikerMessage:stickerMessage andDensity:[STKUtility scaleString]];
     
     DFImageRequestOptions *options = [DFImageRequestOptions new];
     options.priority = DFImageRequestPriorityNormal;

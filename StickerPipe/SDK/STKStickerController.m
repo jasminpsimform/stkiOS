@@ -24,6 +24,7 @@
 #import "STKOrientationNavigationController.h"
 #import "STKShowStickerButton.h"
 #import "STKAnalyticService.h"
+#import "STKImageManager.h"
 
 //SIZES
 
@@ -44,10 +45,7 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 @property (strong, nonatomic) STKStickerDelegateManager *stickersDelegateManager;
 @property (strong, nonatomic) STKStickerHeaderDelegateManager *stickersHeaderDelegateManager;
 @property (strong, nonatomic) UIButton *shopButton;
-
-
 @property (assign, nonatomic) BOOL isKeyboardShowed;
-
 
 @property (strong, nonatomic) STKStickersEntityService *stickersService;
 
@@ -66,6 +64,10 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
         self.stickersService.stickersArray = stickerPacks;
         self.keyboardButton.badgeView.hidden = ![self.stickersService hasNewPacks];
         self.stickersShopButton.badgeView.hidden = !self.stickersService.hasNewModifiedPacks;
+        if (self.showStickersOnStart) {
+            [self showStickersView];
+        }
+        
     } failure:nil];
 }
 
@@ -122,7 +124,6 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     }
     return self;
 }
-
 
 - (void)updateStickers {
     [self loadStickerPacks];
@@ -212,8 +213,13 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 
     self.internalStickersView = [[[NSBundle mainBundle] loadNibNamed:@"STKStickersView" owner:self options:nil] firstObject];
     
+    if (self.stickersViewFrame.size.height > 0) {
+        self.internalStickersView.autoresizingMask = UIViewAutoresizingNone;
+        self.internalStickersView.frame = self.stickersViewFrame;
+    } else {
+        self.internalStickersView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    }
     
-    self.internalStickersView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     self.internalStickersView.clipsToBounds = YES;
     
     //iOS 7 FIX
@@ -310,6 +316,7 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     STKStickersShopViewController *vc = [[STKStickersShopViewController alloc] initWithNibName:@"STKStickersShopViewController" bundle:nil];
     self.stickersService.hasNewModifiedPacks = NO;
     [self showModalViewController:vc];
+    
     
 }
 
