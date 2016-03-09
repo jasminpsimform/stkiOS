@@ -173,7 +173,7 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 }
 
 - (void)initHeaderButton:(UIButton *)button {
-    [button setTintColor:[STKUtility defaultOrangeColor]];
+    [button setTintColor:[STKUtility defaultBlueColor]];
     button.backgroundColor = self.headerBackgroundColor ? self.headerBackgroundColor : [STKUtility defaultGreyColor];
 }
 

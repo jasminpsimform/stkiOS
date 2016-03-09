@@ -53,7 +53,7 @@ static NSUInteger const productsCount = 2;
     [self loadShopPrices];
     
     [self setUpButtons];
-    self.navigationController.navigationBar.tintColor = [STKUtility defaultOrangeColor];
+    self.navigationController.navigationBar.tintColor = [STKUtility defaultBlueColor];
     
     self.jsInterface.delegate = self;
     //    self.stickersPurchaseService.delegate = self;
@@ -102,7 +102,7 @@ static NSUInteger const productsCount = 2;
 
 - (NSString *)shopUrlString {
     
-    NSMutableString *urlstr = [NSMutableString stringWithFormat:@"%@&apiKey=%@&platform=IOS&userId=%@&density=%@&is_subscriber=%d", mainUrl, [STKApiKeyManager apiKey], [STKStickersManager userKey], [STKUtility scaleString], [STKStickersManager isSubscriber]];
+    NSMutableString *urlstr = [NSMutableString stringWithFormat:@"%@&apiKey=%@&platform=IOS&userId=%@&density=%@&is_subscriber=%d&primaryColor=%@", mainUrl, [STKApiKeyManager apiKey], [STKStickersManager userKey], [STKUtility scaleString], [STKStickersManager isSubscriber], @"047aff"];
     
     if (self.prices.count > 0) {
         [urlstr appendString: [NSMutableString stringWithFormat:

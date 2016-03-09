@@ -50,7 +50,7 @@
     
     [self setUpButtons];
     
-    self.navigationController.navigationBar.tintColor = [STKUtility defaultOrangeColor];
+    self.navigationController.navigationBar.tintColor = [STKUtility defaultBlueColor];
     
     __weak typeof(self) wself = self;
     
