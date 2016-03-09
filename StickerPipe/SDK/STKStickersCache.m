@@ -318,8 +318,8 @@ static NSString *const recentName = @"Recent";
     
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K > 0 AND (%K.%K == NO OR %K.%K == nil)", STKStickerAttributes.usedCount, STKStickerRelationships.stickerPack, STKStickerPackAttributes.disabled,STKStickerRelationships.stickerPack, STKStickerPackAttributes.disabled];
         
-        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:STKStickerAttributes.usedCount
-                                                                         ascending:YES];
+        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:STKStickerAttributes.usedDate
+                                                                         ascending:NO];
         
         NSArray *stickers = [STKSticker stk_findWithPredicate:predicate
                                               sortDescriptors:@[sortDescriptor]
