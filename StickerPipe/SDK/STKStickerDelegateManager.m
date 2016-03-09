@@ -122,8 +122,17 @@ typedef enum {
 - (void)addRecentSticker:(STKStickerObject*)sticker {
     sticker.usedCount = @(sticker.usedCount.integerValue + 1);
     STKStickerPackObject *recentPack = self.stickerPacks[0];
-    if (![recentPack.stickers containsObject:sticker] ) {
-        [recentPack.stickers removeObject:sticker];
+    BOOL hasSticker = NO;
+    NSInteger stickerIndex = 0;
+    for (int i = 0; i < recentPack.stickers.count; i++) {
+        STKStickerObject *st = recentPack.stickers[i];
+        if (st.stickerID == sticker.stickerID) {
+            hasSticker = YES;
+            stickerIndex = i;
+        }
+    }
+    if (hasSticker) {
+        [recentPack.stickers removeObjectAtIndex:stickerIndex];
     }
 
     [recentPack.stickers insertObject:sticker atIndex:0];
