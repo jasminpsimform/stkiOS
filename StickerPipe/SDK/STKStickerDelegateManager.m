@@ -139,6 +139,9 @@ typedef enum {
 
     [recentPack.stickers sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"usedCount" ascending:NO]]];
     
+    if (recentPack.stickers.count > 12) {
+        [recentPack.stickers removeObjectAtIndex:12];
+    }
     [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
 }
 
