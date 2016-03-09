@@ -336,7 +336,7 @@ static NSString *const recentName = @"Recent";
                 }
             }
             NSArray *sortedRecentStickers = [stickerObjects sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:STKStickerAttributes.usedCount ascending:NO]]];
-            recentPack.stickers = sortedRecentStickers;
+            recentPack.stickers = [NSMutableArray arrayWithArray:sortedRecentStickers];
             
 //            object = recentPack;
 //    }];
