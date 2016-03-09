@@ -38,7 +38,6 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *stickersHeaderCollectionView;
 
-@property (weak, nonatomic) IBOutlet UIButton *collectionsButton;
 @property (weak, nonatomic) IBOutlet STKShowStickerButton *stickersShopButton;
 @property (weak, nonatomic) IBOutlet UICollectionView *stickersCollectionView;
 
@@ -98,7 +97,6 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
         
         [self initStickerHeader];
         [self initStickersCollectionView];
-        [self initHeaderButton:self.collectionsButton];
         [self initHeaderButton:self.stickersShopButton];
         
         [self reloadStickers];
@@ -197,6 +195,10 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
         }
         
     }];
+   
+    [self.stickersHeaderDelegateManager setDidSelectSettingsRow:^{
+        [weakSelf collectionsButtonAction:nil];
+    }];
     
     self.stickersHeaderCollectionView.dataSource = self.stickersHeaderDelegateManager;
     self.stickersHeaderCollectionView.delegate = self.stickersHeaderDelegateManager;
@@ -229,7 +231,6 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     
     [self initStickerHeader];
     [self initStickersCollectionView];
-    [self initHeaderButton:self.collectionsButton];
     [self initHeaderButton:self.stickersShopButton];
     
 }

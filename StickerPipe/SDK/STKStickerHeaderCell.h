@@ -16,4 +16,6 @@
 
 - (void)configWithStickerPack:(STKStickerPackObject *)stickerPack placeholder:(UIImage *)placeholder placeholderTintColor:(UIColor*)placeholderTintColor;
 
+- (void)configureSettingsCell;
+
 @end

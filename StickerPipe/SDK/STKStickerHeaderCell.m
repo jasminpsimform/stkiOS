@@ -69,6 +69,7 @@
     if ([stickerPack.packName isEqualToString:@"Recent"]) {
         self.originalImage = [UIImage imageNamed:@"STKRecentIcon"];
         self.imageView.image = self.originalImage;
+        self.imageView.tintColor = [UIColor colorWithRed:4/255.0 green:122/255.0 blue:1 alpha:1];
         self.dotView.hidden = YES;
     } else {
         self.dotView.hidden = !stickerPack.isNew.boolValue;
@@ -117,6 +118,11 @@
     
 }
 
-
+- (void)configureSettingsCell {
+    self.originalImage = [UIImage imageNamed:@"STKSettingsIcon"];
+    self.imageView.image = self.originalImage;
+    self.imageView.tintColor = [UIColor colorWithRed:4/255.0 green:122/255.0 blue:1 alpha:1];
+    self.dotView.hidden = YES;
+}
 
 @end
