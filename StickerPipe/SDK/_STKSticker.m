@@ -8,6 +8,8 @@ const struct STKStickerAttributes STKStickerAttributes = {
 	.stickerMessage = @"stickerMessage",
 	.stickerName = @"stickerName",
 	.usedCount = @"usedCount",
+    .usedDate = @"usedDate"
+    
 };
 
 const struct STKStickerRelationships STKStickerRelationships = {
@@ -77,6 +79,8 @@ const struct STKStickerRelationships STKStickerRelationships = {
 @dynamic stickerMessage;
 
 @dynamic stickerName;
+
+@dynamic usedDate;
 
 @dynamic usedCount;
 

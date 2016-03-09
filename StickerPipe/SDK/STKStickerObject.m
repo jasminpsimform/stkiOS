@@ -22,6 +22,7 @@
         self.stickerID = sticker.stickerID;
         self.stickerMessage = sticker.stickerMessage;
         self.usedCount = sticker.usedCount;
+        self.usedDate = sticker.usedDate;
     }
     return self;
 }
@@ -30,7 +31,7 @@
 
 - (NSString*) stringForDescription {
     
-    return [NSString stringWithFormat:@"self: %@\n stickerName: %@\n, stickerID: %@\n stickerMessage: %@\n usedCount: %@\n", [super description], self.stickerName, self.stickerID, self.stickerMessage, self.usedCount];
+    return [NSString stringWithFormat:@"self: %@\n stickerName: %@\n, stickerID: %@\n stickerMessage: %@\n usedCount: %@\n, usedDate:%@\n", [super description], self.stickerName, self.stickerID, self.stickerMessage, self.usedCount, self.usedDate];
 }
 
 - (NSString *)description {

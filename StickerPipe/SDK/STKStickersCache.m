@@ -77,6 +77,7 @@ static NSString *const recentName = @"Recent";
         sticker.stickerID = stickerObject.stickerID;
         sticker.stickerMessage = stickerObject.stickerMessage;
         sticker.usedCount = stickerObject.usedCount;
+        sticker.usedDate = stickerObject.usedDate;
         if (sticker) {
             [stickerModel addStickersObject:sticker];
         }
@@ -97,6 +98,7 @@ static NSString *const recentName = @"Recent";
         sticker.stickerID = stickerObject.stickerID;
         sticker.stickerMessage = stickerObject.stickerMessage;
         sticker.usedCount = stickerObject.usedCount;
+        sticker.usedDate = stickerObject.usedDate;
         if (sticker) {
             [stickerModel addStickersObject:sticker];
         }
@@ -183,6 +185,7 @@ static NSString *const recentName = @"Recent";
         sticker.stickerID = stickerObject.stickerID;
         sticker.stickerMessage = stickerObject.stickerMessage;
         sticker.usedCount = stickerObject.usedCount;
+        sticker.usedDate = stickerObject.usedDate;
         if (sticker) {
             [stickerPack addStickersObject:sticker];
         }
@@ -335,8 +338,10 @@ static NSString *const recentName = @"Recent";
 
                 }
             }
-            NSArray *sortedRecentStickers = [stickerObjects sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:STKStickerAttributes.usedCount ascending:NO]]];
-            recentPack.stickers = [NSMutableArray arrayWithArray:sortedRecentStickers];
+//            NSArray *sortedRecentStickers = [stickerObjects sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:STKStickerAttributes.usedCount ascending:NO]]];
+    NSArray *sortedRecentStickers = [stickerObjects sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:STKStickerAttributes.usedDate ascending:NO]]];
+
+    recentPack.stickers = [NSMutableArray arrayWithArray:sortedRecentStickers];
             
 //            object = recentPack;
 //    }];
@@ -370,6 +375,7 @@ static NSString *const recentName = @"Recent";
         NSInteger usedCount = [sticker.usedCount integerValue];
         usedCount++;
         sticker.usedCount = @(usedCount);
+        sticker.usedDate = [NSDate date];
         
         [[STKAnalyticService sharedService] sendEventWithCategory:STKAnalyticStickerCategory action:trimmedPackNameAndStickerName.firstObject label:sticker.stickerName value:nil];
         
