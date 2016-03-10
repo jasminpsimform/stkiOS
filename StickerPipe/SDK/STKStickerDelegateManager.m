@@ -112,14 +112,15 @@ typedef enum {
     if (stickerPack.stickers.count > 0) {
         STKStickerObject *sticker = stickerPack.stickers[indexPath.item];
         if (sticker) {
-            [self addRecentSticker:sticker];
+            [self addRecentSticker:sticker forSection:indexPath.section];
             self.didSelectSticker(sticker);
         }
     }
 
 }
 
-- (void)addRecentSticker:(STKStickerObject*)sticker {
+- (void)addRecentSticker:(STKStickerObject*)sticker forSection:(NSInteger)section {
+    if (section > 0) {
     sticker.usedCount = @(sticker.usedCount.integerValue + 1);
     STKStickerPackObject *recentPack = self.stickerPacks[0];
     BOOL hasSticker = NO;
@@ -142,7 +143,8 @@ typedef enum {
     if (recentPack.stickers.count > 12) {
         [recentPack.stickers removeObjectAtIndex:12];
     }
-    [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+    }
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
