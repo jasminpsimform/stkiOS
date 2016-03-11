@@ -168,7 +168,8 @@ static NSUInteger const productsCount = 2;
 }
 
 - (void)setUpButtons {
-    UIBarButtonItem *closeBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(closeAction:)];
+    
+    UIBarButtonItem *closeBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed: @"STKBackIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(closeAction:)];
     
     self.navigationItem.leftBarButtonItem = closeBarButton;
     
