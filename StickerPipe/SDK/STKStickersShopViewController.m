@@ -278,7 +278,8 @@ static NSUInteger const productsCount = 2;
         STKStickerPackObject *stickerPack = [wself.entityService getStickerPackWithName:packName];
         [wself.entityService togglePackDisabling:stickerPack];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [[NSNotificationCenter defaultCenter]postNotificationName:STKStickersReorderStickersNotification object:self];
+//            [[NSNotificationCenter defaultCenter]postNotificationName:STKStickersReorderStickersNotification object:self];
+            [[NSNotificationCenter defaultCenter] postNotificationName:STKPackRemovedNotification object:self userInfo:@{@"pack":stickerPack}];
             [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.JsInterface.onPackRemoveSuccess()"];
         });
     } failure:^(NSError *error) {

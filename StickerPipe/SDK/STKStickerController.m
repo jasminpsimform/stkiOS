@@ -92,7 +92,7 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
         [self setupInternalStickersView];
         
         
-//        [self loadStickerPacks];
+        //        [self loadStickerPacks];
         [self loadStartPacks];
         
         [self initStickerHeader];
@@ -119,12 +119,37 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newPackDownloaded:) name:STKNewPackDownloadedNotification object:nil];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removePack:) name:STKPackRemovedNotification object:nil];
+        
     }
     return self;
 }
 
 - (void)updateStickers {
     [self loadStickerPacks];
+}
+
+- (void)removePack:(NSNotification *)notification {
+    NSMutableArray *stickerPacks = [self.stickersService.stickersArray mutableCopy];
+    
+    STKStickerPackObject *packToDelete = notification.userInfo[@"pack"];
+    BOOL hasPack = NO;
+    NSInteger packIndex = 0;
+    for (int i = 0; i < stickerPacks.count; i++) {
+        STKStickerPackObject *pack = stickerPacks[i];
+        if (pack.packID == packToDelete.packID) {
+            hasPack = YES;
+            packIndex = i;
+        }
+    }
+    if (hasPack) {
+        [stickerPacks removeObjectAtIndex:packIndex];
+        
+        self.stickersService.stickersArray = stickerPacks;
+        [self.stickersCollectionView reloadData];
+        [self.stickersHeaderCollectionView reloadData];
+    }
+    
 }
 
 - (void)dealloc {
@@ -142,7 +167,7 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
         [self setPackSelectedAtIndex:stickerIndex];
         [self.stickersHeaderDelegateManager collectionView:self.stickersHeaderCollectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow:stickerIndex inSection:0]];
     } failure:nil];
-   
+    
 }
 
 - (void) initStickersCollectionView {
@@ -190,12 +215,12 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
         NSIndexPath *newIndexPath = [NSIndexPath indexPathForItem:0 inSection:indexPath.item];
         CGRect layoutRect = [weakSelf.stickersCollectionView layoutAttributesForItemAtIndexPath:newIndexPath].frame;
         if (stickerPack.stickers.count > 0 || indexPath.item == 0) {
-        [weakSelf.stickersCollectionView setContentOffset:CGPointMake(weakSelf.stickersCollectionView.contentOffset.x, layoutRect.origin.y  - kStickersSectionPaddingTopBottom) animated:YES];
-        weakSelf.stickersDelegateManager.currentDisplayedSection = indexPath.item;
+            [weakSelf.stickersCollectionView setContentOffset:CGPointMake(weakSelf.stickersCollectionView.contentOffset.x, layoutRect.origin.y  - kStickersSectionPaddingTopBottom) animated:YES];
+            weakSelf.stickersDelegateManager.currentDisplayedSection = indexPath.item;
         }
         
     }];
-   
+    
     [self.stickersHeaderDelegateManager setDidSelectSettingsRow:^{
         [weakSelf collectionsButtonAction:nil];
     }];
@@ -206,13 +231,13 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     [self.stickersHeaderCollectionView registerClass:[STKStickerHeaderCell class] forCellWithReuseIdentifier:@"STKStickerPanelHeaderCell"];
     
     self.stickersHeaderCollectionView.backgroundColor = self.headerBackgroundColor ? self.headerBackgroundColor : [STKUtility defaultGreyColor];
-
+    
     self.stickersShopButton.badgeView.hidden = !self.stickersService.hasNewModifiedPacks;
 }
 
 - (void)setupInternalStickersView {
     self.stickersShopButton.badgeBorderColor = [STKUtility defaultGreyColor];
-
+    
     self.internalStickersView = [[[NSBundle mainBundle] loadNibNamed:@"STKStickersView" owner:self options:nil] firstObject];
     
     if (self.stickersViewFrame.size.height > 0) {
@@ -407,7 +432,7 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     [self hideStickersView];
     UIViewController *presentViewController = [self.delegate stickerControllerViewControllerForPresentingModalView];
     [presentViewController dismissViewControllerAnimated:YES completion:nil];
-   
+    
     [self collectionsButtonAction:nil];
 }
 

@@ -30,6 +30,8 @@ extern NSString *const STKCloseModalViewNotification;
 
 extern NSString *const STKStickersDownloadedNotification;
 
+extern NSString *const STKPackRemovedNotification;
+
 extern NSString *const kLastUpdateIntervalKey;
 
 extern NSString *const kUserKeyDefaultsKey;

@@ -35,6 +35,9 @@ NSString *const STKShowPackNotification =
 NSString *const STKNewPackDownloadedNotification =
     @"STKNewPackDownloadedNotification";
 
+NSString *const STKPackRemovedNotification =
+    @"STKPackRemovedNotification";
+
 NSString *const STKCloseModalViewNotification =
     @"STKCloseModalViewNotification";
 
