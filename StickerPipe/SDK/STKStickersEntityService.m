@@ -293,6 +293,10 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
     return [recentStickerPack.stickers count] > 0;
 }
 
+- (STKStickerPackObject *)recentPack {
+    return [self.cacheEntity recentStickerPack];
+}
+
 - (BOOL)hasNewPacks {
     NSArray *arr = self.stickersArray;
     NSUInteger newsCount = 0;

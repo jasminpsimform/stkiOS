@@ -112,7 +112,7 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
                                                    object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storageUpdated:) name:STKStickersCacheDidUpdateStickersNotification object:nil];
         
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateStickers) name:STKStickersReorderStickersNotification object:nil];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateStickers:) name:STKStickersReorderStickersNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showCollections) name:STKShowStickersCollectionsNotification object:nil];
         
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showPack:) name:STKShowPackNotification object:nil];
@@ -125,8 +125,24 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     return self;
 }
 
-- (void)updateStickers {
-    [self loadStickerPacks];
+- (void)reloadRecent {
+    STKStickerPackObject *recentPack = [self.stickersService recentPack];
+    NSMutableArray *stickers = [self.stickersService.stickersArray mutableCopy];
+    [stickers replaceObjectAtIndex:0 withObject:recentPack];
+    self.stickersService.stickersArray = stickers;
+    [self.stickersCollectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+    
+}
+
+- (void)updateStickers:(NSNotification *)notification {
+//    [self loadStickerPacks];
+    NSMutableArray *stickers = notification.userInfo[@"packs"];
+    [stickers insertObject:self.stickersService.stickersArray[0] atIndex:0];
+    self.stickersService.stickersArray = stickers;
+    [self.stickersCollectionView reloadData];
+    [self.stickersHeaderCollectionView reloadData];
+    [self reloadRecent];
+    
 }
 
 - (void)removePack:(NSNotification *)notification {
@@ -148,6 +164,7 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
         self.stickersService.stickersArray = stickerPacks;
         [self.stickersCollectionView reloadData];
         [self.stickersHeaderCollectionView reloadData];
+        [self reloadRecent];
     }
     
 }

@@ -135,8 +135,9 @@
 
 - (IBAction)closeAction:(id)sender {
     [self dismissViewControllerAnimated:YES completion:^{
-        [[NSNotificationCenter defaultCenter]postNotificationName:STKStickersReorderStickersNotification object:self];
+//        [[NSNotificationCenter defaultCenter]postNotificationName:STKStickersReorderStickersNotification object:self];
         
+        [[NSNotificationCenter defaultCenter]postNotificationName:STKStickersReorderStickersNotification object:self userInfo:@{@"packs": self.dataSource.dataSource}];
         [[NSNotificationCenter defaultCenter] postNotificationName:STKCloseModalViewNotification object:self];
     }];
 }

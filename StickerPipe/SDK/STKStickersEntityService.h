@@ -33,6 +33,8 @@
 
 - (STKStickerPackObject *)getStickerPackWithName:(NSString *)packName;
 
+- (STKStickerPackObject *)recentPack;
+
 - (BOOL)isPackDownloaded:(NSString*)packName;
 
 - (void) saveStickerPack:(STKStickerPackObject*)stickerPack;
