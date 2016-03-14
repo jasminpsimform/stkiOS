@@ -360,6 +360,8 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     self.stickersService.hasNewModifiedPacks = NO;
     [self showModalViewController:vc];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:STKOpenShopNotification object:self];
+    
     
 }
 
