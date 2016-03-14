@@ -131,7 +131,9 @@ static NSUInteger const productsCount = 2;
         [self showErrorAlertWithMessage:error.localizedDescription andOkAction:^{
             [self loadStickersShop];
         } andCancelAction:^{
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self dismissViewControllerAnimated:YES completion:^{
+                 [[NSNotificationCenter defaultCenter] postNotificationName:STKCloseModalViewNotification object:self];
+            }];
         }];
     }];
 }
@@ -237,7 +239,9 @@ static NSUInteger const productsCount = 2;
     [self showErrorAlertWithMessage:error.localizedDescription andOkAction:^{
         [self loadStickersShop];
     } andCancelAction:^{
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:^{
+             [[NSNotificationCenter defaultCenter] postNotificationName:STKCloseModalViewNotification object:self];
+        }];
     }];
 }
 
