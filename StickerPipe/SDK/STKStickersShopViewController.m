@@ -53,7 +53,6 @@ static NSUInteger const productsCount = 2;
     [self loadShopPrices];
     
     [self setUpButtons];
-    self.navigationController.navigationBar.tintColor = [STKUtility defaultOrangeColor];
     
     self.jsInterface.delegate = self;
     //    self.stickersPurchaseService.delegate = self;
@@ -102,7 +101,7 @@ static NSUInteger const productsCount = 2;
 
 - (NSString *)shopUrlString {
     
-    NSMutableString *urlstr = [NSMutableString stringWithFormat:@"%@&apiKey=%@&platform=IOS&userId=%@&density=%@&is_subscriber=%d", mainUrl, [STKApiKeyManager apiKey], [STKStickersManager userKey], [STKUtility scaleString], [STKStickersManager isSubscriber]];
+    NSMutableString *urlstr = [NSMutableString stringWithFormat:@"%@&apiKey=%@&platform=IOS&userId=%@&density=%@&is_subscriber=%d&primaryColor=%@", mainUrl, [STKApiKeyManager apiKey], [STKStickersManager userKey], [STKUtility scaleString], [STKStickersManager isSubscriber], @"047aff"];
     
     if (self.prices.count > 0) {
         [urlstr appendString: [NSMutableString stringWithFormat:
@@ -132,7 +131,9 @@ static NSUInteger const productsCount = 2;
         [self showErrorAlertWithMessage:error.localizedDescription andOkAction:^{
             [self loadStickersShop];
         } andCancelAction:^{
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self dismissViewControllerAnimated:YES completion:^{
+                 [[NSNotificationCenter defaultCenter] postNotificationName:STKCloseModalViewNotification object:self];
+            }];
         }];
     }];
 }
@@ -168,10 +169,12 @@ static NSUInteger const productsCount = 2;
 }
 
 - (void)setUpButtons {
-    UIBarButtonItem *closeBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(closeAction:)];
+    
+    UIBarButtonItem *closeBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed: @"STKBackIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(closeAction:)];
     
     self.navigationItem.leftBarButtonItem = closeBarButton;
-    
+    [self.navigationController.navigationBar setBarTintColor: [UIColor colorWithRed:250/255.0 green:250/255.0 blue:250/255.0 alpha:1.0]];
+    self.navigationController.navigationBar.translucent = NO;
     UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"STKSettingsIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(showCollections:)];
     self.navigationItem.rightBarButtonItem = settingsButton;
 }
@@ -236,7 +239,9 @@ static NSUInteger const productsCount = 2;
     [self showErrorAlertWithMessage:error.localizedDescription andOkAction:^{
         [self loadStickersShop];
     } andCancelAction:^{
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:^{
+             [[NSNotificationCenter defaultCenter] postNotificationName:STKCloseModalViewNotification object:self];
+        }];
     }];
 }
 
@@ -278,7 +283,8 @@ static NSUInteger const productsCount = 2;
         STKStickerPackObject *stickerPack = [wself.entityService getStickerPackWithName:packName];
         [wself.entityService togglePackDisabling:stickerPack];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [[NSNotificationCenter defaultCenter]postNotificationName:STKStickersReorderStickersNotification object:self];
+//            [[NSNotificationCenter defaultCenter]postNotificationName:STKStickersReorderStickersNotification object:self];
+            [[NSNotificationCenter defaultCenter] postNotificationName:STKPackRemovedNotification object:self userInfo:@{@"pack":stickerPack}];
             [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.JsInterface.onPackRemoveSuccess()"];
         });
     } failure:^(NSError *error) {

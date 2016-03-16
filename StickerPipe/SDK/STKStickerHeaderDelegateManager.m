@@ -18,18 +18,29 @@
 
 @implementation STKStickerHeaderDelegateManager
 
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return (self.stickerPacksArray.count > 0) ? 2 : 1;
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    
-    return self.stickerPacksArray.count;
+    if (section == 0 && self.stickerPacksArray.count > 0) {
+        return self.stickerPacksArray.count;
+    } else {
+        return 1;
+    }
     
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     STKStickerHeaderCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"STKStickerPanelHeaderCell" forIndexPath:indexPath];
     
-    STKStickerPackObject *stickerPack = self.stickerPacksArray[indexPath.item];
-
-    [cell configWithStickerPack:stickerPack placeholder:self.placeholderImage placeholderTintColor:self.placeholderHeadercolor];
+    if (indexPath.section == 0 && self.stickerPacksArray.count > 0) {
+        STKStickerPackObject *stickerPack = self.stickerPacksArray[indexPath.item];
+        
+        [cell configWithStickerPack:stickerPack placeholder:self.placeholderImage placeholderTintColor:self.placeholderHeadercolor];
+    } else {
+        [cell configureSettingsCell];
+    }
     
     return cell;
     
@@ -38,13 +49,17 @@
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    STKStickerPackObject *stickerPackObject = self.stickerPacksArray[indexPath.item];
-    self.didSelectRow(indexPath, stickerPackObject);
+    if (indexPath.section == 0 && self.stickerPacksArray.count > 0) {
+        STKStickerPackObject *stickerPackObject = self.stickerPacksArray[indexPath.item];
+        self.didSelectRow(indexPath, stickerPackObject);
+    } else {
+        self.didSelectSettingsRow();
+    }
 }
 
 
 - (void)setStickerPacks:(NSArray *)stickerPacks {
-    self.stickerPacksArray = stickerPacks;    
+    self.stickerPacksArray = stickerPacks;
 }
 
 

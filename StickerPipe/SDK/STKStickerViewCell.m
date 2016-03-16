@@ -59,7 +59,7 @@
     DFImageRequestOptions *options = [DFImageRequestOptions new];
     options.priority = DFImageRequestPriorityNormal;
     
-    self.stickerImageView.image = coloredPlaceholder;
+//    self.stickerImageView.image = coloredPlaceholder;
     [self setNeedsLayout];
     
     DFImageRequest *request = [DFImageRequest requestWithResource:stickerUrl targetSize:CGSizeZero contentMode:DFImageContentModeAspectFit options:options];

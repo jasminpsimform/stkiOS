@@ -50,7 +50,8 @@
     
     [self setUpButtons];
     
-    self.navigationController.navigationBar.tintColor = [STKUtility defaultOrangeColor];
+    [self.navigationController.navigationBar setBarTintColor: [UIColor colorWithRed:250/255.0 green:250/255.0 blue:250/255.0 alpha:1.0]];
+    self.navigationController.navigationBar.translucent = NO;
     
     __weak typeof(self) wself = self;
     
@@ -134,8 +135,9 @@
 
 - (IBAction)closeAction:(id)sender {
     [self dismissViewControllerAnimated:YES completion:^{
-        [[NSNotificationCenter defaultCenter]postNotificationName:STKStickersReorderStickersNotification object:self];
+//        [[NSNotificationCenter defaultCenter]postNotificationName:STKStickersReorderStickersNotification object:self];
         
+        [[NSNotificationCenter defaultCenter]postNotificationName:STKStickersReorderStickersNotification object:self userInfo:@{@"packs": self.dataSource.dataSource}];
         [[NSNotificationCenter defaultCenter] postNotificationName:STKCloseModalViewNotification object:self];
     }];
 }

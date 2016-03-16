@@ -14,6 +14,7 @@
 @interface STKStickerHeaderDelegateManager : NSObject <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (copy, nonatomic) void(^didSelectRow)(NSIndexPath *indexPath, STKStickerPackObject *stickerPackObject);
+@property (copy, nonatomic) void(^didSelectSettingsRow)(void);
 @property (strong, nonatomic) UIImage *placeholderImage;
 @property (strong, nonatomic) UIColor *placeholderHeadercolor;
 

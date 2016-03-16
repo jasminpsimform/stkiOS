@@ -29,6 +29,7 @@ extern NSString* const  STKUtilityAPIUrl;
 + (UIColor*)defaultOrangeColor;
 + (UIColor*)defaultGreyColor;
 + (UIColor*)defaultPlaceholderGrayColor;
++ (UIColor*)defaultBlueColor;
 
 void STKLog(NSString *format, ...);
 

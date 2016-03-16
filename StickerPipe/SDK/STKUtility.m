@@ -117,6 +117,9 @@ NSString *const STKUtilityAPIUrl = @"https://api.stickerpipe.com/stk/";
     return [UIColor colorWithRed:142.0/255.0 green:142.0/255.0 blue:147.0/255.0 alpha:1];
 }
 
++ (UIColor*)defaultBlueColor {
+    return [UIColor colorWithRed:4/255.0 green:122/255.0 blue:1. alpha:1];
+}
 #pragma mark - STKLog
 
 void STKLog(NSString *format, ...) {

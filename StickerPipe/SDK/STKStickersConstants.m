@@ -35,11 +35,17 @@ NSString *const STKShowPackNotification =
 NSString *const STKNewPackDownloadedNotification =
     @"STKNewPackDownloadedNotification";
 
+NSString *const STKPackRemovedNotification =
+    @"STKPackRemovedNotification";
+
 NSString *const STKCloseModalViewNotification =
     @"STKCloseModalViewNotification";
 
 NSString *const STKStickersDownloadedNotification =
     @"STKStickersDownloadedNotification";
+
+NSString *const STKOpenShopNotification =
+    @"STKOpenShopNotification";
 
 NSString *const kLastUpdateIntervalKey =
     @"kLastUpdateIntervalKey";

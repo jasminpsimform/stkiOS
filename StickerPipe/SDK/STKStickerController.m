@@ -38,7 +38,6 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *stickersHeaderCollectionView;
 
-@property (weak, nonatomic) IBOutlet UIButton *collectionsButton;
 @property (weak, nonatomic) IBOutlet STKShowStickerButton *stickersShopButton;
 @property (weak, nonatomic) IBOutlet UICollectionView *stickersCollectionView;
 
@@ -93,12 +92,11 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
         [self setupInternalStickersView];
         
         
-//        [self loadStickerPacks];
+        //        [self loadStickerPacks];
         [self loadStartPacks];
         
         [self initStickerHeader];
         [self initStickersCollectionView];
-        [self initHeaderButton:self.collectionsButton];
         [self initHeaderButton:self.stickersShopButton];
         
         [self reloadStickers];
@@ -114,19 +112,61 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
                                                    object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storageUpdated:) name:STKStickersCacheDidUpdateStickersNotification object:nil];
         
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateStickers) name:STKStickersReorderStickersNotification object:nil];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateStickers:) name:STKStickersReorderStickersNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showCollections) name:STKShowStickersCollectionsNotification object:nil];
         
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showPack:) name:STKShowPackNotification object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newPackDownloaded:) name:STKNewPackDownloadedNotification object:nil];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removePack:) name:STKPackRemovedNotification object:nil];
+        
     }
     return self;
 }
 
-- (void)updateStickers {
-    [self loadStickerPacks];
+- (void)reloadRecent {
+    STKStickerPackObject *recentPack = [self.stickersService recentPack];
+    NSMutableArray *stickers = [self.stickersService.stickersArray mutableCopy];
+    [stickers replaceObjectAtIndex:0 withObject:recentPack];
+    self.stickersService.stickersArray = stickers;
+    [self.stickersCollectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+    
+}
+
+- (void)updateStickers:(NSNotification *)notification {
+//    [self loadStickerPacks];
+    NSMutableArray *stickers = notification.userInfo[@"packs"];
+    [stickers insertObject:self.stickersService.stickersArray[0] atIndex:0];
+    self.stickersService.stickersArray = stickers;
+    [self.stickersCollectionView reloadData];
+    [self.stickersHeaderCollectionView reloadData];
+    [self reloadRecent];
+    
+}
+
+- (void)removePack:(NSNotification *)notification {
+    NSMutableArray *stickerPacks = [self.stickersService.stickersArray mutableCopy];
+    
+    STKStickerPackObject *packToDelete = notification.userInfo[@"pack"];
+    BOOL hasPack = NO;
+    NSInteger packIndex = 0;
+    for (int i = 0; i < stickerPacks.count; i++) {
+        STKStickerPackObject *pack = stickerPacks[i];
+        if (pack.packID == packToDelete.packID) {
+            hasPack = YES;
+            packIndex = i;
+        }
+    }
+    if (hasPack) {
+        [stickerPacks removeObjectAtIndex:packIndex];
+        
+        self.stickersService.stickersArray = stickerPacks;
+        [self.stickersCollectionView reloadData];
+        [self.stickersHeaderCollectionView reloadData];
+        [self reloadRecent];
+    }
+    
 }
 
 - (void)dealloc {
@@ -144,7 +184,7 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
         [self setPackSelectedAtIndex:stickerIndex];
         [self.stickersHeaderDelegateManager collectionView:self.stickersHeaderCollectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow:stickerIndex inSection:0]];
     } failure:nil];
-   
+    
 }
 
 - (void) initStickersCollectionView {
@@ -175,7 +215,7 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 }
 
 - (void)initHeaderButton:(UIButton *)button {
-    [button setTintColor:[STKUtility defaultOrangeColor]];
+    [button setTintColor:[STKUtility defaultBlueColor]];
     button.backgroundColor = self.headerBackgroundColor ? self.headerBackgroundColor : [STKUtility defaultGreyColor];
 }
 
@@ -192,10 +232,14 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
         NSIndexPath *newIndexPath = [NSIndexPath indexPathForItem:0 inSection:indexPath.item];
         CGRect layoutRect = [weakSelf.stickersCollectionView layoutAttributesForItemAtIndexPath:newIndexPath].frame;
         if (stickerPack.stickers.count > 0 || indexPath.item == 0) {
-        [weakSelf.stickersCollectionView setContentOffset:CGPointMake(weakSelf.stickersCollectionView.contentOffset.x, layoutRect.origin.y  - kStickersSectionPaddingTopBottom) animated:YES];
-        weakSelf.stickersDelegateManager.currentDisplayedSection = indexPath.item;
+            [weakSelf.stickersCollectionView setContentOffset:CGPointMake(weakSelf.stickersCollectionView.contentOffset.x, layoutRect.origin.y  - kStickersSectionPaddingTopBottom) animated:YES];
+            weakSelf.stickersDelegateManager.currentDisplayedSection = indexPath.item;
         }
         
+    }];
+    
+    [self.stickersHeaderDelegateManager setDidSelectSettingsRow:^{
+        [weakSelf collectionsButtonAction:nil];
     }];
     
     self.stickersHeaderCollectionView.dataSource = self.stickersHeaderDelegateManager;
@@ -204,13 +248,13 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     [self.stickersHeaderCollectionView registerClass:[STKStickerHeaderCell class] forCellWithReuseIdentifier:@"STKStickerPanelHeaderCell"];
     
     self.stickersHeaderCollectionView.backgroundColor = self.headerBackgroundColor ? self.headerBackgroundColor : [STKUtility defaultGreyColor];
-
+    
     self.stickersShopButton.badgeView.hidden = !self.stickersService.hasNewModifiedPacks;
 }
 
 - (void)setupInternalStickersView {
     self.stickersShopButton.badgeBorderColor = [STKUtility defaultGreyColor];
-
+    
     self.internalStickersView = [[[NSBundle mainBundle] loadNibNamed:@"STKStickersView" owner:self options:nil] firstObject];
     
     if (self.stickersViewFrame.size.height > 0) {
@@ -229,7 +273,6 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     
     [self initStickerHeader];
     [self initStickersCollectionView];
-    [self initHeaderButton:self.collectionsButton];
     [self initHeaderButton:self.stickersShopButton];
     
 }
@@ -316,6 +359,8 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     STKStickersShopViewController *vc = [[STKStickersShopViewController alloc] initWithNibName:@"STKStickersShopViewController" bundle:nil];
     self.stickersService.hasNewModifiedPacks = NO;
     [self showModalViewController:vc];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:STKOpenShopNotification object:self];
     
     
 }
@@ -406,7 +451,7 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     [self hideStickersView];
     UIViewController *presentViewController = [self.delegate stickerControllerViewControllerForPresentingModalView];
     [presentViewController dismissViewControllerAnimated:YES completion:nil];
-   
+    
     [self collectionsButtonAction:nil];
 }
 

@@ -17,6 +17,7 @@
 @property (strong, nonatomic) NSNumber *stickerID;
 @property (strong, nonatomic) NSString *stickerMessage;
 @property (assign, nonatomic) NSNumber *usedCount;
+@property (nonatomic, strong) NSDate *usedDate;
 
 - (instancetype) initWithSticker:(STKSticker*) sticker;
 

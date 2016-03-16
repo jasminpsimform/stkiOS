@@ -26,6 +26,8 @@ Add API key in your AppDelegate.m
 [STKStickersManager setStartTimeInterval];
 ```
 
+You can get your own API Key on http://stickerpipe.com to have customized packs set.
+
 ### Users
 
 ```objc

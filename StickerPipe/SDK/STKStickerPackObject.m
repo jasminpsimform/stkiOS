@@ -43,7 +43,8 @@
                 [stickersArray addObject:stickerObject];
             }
 
-        self.stickers = [NSArray arrayWithArray:stickersArray];
+      //  self.stickers = [NSArray arrayWithArray:stickersArray];
+        self.stickers = stickersArray;
     }
     return self;
 }
@@ -73,7 +74,9 @@
             }
         }
 
-        self.stickers = [NSArray arrayWithArray:stickersArray];
+//        self.stickers = [NSArray arrayWithArray:stickersArray];
+        self.stickers = stickersArray;
+
     }
     return self;
 }

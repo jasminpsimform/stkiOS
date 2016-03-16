@@ -112,10 +112,39 @@ typedef enum {
     if (stickerPack.stickers.count > 0) {
         STKStickerObject *sticker = stickerPack.stickers[indexPath.item];
         if (sticker) {
+            [self addRecentSticker:sticker forSection:indexPath.section];
             self.didSelectSticker(sticker);
         }
     }
 
+}
+
+- (void)addRecentSticker:(STKStickerObject*)sticker forSection:(NSInteger)section {
+    if (section > 0) {
+    sticker.usedCount = @(sticker.usedCount.integerValue + 1);
+    STKStickerPackObject *recentPack = self.stickerPacks[0];
+    BOOL hasSticker = NO;
+    NSInteger stickerIndex = 0;
+    for (int i = 0; i < recentPack.stickers.count; i++) {
+        STKStickerObject *st = recentPack.stickers[i];
+        if (st.stickerID == sticker.stickerID) {
+            hasSticker = YES;
+            stickerIndex = i;
+        }
+    }
+    if (hasSticker) {
+        [recentPack.stickers removeObjectAtIndex:stickerIndex];
+    }
+
+    [recentPack.stickers insertObject:sticker atIndex:0];
+
+    [recentPack.stickers sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"usedCount" ascending:NO]]];
+    
+    if (recentPack.stickers.count > 12) {
+        [recentPack.stickers removeObjectAtIndex:12];
+    }
+        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+    }
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
