@@ -117,6 +117,24 @@ static NSString *const packsURL = @"shop/my";
     }];
 }
 
+- (void)getStickerURLWithId:(NSString *)contentId
+                    success:(void (^)(id))success failure:(void (^)(NSError *))failure {
+    
+    NSString *route = [NSString stringWithFormat:@"content/%@", contentId];
+    
+    
+    [self.sessionManager GET:route parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+
+}
+
 - (void)loadStickerPackWithName:(NSString *)packName andPricePoint:(NSString *)pricePoint
                         success:(void (^)(id))success
                         failure:(void (^)(NSError *))failure
