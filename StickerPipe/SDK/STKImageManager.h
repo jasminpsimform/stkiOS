@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import <DFImageManagerKit.h>
+#import "DFImageManagerKit.h"
 
 typedef void(^STKCompletionBlock)(NSError *error, UIImage *stickerImage);
 typedef void(^STKDownloadingProgressBlock)(NSTimeInterval progress);
