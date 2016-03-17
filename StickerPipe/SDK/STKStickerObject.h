@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "STKStickerProtocol.h"
+#import <SDWebImage/SDWebImageManager.h>
 
 @class STKSticker, STKStickerPackObject;
 
@@ -18,7 +19,11 @@
 @property (strong, nonatomic) NSString *stickerMessage;
 @property (assign, nonatomic) NSNumber *usedCount;
 @property (nonatomic, strong) NSDate *usedDate;
+@property (nonatomic, strong) NSString *stickerURL;
+@property (nonatomic, strong) NSString *packName;
 
 - (instancetype) initWithSticker:(STKSticker*) sticker;
+
+- (void)loadStickerImage;
 
 @end

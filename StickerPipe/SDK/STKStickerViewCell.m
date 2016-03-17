@@ -11,6 +11,10 @@
 #import "UIImage+Tint.h"
 #import "STKUtility.h"
 #import "DFImageManagerKit.h"
+#import <SDWebImage/SDWebImageManager.h>
+#import "STKStickerObject.h"
+#import "STKImageManager.h"
+#import "UIImageView+WebCache.h"
 
 @interface STKStickerViewCell()
 
@@ -42,6 +46,7 @@
     [self.imageTask cancel];
     self.imageTask = nil;
     self.stickerImageView.image = nil;
+    [self.stickerImageView sd_cancelCurrentAnimationImagesLoad];
 }
 
 - (void) configureWithStickerMessage:(NSString*)stickerMessage
@@ -59,7 +64,7 @@
     DFImageRequestOptions *options = [DFImageRequestOptions new];
     options.priority = DFImageRequestPriorityNormal;
     
-//    self.stickerImageView.image = coloredPlaceholder;
+    self.stickerImageView.image = coloredPlaceholder;
     [self setNeedsLayout];
     
     DFImageRequest *request = [DFImageRequest requestWithResource:stickerUrl targetSize:CGSizeZero contentMode:DFImageContentModeAspectFit options:options];
@@ -68,17 +73,28 @@
     
     //TODO:MOVE TASK TO MODEL
     
-    self.imageTask =[[DFImageManager sharedManager] imageTaskForRequest:request completion:^(UIImage *image, NSDictionary *info) {
+//    self.imageTask =[[DFImageManager sharedManager] imageTaskForRequest:request completion:^(UIImage *image, NSDictionary *info) {
+//        if (image) {
+//            weakSelf.stickerImageView.image = image;
+//            [weakSelf setNeedsLayout];
+//        } else {
+//            NSError *error = info[DFImageInfoErrorKey];
+//            if (error && error.code != -1) {
+//                STKLog(@"Failed loading from stickerView cell: %@", error.localizedDescription);
+//            }
+//        }
+//    }];
+    NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"[]"];
+    NSString *stickerName = [stickerMessage stringByTrimmingCharactersInSet:characterSet];
+
+    [[SDImageCache sharedImageCache] queryDiskCacheForKey:stickerName done:^(UIImage *image, SDImageCacheType cacheType) {
         if (image) {
             weakSelf.stickerImageView.image = image;
             [weakSelf setNeedsLayout];
-        } else {
-            NSError *error = info[DFImageInfoErrorKey];
-            if (error && error.code != -1) {
-                STKLog(@"Failed loading from stickerView cell: %@", error.localizedDescription);
-            }
         }
     }];
+    
+
     
     [self.imageTask resume];
             
