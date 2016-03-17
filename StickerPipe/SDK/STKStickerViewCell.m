@@ -15,6 +15,7 @@
 #import "STKStickerObject.h"
 #import "STKImageManager.h"
 #import "UIImageView+WebCache.h"
+#import "STKStickersApiService.h"
 
 @interface STKStickerViewCell()
 
@@ -92,6 +93,31 @@
             weakSelf.stickerImageView.image = image;
             [weakSelf setNeedsLayout];
         }
+        else {
+            STKStickersApiService *stickersApiService = [STKStickersApiService new];
+            [stickersApiService getStickerInfoWithId:stickerName success:^(id response) {
+                
+                NSString *urlString = response[@"data"][@"image"][[STKUtility scaleString]];
+                
+                SDWebImageDownloader *downloader = [SDWebImageDownloader sharedDownloader];
+                
+                [downloader downloadImageWithURL: [NSURL URLWithString:urlString]
+                                         options:0
+                                        progress:nil
+                                       completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+                                           if (image && finished) {
+                                               
+                                               [[SDImageCache sharedImageCache] storeImage:image forKey:stickerName];
+                                               dispatch_async(dispatch_get_main_queue(), ^{
+                                                   weakSelf.stickerImageView.image = image;
+                                                   [weakSelf setNeedsLayout];
+                                               });
+                                             
+                                           }
+                                       }];
+            } failure:nil];
+        }
+
     }];
     
 
