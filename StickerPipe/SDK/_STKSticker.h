@@ -9,6 +9,8 @@ extern const struct STKStickerAttributes {
 	__unsafe_unretained NSString *stickerName;
 	__unsafe_unretained NSString *usedCount;
     __unsafe_unretained NSString *usedDate;
+    __unsafe_unretained NSString *packName;
+
 
 } STKStickerAttributes;
 
@@ -54,6 +56,8 @@ extern const struct STKStickerRelationships {
 @property (nonatomic, strong) STKStickerPack *stickerPack;
 
 @property (nonatomic, strong) NSDate *usedDate;
+
+@property (nonatomic, strong) NSString *packName;
 
 //- (BOOL)validateStickerPack:(id*)value_ error:(NSError**)error_;
 

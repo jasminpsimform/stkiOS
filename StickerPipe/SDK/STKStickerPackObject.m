@@ -40,6 +40,7 @@
                 NSString *stickerName = sticker[@"name"];
                 stickerObject.stickerName = stickerName;
                 stickerObject.stickerMessage = [NSString stringWithFormat:@"[[%@_%@]]", packName, stickerName];
+                stickerObject.packName = self.packName;
                 [stickersArray addObject:stickerObject];
             }
 

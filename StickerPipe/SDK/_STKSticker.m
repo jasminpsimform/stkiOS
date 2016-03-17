@@ -84,6 +84,8 @@ const struct STKStickerRelationships STKStickerRelationships = {
 
 @dynamic usedCount;
 
+@dynamic packName;
+
 - (int64_t)usedCountValue {
 	NSNumber *result = [self usedCount];
 	return [result longLongValue];
