@@ -9,10 +9,6 @@
 /* Begin PBXBuildFile section */
 		6E19A0AC1B788E1B002DC75F /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E19A0AB1B788E1B002DC75F /* StoreKit.framework */; };
 		6E2C2D2F1B84A76A009714CD /* STKOrientationNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2C2D2E1B84A76A009714CD /* STKOrientationNavigationController.m */; };
-		6E310A381B68B9E300FB75D0 /* STKPackDescriptionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E310A371B68B9E300FB75D0 /* STKPackDescriptionController.m */; };
-		6E310A3A1B68BA9000FB75D0 /* STKPackDescriptionController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E310A391B68BA9000FB75D0 /* STKPackDescriptionController.xib */; };
-		6E310A3C1B68EE4D00FB75D0 /* STKPackDescriptionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E310A3B1B68EE4D00FB75D0 /* STKPackDescriptionHeader.xib */; };
-		6E310A3F1B68F13C00FB75D0 /* STKPackDescriptionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E310A3E1B68F13C00FB75D0 /* STKPackDescriptionHeader.m */; };
 		6E5F5A461B5E37C40036214B /* STKStickersSeparator.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E5F5A451B5E37C40036214B /* STKStickersSeparator.m */; };
 		6E5F5A491B5E7B000036214B /* STKStickerDelegateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E5F5A481B5E7B000036214B /* STKStickerDelegateManager.m */; };
 		6E5F5A4C1B5E96A20036214B /* STKStickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E5F5A4B1B5E96A20036214B /* STKStickerController.m */; };
@@ -95,12 +91,6 @@
 		6E19A0DE1B7B3216002DC75F /* StickerModel 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "StickerModel 6.xcdatamodel"; sourceTree = "<group>"; };
 		6E2C2D2D1B84A76A009714CD /* STKOrientationNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKOrientationNavigationController.h; sourceTree = "<group>"; };
 		6E2C2D2E1B84A76A009714CD /* STKOrientationNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKOrientationNavigationController.m; sourceTree = "<group>"; };
-		6E310A361B68B9E300FB75D0 /* STKPackDescriptionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKPackDescriptionController.h; sourceTree = "<group>"; };
-		6E310A371B68B9E300FB75D0 /* STKPackDescriptionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKPackDescriptionController.m; sourceTree = "<group>"; };
-		6E310A391B68BA9000FB75D0 /* STKPackDescriptionController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STKPackDescriptionController.xib; sourceTree = "<group>"; };
-		6E310A3B1B68EE4D00FB75D0 /* STKPackDescriptionHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STKPackDescriptionHeader.xib; sourceTree = "<group>"; };
-		6E310A3D1B68F13C00FB75D0 /* STKPackDescriptionHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKPackDescriptionHeader.h; sourceTree = "<group>"; };
-		6E310A3E1B68F13C00FB75D0 /* STKPackDescriptionHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKPackDescriptionHeader.m; sourceTree = "<group>"; };
 		6E310A441B6A5A1800FB75D0 /* StickerModel 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "StickerModel 4.xcdatamodel"; sourceTree = "<group>"; };
 		6E5F5A441B5E37C40036214B /* STKStickersSeparator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKStickersSeparator.h; sourceTree = "<group>"; };
 		6E5F5A451B5E37C40036214B /* STKStickersSeparator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKStickersSeparator.m; sourceTree = "<group>"; };
@@ -281,27 +271,6 @@ StickerPipeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper
 			name = IdentityService;
 			sourceTree = "<group>";
 		};
-		6E310A351B68B9B600FB75D0 /* PacksDescription */ = {
-			isa = PBXGroup;
-			children = (
-				6E310A361B68B9E300FB75D0 /* STKPackDescriptionController.h */,
-				6E310A371B68B9E300FB75D0 /* STKPackDescriptionController.m */,
-				6E310A391B68BA9000FB75D0 /* STKPackDescriptionController.xib */,
-				6E310A401B68F14200FB75D0 /* Header */,
-			);
-			name = PacksDescription;
-			sourceTree = "<group>";
-		};
-		6E310A401B68F14200FB75D0 /* Header */ = {
-			isa = PBXGroup;
-			children = (
-				6E310A3B1B68EE4D00FB75D0 /* STKPackDescriptionHeader.xib */,
-				6E310A3D1B68F13C00FB75D0 /* STKPackDescriptionHeader.h */,
-				6E310A3E1B68F13C00FB75D0 /* STKPackDescriptionHeader.m */,
-			);
-			name = Header;
-			sourceTree = "<group>";
-		};
 		6E5F5A431B5E37360036214B /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -480,7 +449,6 @@ StickerPipeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper
 				9A61507C1C7B3C7A00E46A2C /* Categories */,
 				9AF866DF1C5A14A8002A555B /* Shop */,
 				6E7E2A911B7229DE00DCAFC5 /* Collections */,
-				6E310A351B68B9B600FB75D0 /* PacksDescription */,
 				6EB287CB1B666D5200E9A2A5 /* Services */,
 				9AC9682E1C85919C00D7612B /* STKImageManager.h */,
 				9AC9682F1C85919C00D7612B /* STKImageManager.m */,
@@ -828,10 +796,8 @@ StickerPipeTests.xctest */;
 				9AF866F41C5FA420002A555B /* STKStickersView.xib in Resources */,
 				6EF264631B3C0F830099A657 /* Main.storyboard in Resources */,
 				6EADF3611B46B3CE008005E9 /* StickerPipe.xcassets in Resources */,
-				6E310A3C1B68EE4D00FB75D0 /* STKPackDescriptionHeader.xib in Resources */,
 				9ABDDB2D1C845D9C00554561 /* STKStickersShopViewController.xib in Resources */,
 				6EA356371B72581100D540F7 /* STKStickerSettingsCell.xib in Resources */,
-				6E310A3A1B68BA9000FB75D0 /* STKPackDescriptionController.xib in Resources */,
 				6E7E2A961B722A0C00DCAFC5 /* STKStickersSettingsViewController.xib in Resources */,
 				9A0716E81C43DD6B004D2ACF /* Launch.xib in Resources */,
 				6EF264651B3C0F830099A657 /* Images.xcassets in Resources */,
@@ -919,7 +885,6 @@ StickerPipeTests.xctest */;
 				6EDE15C01B6FA6600024B6DC /* STKEmptyRecentCell.m in Sources */,
 				9ABDDB221C845CF100554561 /* SKProduct+STKStickerSKProduct.m in Sources */,
 				9A6150771C74817E00E46A2C /* STKInAppProductsManager.m in Sources */,
-				6E310A381B68B9E300FB75D0 /* STKPackDescriptionController.m in Sources */,
 				6EADF3661B46B3FD008005E9 /* STKApiKeyManager.m in Sources */,
 				6E5F5A4C1B5E96A20036214B /* STKStickerController.m in Sources */,
 				6EB287D41B66731300E9A2A5 /* STKStickersEntityService.m in Sources */,
@@ -936,7 +901,6 @@ StickerPipeTests.xctest */;
 				6EADF3671B46B3FD008005E9 /* STKUUIDManager.m in Sources */,
 				6E85192E1B4D7B0700808338 /* STKStickerHeaderCell.m in Sources */,
 				6E8519281B4D641E00808338 /* STKStickerPackObject.m in Sources */,
-				6E310A3F1B68F13C00FB75D0 /* STKPackDescriptionHeader.m in Sources */,
 				6EADF3701B46B41E008005E9 /* STKApiAbstractService.m in Sources */,
 				6EADF39B1B46D4EE008005E9 /* STKChatStickerCell.m in Sources */,
 				6E776D7F1B4BF6150001FBB6 /* STKSticker.m in Sources */,
