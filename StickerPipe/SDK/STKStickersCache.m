@@ -99,6 +99,7 @@ static NSString *const recentName = @"Recent";
         sticker.stickerMessage = stickerObject.stickerMessage;
         sticker.usedCount = stickerObject.usedCount;
         sticker.usedDate = stickerObject.usedDate;
+        sticker.packName = stickerObject.packName;
         if (sticker) {
             [stickerModel addStickersObject:sticker];
         }
@@ -186,6 +187,7 @@ static NSString *const recentName = @"Recent";
         sticker.stickerMessage = stickerObject.stickerMessage;
         sticker.usedCount = stickerObject.usedCount;
         sticker.usedDate = stickerObject.usedDate;
+        sticker.packName = stickerObject.packName;
         if (sticker) {
             [stickerPack addStickersObject:sticker];
         }
@@ -350,6 +352,14 @@ static NSString *const recentName = @"Recent";
     return recentPack;
 }
 
+- (NSString *)packNameForStickerId:(NSString *)stickerId {
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", STKStickerAttributes.stickerID, stickerId];
+    STKSticker *sticker = [[STKSticker stk_findWithPredicate:predicate sortDescriptors:nil fetchLimit:1 context:self.mainContext] firstObject];
+
+    return sticker.packName;
+}
+
 #pragma mark - Change
 
 
@@ -370,14 +380,14 @@ static NSString *const recentName = @"Recent";
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@",STKStickerAttributes.stickerID , stickerID];
         NSArray *stickers = [STKSticker stk_findWithPredicate:predicate sortDescriptors:nil fetchLimit:1 context:self.backgroundContext];
         STKSticker *sticker = stickers.firstObject;
-        NSArray *trimmedPackNameAndStickerName = [STKUtility trimmedPackNameAndStickerNameWithMessage:sticker.stickerMessage];
+//        NSArray *trimmedPackNameAndStickerName = [STKUtility trimmedPackNameAndStickerNameWithMessage:sticker.stickerMessage];
 
         NSInteger usedCount = [sticker.usedCount integerValue];
         usedCount++;
         sticker.usedCount = @(usedCount);
         sticker.usedDate = [NSDate date];
         
-        [[STKAnalyticService sharedService] sendEventWithCategory:STKAnalyticStickerCategory action:trimmedPackNameAndStickerName.firstObject label:sticker.stickerName value:nil];
+        [[STKAnalyticService sharedService] sendEventWithCategory:STKAnalyticStickerCategory action:sticker.packName label:sticker.stickerName value:nil];
         
         [weakSelf.backgroundContext save:nil];
         

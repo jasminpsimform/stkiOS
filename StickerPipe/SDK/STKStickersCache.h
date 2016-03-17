@@ -39,6 +39,8 @@
 
 - (STKStickerPackObject*)recentStickerPack;
 
+- (NSString *)packNameForStickerId:(NSString *)stickerId;
+
 - (BOOL)isStickerPackDownloaded:(NSString*)packName;
 
 - (BOOL)hasNewStickerPacks;
