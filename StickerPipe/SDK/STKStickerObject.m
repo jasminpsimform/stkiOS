@@ -23,9 +23,25 @@
         self.stickerMessage = sticker.stickerMessage;
         self.usedCount = sticker.usedCount;
         self.usedDate = sticker.usedDate;
+        self.packName = sticker.packName;
     }
     return self;
 }
+
+- (void)loadStickerImage {
+    SDWebImageDownloader *downloader = [SDWebImageDownloader sharedDownloader];
+    [downloader downloadImageWithURL:[NSURL URLWithString:self.stickerURL]
+                             options:0
+                            progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                                
+                            }
+                           completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+                               if (image && finished) {
+                                   [[SDImageCache sharedImageCache] storeImage:image forKey:[self.stickerID stringValue]];
+                               }
+                           }];
+}
+
 
 #pragma mark - Description
 

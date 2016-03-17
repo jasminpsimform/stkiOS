@@ -39,8 +39,13 @@
                 stickerObject.stickerID = sticker[@"content_id"];
                 NSString *stickerName = sticker[@"name"];
                 stickerObject.stickerName = stickerName;
-                stickerObject.stickerMessage = [NSString stringWithFormat:@"[[%@_%@]]", packName, stickerName];
+                stickerObject.stickerMessage = [NSString stringWithFormat:@"[[%@]]", stickerObject.stickerID];
+                stickerObject.stickerURL = sticker[@"image"][[STKUtility scaleString]];
                 stickerObject.packName = self.packName;
+//                stickerObject.stickerMessage = [NSString stringWithFormat:@"[[%@_%@]]", packName, stickerName];
+                if (stickerObject.stickerURL) {
+                    [stickerObject loadStickerImage];
+                }
                 [stickersArray addObject:stickerObject];
             }
 

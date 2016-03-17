@@ -16,5 +16,5 @@
 @property (strong, nonatomic) NSString *stickerMessage;
 @property (assign, nonatomic) NSNumber *usedCount;
 @property (nonatomic, strong) NSDate *usedDate;
-
+@property (nonatomic, strong) NSString *packName;
 @end
