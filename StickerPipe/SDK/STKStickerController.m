@@ -19,7 +19,6 @@
 #import "STKStickersSettingsViewController.h"
 #import "STKStickersShopViewController.h"
 
-#import "STKPackDescriptionController.h"
 #import "STKStickerPackObject.h"
 #import "STKOrientationNavigationController.h"
 #import "STKShowStickerButton.h"
@@ -30,7 +29,7 @@
 
 static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 
-@interface STKStickerController() <STKPackDescriptionControllerDelegate>
+@interface STKStickerController()
 
 @property (strong, nonatomic) UIView *keyboardButtonSuperView;
 
@@ -428,23 +427,29 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     
 }
 
-#pragma mark - STKPackDescriptionControllerDelegate
-
-- (void)packDescriptionControllerDidChangePakcStatus:(STKPackDescriptionController*)controller {
-    if ([self.delegate respondsToSelector:@selector(stickerControllerDidChangePackStatus:)]) {
-        [self.delegate stickerControllerDidChangePackStatus:self];
-    }
-}
-
 #pragma mark - Presenting
 
 - (void)showPackInfoControllerWithStickerMessage:(NSString*)message {
     
     [self hideStickersView];
     STKStickersShopViewController *vc = [[STKStickersShopViewController alloc] initWithNibName:@"STKStickersShopViewController" bundle:[NSBundle mainBundle]];
-    
-    vc.packName = [[STKUtility trimmedPackNameAndStickerNameWithMessage:message] firstObject];
-    [self showModalViewController:vc];
+
+    if ([self isStickerPackDownloaded:message]) {
+        vc.packName = [self.stickersService packNameForStickerId:[STKUtility stickerIdWithMessage:message]];
+        [self showModalViewController:vc];
+
+    } else {
+        __weak typeof(self) weakSelf = self;
+
+        [self.stickersService getPackNameForMessage:message
+                                         completion:^(NSString *packName) {
+                                             vc.packName = packName;
+                                             dispatch_async(dispatch_get_main_queue(), ^{
+                                                 [weakSelf showModalViewController:vc];
+                                             });
+                                         }];
+    }
+
 }
 
 - (void)showCollections {
@@ -466,8 +471,10 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 #pragma mark - Checks
 
 -(BOOL)isStickerPackDownloaded:(NSString *)packMessage {
-    NSArray *packNames = [STKUtility trimmedPackNameAndStickerNameWithMessage:packMessage];
-    NSString *packName = packNames.firstObject;
+//    NSArray *packNames = [STKUtility trimmedPackNameAndStickerNameWithMessage:packMessage];
+//    NSString *packName = packNames.firstObject;
+    NSString *stickerId = [STKUtility stickerIdWithMessage:packMessage];
+    NSString *packName = [self.stickersService packNameForStickerId:stickerId];
     return [self.stickersService isPackDownloaded:packName];
     
 }
