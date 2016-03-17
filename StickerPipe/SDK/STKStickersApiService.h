@@ -17,9 +17,9 @@
                        success:(void (^)(id response))success
                        failure:(void (^)(NSError *error))failure;
 
-- (void)getStickerURLWithId:(NSString*)contentId
-                       success:(void (^)(id response))success
-                       failure:(void (^)(NSError *error))failure;
+- (void)getStickerInfoWithId:(NSString *)contentId
+                    success:(void (^)(id response))success
+                    failure:(void (^)(NSError *))failure;
 
 
 - (void)loadStickerPackWithName:(NSString *)packName andPricePoint:(NSString *)pricePoint

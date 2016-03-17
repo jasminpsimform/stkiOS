@@ -117,8 +117,9 @@ static NSString *const packsURL = @"shop/my";
     }];
 }
 
-- (void)getStickerURLWithId:(NSString *)contentId
-                    success:(void (^)(id))success failure:(void (^)(NSError *))failure {
+- (void)getStickerInfoWithId:(NSString *)contentId
+                     success:(void (^)(id response))success
+                     failure:(void (^)(NSError *))failure {
     
     NSString *route = [NSString stringWithFormat:@"content/%@", contentId];
     
