@@ -15,6 +15,7 @@
 #import "STKUtility.h"
 #import "STKStickersConstants.h"
 #import "STKStickerPack.h"
+#import <SDWebImage/SDWebImageManager.h>
 
 static NSString *const kLastModifiedDateKey = @"kLastModifiedDateKey";
 static NSString *const recentName = @"Recent";
@@ -208,6 +209,17 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
     
 }
 
+- (void)getPackNameForMessage:(NSString *)message
+                   completion:(void (^)(NSString *))completion {
+
+    [self.apiService getStickerInfoWithId:[STKUtility stickerIdWithMessage:message] success:^(id response) {
+        NSString *packname = response[@"data"][@"pack"];
+        if (completion) {
+            completion(packname);
+        }
+    } failure:nil];
+}
+
 - (void)getStickerPacksIgnoringRecentWithType:(NSString *)type
                                    completion:(void (^)(NSArray *))completion
                                       failure:(void (^)(NSError *))failre {
@@ -295,6 +307,10 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
 
 - (STKStickerPackObject *)recentPack {
     return [self.cacheEntity recentStickerPack];
+}
+
+- (NSString *)packNameForStickerId:(NSString *)stickerId {
+    return [self.cacheEntity packNameForStickerId:stickerId];
 }
 
 - (BOOL)hasNewPacks {

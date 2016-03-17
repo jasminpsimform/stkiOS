@@ -26,7 +26,9 @@
                                    completion:(void(^)(NSArray *stickerPacks))completion
                                       failure:(void(^)(NSError *error))failre;
 
-- (void) getPackWithMessage:(NSString*)message completion:(void(^)(STKStickerPackObject* stickerPack, BOOL isDownloaded))completion;
+- (void)getPackWithMessage:(NSString*)message completion:(void(^)(STKStickerPackObject* stickerPack, BOOL isDownloaded))completion;
+
+- (void)getPackNameForMessage:(NSString *)message completion:(void(^)(NSString* packName))completion;
 
 - (void)downloadNewPack:(NSDictionary *)packDict
               onSuccess:(void(^)(void))success;
@@ -34,6 +36,8 @@
 - (STKStickerPackObject *)getStickerPackWithName:(NSString *)packName;
 
 - (STKStickerPackObject *)recentPack;
+
+- (NSString *)packNameForStickerId:(NSString *)stickerId;
 
 - (BOOL)isPackDownloaded:(NSString*)packName;
 
