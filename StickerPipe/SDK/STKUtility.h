@@ -21,6 +21,7 @@ extern NSString* const  STKUtilityAPIUrl;
 + (NSURL*)tabImageUrlForPackName:(NSString*) name;
 + (NSURL*)mainImageUrlForPackName:(NSString*) name;
 + (NSArray*)trimmedPackNameAndStickerNameWithMessage:(NSString*)message;
++ (NSString *)stickerIdWithMessage:(NSString *)message;
 
 + (NSString*)scaleString;
 + (NSString*)maxDensity;

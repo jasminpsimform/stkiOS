@@ -43,6 +43,13 @@ NSString *const STKUtilityAPIUrl = @"https://api.stickerpipe.com/stk/";
     return separaredStickerNames;
 }
 
++ (NSString *)stickerIdWithMessage:(NSString *)message {
+    
+    NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"[]"];
+
+    return [message stringByTrimmingCharactersInSet:characterSet];
+}
+
 + (NSURL *)tabImageUrlForPackName:(NSString *)name {
     
     NSString *density = [self scaleString];
