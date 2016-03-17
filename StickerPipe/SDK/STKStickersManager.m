@@ -71,7 +71,9 @@
 #pragma mark - Validation
 
 + (BOOL)isStickerMessage:(NSString *)message {
-    NSString *regexPattern = @"^\\[\\[[a-zA-Z0-9]+_[a-zA-Z0-9]+\\]\\]$";
+//    NSString *regexPattern = @"^\\[\\[[a-zA-Z0-9]+_[a-zA-Z0-9]+\\]\\]$";
+    NSString *regexPattern = @"^\\[\\[[a-zA-Z0-9]+\\]\\]$";
+
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regexPattern];
     
