@@ -24,6 +24,8 @@
 #import "STKShowStickerButton.h"
 #import "STKAnalyticService.h"
 #import "STKImageManager.h"
+#import "STKStickersManager.h"
+
 
 //SIZES
 
@@ -471,10 +473,14 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 #pragma mark - Checks
 
 -(BOOL)isStickerPackDownloaded:(NSString *)packMessage {
-//    NSArray *packNames = [STKUtility trimmedPackNameAndStickerNameWithMessage:packMessage];
-//    NSString *packName = packNames.firstObject;
-    NSString *stickerId = [STKUtility stickerIdWithMessage:packMessage];
-    NSString *packName = [self.stickersService packNameForStickerId:stickerId];
+    NSString *packName = [NSString new];
+    if ([STKStickersManager isOldFormatStickerMessage:packMessage]) {
+        NSArray *packNames = [STKUtility trimmedPackNameAndStickerNameWithMessage:packMessage];
+        packName = packNames.firstObject;
+    } else {
+        NSString *stickerId = [STKUtility stickerIdWithMessage:packMessage];
+        packName = [self.stickersService packNameForStickerId:stickerId];
+    }
     return [self.stickersService isPackDownloaded:packName];
     
 }

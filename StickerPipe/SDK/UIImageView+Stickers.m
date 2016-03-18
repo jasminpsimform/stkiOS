@@ -12,6 +12,7 @@
 #import "UIImage+Tint.h"
 #import "STKStickersManager.h"
 #import "STKImageManager.h"
+#import "UIImageView+WebCache.h"
 
 @interface UIImageView()
 
@@ -79,8 +80,11 @@
             progressBlock(progress);
         }
     } andCompletion:^(NSError *error, UIImage *stickerImage) {
-        weakSelf.image = stickerImage;
-        [weakSelf setNeedsLayout];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            weakSelf.image = stickerImage;
+            [weakSelf setNeedsLayout];
+        });
+     
         if (error && error.code != -1) {
             STKLog(@"Failed loading from category: %@", error.localizedDescription);
         }
@@ -107,5 +111,9 @@
     [self.imageManager cancelLoading];
 }
 
+- (void)stk_cancelStickerImageLoading:(UIImageView *)stickerImageView {
+
+    [stickerImageView sd_cancelCurrentAnimationImagesLoad];
+}
 
 @end

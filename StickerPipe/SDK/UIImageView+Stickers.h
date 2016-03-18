@@ -36,4 +36,6 @@ typedef void(^STKDownloadingProgressBlock)(NSTimeInterval progress);
 
 - (void) stk_cancelStickerLoading;
 
+- (void) stk_cancelStickerImageLoading:(UIImageView *)stickerImageView;
+
 @end

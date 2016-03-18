@@ -72,9 +72,19 @@
 
 + (BOOL)isStickerMessage:(NSString *)message {
 //    NSString *regexPattern = @"^\\[\\[[a-zA-Z0-9]+_[a-zA-Z0-9]+\\]\\]$";
-    NSString *regexPattern = @"^\\[\\[[a-zA-Z0-9]+\\]\\]$";
+//    NSString *regexPattern = @"^\\[\\[[a-zA-Z0-9]+\\]\\]$";
+    NSString *regexPattern = @"^\\[\\[(.*)\\]\\]";
 
     
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regexPattern];
+    
+    BOOL isStickerMessage = [predicate evaluateWithObject:message];
+    
+    return isStickerMessage;
+}
+
++ (BOOL)isOldFormatStickerMessage:(NSString *)message  {
+    NSString *regexPattern = @"^\\[\\[[a-zA-Z0-9]+_[a-zA-Z0-9]+\\]\\]$";
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regexPattern];
     
     BOOL isStickerMessage = [predicate evaluateWithObject:message];

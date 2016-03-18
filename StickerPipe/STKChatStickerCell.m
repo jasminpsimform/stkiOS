@@ -15,6 +15,7 @@
 - (void)prepareForReuse {
     [self.stickerImageView stk_cancelStickerLoading];
     self.stickerImageView.image = nil;
+    [self.stickerImageView stk_cancelStickerImageLoading:self.stickerImageView];
     
 }
 

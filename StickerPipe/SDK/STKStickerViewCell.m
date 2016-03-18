@@ -48,6 +48,7 @@
     self.imageTask = nil;
     self.stickerImageView.image = nil;
     [self.stickerImageView sd_cancelCurrentAnimationImagesLoad];
+    [[SDWebImageManager sharedManager] cancelAll];
 }
 
 - (void) configureWithStickerMessage:(NSString*)stickerMessage

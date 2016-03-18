@@ -27,6 +27,8 @@
 
 + (BOOL) isStickerMessage:(NSString*) message;
 
++ (BOOL) isOldFormatStickerMessage:(NSString*) message;
+
 + (void)setStartTimeInterval;
 
 + (void)setPriceBWithLabel:(NSString *)priceLabel
