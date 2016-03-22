@@ -46,7 +46,7 @@
     self.tableView.dataSource = self.dataSource;
     self.tableView.delegate = self;
     
-    self.navigationItem.title = @"Stickers";
+    self.navigationItem.title = @"Settings";
     
     [self setUpButtons];
     
@@ -85,7 +85,8 @@
 }
 
 - (void) setUpButtons {
-    UIBarButtonItem *closeBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(closeAction:)];
+    
+    UIBarButtonItem *closeBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed: @"STKBackIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(closeAction:)];
     
     self.navigationItem.leftBarButtonItem = closeBarButton;
     
@@ -135,12 +136,10 @@
 
 - (IBAction)closeAction:(id)sender {
     [self dismissViewControllerAnimated:YES completion:^{
-//        [[NSNotificationCenter defaultCenter]postNotificationName:STKStickersReorderStickersNotification object:self];
         
         [[NSNotificationCenter defaultCenter]postNotificationName:STKStickersReorderStickersNotification object:self userInfo:@{@"packs": self.dataSource.dataSource}];
         [[NSNotificationCenter defaultCenter] postNotificationName:STKCloseModalViewNotification object:self];
     }];
 }
-
 
 @end

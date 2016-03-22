@@ -15,7 +15,6 @@
 #import "STKUUIDManager.h"
 #import "STKStickersConstants.h"
 #import "STKStickersApiService.h"
-//#import "STKPurchaseService.h"
 #import "STKStickersPurchaseService.h"
 #import "STKStickersEntityService.h"
 #import "SKProduct+STKStickerSKProduct.h"
@@ -37,7 +36,6 @@ static NSUInteger const productsCount = 2;
 
 @property(nonatomic, strong) STKStickersShopJsInterface *jsInterface;
 @property(nonatomic, strong) STKStickersApiService *apiService;
-//@property(nonatomic, strong) STKStickersPurchaseService *stickersPurchaseService;
 @property(nonatomic, strong) STKStickersEntityService *entityService;
 
 @property(nonatomic, strong) NSMutableArray *prices;
@@ -54,8 +52,10 @@ static NSUInteger const productsCount = 2;
     
     [self setUpButtons];
     
+    self.navigationItem.title = @"Store";
+    
     self.jsInterface.delegate = self;
-    //    self.stickersPurchaseService.delegate = self;
+
     [STKStickersPurchaseService sharedInstance].delegate = self;
     
     self.apiService = [STKStickersApiService new];
@@ -71,7 +71,6 @@ static NSUInteger const productsCount = 2;
     if ([STKInAppProductsManager hasProductIds]) {
         __weak typeof(self) wself = self;
         
-        //        [self.stickersPurchaseService requestProductsWithIdentifier:[STKInAppProductsManager productIds] completion:^(NSArray *stickerPacks) {
         [[STKStickersPurchaseService sharedInstance] requestProductsWithIdentifier:[STKInAppProductsManager productIds] completion:^(NSArray *stickerPacks) {
             if (stickerPacks.count == productsCount) {
                 
@@ -145,13 +144,6 @@ static NSUInteger const productsCount = 2;
     return _jsInterface;
 }
 
-//- (STKStickersPurchaseService *)stickersPurchaseService {
-//    if (!_stickersPurchaseService) {
-//        _stickersPurchaseService = [STKStickersPurchaseService new];
-//    }
-//    return _stickersPurchaseService;
-//}
-
 - (STKStickersEntityService *)entityService {
     if (!_entityService) {
         _entityService = [STKStickersEntityService new];
@@ -194,8 +186,6 @@ static NSUInteger const productsCount = 2;
     __weak typeof(self) wself = self;
     
     [self.apiService loadStickerPackWithName:packName andPricePoint:packPrice success:^(id response) {
-        //        [wself.entityService downloadNewPack:response[@"data"]
-        //                                   onSuccess:^(NSArray *stickerPacks) {
         [wself.entityService downloadNewPack:response[@"data"] onSuccess:^{
             [wself dismissViewControllerAnimated:YES completion:^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:STKNewPackDownloadedNotification object:self userInfo:@{@"packName": packName}];
@@ -235,7 +225,7 @@ static NSUInteger const productsCount = 2;
 #pragma mark - UIWebviewDelegate
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    // [self showError:error.localizedDescription];
+
     [self showErrorAlertWithMessage:error.localizedDescription andOkAction:^{
         [self loadStickersShop];
     } andCancelAction:^{
