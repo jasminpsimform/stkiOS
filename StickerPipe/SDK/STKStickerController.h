@@ -29,6 +29,11 @@
 - (void)stickerController:(STKStickerController*)stickerController
     willShareStickerWithMessage:(NSString *)message;
 
+- (void)stickerControllerErrorHandle:(NSError *)error;
+
+- (void)stickerControllerReloadView;
+
+
 @end
 
 @interface STKStickerController : NSObject
@@ -49,8 +54,11 @@
 
 @property (nonatomic) BOOL showStickersOnStart;
 
+@property (nonatomic) BOOL isNetworkReachable;
+
 
 //@property (nonatomic, strong) UIColor *stickersShopTintColor;
++ (STKStickerController *) sharedInstance;
 
 - (void)updateFrames;
 
@@ -71,5 +79,7 @@
 - (void)setColorForStickersHeaderPlaceholderColor:(UIColor*) color;
 
 - (void)textMessageSent:(NSString *)message;
+
+- (void)handleError:(NSError *)error;
 
 @end

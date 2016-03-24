@@ -26,6 +26,8 @@
 #import "STKImageManager.h"
 #import "STKStickersManager.h"
 
+#import <AFNetworking/AFNetworking.h>
+
 
 //SIZES
 
@@ -84,6 +86,16 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     } failure:nil];
 }
 
++ (STKStickerController *) sharedInstance {
+    static STKStickerController *entity = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        entity = [[STKStickerController alloc] init];
+    });
+    
+    return entity;
+}
+
 - (instancetype)init
 {
     self = [super init];
@@ -92,6 +104,9 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
         self.stickersService = [STKStickersEntityService new];
         [self setupInternalStickersView];
         
+        [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+        [self checkNetwork];
+
         
         //        [self loadStickerPacks];
         [self loadStartPacks];
@@ -124,6 +139,14 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
         
     }
     return self;
+}
+
+- (void)checkNetwork {
+
+    [[AFNetworkReachabilityManager sharedManager]setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status){
+        self.isNetworkReachable = (status == AFNetworkReachabilityStatusReachableViaWWAN ||
+                                   status ==  AFNetworkReachabilityStatusReachableViaWiFi);
+    }];
 }
 
 - (void)reloadRecent {
@@ -213,6 +236,14 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     [self.stickersCollectionView registerClass:[STKStickersSeparator class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"STKStickerPanelSeparator"];
     
     self.stickersDelegateManager.collectionView = self.stickersCollectionView;
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
+        [self.stickersCollectionView addSubview:refreshControl];
+        self.stickersCollectionView.alwaysBounceVertical = YES;
+    });
+
 }
 
 - (void)initHeaderButton:(UIButton *)button {
@@ -251,6 +282,12 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     self.stickersHeaderCollectionView.backgroundColor = self.headerBackgroundColor ? self.headerBackgroundColor : [STKUtility defaultGreyColor];
     
     self.stickersShopButton.badgeView.hidden = !self.stickersService.hasNewModifiedPacks;
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
+        [self.stickersHeaderCollectionView addSubview:refreshControl];
+    });
 }
 
 - (void)setupInternalStickersView {
@@ -347,6 +384,23 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     UIViewController *presenter = [self.delegate stickerControllerViewControllerForPresentingModalView];
     
     [presenter presentViewController:navigationController animated:YES completion:nil];
+}
+
+- (void)handleRefresh:(UIRefreshControl *)refresh {
+    NSLog(@"handleRefresh");
+    
+    [refresh endRefreshing];
+}
+
+- (void)handleError:(NSError *)error {
+    if ([self.delegate respondsToSelector:@selector(stickerControllerErrorHandle:)]) {
+        if (self.isNetworkReachable) {
+            [self.delegate stickerControllerErrorHandle:error];
+        } else {
+            NSError *noInternetError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSURLErrorNotConnectedToInternet userInfo:nil];
+            [self.delegate stickerControllerErrorHandle:noInternetError];
+        }
+    }
 }
 
 #pragma mark - Actions
