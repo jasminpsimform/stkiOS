@@ -30,8 +30,9 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *textViewHeightConstraint;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomViewConstraint;
+@property (weak, nonatomic) IBOutlet UIView *errorView;
 
-@property (strong, nonatomic) STKStickerController *stickerController;
+//@property (strong, nonatomic) STKStickerController *stickerController;
 
 - (IBAction)sendClicked:(id)sender;
 
@@ -72,9 +73,11 @@
     
     [self scrollTableViewToBottom];
     
-    self.stickerController = [[STKStickerController alloc] init];
-    self.stickerController.delegate = self;
-    self.stickerController.textInputView = self.inputTextView;
+//    self.stickerController = [[STKStickerController alloc] init];
+//    self.stickerController.delegate = self;
+//    self.stickerController.textInputView = self.inputTextView;
+    [STKStickerController sharedInstance].delegate = self;
+    [STKStickerController sharedInstance].textInputView = self.inputTextView;
     
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
@@ -85,7 +88,8 @@
 }
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    [self.stickerController updateFrames];
+//    [self.stickerController updateFrames];
+    [[STKStickerController sharedInstance] updateFrames];
 }
 
 
@@ -160,7 +164,9 @@
     if ([STKStickersManager isStickerMessage:message]) {
         STKChatStickerCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell"];
         
-        [cell fillWithStickerMessage:message downloaded:[self.stickerController isStickerPackDownloaded:message]];
+//        [cell fillWithStickerMessage:message downloaded:[self.stickerController isStickerPackDownloaded:message]];
+        [cell fillWithStickerMessage:message
+                          downloaded:[[STKStickerController sharedInstance] isStickerPackDownloaded:message]];
         return cell;
     } else {
         STKChatTextCell *cell = [self.tableView
@@ -177,7 +183,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     id cell = [tableView cellForRowAtIndexPath:indexPath];
     if ([cell isKindOfClass:[STKChatStickerCell class]]) {
-        [self.stickerController showPackInfoControllerWithStickerMessage:self.dataSource[indexPath.row]];
+//        [self.stickerController showPackInfoControllerWithStickerMessage:self.dataSource[indexPath.row]];
+        [[STKStickerController sharedInstance] showPackInfoControllerWithStickerMessage:self.dataSource[indexPath.row]];
     }
     
 }
@@ -191,12 +198,17 @@
 
 - (void)stickerController:(STKStickerController *)stickerController didSelectStickerWithMessage:(NSString *)message {
     STKChatStickerCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell"];
-    [cell fillWithStickerMessage:message downloaded:[self.stickerController isStickerPackDownloaded:message]];
+//    [cell fillWithStickerMessage:message downloaded:[self.stickerController isStickerPackDownloaded:message]];
+     [cell fillWithStickerMessage:message downloaded:[[STKStickerController sharedInstance] isStickerPackDownloaded:message]];
     [self addMessage:message];
 }
 
 - (UIViewController *)stickerControllerViewControllerForPresentingModalView {
     return self;
+}
+
+- (void)stickerControllerErrorHandle:(NSError *)error {
+    self.errorView.hidden = NO;
 }
 
 - (void)addMessage:(NSString *)message {
@@ -213,7 +225,9 @@
 - (void)textViewDidChange:(UITextView *)textView  {
     self.sendButton.enabled = textView.text.length > 0;
     self.textViewHeightConstraint.constant = textView.contentSize.height;
-    self.stickerController.keyboardButton.hidden = textView.text.length > 0;
+//    self.stickerController.keyboardButton.hidden = textView.text.length > 0;
+    [STKStickerController sharedInstance].keyboardButton.hidden = textView.text.length > 0;
+
 }
 
 #pragma mark - Gesture
@@ -224,14 +238,14 @@
 
 #pragma mark - Property
 
-- (STKStickerController *)stickerController {
-    if (!_stickerController) {
-        _stickerController = [STKStickerController new];
-        _stickerController.delegate = self;
-        _stickerController.textInputView = self.inputTextView;
-    }
-    return _stickerController;
-}
+//- (STKStickerController *)stickerController {
+//    if (!_stickerController) {
+//        _stickerController = [STKStickerController new];
+//        _stickerController.delegate = self;
+//        _stickerController.textInputView = self.inputTextView;
+//    }
+//    return _stickerController;
+//}
 
 #pragma mark - Actions
 
@@ -239,7 +253,8 @@
     NSString *message = self.inputTextView.text;
     if (message.length > 0) {
         [self addMessage:message];
-        [self.stickerController textMessageSent:message];
+//        [self.stickerController textMessageSent:message];
+        [[STKStickerController sharedInstance] textMessageSent:message];
         self.inputTextView.text = @"";
         self.textViewHeightConstraint.constant = 33;
     }

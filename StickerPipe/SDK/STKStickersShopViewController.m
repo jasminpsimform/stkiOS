@@ -19,6 +19,7 @@
 #import "STKStickersEntityService.h"
 #import "SKProduct+STKStickerSKProduct.h"
 #import "STKStickerPackObject.h"
+#import "STKStickerController.h"
 
 #import "STKStickersShopJsInterface.h"
 
@@ -37,8 +38,11 @@ static NSUInteger const productsCount = 2;
 @property(nonatomic, strong) STKStickersShopJsInterface *jsInterface;
 @property(nonatomic, strong) STKStickersApiService *apiService;
 @property(nonatomic, strong) STKStickersEntityService *entityService;
+//@property(nonatomic, strong) STKStickerController *stickerController;
 
 @property(nonatomic, strong) NSMutableArray *prices;
+
+//@property BOOL isNetworkReachable;
 
 @end
 
@@ -48,18 +52,48 @@ static NSUInteger const productsCount = 2;
     [super viewDidLoad];
     
     self.prices = [NSMutableArray new];
-    [self loadShopPrices];
+   
+    if ([STKStickerController sharedInstance].isNetworkReachable) {
+        [self loadShopPrices];
+    } else {
+        [[STKStickerController sharedInstance] handleError:nil];
+    }
+    
     
     [self setUpButtons];
     
     self.navigationItem.title = @"Store";
     
     self.jsInterface.delegate = self;
-
+    
     [STKStickersPurchaseService sharedInstance].delegate = self;
     
     self.apiService = [STKStickersApiService new];
+    
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
+    [self.stickersShopWebView.scrollView addSubview:refreshControl];
 }
+
+//- (void)checkNetwork {
+//
+//    [[AFNetworkReachabilityManager sharedManager]setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status){
+//        self.isNetworkReachable = (status == AFNetworkReachabilityStatusReachableViaWWAN ||
+//                                   status ==  AFNetworkReachabilityStatusReachableViaWiFi);
+//    }];
+//}
+
+- (void)handleRefresh:(UIRefreshControl *)refresh {
+    if ([STKStickerController sharedInstance].isNetworkReachable) {
+        [self loadShopPrices];
+        if ([[STKStickerController sharedInstance].delegate respondsToSelector:@selector(stickerControllerReloadView)]) {
+            [[STKStickerController sharedInstance].delegate stickerControllerReloadView];
+        }
+    }
+    [refresh endRefreshing];
+}
+
+
 
 - (void)packDownloaded {
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -68,6 +102,7 @@ static NSUInteger const productsCount = 2;
 }
 
 - (void)loadShopPrices {
+    
     if ([STKInAppProductsManager hasProductIds]) {
         __weak typeof(self) wself = self;
         
@@ -131,7 +166,7 @@ static NSUInteger const productsCount = 2;
             [self loadStickersShop];
         } andCancelAction:^{
             [self dismissViewControllerAnimated:YES completion:^{
-                 [[NSNotificationCenter defaultCenter] postNotificationName:STKCloseModalViewNotification object:self];
+                [[NSNotificationCenter defaultCenter] postNotificationName:STKCloseModalViewNotification object:self];
             }];
         }];
     }];
@@ -150,6 +185,13 @@ static NSUInteger const productsCount = 2;
     }
     return _entityService;
 }
+
+//- (STKStickerController *)stickerController {
+//    if (!_stickerController) {
+//        _stickerController = [STKStickerController new];
+//    }
+//    return _stickerController;
+//}
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -225,12 +267,12 @@ static NSUInteger const productsCount = 2;
 #pragma mark - UIWebviewDelegate
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-
+    
     [self showErrorAlertWithMessage:error.localizedDescription andOkAction:^{
         [self loadStickersShop];
     } andCancelAction:^{
         [self dismissViewControllerAnimated:YES completion:^{
-             [[NSNotificationCenter defaultCenter] postNotificationName:STKCloseModalViewNotification object:self];
+            [[NSNotificationCenter defaultCenter] postNotificationName:STKCloseModalViewNotification object:self];
         }];
     }];
 }
@@ -273,7 +315,7 @@ static NSUInteger const productsCount = 2;
         STKStickerPackObject *stickerPack = [wself.entityService getStickerPackWithName:packName];
         [wself.entityService togglePackDisabling:stickerPack];
         dispatch_async(dispatch_get_main_queue(), ^{
-//            [[NSNotificationCenter defaultCenter]postNotificationName:STKStickersReorderStickersNotification object:self];
+            //            [[NSNotificationCenter defaultCenter]postNotificationName:STKStickersReorderStickersNotification object:self];
             [[NSNotificationCenter defaultCenter] postNotificationName:STKPackRemovedNotification object:self userInfo:@{@"pack":stickerPack}];
             [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.JsInterface.onPackRemoveSuccess()"];
         });
