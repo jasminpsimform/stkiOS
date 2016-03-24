@@ -86,20 +86,9 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     } failure:nil];
 }
 
-+ (STKStickerController *) sharedInstance {
-    static STKStickerController *entity = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-//        entity = [[STKStickerController alloc] init];
-        entity = [[super alloc] initStickerController];
-    });
-    
-    return entity;
-}
 
-//- (instancetype)init
-- (STKStickerController *)initStickerController
-{
+- (instancetype)init {
+    
     self = [super init];
     if (self) {
         
@@ -285,12 +274,6 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     self.stickersHeaderCollectionView.backgroundColor = self.headerBackgroundColor ? self.headerBackgroundColor : [STKUtility defaultGreyColor];
     
     self.stickersShopButton.badgeView.hidden = !self.stickersService.hasNewModifiedPacks;
-    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
-        [self.stickersHeaderCollectionView addSubview:refreshControl];
-    });
 }
 
 - (void)setupInternalStickersView {
@@ -390,8 +373,7 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 }
 
 - (void)handleRefresh:(UIRefreshControl *)refresh {
-    NSLog(@"handleRefresh");
-    
+    [self loadStickerPacks];
     [refresh endRefreshing];
 }
 

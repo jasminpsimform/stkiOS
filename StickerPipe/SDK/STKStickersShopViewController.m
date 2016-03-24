@@ -25,12 +25,15 @@
 
 #import <JavaScriptCore/JavaScriptCore.h>
 #import <StoreKit/StoreKit.h>
+#import <AFNetworking/AFNetworking.h>
 
 //static NSString * const mainUrl = @"http://work.stk.908.vc/api/v2/web?";
 static NSString * const mainUrl = @"http://api.stickerpipe.com/api/v2/web?";
 
 static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/stickerPipeStore.js";
 
+static NSString * const noInternetMessage = @"No internet connection";
+static NSString * const otherErrorMessage = @"Oops... something went wrong";
 static NSUInteger const productsCount = 2;
 
 @interface STKStickersShopViewController () <UIWebViewDelegate, STKStickersShopJsInterfaceDelegate, STKStickersPurchaseDelegate>
@@ -38,11 +41,15 @@ static NSUInteger const productsCount = 2;
 @property(nonatomic, strong) STKStickersShopJsInterface *jsInterface;
 @property(nonatomic, strong) STKStickersApiService *apiService;
 @property(nonatomic, strong) STKStickersEntityService *entityService;
-//@property(nonatomic, strong) STKStickerController *stickerController;
+
+@property(nonatomic, weak) IBOutlet UIView *errorView;
+@property(nonatomic, weak) IBOutlet UILabel *errorLabel;
 
 @property(nonatomic, strong) NSMutableArray *prices;
 
-//@property BOOL isNetworkReachable;
+@property BOOL isNetworkReachable;
+
+- (IBAction)closeErrorClicked:(id)sender;
 
 @end
 
@@ -51,13 +58,16 @@ static NSUInteger const productsCount = 2;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+    [self checkNetwork];
+    
     self.prices = [NSMutableArray new];
-   
-    if ([STKStickerController sharedInstance].isNetworkReachable) {
-        [self loadShopPrices];
-    } else {
-        [[STKStickerController sharedInstance] handleError:nil];
-    }
+    
+//    if (self.isNetworkReachable) {
+//        [self loadShopPrices];
+//    } else {
+//        [self handleError:nil];
+//    }
     
     
     [self setUpButtons];
@@ -75,25 +85,35 @@ static NSUInteger const productsCount = 2;
     [self.stickersShopWebView.scrollView addSubview:refreshControl];
 }
 
-//- (void)checkNetwork {
-//
-//    [[AFNetworkReachabilityManager sharedManager]setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status){
-//        self.isNetworkReachable = (status == AFNetworkReachabilityStatusReachableViaWWAN ||
-//                                   status ==  AFNetworkReachabilityStatusReachableViaWiFi);
-//    }];
-//}
+- (void)checkNetwork {
+    __weak typeof(self) wself = self;
+    
+    [[AFNetworkReachabilityManager sharedManager]setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status){
+        if ((status == AFNetworkReachabilityStatusReachableViaWWAN ||
+             status ==  AFNetworkReachabilityStatusReachableViaWiFi)) {
+            wself.isNetworkReachable = YES;
+            wself.errorView.hidden = YES;
+            [wself loadShopPrices];
+        } else {
+            wself.isNetworkReachable = NO;
+            [wself handleError: [NSError errorWithDomain:NSCocoaErrorDomain code:NSURLErrorNotConnectedToInternet userInfo:nil]];
+            
+        }
+    }];
+}
+
+- (void)handleError:(NSError *)error {
+    [self.activity stopAnimating];
+//    self.errorView.hidden = NO;
+//    self.errorLabel.text = (error.code == NSURLErrorNotConnectedToInternet) ? noInternetMessage : otherErrorMessage;
+}
 
 - (void)handleRefresh:(UIRefreshControl *)refresh {
-    if ([STKStickerController sharedInstance].isNetworkReachable) {
-        [self loadShopPrices];
-        if ([[STKStickerController sharedInstance].delegate respondsToSelector:@selector(stickerControllerReloadView)]) {
-            [[STKStickerController sharedInstance].delegate stickerControllerReloadView];
-        }
+    if (self.isNetworkReachable) {
+        [self checkNetwork];
     }
     [refresh endRefreshing];
 }
-
-
 
 - (void)packDownloaded {
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -185,13 +205,6 @@ static NSUInteger const productsCount = 2;
     }
     return _entityService;
 }
-
-//- (STKStickerController *)stickerController {
-//    if (!_stickerController) {
-//        _stickerController = [STKStickerController new];
-//    }
-//    return _stickerController;
-//}
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -381,6 +394,19 @@ static NSUInteger const productsCount = 2;
             [[NSNotificationCenter defaultCenter] postNotificationName:STKShowStickersCollectionsNotification object:self];
         }];
     });
+}
+
+
+- (void)closeErrorClicked:(id)sender {
+    if (self.isNetworkReachable) {
+        self.errorView.hidden = YES;
+        [self loadShopPrices];
+    } else {
+        self.errorView.hidden = NO;
+    }
+    
+    
+    
 }
 
 #pragma mark - purchses
