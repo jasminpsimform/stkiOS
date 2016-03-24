@@ -67,9 +67,9 @@
     
     NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"[]"];
     NSString *stickerName = [stickerMessage stringByTrimmingCharactersInSet:characterSet];
-    SDImageCache *imageCache = [[SDImageCache alloc] initWithNamespace:@"myNamespace"];
     
-    [imageCache queryDiskCacheForKey:stickerName done:^(UIImage *image,
+    [[SDImageCache sharedImageCache] queryDiskCacheForKey:stickerName
+                                                     done:^(UIImage *image,
                                                         SDImageCacheType cacheType) {
         if (image) {
             completion(nil, image);
