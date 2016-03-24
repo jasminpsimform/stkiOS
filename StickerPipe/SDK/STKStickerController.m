@@ -90,13 +90,15 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     static STKStickerController *entity = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        entity = [[STKStickerController alloc] init];
+//        entity = [[STKStickerController alloc] init];
+        entity = [[super alloc] initStickerController];
     });
     
     return entity;
 }
 
-- (instancetype)init
+//- (instancetype)init
+- (STKStickerController *)initStickerController
 {
     self = [super init];
     if (self) {
@@ -142,9 +144,10 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 }
 
 - (void)checkNetwork {
+    __weak typeof(self) weakSelf = self;
 
     [[AFNetworkReachabilityManager sharedManager]setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status){
-        self.isNetworkReachable = (status == AFNetworkReachabilityStatusReachableViaWWAN ||
+        weakSelf.isNetworkReachable = (status == AFNetworkReachabilityStatusReachableViaWWAN ||
                                    status ==  AFNetworkReachabilityStatusReachableViaWiFi);
     }];
 }
