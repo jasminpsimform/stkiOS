@@ -33,6 +33,9 @@
 
 static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 
+static NSString * const noInternetMessage = @"No internet connection";
+static NSString * const otherErrorMessage = @"Oops... something went wrong";
+
 @interface STKStickerController()
 
 @property (strong, nonatomic) UIView *keyboardButtonSuperView;
@@ -49,10 +52,14 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 @property (strong, nonatomic) UIButton *shopButton;
 @property (assign, nonatomic) BOOL isKeyboardShowed;
 
+@property (nonatomic, weak) IBOutlet UIView *errorView;
+@property (nonatomic, weak) IBOutlet UILabel *errorLabel;
+
 @property (strong, nonatomic) STKStickersEntityService *stickersService;
 
 - (IBAction)collectionsButtonAction:(id)sender;
 - (IBAction)stickersShopButtonAction:(id)sender;
+- (IBAction)closeError:(id)sender;
 
 @end
 
@@ -133,11 +140,19 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 }
 
 - (void)checkNetwork {
-    __weak typeof(self) weakSelf = self;
-
+    __weak typeof(self) wself = self;
+    
     [[AFNetworkReachabilityManager sharedManager]setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status){
-        weakSelf.isNetworkReachable = (status == AFNetworkReachabilityStatusReachableViaWWAN ||
-                                   status ==  AFNetworkReachabilityStatusReachableViaWiFi);
+        if ((status == AFNetworkReachabilityStatusReachableViaWWAN ||
+             status ==  AFNetworkReachabilityStatusReachableViaWiFi)) {
+            wself.isNetworkReachable = YES;
+            wself.errorView.hidden = YES;
+            [wself loadStickerPacks];
+        } else {
+            wself.isNetworkReachable = NO;
+            [wself handleError: [NSError errorWithDomain:NSCocoaErrorDomain code:NSURLErrorNotConnectedToInternet userInfo:nil]];
+            
+        }
     }];
 }
 
@@ -373,11 +388,16 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 }
 
 - (void)handleRefresh:(UIRefreshControl *)refresh {
-    [self loadStickerPacks];
+    if (self.isNetworkReachable) {
+        [self loadStickerPacks];
+        self.errorView.hidden = YES;
+    }
     [refresh endRefreshing];
 }
 
 - (void)handleError:(NSError *)error {
+    self.errorView.hidden = NO;
+    self.errorLabel.text = (error.code == NSURLErrorNotConnectedToInternet) ? noInternetMessage : otherErrorMessage;
     if ([self.delegate respondsToSelector:@selector(stickerControllerErrorHandle:)]) {
         if (self.isNetworkReachable) {
             [self.delegate stickerControllerErrorHandle:error];
@@ -411,6 +431,15 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
         
     } else {
         [self showStickersView];
+    }
+}
+
+- (void)closeError:(id)sender {
+    if (self.isNetworkReachable) {
+        self.errorView.hidden = YES;
+        [self loadStickerPacks];
+    } else {
+        self.errorView.hidden = NO;
     }
 }
 

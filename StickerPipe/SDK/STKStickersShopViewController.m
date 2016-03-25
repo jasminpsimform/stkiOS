@@ -104,13 +104,14 @@ static NSUInteger const productsCount = 2;
 
 - (void)handleError:(NSError *)error {
     [self.activity stopAnimating];
-//    self.errorView.hidden = NO;
-//    self.errorLabel.text = (error.code == NSURLErrorNotConnectedToInternet) ? noInternetMessage : otherErrorMessage;
+    self.errorView.hidden = NO;
+    self.errorLabel.text = (error.code == NSURLErrorNotConnectedToInternet) ? noInternetMessage : otherErrorMessage;
 }
 
 - (void)handleRefresh:(UIRefreshControl *)refresh {
     if (self.isNetworkReachable) {
         [self checkNetwork];
+        self.errorView.hidden = YES;
     }
     [refresh endRefreshing];
 }
@@ -135,12 +136,14 @@ static NSUInteger const productsCount = 2;
                 [wself loadStickersShop];
                 
             } else {
-                [wself showErrorAlertWithMessage:@"Can't load products. Try again later" andOkAction:nil andCancelAction:^{
-                    [wself dismissViewControllerAnimated:YES completion:nil];
-                }];
+//                [wself showErrorAlertWithMessage:@"Can't load products. Try again later" andOkAction:nil andCancelAction:^{
+//                    [wself dismissViewControllerAnimated:YES completion:nil];
+//                }];
+                [self handleError:nil];
             }
         } failure:^(NSError *error) {
-            [wself showErrorAlertWithMessage:error.localizedDescription andOkAction:nil andCancelAction:nil];
+//            [wself showErrorAlertWithMessage:error.localizedDescription andOkAction:nil andCancelAction:nil];
+            [self handleError:error];
         }];
         
     }
@@ -182,13 +185,14 @@ static NSUInteger const productsCount = 2;
     [self.stickersShopWebView loadRequest:[self shopRequest] progress:nil success:^NSString * _Nonnull(NSHTTPURLResponse * _Nonnull response, NSString * _Nonnull HTML) {
         return HTML;
     } failure:^(NSError * error) {
-        [self showErrorAlertWithMessage:error.localizedDescription andOkAction:^{
-            [self loadStickersShop];
-        } andCancelAction:^{
-            [self dismissViewControllerAnimated:YES completion:^{
-                [[NSNotificationCenter defaultCenter] postNotificationName:STKCloseModalViewNotification object:self];
-            }];
-        }];
+        [self handleError:error];
+//        [self showErrorAlertWithMessage:error.localizedDescription andOkAction:^{
+//            [self loadStickersShop];
+//        } andCancelAction:^{
+//            [self dismissViewControllerAnimated:YES completion:^{
+//                [[NSNotificationCenter defaultCenter] postNotificationName:STKCloseModalViewNotification object:self];
+//            }];
+//        }];
     }];
 }
 
@@ -281,13 +285,14 @@ static NSUInteger const productsCount = 2;
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     
-    [self showErrorAlertWithMessage:error.localizedDescription andOkAction:^{
-        [self loadStickersShop];
-    } andCancelAction:^{
-        [self dismissViewControllerAnimated:YES completion:^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:STKCloseModalViewNotification object:self];
-        }];
-    }];
+    [self handleError:error];
+//    [self showErrorAlertWithMessage:error.localizedDescription andOkAction:^{
+//        [self loadStickersShop];
+//    } andCancelAction:^{
+//        [self dismissViewControllerAnimated:YES completion:^{
+//            [[NSNotificationCenter defaultCenter] postNotificationName:STKCloseModalViewNotification object:self];
+//        }];
+//    }];
 }
 
 #pragma mark - STKStickersShopJsInterfaceDelegate

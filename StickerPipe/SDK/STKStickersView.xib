@@ -7,6 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="STKStickerController">
             <connections>
+                <outlet property="errorLabel" destination="FcZ-i9-CzP" id="bI9-g4-k4k"/>
+                <outlet property="errorView" destination="lAi-C4-ca8" id="nlV-lv-ZDp"/>
                 <outlet property="internalStickersView" destination="iN0-l3-epB" id="nAX-q7-xxV"/>
                 <outlet property="stickersCollectionView" destination="Ldw-kQ-X5c" id="D5B-GO-Mk7"/>
                 <outlet property="stickersHeaderCollectionView" destination="379-v9-f3Z" id="cR8-3V-BS8"/>
@@ -58,18 +60,55 @@
                         <action selector="stickersShopButtonAction:" destination="-1" eventType="touchUpInside" id="w6a-AE-gf1"/>
                     </connections>
                 </button>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lAi-C4-ca8">
+                    <rect key="frame" x="0.0" y="44" width="320" height="30"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No internet connection" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FcZ-i9-CzP">
+                            <rect key="frame" x="28" y="0.0" width="254" height="30"/>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4JH-i5-Oiw">
+                            <rect key="frame" x="282" y="0.0" width="30" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="30" id="CqV-4O-JRT"/>
+                            </constraints>
+                            <state key="normal" title="X">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="closeError:" destination="-1" eventType="touchUpInside" id="d29-of-XSA"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="FcZ-i9-CzP" secondAttribute="bottom" id="DBB-VZ-DXx"/>
+                        <constraint firstAttribute="bottom" secondItem="4JH-i5-Oiw" secondAttribute="bottom" id="H77-jG-NkN"/>
+                        <constraint firstAttribute="trailing" secondItem="4JH-i5-Oiw" secondAttribute="trailing" constant="8" id="Ox9-Pq-yaY"/>
+                        <constraint firstItem="4JH-i5-Oiw" firstAttribute="top" secondItem="lAi-C4-ca8" secondAttribute="top" id="c6H-AK-MeB"/>
+                        <constraint firstItem="FcZ-i9-CzP" firstAttribute="leading" secondItem="lAi-C4-ca8" secondAttribute="leading" constant="28" id="ed8-Is-3YD"/>
+                        <constraint firstItem="FcZ-i9-CzP" firstAttribute="top" secondItem="lAi-C4-ca8" secondAttribute="top" id="ntU-C1-OCB"/>
+                        <constraint firstItem="4JH-i5-Oiw" firstAttribute="leading" secondItem="FcZ-i9-CzP" secondAttribute="trailing" id="pfI-m3-UhF"/>
+                        <constraint firstAttribute="height" constant="30" id="tdK-ij-q1f"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="7jD-2I-ugX" firstAttribute="leading" secondItem="379-v9-f3Z" secondAttribute="trailing" id="36U-s3-yfW"/>
+                <constraint firstAttribute="trailing" secondItem="lAi-C4-ca8" secondAttribute="trailing" id="42R-Wc-Eoe"/>
                 <constraint firstAttribute="bottom" secondItem="Ldw-kQ-X5c" secondAttribute="bottom" id="HOt-bK-7Vf"/>
                 <constraint firstItem="379-v9-f3Z" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Mcf-nX-wns"/>
                 <constraint firstItem="Ldw-kQ-X5c" firstAttribute="top" secondItem="7jD-2I-ugX" secondAttribute="bottom" id="Tsx-ao-Nd7"/>
                 <constraint firstItem="Ldw-kQ-X5c" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="UEd-Tn-ZlU"/>
                 <constraint firstAttribute="trailing" secondItem="7jD-2I-ugX" secondAttribute="trailing" id="UIV-qy-ww0"/>
+                <constraint firstItem="lAi-C4-ca8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Wep-SY-oNH"/>
                 <constraint firstAttribute="trailing" secondItem="Ldw-kQ-X5c" secondAttribute="trailing" id="fpB-lY-4uP"/>
                 <constraint firstItem="379-v9-f3Z" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="hEt-tA-iOy"/>
                 <constraint firstItem="7jD-2I-ugX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="l8X-70-ezV"/>
+                <constraint firstItem="lAi-C4-ca8" firstAttribute="top" secondItem="7jD-2I-ugX" secondAttribute="bottom" id="zlJ-FU-15J"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="306" y="248"/>
