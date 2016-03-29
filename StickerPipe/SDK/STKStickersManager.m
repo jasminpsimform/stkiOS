@@ -16,6 +16,8 @@
 #import "STKStickersConstants.h"
 #import "NSString+MD5.h"
 
+static BOOL downloadMaxIm = NO;
+
 @interface STKStickersManager()
 
 
@@ -175,6 +177,16 @@
 + (void)setPriceBProductId:(NSString *)priceBProductId andPriceCProductId:(NSString *)priceCProductId {
     [STKInAppProductsManager setPriceBproductId:priceBProductId];
     [STKInAppProductsManager setPriceCproductId:priceCProductId];
+}
+
+#pragma mark - max images
+
++ (void)setDownloadMaxImages:(BOOL)downloadMaxImages {
+    downloadMaxIm = downloadMaxImages;
+}
+
++ (BOOL)downloadMaxImages {
+    return downloadMaxIm;
 }
 
 @end

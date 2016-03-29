@@ -72,10 +72,11 @@
     __weak typeof(self) weakSelf = self;
     
     self.imageManager = [STKImageManager new];
-
-
+    
+    NSString *density = ([STKStickersManager downloadMaxImages]) ? [STKUtility maxDensity] : [STKUtility scaleString];
+   
     [self.imageManager getImageForStickerMessage:stickerMessage
-                                      andDensity:[STKUtility scaleString] withProgress:^(NSTimeInterval progress) {
+                                      andDensity:density withProgress:^(NSTimeInterval progress) {
         if (progressBlock) {
             progressBlock(progress);
         }
