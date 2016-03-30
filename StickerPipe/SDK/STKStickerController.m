@@ -104,7 +104,7 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
         
         [[AFNetworkReachabilityManager sharedManager] startMonitoring];
         [self checkNetwork];
-
+        
         
         //        [self loadStickerPacks];
         [self loadStartPacks];
@@ -166,7 +166,7 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
 }
 
 - (void)updateStickers:(NSNotification *)notification {
-//    [self loadStickerPacks];
+    //    [self loadStickerPacks];
     NSMutableArray *stickers = notification.userInfo[@"packs"];
     [stickers insertObject:self.stickersService.stickersArray[0] atIndex:0];
     self.stickersService.stickersArray = stickers;
@@ -250,7 +250,7 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
         [self.stickersCollectionView addSubview:refreshControl];
         self.stickersCollectionView.alwaysBounceVertical = YES;
     });
-
+    
 }
 
 - (void)initHeaderButton:(UIButton *)button {
@@ -493,6 +493,7 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
             [self reloadHeaderItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
         }
         [self.stickersHeaderCollectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionCenteredHorizontally];
+        [self.stickersHeaderDelegateManager collectionView:self.stickersHeaderCollectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow: index inSection:0]];
     }
     
 }
@@ -503,14 +504,14 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
     
     [self hideStickersView];
     STKStickersShopViewController *vc = [[STKStickersShopViewController alloc] initWithNibName:@"STKStickersShopViewController" bundle:[NSBundle mainBundle]];
-
+    
     if ([self isStickerPackDownloaded:message]) {
         vc.packName = [self.stickersService packNameForStickerId:[STKUtility stickerIdWithMessage:message]];
         [self showModalViewController:vc];
-
+        
     } else {
         __weak typeof(self) weakSelf = self;
-
+        
         [self.stickersService getPackNameForMessage:message
                                          completion:^(NSString *packName) {
                                              vc.packName = packName;
@@ -519,7 +520,7 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
                                              });
                                          }];
     }
-
+    
 }
 
 - (void)showCollections {
