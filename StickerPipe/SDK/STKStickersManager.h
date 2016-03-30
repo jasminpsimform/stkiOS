@@ -48,4 +48,7 @@
 
 + (void)setPriceBProductId:(NSString *)priceBProductId andPriceCProductId:(NSString *)priceCProductId;
 
++ (void)setDownloadMaxImages:(BOOL)downloadMaxImages;
++ (BOOL)downloadMaxImages;
+
 @end

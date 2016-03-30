@@ -26,10 +26,15 @@
 #import "STKImageManager.h"
 #import "STKStickersManager.h"
 
+#import <AFNetworking/AFNetworking.h>
+
 
 //SIZES
 
 static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
+
+static NSString * const noInternetMessage = @"No internet connection";
+static NSString * const otherErrorMessage = @"Oops... something went wrong";
 
 @interface STKStickerController()
 
@@ -47,10 +52,14 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 @property (strong, nonatomic) UIButton *shopButton;
 @property (assign, nonatomic) BOOL isKeyboardShowed;
 
+@property (nonatomic, weak) IBOutlet UIView *errorView;
+@property (nonatomic, weak) IBOutlet UILabel *errorLabel;
+
 @property (strong, nonatomic) STKStickersEntityService *stickersService;
 
 - (IBAction)collectionsButtonAction:(id)sender;
 - (IBAction)stickersShopButtonAction:(id)sender;
+- (IBAction)closeError:(id)sender;
 
 @end
 
@@ -84,14 +93,18 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     } failure:nil];
 }
 
-- (instancetype)init
-{
+
+- (instancetype)init {
+    
     self = [super init];
     if (self) {
         
         self.stickersService = [STKStickersEntityService new];
         [self setupInternalStickersView];
         
+        [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+        [self checkNetwork];
+
         
         //        [self loadStickerPacks];
         [self loadStartPacks];
@@ -124,6 +137,23 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
         
     }
     return self;
+}
+
+- (void)checkNetwork {
+    __weak typeof(self) wself = self;
+    
+    [[AFNetworkReachabilityManager sharedManager]setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status){
+        if ((status == AFNetworkReachabilityStatusReachableViaWWAN ||
+             status ==  AFNetworkReachabilityStatusReachableViaWiFi)) {
+            wself.isNetworkReachable = YES;
+            wself.errorView.hidden = YES;
+            [wself loadStickerPacks];
+        } else {
+            wself.isNetworkReachable = NO;
+            [wself handleError: [NSError errorWithDomain:NSCocoaErrorDomain code:NSURLErrorNotConnectedToInternet userInfo:nil]];
+            
+        }
+    }];
 }
 
 - (void)reloadRecent {
@@ -213,6 +243,14 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     [self.stickersCollectionView registerClass:[STKStickersSeparator class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"STKStickerPanelSeparator"];
     
     self.stickersDelegateManager.collectionView = self.stickersCollectionView;
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
+        [self.stickersCollectionView addSubview:refreshControl];
+        self.stickersCollectionView.alwaysBounceVertical = YES;
+    });
+
 }
 
 - (void)initHeaderButton:(UIButton *)button {
@@ -349,6 +387,27 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
     [presenter presentViewController:navigationController animated:YES completion:nil];
 }
 
+- (void)handleRefresh:(UIRefreshControl *)refresh {
+    if (self.isNetworkReachable) {
+        [self loadStickerPacks];
+        self.errorView.hidden = YES;
+    }
+    [refresh endRefreshing];
+}
+
+- (void)handleError:(NSError *)error {
+    self.errorView.hidden = NO;
+    self.errorLabel.text = (error.code == NSURLErrorNotConnectedToInternet) ? noInternetMessage : otherErrorMessage;
+    if ([self.delegate respondsToSelector:@selector(stickerControllerErrorHandle:)]) {
+        if (self.isNetworkReachable) {
+            [self.delegate stickerControllerErrorHandle:error];
+        } else {
+            NSError *noInternetError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSURLErrorNotConnectedToInternet userInfo:nil];
+            [self.delegate stickerControllerErrorHandle:noInternetError];
+        }
+    }
+}
+
 #pragma mark - Actions
 
 - (void)collectionsButtonAction:(UIButton*)collectionsButton {
@@ -372,6 +431,15 @@ static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
         
     } else {
         [self showStickersView];
+    }
+}
+
+- (void)closeError:(id)sender {
+    if (self.isNetworkReachable) {
+        self.errorView.hidden = YES;
+        [self loadStickerPacks];
+    } else {
+        self.errorView.hidden = NO;
     }
 }
 

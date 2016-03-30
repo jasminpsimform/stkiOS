@@ -14,7 +14,7 @@
 #import "STKStickersPurchaseService.h"
 
 @interface STKChatViewController() <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, STKStickerControllerDelegate, UIAlertViewDelegate> {
-
+    
     NSString *packName;
     NSString *packPrice;
 }
@@ -30,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *textViewHeightConstraint;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomViewConstraint;
+@property (weak, nonatomic) IBOutlet UIView *errorView;
 
 @property (strong, nonatomic) STKStickerController *stickerController;
 
@@ -75,7 +76,6 @@
     self.stickerController = [[STKStickerController alloc] init];
     self.stickerController.delegate = self;
     self.stickerController.textInputView = self.inputTextView;
-    
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     
@@ -161,6 +161,7 @@
         STKChatStickerCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell"];
         
         [cell fillWithStickerMessage:message downloaded:[self.stickerController isStickerPackDownloaded:message]];
+        
         return cell;
     } else {
         STKChatTextCell *cell = [self.tableView
@@ -179,7 +180,6 @@
     if ([cell isKindOfClass:[STKChatStickerCell class]]) {
         [self.stickerController showPackInfoControllerWithStickerMessage:self.dataSource[indexPath.row]];
     }
-    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -192,11 +192,16 @@
 - (void)stickerController:(STKStickerController *)stickerController didSelectStickerWithMessage:(NSString *)message {
     STKChatStickerCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell"];
     [cell fillWithStickerMessage:message downloaded:[self.stickerController isStickerPackDownloaded:message]];
+    
     [self addMessage:message];
 }
 
 - (UIViewController *)stickerControllerViewControllerForPresentingModalView {
     return self;
+}
+
+- (void)stickerControllerErrorHandle:(NSError *)error {
+    self.errorView.hidden = NO;
 }
 
 - (void)addMessage:(NSString *)message {
@@ -252,15 +257,15 @@
     
     packName = notification.userInfo[@"packName"];
     packPrice = notification.userInfo[@"packPrice"];
-
+    
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"Purchase this stickers pack?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
     alertView.delegate = self;
     dispatch_async(dispatch_get_main_queue(), ^{
-
+        
         [alertView show];
     });
-//    STKPurchaseService *purchaseService = [STKPurchaseService new];
-//    [purchaseService purchaseFailed];
+    //    STKPurchaseService *purchaseService = [STKPurchaseService new];
+    //    [purchaseService purchaseFailed];
     
 }
 

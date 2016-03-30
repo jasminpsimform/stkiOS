@@ -19,17 +19,21 @@
 #import "STKStickersEntityService.h"
 #import "SKProduct+STKStickerSKProduct.h"
 #import "STKStickerPackObject.h"
+#import "STKStickerController.h"
 
 #import "STKStickersShopJsInterface.h"
 
 #import <JavaScriptCore/JavaScriptCore.h>
 #import <StoreKit/StoreKit.h>
+#import <AFNetworking/AFNetworking.h>
 
 //static NSString * const mainUrl = @"http://work.stk.908.vc/api/v2/web?";
 static NSString * const mainUrl = @"http://api.stickerpipe.com/api/v2/web?";
 
 static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/stickerPipeStore.js";
 
+static NSString * const noInternetMessage = @"No internet connection";
+static NSString * const otherErrorMessage = @"Oops... something went wrong";
 static NSUInteger const productsCount = 2;
 
 @interface STKStickersShopViewController () <UIWebViewDelegate, STKStickersShopJsInterfaceDelegate, STKStickersPurchaseDelegate>
@@ -38,7 +42,14 @@ static NSUInteger const productsCount = 2;
 @property(nonatomic, strong) STKStickersApiService *apiService;
 @property(nonatomic, strong) STKStickersEntityService *entityService;
 
+@property(nonatomic, weak) IBOutlet UIView *errorView;
+@property(nonatomic, weak) IBOutlet UILabel *errorLabel;
+
 @property(nonatomic, strong) NSMutableArray *prices;
+
+@property BOOL isNetworkReachable;
+
+- (IBAction)closeErrorClicked:(id)sender;
 
 @end
 
@@ -47,18 +58,62 @@ static NSUInteger const productsCount = 2;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+    [self checkNetwork];
+    
     self.prices = [NSMutableArray new];
-    [self loadShopPrices];
+    
+//    if (self.isNetworkReachable) {
+//        [self loadShopPrices];
+//    } else {
+//        [self handleError:nil];
+//    }
+    
     
     [self setUpButtons];
     
     self.navigationItem.title = @"Store";
     
     self.jsInterface.delegate = self;
-
+    
     [STKStickersPurchaseService sharedInstance].delegate = self;
     
     self.apiService = [STKStickersApiService new];
+    
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
+    [self.stickersShopWebView.scrollView addSubview:refreshControl];
+}
+
+- (void)checkNetwork {
+    __weak typeof(self) wself = self;
+    
+    [[AFNetworkReachabilityManager sharedManager]setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status){
+        if ((status == AFNetworkReachabilityStatusReachableViaWWAN ||
+             status ==  AFNetworkReachabilityStatusReachableViaWiFi)) {
+            wself.isNetworkReachable = YES;
+            wself.errorView.hidden = YES;
+            [wself loadShopPrices];
+        } else {
+            wself.isNetworkReachable = NO;
+            [wself handleError: [NSError errorWithDomain:NSCocoaErrorDomain code:NSURLErrorNotConnectedToInternet userInfo:nil]];
+            
+        }
+    }];
+}
+
+- (void)handleError:(NSError *)error {
+    [self.activity stopAnimating];
+    self.errorView.hidden = NO;
+    self.errorLabel.text = (error.code == NSURLErrorNotConnectedToInternet) ? noInternetMessage : otherErrorMessage;
+}
+
+- (void)handleRefresh:(UIRefreshControl *)refresh {
+    if (self.isNetworkReachable) {
+        [self checkNetwork];
+        self.errorView.hidden = YES;
+    }
+    [refresh endRefreshing];
 }
 
 - (void)packDownloaded {
@@ -68,6 +123,7 @@ static NSUInteger const productsCount = 2;
 }
 
 - (void)loadShopPrices {
+    
     if ([STKInAppProductsManager hasProductIds]) {
         __weak typeof(self) wself = self;
         
@@ -80,12 +136,14 @@ static NSUInteger const productsCount = 2;
                 [wself loadStickersShop];
                 
             } else {
-                [wself showErrorAlertWithMessage:@"Can't load products. Try again later" andOkAction:nil andCancelAction:^{
-                    [wself dismissViewControllerAnimated:YES completion:nil];
-                }];
+//                [wself showErrorAlertWithMessage:@"Can't load products. Try again later" andOkAction:nil andCancelAction:^{
+//                    [wself dismissViewControllerAnimated:YES completion:nil];
+//                }];
+                [self handleError:nil];
             }
         } failure:^(NSError *error) {
-            [wself showErrorAlertWithMessage:error.localizedDescription andOkAction:nil andCancelAction:nil];
+//            [wself showErrorAlertWithMessage:error.localizedDescription andOkAction:nil andCancelAction:nil];
+            [self handleError:error];
         }];
         
     }
@@ -127,13 +185,14 @@ static NSUInteger const productsCount = 2;
     [self.stickersShopWebView loadRequest:[self shopRequest] progress:nil success:^NSString * _Nonnull(NSHTTPURLResponse * _Nonnull response, NSString * _Nonnull HTML) {
         return HTML;
     } failure:^(NSError * error) {
-        [self showErrorAlertWithMessage:error.localizedDescription andOkAction:^{
-            [self loadStickersShop];
-        } andCancelAction:^{
-            [self dismissViewControllerAnimated:YES completion:^{
-                 [[NSNotificationCenter defaultCenter] postNotificationName:STKCloseModalViewNotification object:self];
-            }];
-        }];
+        [self handleError:error];
+//        [self showErrorAlertWithMessage:error.localizedDescription andOkAction:^{
+//            [self loadStickersShop];
+//        } andCancelAction:^{
+//            [self dismissViewControllerAnimated:YES completion:^{
+//                [[NSNotificationCenter defaultCenter] postNotificationName:STKCloseModalViewNotification object:self];
+//            }];
+//        }];
     }];
 }
 
@@ -225,14 +284,15 @@ static NSUInteger const productsCount = 2;
 #pragma mark - UIWebviewDelegate
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-
-    [self showErrorAlertWithMessage:error.localizedDescription andOkAction:^{
-        [self loadStickersShop];
-    } andCancelAction:^{
-        [self dismissViewControllerAnimated:YES completion:^{
-             [[NSNotificationCenter defaultCenter] postNotificationName:STKCloseModalViewNotification object:self];
-        }];
-    }];
+    
+    [self handleError:error];
+//    [self showErrorAlertWithMessage:error.localizedDescription andOkAction:^{
+//        [self loadStickersShop];
+//    } andCancelAction:^{
+//        [self dismissViewControllerAnimated:YES completion:^{
+//            [[NSNotificationCenter defaultCenter] postNotificationName:STKCloseModalViewNotification object:self];
+//        }];
+//    }];
 }
 
 #pragma mark - STKStickersShopJsInterfaceDelegate
@@ -273,7 +333,7 @@ static NSUInteger const productsCount = 2;
         STKStickerPackObject *stickerPack = [wself.entityService getStickerPackWithName:packName];
         [wself.entityService togglePackDisabling:stickerPack];
         dispatch_async(dispatch_get_main_queue(), ^{
-//            [[NSNotificationCenter defaultCenter]postNotificationName:STKStickersReorderStickersNotification object:self];
+            //            [[NSNotificationCenter defaultCenter]postNotificationName:STKStickersReorderStickersNotification object:self];
             [[NSNotificationCenter defaultCenter] postNotificationName:STKPackRemovedNotification object:self userInfo:@{@"pack":stickerPack}];
             [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.JsInterface.onPackRemoveSuccess()"];
         });
@@ -339,6 +399,19 @@ static NSUInteger const productsCount = 2;
             [[NSNotificationCenter defaultCenter] postNotificationName:STKShowStickersCollectionsNotification object:self];
         }];
     });
+}
+
+
+- (void)closeErrorClicked:(id)sender {
+    if (self.isNetworkReachable) {
+        self.errorView.hidden = YES;
+        [self loadShopPrices];
+    } else {
+        self.errorView.hidden = NO;
+    }
+    
+    
+    
 }
 
 #pragma mark - purchses
