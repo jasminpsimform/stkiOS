@@ -81,6 +81,6 @@
 
 - (void)handleError:(NSError *)error;
 
-- (void)setPackSelectedAtIndex:(NSInteger)index;
+- (void)selectPack:(NSUInteger)index;
 
 @end
