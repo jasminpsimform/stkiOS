@@ -51,4 +51,7 @@
 + (void)setDownloadMaxImages:(BOOL)downloadMaxImages;
 + (BOOL)downloadMaxImages;
 
++ (void)sendToken:(NSString *)token
+          failure:(void (^)(NSError *))failure;
+
 @end

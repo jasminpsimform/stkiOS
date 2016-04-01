@@ -15,6 +15,7 @@
 #import "STKCoreDataService.h"
 #import "STKStickersConstants.h"
 #import "NSString+MD5.h"
+#import "STKStickersApiService.h"
 
 static BOOL downloadMaxIm = NO;
 
@@ -187,6 +188,16 @@ static BOOL downloadMaxIm = NO;
 
 + (BOOL)downloadMaxImages {
     return downloadMaxIm;
+}
+
++ (void)sendToken:(NSString *)token
+          failure:(void (^)(NSError *))failure {
+    
+    STKStickersApiService *apiServise = [STKStickersApiService new];
+    [apiServise sendDeviceToken:token failure:^(NSError *error) {
+        failure(error);
+    }];
+    
 }
 
 @end

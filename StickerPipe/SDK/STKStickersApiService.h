@@ -30,4 +30,7 @@
                           success:(void (^)(id))success
                           failure:(void (^)(NSError *))failure;
 
+- (void)sendDeviceToken:(NSString *)token
+                failure:(void (^)(NSError *))failure;
+
 @end
