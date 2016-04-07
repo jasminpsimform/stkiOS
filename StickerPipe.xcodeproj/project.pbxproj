@@ -205,6 +205,7 @@ StickerPipeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper
 		9A6150751C74817E00E46A2C /* STKInAppProductsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKInAppProductsManager.h; sourceTree = "<group>"; };
 		9A6150761C74817E00E46A2C /* STKInAppProductsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKInAppProductsManager.m; sourceTree = "<group>"; };
 		9A9936FF1CA5819E0042DFF8 /* StickerModel 10.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "StickerModel 10.xcdatamodel"; sourceTree = "<group>"; };
+		9AADC4A61CB3B617001EA7A3 /* StickerModel 11.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "StickerModel 11.xcdatamodel"; sourceTree = "<group>"; };
 		9ABDDB201C845CE300554561 /* SKProduct+STKStickerSKProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKProduct+STKStickerSKProduct.h"; sourceTree = "<group>"; };
 		9ABDDB211C845CF100554561 /* SKProduct+STKStickerSKProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKProduct+STKStickerSKProduct.m"; sourceTree = "<group>"; };
 		9ABDDB231C845D4000554561 /* STKStickersShopJsInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKStickersShopJsInterface.h; sourceTree = "<group>"; };
@@ -1160,6 +1161,7 @@ StickerPipeTests.xctest */;
 		6E9012641B56941500A5FCAE /* StickerModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				9AADC4A61CB3B617001EA7A3 /* StickerModel 11.xcdatamodel */,
 				9A9936FF1CA5819E0042DFF8 /* StickerModel 10.xcdatamodel */,
 				6E857D191B836AED00C18A49 /* StickerModel 8.xcdatamodel */,
 				6EB337941B7CDAAC00B0C158 /* StickerModel 7.xcdatamodel */,
@@ -1170,7 +1172,7 @@ StickerPipeTests.xctest */;
 				6E9012661B56941500A5FCAE /* StickerModel 3.xcdatamodel */,
 				6E9012671B56941500A5FCAE /* StickerModel.xcdatamodel */,
 			);
-			currentVersion = 9A9936FF1CA5819E0042DFF8 /* StickerModel 10.xcdatamodel */;
+			currentVersion = 9AADC4A61CB3B617001EA7A3 /* StickerModel 11.xcdatamodel */;
 			path = StickerModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
