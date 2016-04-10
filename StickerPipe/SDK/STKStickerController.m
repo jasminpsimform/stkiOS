@@ -522,6 +522,14 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
 
 }
 
+- (void)showPackInfoControllerWithName:(NSString *)packName{
+    STKStickersShopViewController *vc = [[STKStickersShopViewController alloc] initWithNibName:@"STKStickersShopViewController" bundle:[NSBundle mainBundle]];
+    vc.packName = packName;
+    [self showModalViewController:vc];
+    
+}
+
+
 - (void)showCollections {
     [self hideStickersView];
     UIViewController *presentViewController = [self.delegate stickerControllerViewControllerForPresentingModalView];
