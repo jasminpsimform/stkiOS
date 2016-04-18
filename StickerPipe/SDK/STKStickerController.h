@@ -83,4 +83,6 @@
 
 - (void)selectPack:(NSUInteger)index;
 
+- (void)setupInternalStickersView;
+
 @end
