@@ -144,11 +144,11 @@ Placeholder in stickers view header
 
 ## Credits
 
-908 Inc.
+Stickerpipe
 
 ## Contact
 
-mail@908.vc
+i@stickerpipe.com
 
 ## License
 
