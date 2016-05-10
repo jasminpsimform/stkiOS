@@ -21,15 +21,19 @@ NSString *const STKBaseApiUrl = @"https://api.stickerpipe.com/api";
 
 @implementation STKApiAbstractService
 
-- (instancetype)init
-{
+- (instancetype)init {
+    
     self = [super init];
     if (self) {
         NSString *baseUrl = [NSString stringWithFormat:@"%@/%@", STKBaseApiUrl, STKApiVersion];
-        self.sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseUrl]];
-        self.getSessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseUrl]];
-        self.sessionManager.requestSerializer = [self baseSerializer];
         
+        NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+        config.HTTPMaximumConnectionsPerHost = 1;
+        
+        self.sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseUrl] sessionConfiguration:config];
+        self.getSessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseUrl]];
+        
+        self.sessionManager.requestSerializer = [self baseSerializer];        
         self.getSessionManager.requestSerializer = [self getSerializer];
     }
     return self;
