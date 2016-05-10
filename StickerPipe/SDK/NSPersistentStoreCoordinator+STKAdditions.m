@@ -13,6 +13,7 @@ static NSPersistentStoreCoordinator *defaultCoordinator;
 @implementation NSPersistentStoreCoordinator (STKAdditions)
 
 + (NSPersistentStoreCoordinator *)stk_defaultPersistentsStoreCoordinator {
+    
     if (!defaultCoordinator) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
@@ -48,8 +49,8 @@ static NSPersistentStoreCoordinator *defaultCoordinator;
             NSAssert(store != nil, @"Error initializing PSC: %@\n%@", [error localizedDescription], [error userInfo]);
             defaultCoordinator = coordinator;
         });
-
-        }
+    }
+    
     return defaultCoordinator;
 }
 

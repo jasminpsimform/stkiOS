@@ -14,8 +14,8 @@
 
 @implementation STKStickerPackObject
 
-- (instancetype)initWithServerResponse:(NSDictionary *)serverResponse
-{
+- (instancetype)initWithServerResponse:(NSDictionary *)serverResponse {
+    
     self = [super init];
     if (self) {
         self.artist = serverResponse[@"artist"];
@@ -34,29 +34,29 @@
         self.productID = serverResponse[@"product_id"];
         NSMutableArray *stickersArray = [NSMutableArray array];
         NSArray *stickers = serverResponse[@"stickers"];
-            for (NSDictionary *sticker in stickers) {
-                STKStickerObject *stickerObject = [[STKStickerObject alloc] init];
-                stickerObject.stickerID = sticker[@"content_id"];
-                NSString *stickerName = sticker[@"name"];
-                stickerObject.stickerName = stickerName;
-                stickerObject.stickerMessage = [NSString stringWithFormat:@"[[%@]]", stickerObject.stickerID];
-                stickerObject.stickerURL = sticker[@"image"][[STKUtility scaleString]];
-                stickerObject.packName = self.packName;
-//                stickerObject.stickerMessage = [NSString stringWithFormat:@"[[%@_%@]]", packName, stickerName];
-                if (stickerObject.stickerURL) {
-                    [stickerObject loadStickerImage];
-                }
-                [stickersArray addObject:stickerObject];
+        for (NSDictionary *sticker in stickers) {
+            STKStickerObject *stickerObject = [[STKStickerObject alloc] init];
+            stickerObject.stickerID = sticker[@"content_id"];
+            NSString *stickerName = sticker[@"name"];
+            stickerObject.stickerName = stickerName;
+            stickerObject.stickerMessage = [NSString stringWithFormat:@"[[%@]]", stickerObject.stickerID];
+            stickerObject.stickerURL = sticker[@"image"][[STKUtility scaleString]];
+            stickerObject.packName = self.packName;
+            //                stickerObject.stickerMessage = [NSString stringWithFormat:@"[[%@_%@]]", packName, stickerName];
+            if (stickerObject.stickerURL) {
+                [stickerObject loadStickerImage];
             }
-
-      //  self.stickers = [NSArray arrayWithArray:stickersArray];
+            [stickersArray addObject:stickerObject];
+        }
+        //  self.stickers = [NSArray arrayWithArray:stickersArray];
         self.stickers = stickersArray;
     }
+    
     return self;
 }
 
-- (instancetype)initWithStickerPack:(STKStickerPack*) stickerPack
-{
+- (instancetype)initWithStickerPack:(STKStickerPack*) stickerPack {
+    
     self = [super init];
     if (self) {
         self.artist = stickerPack.artist;
@@ -74,16 +74,15 @@
         NSMutableArray *stickersArray = [NSMutableArray array];
         @autoreleasepool {
             for (STKSticker *sticker in stickerPack.stickers) {
-
+                
                 STKStickerObject *stickerObject = [[STKStickerObject alloc] initWithSticker:sticker];
                 [stickersArray addObject:stickerObject];
             }
         }
-
-//        self.stickers = [NSArray arrayWithArray:stickersArray];
+        //        self.stickers = [NSArray arrayWithArray:stickersArray];
         self.stickers = stickersArray;
-
     }
+    
     return self;
 }
 
@@ -95,7 +94,6 @@
 }
 
 - (NSString *)description {
-    
     return [self stringForDescription];
 }
 

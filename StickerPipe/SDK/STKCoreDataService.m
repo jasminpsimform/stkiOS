@@ -13,7 +13,7 @@
 
 @implementation STKCoreDataService
 
-+ (void) setupCoreData {
++ (void)setupCoreData {
     
     NSPersistentStoreCoordinator *coordinator = [NSPersistentStoreCoordinator stk_defaultPersistentsStoreCoordinator];
     

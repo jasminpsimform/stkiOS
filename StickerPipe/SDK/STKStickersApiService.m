@@ -21,8 +21,8 @@ static NSString *const packsURL = @"shop/my";
 
 @implementation STKStickersApiService
 
-- (instancetype)init
-{
+- (instancetype)init {
+    
     self = [super init];
     if (self) {
         dispatch_queue_t completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -102,8 +102,8 @@ static NSString *const packsURL = @"shop/my";
 
 - (void)getStickerPackWithName:(NSString *)packName
                        success:(void (^)(id))success
-                       failure:(void (^)(NSError *))failure
-{
+                       failure:(void (^)(NSError *))failure {
+    
     NSString *route = [NSString stringWithFormat:@"pack/%@", packName];
     
     [self.sessionManager GET:route parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -138,8 +138,8 @@ static NSString *const packsURL = @"shop/my";
 
 - (void)loadStickerPackWithName:(NSString *)packName andPricePoint:(NSString *)pricePoint
                         success:(void (^)(id))success
-                        failure:(void (^)(NSError *))failure
-{
+                        failure:(void (^)(NSError *))failure {
+    
     NSString *route = [NSString stringWithFormat:@"packs/%@", packName];
     NSDictionary *params = @{@"purchase_type": [self purchaseType:pricePoint]};
     
@@ -167,8 +167,8 @@ static NSString *const packsURL = @"shop/my";
 
 - (void)deleteStickerPackWithName:(NSString *)packName
                           success:(void (^)(id))success
-                          failure:(void (^)(NSError *))failure
-{
+                          failure:(void (^)(NSError *))failure {
+    
     NSString *route = [NSString stringWithFormat:@"packs/%@", packName];
     
     [self.sessionManager DELETE:route parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {

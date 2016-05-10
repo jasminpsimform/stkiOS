@@ -33,8 +33,8 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
 
 @implementation STKStickersEntityService
 
-- (instancetype)init
-{
+- (instancetype)init {
+    
     self = [super init];
     if (self) {
         self.apiService = [[STKStickersApiService alloc] init];
@@ -84,8 +84,8 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
 
 #pragma mark - Get sticker packs
 
-- (void)loadStickerPacksFromCache:(NSString *)type
-                       completion:(void (^)(NSArray *))completion {
+- (void)loadStickerPacksFromCache:(NSString *)type completion:(void (^)(NSArray *))completion {
+    
     __weak typeof(self) weakSelf = self;
     
     [self.cacheEntity getStickerPacks:^(NSArray *stickerPacks) {
@@ -109,7 +109,7 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
     }];
 }
 
-- (void)loadStickersForPacks:(NSArray *)packs completion:(void (^)(NSArray *))completion{
+- (void)loadStickersForPacks:(NSArray *)packs completion:(void (^)(NSArray *))completion {
     
     __weak typeof(self) weakSelf = self;
     
@@ -146,8 +146,7 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
 
 - (void)getStickerPacksWithType:(NSString *)type
                      completion:(void (^)(NSArray *))completion
-                        failure:(void (^)(NSError *))failure
-{
+                        failure:(void (^)(NSError *))failure {
     
     __weak typeof(self) weakSelf = self;
 //    dispatch_async(self.queue, ^{
@@ -209,8 +208,7 @@ static const NSTimeInterval kUpdatesDelay = 900.0; //15 min
     
 }
 
-- (void)getPackNameForMessage:(NSString *)message
-                   completion:(void (^)(NSString *))completion {
+- (void)getPackNameForMessage:(NSString *)message completion:(void (^)(NSString *))completion {
 
     [self.apiService getStickerInfoWithId:[STKUtility stickerIdWithMessage:message] success:^(id response) {
         NSString *packname = response[@"data"][@"pack"];

@@ -19,8 +19,8 @@
 
 @implementation STKBadgeView
 
-- (instancetype)initWithFrame:(CGRect)frame lineWidth:(CGFloat)lineWidth dotSize:(CGSize)dotSize andBorderColor:(UIColor *)borderColor
-{
+- (instancetype)initWithFrame:(CGRect)frame lineWidth:(CGFloat)lineWidth dotSize:(CGSize)dotSize andBorderColor:(UIColor *)borderColor {
+    
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
@@ -32,15 +32,14 @@
     return self;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
+    
     self = [super initWithFrame:frame];
     if (self) {
         [[NSException exceptionWithName:@"Init exeption" reason:@"Use initWithFrame:lineWidth:" userInfo:nil] raise];
     }
     return self;
 }
-
 
 - (void)drawRect:(CGRect)rect {
     // Drawing code

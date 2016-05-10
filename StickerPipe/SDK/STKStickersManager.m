@@ -106,7 +106,6 @@ static BOOL downloadMaxIm = NO;
 #pragma mark - User key
 
 + (void)setUserKey:(NSString *)userKey {
-    
     NSString *hashUserKey = [[userKey stringByAppendingString:[STKApiKeyManager apiKey]] MD5Digest];
     [[NSUserDefaults standardUserDefaults] setObject:hashUserKey forKey:kUserKeyDefaultsKey];
 }
@@ -135,8 +134,7 @@ static BOOL downloadMaxIm = NO;
 
 #pragma mark - Prices
 
-+ (void)setPriceBWithLabel:(NSString *)priceLabel
-        andValue:(CGFloat)priceValue {
++ (void)setPriceBWithLabel:(NSString *)priceLabel andValue:(CGFloat)priceValue {
     [[NSUserDefaults standardUserDefaults] setObject:priceLabel forKey:kPriceBLabel];
     [[NSUserDefaults standardUserDefaults] setFloat:priceValue forKey:kPriceBValue];
 }
@@ -149,8 +147,7 @@ static BOOL downloadMaxIm = NO;
     return [[NSUserDefaults standardUserDefaults] floatForKey:kPriceBValue];
 }
 
-+ (void)setPriceCwithLabel:(NSString *)priceLabel
-        andValue:(CGFloat)priceValue {
++ (void)setPriceCwithLabel:(NSString *)priceLabel andValue:(CGFloat)priceValue {
     [[NSUserDefaults standardUserDefaults] setObject:priceLabel forKey:kPriceCLabel];
     [[NSUserDefaults standardUserDefaults] setFloat:priceValue forKey:kPriceCValue];
 }

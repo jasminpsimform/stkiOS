@@ -56,7 +56,7 @@
 
 - (void)requestProductsWithIdentifier:(NSArray *)productIds
                            completion:(void(^) (NSArray *))completion
-                              failure:(void (^)(NSError *))failre{
+                              failure:(void (^)(NSError *))failre {
     NSSet *product = [NSSet setWithArray:productIds];
     [[RMStore defaultStore] requestProducts:product success:^(NSArray *products, NSArray *invalidProductIdentifiers) {
         completion(products);
@@ -85,13 +85,11 @@
         NSLog(@"purchase failed");
         [wself purchaseFailedError:error];
     }];
-    
 }
 
 - (void)purchasInternalPackName:(NSString *)packName
                        andPackPrice:(NSString *)packPrice {
     [self purchaseSucceedForPack:packName withPrice:packPrice];
-
 }
 
 #pragma mark - purchases

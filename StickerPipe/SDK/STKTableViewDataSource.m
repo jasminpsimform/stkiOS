@@ -18,8 +18,8 @@
 
 @implementation STKTableViewDataSource
 
-- (instancetype)initWithItems:(NSArray *)items cellIdentifier:(NSString *)identifier configureBlock:(TableViewCellConfigureBlock)configureBlock
-{
+- (instancetype)initWithItems:(NSArray *)items cellIdentifier:(NSString *)identifier configureBlock:(TableViewCellConfigureBlock)configureBlock {
+    
     self = [super init];
     if (self) {
         self.dataSource = [NSMutableArray arrayWithArray:items];

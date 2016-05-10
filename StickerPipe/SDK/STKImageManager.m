@@ -62,8 +62,7 @@
     [self.imageTask cancel];
 }
 
-- (void)getImageForStickerMessage:(NSString *)stickerMessage
-                       andDensity:(NSString *)density withProgress:(STKDownloadingProgressBlock)progressBlock andCompletion:(STKCompletionBlock)completion {
+- (void)getImageForStickerMessage:(NSString *)stickerMessage andDensity:(NSString *)density withProgress:(STKDownloadingProgressBlock)progressBlock andCompletion:(STKCompletionBlock)completion {
     
     NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"[]"];
     NSString *stickerName = [stickerMessage stringByTrimmingCharactersInSet:characterSet];

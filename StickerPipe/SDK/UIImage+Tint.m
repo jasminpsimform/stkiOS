@@ -28,7 +28,6 @@
         
     }
     return self;
-    
 }
 
 + (UIImage *)convertImageToGrayScale:(UIImage *)image {

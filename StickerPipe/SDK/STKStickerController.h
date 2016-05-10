@@ -63,9 +63,9 @@
 
 - (void)reloadStickersView;
 
-- (void) showStickersView;
+- (void)showStickersView;
 
-- (void) hideStickersView;
+- (void)hideStickersView;
 
 - (BOOL)isStickerPackDownloaded:(NSString*)packMessage;
 

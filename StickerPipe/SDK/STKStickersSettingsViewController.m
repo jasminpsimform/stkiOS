@@ -84,7 +84,7 @@
     return YES;
 }
 
-- (void) setUpButtons {
+- (void)setUpButtons {
     
     UIBarButtonItem *closeBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed: @"STKBackIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(closeAction:)];
     
@@ -96,7 +96,7 @@
     
 }
 
-- (void) reorderPacks {
+- (void)reorderPacks {
     NSMutableArray *dataSoruce = [self.dataSource dataSource];
     [dataSoruce enumerateObjectsUsingBlock:^(STKStickerPackObject* obj, NSUInteger idx, BOOL *stop) {
         obj.order = @(idx);

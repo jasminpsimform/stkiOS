@@ -13,9 +13,16 @@
 #import "NSString+MD5.h"
 #import <SSKeychain/SSKeychain.h>
 
+#import "STKAnalyticsAPIClient.h"
+
+//demo
 NSString *const apiKey = @"72921666b5ff8651f374747bfefaf7b2";
 
-NSString *const testIOSKey = @"f06190d9d63cd2f4e7b124612f63c56c";
+//test
+//NSString *const testIOSKey = @"f06190d9d63cd2f4e7b124612f63c56c";
+
+//for push
+NSString *const testIOSKey = @"dced537bd6796e0e6dc31b8e79485c6a";
 
 @interface AppDelegate ()
 
@@ -38,7 +45,6 @@ NSString *const testIOSKey = @"f06190d9d63cd2f4e7b124612f63c56c";
     return strApplicationUUID;
 }
 
-
 - (NSString *)userId {
     
     NSString  *currentDeviceId = [self getUniqueDeviceIdentifierAsString];
@@ -53,7 +59,7 @@ NSString *const testIOSKey = @"f06190d9d63cd2f4e7b124612f63c56c";
     [Crashlytics startWithAPIKey:@"0c5dc9cc90ca8deb6e4e375e9d1fbcc76d193c10"];
     [CrashlyticsKit setUserIdentifier:[self userId]];
 
-    [STKStickersManager initWitApiKey: apiKey];
+    [STKStickersManager initWitApiKey: testIOSKey];
     [STKStickersManager setStartTimeInterval];
     [STKStickersManager setUserKey:[self userId]];
     
@@ -63,7 +69,26 @@ NSString *const testIOSKey = @"f06190d9d63cd2f4e7b124612f63c56c";
     
     [STKStickersManager setUserIsSubscriber:NO];
     
+//    UIUserNotificationType types = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+//    UIUserNotificationSettings *mySettings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
+//    [[UIApplication sharedApplication] registerUserNotificationSettings:mySettings];
+    
+     [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+     [[UIApplication sharedApplication] registerForRemoteNotifications];
+    
     return YES;
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken  {
+    NSLog(@"My token is: %@", deviceToken);
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    NSLog(@"Failed to get token, error: %@", error);
+}
+
+- (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    NSLog(@"Received notification: %@", userInfo);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
