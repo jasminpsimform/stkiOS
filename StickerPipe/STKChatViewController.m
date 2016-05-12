@@ -232,7 +232,7 @@
 #pragma mark - Actions
 
 - (void)sendClicked:(id)sender {
-    NSString *message = self.inputTextView.text;
+     NSString *message = self.inputTextView.text;
     if (message.length > 0) {
         [self addMessage:message];
         [self.stickerController textMessageSent:message];

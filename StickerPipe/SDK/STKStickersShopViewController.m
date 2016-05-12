@@ -314,7 +314,6 @@ static NSUInteger const productsCount = 2;
             [[NSNotificationCenter defaultCenter] postNotificationName:STKPurchasePackNotification object:self userInfo:@{@"packName":packName, @"packPrice":packPrice}];
         }
     }
-    
 }
 
 - (void)setInProgress:(BOOL)show {
@@ -358,7 +357,6 @@ static NSUInteger const productsCount = 2;
     [self purchaseFailedError:error];
 }
 
-
 #pragma mark - Show views
 
 - (void)showErrorAlertWithMessage:(NSString *)errorMessage
@@ -396,7 +394,6 @@ static NSUInteger const productsCount = 2;
         }];
     });
 }
-
 
 - (void)closeErrorClicked:(id)sender {
     if (self.isNetworkReachable) {

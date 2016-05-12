@@ -13,16 +13,14 @@
 #import "NSString+MD5.h"
 #import <SSKeychain/SSKeychain.h>
 
-#import "STKAnalyticsAPIClient.h"
-
 //demo
 NSString *const apiKey = @"72921666b5ff8651f374747bfefaf7b2";
 
 //test
-NSString *const testIOSKey = @"f06190d9d63cd2f4e7b124612f63c56c";
+//NSString *const testIOSKey = @"f06190d9d63cd2f4e7b124612f63c56c";
 
 //for push
-//NSString *const testIOSKey = @"dced537bd6796e0e6dc31b8e79485c6a";
+NSString *const testIOSKey = @"dced537bd6796e0e6dc31b8e79485c6a";
 
 @interface AppDelegate ()
 
@@ -63,7 +61,7 @@ NSString *const testIOSKey = @"f06190d9d63cd2f4e7b124612f63c56c";
     [STKStickersManager setStartTimeInterval];
     [STKStickersManager setUserKey:[self userId]];
     
-    [STKStickersManager setPriceBProductId:@"com.priceB.stickerPipe" andPriceCProductId:@"com.priceC.stickerPipe"];
+//    [STKStickersManager setPriceBProductId:@"com.priceB.stickerPipe" andPriceCProductId:@"com.priceC.stickerPipe"];
     [STKStickersManager setPriceBWithLabel:@"0.99 USD" andValue:0.99f];
     [STKStickersManager setPriceCwithLabel:@"1.99 USD" andValue:1.99f];
     
@@ -76,7 +74,7 @@ NSString *const testIOSKey = @"f06190d9d63cd2f4e7b124612f63c56c";
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken  {
-    NSLog(@"My token is: %@", deviceToken);
+    [STKStickersManager sendDeviceToken:deviceToken failure:nil];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
@@ -84,7 +82,7 @@ NSString *const testIOSKey = @"f06190d9d63cd2f4e7b124612f63c56c";
 }
 
 - (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    NSLog(@"Received notification: %@", userInfo);
+    [STKStickersManager getUserInfo:userInfo];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

@@ -17,6 +17,8 @@
 #import "NSString+MD5.h"
 #import "STKStickersApiService.h"
 
+#import "STKStickerController.h"
+
 static BOOL downloadMaxIm = NO;
 
 @interface STKStickersManager()
@@ -187,14 +189,27 @@ static BOOL downloadMaxIm = NO;
     return downloadMaxIm;
 }
 
-+ (void)sendToken:(NSString *)token
++ (void)sendDeviceToken:(NSData *)deviceToken
           failure:(void (^)(NSError *))failure {
+    
+    NSString * token = [NSString stringWithFormat:@"%@", deviceToken];
+    //Format token as you need:
+    token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
+    token = [token stringByReplacingOccurrencesOfString:@">" withString:@""];
+    token = [token stringByReplacingOccurrencesOfString:@"<" withString:@""];
+    
+    NSLog(@"My token is: %@", token);
     
     STKStickersApiService *apiServise = [STKStickersApiService new];
     [apiServise sendDeviceToken:token failure:^(NSError *error) {
         failure(error);
     }];
-    
+}
+
++ (void)getUserInfo:(NSDictionary *)info {
+    NSString *packName = info[@"pack"];
+    STKStickerController *sController = [STKStickerController new];
+    [sController showPackInfoControllerWithName:packName];
 }
 
 @end

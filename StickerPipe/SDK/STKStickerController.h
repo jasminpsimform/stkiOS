@@ -71,6 +71,8 @@
 
 - (void)showPackInfoControllerWithStickerMessage:(NSString*)message;
 
+- (void)showPackInfoControllerWithName:(NSString *)packName;
+
 //Color settings. Default is light gray
 
 - (void)setColorForStickersPlaceholder:(UIColor*) color;
