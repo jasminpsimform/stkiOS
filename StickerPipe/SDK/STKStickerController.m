@@ -650,7 +650,7 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
 
 
 - (void) reloadStickersInputViews {
-   // [self.textInputView reloadInputViews];
+    [self.textInputView reloadInputViews];
     if (!self.isKeyboardShowed) {
         [self.textInputView becomeFirstResponder];
     }
