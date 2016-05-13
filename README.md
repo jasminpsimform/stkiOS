@@ -108,6 +108,27 @@ Use delegate method to set base controller for presenting modal controllers
 }
 ```
 
+### Push notifications
+Register to push notifications in AppDelegate. 
+
+Add 
+```objc
+[STKStickersManager sendDeviceToken:deviceToken failure:nil];
+```
+method call to delegate method:
+```objc
+- (void)application:(UIApplication )application didRegisterForRemoteNotificationsWithDeviceToken:(NSData )deviceToken  
+```
+
+Add
+```objc
+[STKStickersManager getUserInfo:userInfo];
+```
+method call to delegate method:
+```objc
+- (void) application:(UIApplication )application didReceiveRemoteNotification:(NSDictionary )userInfo
+```
+
 ### Text message send
 
 ```objc
