@@ -64,18 +64,19 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="77l-po-v5c">
-                                                    <rect key="frame" x="148" y="0.0" width="160" height="159.5"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="160" id="HMQ-zB-fs1"/>
-                                                    </constraints>
-                                                </imageView>
                                                 <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jre-cg-nrc">
                                                     <rect key="frame" x="103" y="69" width="21" height="22"/>
                                                     <state key="normal" image="STKDownloadIcon">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="77l-po-v5c">
+                                                    <rect key="frame" x="148" y="0.0" width="160" height="159.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="160" id="HMQ-zB-fs1"/>
+                                                        <constraint firstAttribute="height" constant="159.5" id="ksz-Tl-ph5"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="77l-po-v5c" secondAttribute="bottom" id="4c0-01-lnT"/>
