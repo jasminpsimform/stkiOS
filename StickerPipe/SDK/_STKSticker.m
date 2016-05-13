@@ -9,7 +9,6 @@ const struct STKStickerAttributes STKStickerAttributes = {
 	.stickerName = @"stickerName",
 	.usedCount = @"usedCount",
     .usedDate = @"usedDate"
-    
 };
 
 const struct STKStickerRelationships STKStickerRelationships = {

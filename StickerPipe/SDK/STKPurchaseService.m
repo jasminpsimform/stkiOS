@@ -51,7 +51,6 @@
     [self.productRequest cancel];
 }
 
-
 - (NSString *)purchaseRecordFilePath {
     NSString *documentDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
     return [documentDirectory stringByAppendingPathComponent:@"stickerpurchases.plist"];
@@ -68,7 +67,6 @@
     NSError *error = nil;
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.purchasedRecord];
     [data writeToFile:[self purchaseRecordFilePath] options:NSDataWritingAtomic | NSDataWritingFileProtectionComplete error:&error];
-
 }
 
 - (BOOL)isPurchasedProductWithIdentifier:(NSString *)identifier {
@@ -91,8 +89,8 @@
 
 - (void)purchaseProductWithIdentifier:(NSString*)productIdentifier
                            completion:(STKPurchaseCompletionBlock)completion
-                              failure:(STKPurchaseFailureBlock)failure
-{
+                              failure:(STKPurchaseFailureBlock)failure {
+    
     self.purchaseCompletionBlock = completion;
     self.purchaseFailureBlock = failure;
 
@@ -104,7 +102,6 @@
             }
         }
     }];
-
 }
 
 - (void)requestProductsWithIdentifiers:(NSSet *)identifiers completion:(STKProductsBlock)completion {
@@ -144,7 +141,6 @@
         }
     }
 }
-
 
 #pragma mark - SKProductsRequestDelegate
 

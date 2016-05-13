@@ -13,9 +13,8 @@
 
 @implementation STKStickerObject
 
-
-- (instancetype) initWithSticker:(STKSticker*) sticker
-{
+- (instancetype)initWithSticker:(STKSticker*) sticker {
+    
     self = [super init];
     if (self) {
         self.stickerName = sticker.stickerName;
@@ -42,10 +41,9 @@
                            }];
 }
 
-
 #pragma mark - Description
 
-- (NSString*) stringForDescription {
+- (NSString *)stringForDescription {
     
     return [NSString stringWithFormat:@"self: %@\n stickerName: %@\n, stickerID: %@\n stickerMessage: %@\n usedCount: %@\n, usedDate:%@\n", [super description], self.stickerName, self.stickerID, self.stickerMessage, self.usedCount, self.usedDate];
 }
@@ -54,7 +52,7 @@
     return [self stringForDescription];
 }
 
-- (NSString*) debugDescription {
+- (NSString *)debugDescription {
     return [self stringForDescription];
 }
 

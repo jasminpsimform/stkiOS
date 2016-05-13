@@ -15,6 +15,9 @@
 #import "STKCoreDataService.h"
 #import "STKStickersConstants.h"
 #import "NSString+MD5.h"
+#import "STKStickersApiService.h"
+
+#import "STKStickerController.h"
 
 static BOOL downloadMaxIm = NO;
 
@@ -105,7 +108,6 @@ static BOOL downloadMaxIm = NO;
 #pragma mark - User key
 
 + (void)setUserKey:(NSString *)userKey {
-    
     NSString *hashUserKey = [[userKey stringByAppendingString:[STKApiKeyManager apiKey]] MD5Digest];
     [[NSUserDefaults standardUserDefaults] setObject:hashUserKey forKey:kUserKeyDefaultsKey];
 }
@@ -134,8 +136,7 @@ static BOOL downloadMaxIm = NO;
 
 #pragma mark - Prices
 
-+ (void)setPriceBWithLabel:(NSString *)priceLabel
-        andValue:(CGFloat)priceValue {
++ (void)setPriceBWithLabel:(NSString *)priceLabel andValue:(CGFloat)priceValue {
     [[NSUserDefaults standardUserDefaults] setObject:priceLabel forKey:kPriceBLabel];
     [[NSUserDefaults standardUserDefaults] setFloat:priceValue forKey:kPriceBValue];
 }
@@ -148,8 +149,7 @@ static BOOL downloadMaxIm = NO;
     return [[NSUserDefaults standardUserDefaults] floatForKey:kPriceBValue];
 }
 
-+ (void)setPriceCwithLabel:(NSString *)priceLabel
-        andValue:(CGFloat)priceValue {
++ (void)setPriceCwithLabel:(NSString *)priceLabel andValue:(CGFloat)priceValue {
     [[NSUserDefaults standardUserDefaults] setObject:priceLabel forKey:kPriceCLabel];
     [[NSUserDefaults standardUserDefaults] setFloat:priceValue forKey:kPriceCValue];
 }
@@ -187,6 +187,29 @@ static BOOL downloadMaxIm = NO;
 
 + (BOOL)downloadMaxImages {
     return downloadMaxIm;
+}
+
++ (void)sendDeviceToken:(NSData *)deviceToken
+          failure:(void (^)(NSError *))failure {
+    
+    NSString * token = [NSString stringWithFormat:@"%@", deviceToken];
+    //Format token as you need:
+    token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
+    token = [token stringByReplacingOccurrencesOfString:@">" withString:@""];
+    token = [token stringByReplacingOccurrencesOfString:@"<" withString:@""];
+    
+    NSLog(@"My token is: %@", token);
+    
+    STKStickersApiService *apiServise = [STKStickersApiService new];
+    [apiServise sendDeviceToken:token failure:^(NSError *error) {
+        failure(error);
+    }];
+}
+
++ (void)getUserInfo:(NSDictionary *)info {
+    NSString *packName = info[@"pack"];
+    STKStickerController *sController = [STKStickerController new];
+    [sController showPackInfoControllerWithName:packName];
 }
 
 @end

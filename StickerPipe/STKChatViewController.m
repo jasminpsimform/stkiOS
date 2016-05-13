@@ -65,7 +65,6 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchasePack:) name:STKPurchasePackNotification object:nil];
     
-    
     //tap gesture
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(textViewDidTap:)];
@@ -78,21 +77,17 @@
     self.stickerController.textInputView = self.inputTextView;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateStickersCache:) name:STKStickersCacheDidUpdateStickersNotification object:nil];
-    
-    
 }
+
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     [self.stickerController updateFrames];
 }
 
-
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
 
 #pragma mark - UI Methods
 
@@ -102,14 +97,13 @@
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
-
 #pragma mark - Notifications
 
 - (void)didUpdateStickersCache:(NSNotification*) notification {
     [self.tableView reloadData];
 }
 
-- (void) didShowKeyboard:(NSNotification*)notification {
+- (void)didShowKeyboard:(NSNotification*)notification {
     
     CGRect keyboardBounds = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     
@@ -128,7 +122,6 @@
     
     self.isKeyboardShowed = YES;
     [self scrollTableViewToBottom];
-    
 }
 
 
@@ -148,13 +141,11 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
     return self.dataSource.count;
-    
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView
-         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     NSString *message = self.dataSource[indexPath.row];
     
     if ([STKStickersManager isStickerMessage:message]) {
@@ -241,14 +232,13 @@
 #pragma mark - Actions
 
 - (void)sendClicked:(id)sender {
-    NSString *message = self.inputTextView.text;
+     NSString *message = self.inputTextView.text;
     if (message.length > 0) {
         [self addMessage:message];
         [self.stickerController textMessageSent:message];
         self.inputTextView.text = @"";
         self.textViewHeightConstraint.constant = 33;
     }
-    
 }
 
 #pragma mark - PurchasePack
@@ -266,7 +256,6 @@
     });
     //    STKPurchaseService *purchaseService = [STKPurchaseService new];
     //    [purchaseService purchaseFailed];
-    
 }
 
 #pragma mark - Alert controller delegate
@@ -282,8 +271,6 @@
         default:
             break;
     }
-    
 }
-
 
 @end

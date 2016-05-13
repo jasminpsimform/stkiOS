@@ -67,23 +67,29 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
 
 #pragma mark - Inits
 
-- (void)loadStickerPacks
-{
+- (void)loadStickerPacks {
+    
     [self.stickersService getStickerPacksWithType:nil completion:^(NSArray *stickerPacks) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+
         self.stickersService.stickersArray = stickerPacks;
         self.keyboardButton.badgeView.hidden = ![self.stickersService hasNewPacks];
         self.stickersShopButton.badgeView.hidden = !self.stickersService.hasNewModifiedPacks;
         if (self.showStickersOnStart) {
             [self showStickersView];
         }
+            [self reloadStickers];
+
+        });
+        
         
     } failure:nil];
 }
 
-
-- (void)loadStartPacks
-{
+- (void)loadStartPacks {
+    
     [self.stickersService getStickerPacksWithType:nil completion:^(NSArray *stickerPacks) {
+        
         self.stickersService.stickersArray = stickerPacks;
         self.keyboardButton.badgeView.hidden = ![self.stickersService hasNewPacks];
         self.stickersShopButton.badgeView.hidden = !self.stickersService.hasNewModifiedPacks;
@@ -100,11 +106,14 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
     if (self) {
         
         self.stickersService = [STKStickersEntityService new];
+        self.stickersDelegateManager = [STKStickerDelegateManager new];
+        self.stickersHeaderDelegateManager = [STKStickerHeaderDelegateManager new];
+
+        
         [self setupInternalStickersView];
         
         [[AFNetworkReachabilityManager sharedManager] startMonitoring];
         [self checkNetwork];
-
         
         //        [self loadStickerPacks];
         [self loadStartPacks];
@@ -135,11 +144,15 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removePack:) name:STKPackRemovedNotification object:nil];
         
+        [self.stickersHeaderCollectionView reloadData];
+        [self.stickersCollectionView reloadData];
+        
     }
     return self;
 }
 
 - (void)checkNetwork {
+    
     __weak typeof(self) wself = self;
     
     [[AFNetworkReachabilityManager sharedManager]setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status){
@@ -151,32 +164,34 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
         } else {
             wself.isNetworkReachable = NO;
             [wself handleError: [NSError errorWithDomain:NSCocoaErrorDomain code:NSURLErrorNotConnectedToInternet userInfo:nil]];
-            
         }
     }];
 }
 
 - (void)reloadRecent {
+    
     STKStickerPackObject *recentPack = [self.stickersService recentPack];
     NSMutableArray *stickers = [self.stickersService.stickersArray mutableCopy];
     [stickers replaceObjectAtIndex:0 withObject:recentPack];
     self.stickersService.stickersArray = stickers;
+    [self.stickersDelegateManager setStickerPacksArray: stickers];
     [self.stickersCollectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
-    
 }
 
 - (void)updateStickers:(NSNotification *)notification {
-//    [self loadStickerPacks];
+
     NSMutableArray *stickers = notification.userInfo[@"packs"];
     [stickers insertObject:self.stickersService.stickersArray[0] atIndex:0];
     self.stickersService.stickersArray = stickers;
+    [self.stickersHeaderDelegateManager setStickerPacks:stickers];
+    [self.stickersDelegateManager setStickerPacksArray:stickers];
     [self.stickersCollectionView reloadData];
     [self.stickersHeaderCollectionView reloadData];
     [self reloadRecent];
-    
 }
 
 - (void)removePack:(NSNotification *)notification {
+    
     NSMutableArray *stickerPacks = [self.stickersService.stickersArray mutableCopy];
     
     STKStickerPackObject *packToDelete = notification.userInfo[@"pack"];
@@ -191,11 +206,12 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
     }
     if (hasPack) {
         [stickerPacks removeObjectAtIndex:packIndex];
-        
-        self.stickersService.stickersArray = stickerPacks;
-        [self.stickersCollectionView reloadData];
-        [self.stickersHeaderCollectionView reloadData];
-        [self reloadRecent];
+            self.stickersService.stickersArray = stickerPacks;
+        [self.stickersHeaderDelegateManager setStickerPacks:stickerPacks];
+        [self.stickersDelegateManager setStickerPacksArray:stickerPacks];
+            [self.stickersCollectionView reloadData];
+            [self.stickersHeaderCollectionView reloadData];
+            [self reloadRecent];
     }
     
 }
@@ -205,22 +221,33 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
 }
 
 - (void)newPackDownloaded:(NSNotification *)notification {
+    
     [self.stickersService getStickerPacksWithType:nil completion:^(NSArray *stickerPacks) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+
+       
         self.stickersService.stickersArray = stickerPacks;
         self.keyboardButton.badgeView.hidden = ![self.stickersService hasNewPacks];
         self.stickersShopButton.badgeView.hidden = !self.stickersService.hasNewModifiedPacks;
         NSString *packName = notification.userInfo[@"packName"];
         NSUInteger stickerIndex = [self.stickersService indexOfPackWithName:packName];
+       
+        [self.stickersHeaderDelegateManager setStickerPacks:self.stickersService.stickersArray];
+        [self.stickersDelegateManager setStickerPacksArray:self.stickersService.stickersArray];
+        
+        [self.stickersHeaderCollectionView reloadData];
+        [self.stickersCollectionView reloadData];
+
         [self showStickersView];
         [self setPackSelectedAtIndex:stickerIndex];
         [self.stickersHeaderDelegateManager collectionView:self.stickersHeaderCollectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow:stickerIndex inSection:0]];
+        });
     } failure:nil];
-    
 }
 
-- (void) initStickersCollectionView {
+- (void)initStickersCollectionView {
     
-    self.stickersDelegateManager = [STKStickerDelegateManager new];
+//    self.stickersDelegateManager = [STKStickerDelegateManager new];
     
     __weak typeof(self) weakSelf = self;
     [self.stickersDelegateManager setDidChangeDisplayedSection:^(NSInteger displayedSection) {
@@ -237,6 +264,7 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
     
     self.stickersCollectionView.dataSource = self.stickersDelegateManager;
     self.stickersCollectionView.delegate = self.stickersDelegateManager;
+    self.stickersDelegateManager.collectionView = self.stickersCollectionView;
     [self.stickersCollectionView registerClass:[STKStickerViewCell class] forCellWithReuseIdentifier:@"STKStickerViewCell"];
     [self.stickersCollectionView registerClass:[STKEmptyRecentCell class] forCellWithReuseIdentifier:@"STKEmptyRecentCell"];
     [self.stickersCollectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"UICollectionReusableView"];
@@ -250,7 +278,6 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
         [self.stickersCollectionView addSubview:refreshControl];
         self.stickersCollectionView.alwaysBounceVertical = YES;
     });
-
 }
 
 - (void)initHeaderButton:(UIButton *)button {
@@ -260,7 +287,7 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
 
 
 - (void) initStickerHeader {
-    self.stickersHeaderDelegateManager = [STKStickerHeaderDelegateManager new];
+//    self.stickersHeaderDelegateManager = [STKStickerHeaderDelegateManager new];
     __weak typeof(self) weakSelf = self;
     [self.stickersHeaderDelegateManager setDidSelectRow:^(NSIndexPath *indexPath, STKStickerPackObject *stickerPack) {
         if (stickerPack.isNew.boolValue) {
@@ -292,6 +319,7 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
 }
 
 - (void)setupInternalStickersView {
+    
     self.stickersShopButton.badgeBorderColor = [STKUtility defaultGreyColor];
     
     self.internalStickersView = [[[NSBundle mainBundle] loadNibNamed:@"STKStickersView" owner:self options:nil] firstObject];
@@ -313,10 +341,10 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
     [self initStickerHeader];
     [self initStickersCollectionView];
     [self initHeaderButton:self.stickersShopButton];
-    
 }
 
 - (void)addKeyboardButtonConstraintsToView:(UIView *)view {
+    
     self.keyboardButton.translatesAutoresizingMaskIntoConstraints = NO;
     
     NSLayoutConstraint *width = [NSLayoutConstraint constraintWithItem:self.keyboardButton
@@ -356,7 +384,9 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
 
 
 - (void)initKeyBoardButton {
+    
     self.keyboardButton = [STKShowStickerButton buttonWithType:UIButtonTypeSystem];
+    
     UIImage *buttonImage = [UIImage imageNamed:@"STKShowStickersIcon"];
     [self.keyboardButton setImage:buttonImage forState:UIControlStateNormal];
     [self.keyboardButton addTarget:self action:@selector(keyboardButtonAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -378,6 +408,7 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
 }
 
 - (void)showModalViewController:(UIViewController *)viewController {
+    
     [self hideStickersView];
     
     STKOrientationNavigationController *navigationController = [[STKOrientationNavigationController alloc] initWithRootViewController:viewController];
@@ -396,6 +427,7 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
 }
 
 - (void)handleError:(NSError *)error {
+    
     self.errorView.hidden = NO;
     self.errorLabel.text = (error.code == NSURLErrorNotConnectedToInternet) ? noInternetMessage : otherErrorMessage;
     if ([self.delegate respondsToSelector:@selector(stickerControllerErrorHandle:)]) {
@@ -416,13 +448,12 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
 }
 
 - (void)stickersShopButtonAction:(id)sender {
+    
     STKStickersShopViewController *vc = [[STKStickersShopViewController alloc] initWithNibName:@"STKStickersShopViewController" bundle:nil];
     self.stickersService.hasNewModifiedPacks = NO;
     [self showModalViewController:vc];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:STKOpenShopNotification object:self];
-    
-    
 }
 
 - (void)keyboardButtonAction:(UIButton *)keyboardButton {
@@ -443,7 +474,6 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
     }
 }
 
-
 #pragma mark - Reload
 
 - (void)reloadStickersView {
@@ -452,6 +482,7 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
 }
 
 - (void)reloadHeaderItemAtIndexPath:(NSIndexPath*)indexPath {
+    
     NSArray *stickerPacks = self.stickersService.stickersArray;
     [self.stickersHeaderDelegateManager setStickerPacks:stickerPacks];
     [self.stickersHeaderCollectionView reloadItemsAtIndexPaths:@[indexPath]];
@@ -459,6 +490,7 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
 }
 
 - (void)reloadStickersHeader {
+    
     NSArray *stickerPacks = self.stickersService.stickersArray;
     [self.stickersHeaderDelegateManager setStickerPacks:stickerPacks];
     [self.stickersHeaderCollectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:1 inSection:0]]];
@@ -483,6 +515,7 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
 #pragma mark - Selection
 
 - (void)setPackSelectedAtIndex:(NSInteger)index {
+    
     if ([self.stickersHeaderCollectionView numberOfItemsInSection:0] - 1 >= index) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
         
@@ -494,7 +527,6 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
         }
         [self.stickersHeaderCollectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionCenteredHorizontally];
     }
-    
 }
 
 #pragma mark - Presenting
@@ -503,14 +535,14 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
     
     [self hideStickersView];
     STKStickersShopViewController *vc = [[STKStickersShopViewController alloc] initWithNibName:@"STKStickersShopViewController" bundle:[NSBundle mainBundle]];
-
+    
     if ([self isStickerPackDownloaded:message]) {
         vc.packName = [self.stickersService packNameForStickerId:[STKUtility stickerIdWithMessage:message]];
         [self showModalViewController:vc];
-
+        
     } else {
         __weak typeof(self) weakSelf = self;
-
+        
         [self.stickersService getPackNameForMessage:message
                                          completion:^(NSString *packName) {
                                              vc.packName = packName;
@@ -519,7 +551,12 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
                                              });
                                          }];
     }
+}
 
+- (void)showPackInfoControllerWithName:(NSString *)packName {
+    STKStickersShopViewController *vc = [[STKStickersShopViewController alloc] initWithNibName:@"STKStickersShopViewController" bundle:[NSBundle mainBundle]];
+    vc.packName = packName;
+    [self showModalViewController:vc];
 }
 
 - (void)showCollections {
@@ -533,9 +570,13 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
 - (void)showPack:(NSNotification *)notification {
     NSString *packName = notification.userInfo[@"packName"];
     NSUInteger stickerIndex = [self.stickersService indexOfPackWithName:packName];
-    [self showStickersView];
+    //[self showStickersView];
     [self setPackSelectedAtIndex:stickerIndex];
-    [self.stickersHeaderDelegateManager collectionView:self.stickersHeaderCollectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow:stickerIndex inSection:0]];
+}
+
+- (void)selectPack:(NSUInteger)index {
+    [self setPackSelectedAtIndex:index];
+    [self.stickersHeaderDelegateManager collectionView:self.stickersHeaderCollectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
 }
 
 #pragma mark - Checks
@@ -550,7 +591,6 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
         packName = [self.stickersService packNameForStickerId:stickerId];
     }
     return [self.stickersService isPackDownloaded:packName];
-    
 }
 
 #pragma mark - Colors
@@ -586,7 +626,7 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
 
 #pragma mark - Show/hide stickers
 
-- (void) showStickersView {
+- (void)showStickersView {
     UIImage *buttonImage = [UIImage imageNamed:@"STKShowKeyboadIcon"];
     
     [self.keyboardButton setImage:buttonImage forState:UIControlStateNormal];
@@ -596,7 +636,7 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
     [self reloadStickersInputViews];
 }
 
-- (void) hideStickersView {
+- (void)hideStickersView {
     
     UIImage *buttonImage = [UIImage imageNamed:@"STKShowStickersIcon"];
     
@@ -610,20 +650,17 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
 
 
 - (void) reloadStickersInputViews {
-    [self.textInputView reloadInputViews];
+   // [self.textInputView reloadInputViews];
     if (!self.isKeyboardShowed) {
         [self.textInputView becomeFirstResponder];
     }
 }
-
-
 
 #pragma mark - keyboard notifications
 
 - (void) didShowKeyboard:(NSNotification*)notification {
     self.isKeyboardShowed = YES;
 }
-
 
 - (void)willHideKeyboard:(NSNotification*)notification {
     self.isKeyboardShowed = NO;
@@ -634,6 +671,7 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
 }
 
 #pragma mark -------
+
 - (void)textMessageSent:(NSString *)message {
     [[STKAnalyticService sharedService] sendEventWithCategory:STKAnalyticMessageCategory action:STKAnalyticActionSend label:STKMessageTextLabel value:nil];
     

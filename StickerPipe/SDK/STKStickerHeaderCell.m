@@ -25,8 +25,8 @@
 
 @implementation STKStickerHeaderCell
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
+    
     self = [super initWithFrame:frame];
     if (self) {
         self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 24.0, 24.0)];
@@ -64,7 +64,7 @@
     self.backgroundColor = [UIColor clearColor];
 }
 
-- (void)configWithStickerPack:(STKStickerPackObject *)stickerPack placeholder:(UIImage *)placeholder placeholderTintColor:(UIColor *)placeholderTintColor{
+- (void)configWithStickerPack:(STKStickerPackObject *)stickerPack placeholder:(UIImage *)placeholder placeholderTintColor:(UIColor *)placeholderTintColor {
     //TODO:Refactoring
     if ([stickerPack.packName isEqualToString:@"Recent"]) {
         

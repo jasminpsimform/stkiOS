@@ -65,8 +65,8 @@ static const NSInteger kMemoryCacheObjectsCount = 20;
 }
 
 
-- (instancetype)init
-{
+- (instancetype)init {
+    
     self = [super init];
     if (self) {
         
@@ -96,15 +96,13 @@ static const NSInteger kMemoryCacheObjectsCount = 20;
 - (void)sendEventWithCategory:(NSString*)category
                        action:(NSString*)action
                         label:(NSString*)label
-                        value:(NSNumber*)value
-{
+                        value:(NSNumber*)value {
     
 //#ifndef DEBUG
     __weak typeof(self) weakSelf = self;
     [self.backgroundContext performBlock:^{
         
         STKStatistic *statistic = nil;
-        
         
         if ([category isEqualToString:STKAnalyticMessageCategory]) {
             NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[STKStatistic entityName]];
@@ -161,21 +159,19 @@ static const NSInteger kMemoryCacheObjectsCount = 20;
 
 #pragma mark - Notifications
 
-- (void)applicationWillResignActive:(NSNotification*) notification {
+- (void)applicationWillResignActive:(NSNotification *)notification {
     
     [self sendEventsFromDatabase];
-    
 }
 
-- (void) applicationWillTerminateNotification:(NSNotification*) notification {
+- (void)applicationWillTerminateNotification:(NSNotification *)notification {
     
     [self sendEventsFromDatabase];
-    
 }
 
 #pragma mark - Sending
 
-- (void) sendEventsFromDatabase {
+- (void)sendEventsFromDatabase {
     
     __weak typeof(self) weakSelf = self;
 
@@ -188,7 +184,7 @@ static const NSInteger kMemoryCacheObjectsCount = 20;
     
     NSArray *events = [STKStatistic stk_findAllInContext:self.backgroundContext];
 
-    
+    //API - send analitics
     [self.analyticsApiClient sendStatistics:events success:^(id response) {
         
         [weakSelf.backgroundContext performBlock:^{

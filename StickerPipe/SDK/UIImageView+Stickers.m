@@ -24,22 +24,19 @@
 
 #pragma mark - Builder
 
-- (void) stk_setStickerWithMessage:(NSString *)stickerMessage completion:(STKCompletionBlock)completion {
+- (void)stk_setStickerWithMessage:(NSString *)stickerMessage completion:(STKCompletionBlock)completion {
     
     [self stk_setStickerWithMessage:stickerMessage placeholder:nil placeholderColor:nil progress:nil completion:completion];
     
 }
 
 
-- (void) stk_setStickerWithMessage:(NSString *)stickerMessage placeholder:(UIImage *)placeholder {
+- (void)stk_setStickerWithMessage:(NSString *)stickerMessage placeholder:(UIImage *)placeholder {
     
     [self stk_setStickerWithMessage:stickerMessage placeholder:placeholder placeholderColor:nil progress:nil completion:nil];
 }
 
-- (void) stk_setStickerWithMessage:(NSString *)stickerMessage
-                   placeholder:(UIImage *)placeholder
-                    completion:(STKCompletionBlock)completion
-{
+- (void)stk_setStickerWithMessage:(NSString *)stickerMessage placeholder:(UIImage *)placeholder completion:(STKCompletionBlock)completion {
     
     [self stk_setStickerWithMessage:stickerMessage placeholder:placeholder placeholderColor:nil progress:nil completion:completion];
 }

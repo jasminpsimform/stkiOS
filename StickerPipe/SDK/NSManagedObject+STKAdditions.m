@@ -33,7 +33,6 @@
     }];
     
     return objects;
-    
 }
 
 + (NSArray *)stk_findWithPredicate:(NSPredicate *)predicate
@@ -45,8 +44,8 @@
 + (NSArray *)stk_findWithPredicate:(NSPredicate *)predicate
                    sortDescriptors:(NSArray*)sortDescriptors
                         fetchLimit:(NSInteger) fetchLimit
-                           context:(NSManagedObjectContext *)context
-{
+                           context:(NSManagedObjectContext *)context {
+    
     NSFetchRequest *request = [self stk_fetchRequestWithContext:context];
     request.sortDescriptors = sortDescriptors;
     request.predicate = predicate;
@@ -84,7 +83,6 @@
     }];
     
     return objects;
-    
 }
 
 + (NSFetchRequest*)stk_fetchRequestWithContext:(NSManagedObjectContext*) context {
@@ -92,7 +90,6 @@
     request.entity = [NSEntityDescription entityForName:[self stk_entityName] inManagedObjectContext:context];
     return request;
 }
-
 
 #pragma mark - Delete
 
@@ -112,7 +109,6 @@
     for (id object in objects) {
         [context deleteObject:object];
     }
-    
 }
 
 + (NSString*) stk_entityName {

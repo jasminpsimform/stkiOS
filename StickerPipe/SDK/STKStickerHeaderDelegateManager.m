@@ -28,7 +28,6 @@
     } else {
         return 1;
     }
-    
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -43,7 +42,6 @@
     }
     
     return cell;
-    
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -57,17 +55,14 @@
     }
 }
 
-
 - (void)setStickerPacks:(NSArray *)stickerPacks {
     self.stickerPacksArray = stickerPacks;
 }
-
 
 #pragma mark - Common
 
 - (STKStickerPackObject *)itemAtIndexPath:(NSIndexPath *)indexPath {
     return self.stickerPacksArray[indexPath.item];
 }
-
 
 @end

@@ -63,13 +63,15 @@
 
 - (void)reloadStickersView;
 
-- (void) showStickersView;
+- (void)showStickersView;
 
-- (void) hideStickersView;
+- (void)hideStickersView;
 
 - (BOOL)isStickerPackDownloaded:(NSString*)packMessage;
 
 - (void)showPackInfoControllerWithStickerMessage:(NSString*)message;
+
+- (void)showPackInfoControllerWithName:(NSString *)packName;
 
 //Color settings. Default is light gray
 
@@ -80,5 +82,9 @@
 - (void)textMessageSent:(NSString *)message;
 
 - (void)handleError:(NSError *)error;
+
+- (void)selectPack:(NSUInteger)index;
+
+- (void)setupInternalStickersView;
 
 @end

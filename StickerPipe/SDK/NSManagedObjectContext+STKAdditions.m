@@ -34,13 +34,11 @@ static NSManagedObjectContext *analyticsContext;
         backgroundQueueContext.persistentStoreCoordinator = coordinator;
         mainQueueContext.persistentStoreCoordinator = coordinator;
         analyticsBackgroundContext.persistentStoreCoordinator = coordinator;
-
     }
     
     mainContext = mainQueueContext;
     backgroundContext = backgroundQueueContext;
     analyticsContext = analyticsBackgroundContext;
-    
 }
 
 + (void)contexDidSave:(NSNotification*) notification {
@@ -79,7 +77,6 @@ static NSManagedObjectContext *analyticsContext;
         [self stk_setupContextStackWithPersistanceStore:[NSPersistentStoreCoordinator stk_defaultPersistentsStoreCoordinator]];
     }
     return analyticsContext;
-    
 }
 
 @end

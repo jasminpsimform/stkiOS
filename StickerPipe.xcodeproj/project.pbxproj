@@ -655,8 +655,8 @@ StickerPipeTests.xctest */,
 		9A58E64D1C4E3C8100DD0A29 /* StickersSeparator */ = {
 			isa = PBXGroup;
 			children = (
-				6E5F5A451B5E37C40036214B /* STKStickersSeparator.m */,
 				6E5F5A441B5E37C40036214B /* STKStickersSeparator.h */,
+				6E5F5A451B5E37C40036214B /* STKStickersSeparator.m */,
 			);
 			name = StickersSeparator;
 			sourceTree = "<group>";
@@ -664,8 +664,8 @@ StickerPipeTests.xctest */,
 		9A61507C1C7B3C7A00E46A2C /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				9ABDDB211C845CF100554561 /* SKProduct+STKStickerSKProduct.m */,
 				9ABDDB201C845CE300554561 /* SKProduct+STKStickerSKProduct.h */,
+				9ABDDB211C845CF100554561 /* SKProduct+STKStickerSKProduct.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
