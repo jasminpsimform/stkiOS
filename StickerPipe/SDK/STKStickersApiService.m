@@ -143,7 +143,7 @@ static NSString *const packsURL = @"shop/my";
     NSString *route = [NSString stringWithFormat:@"packs/%@", packName];
     NSDictionary *params = @{@"purchase_type": [self purchaseType:pricePoint]};
     
-    [self.sessionManager POST:route parameters:params success:^(NSURLSessionDataTask *task, id responseObject) {
+    [self.stickerSessionManager POST:route parameters:params success:^(NSURLSessionDataTask *task, id responseObject) {
         if (success) {
             success(responseObject);
         }

@@ -30,9 +30,11 @@ NSString *const STKBaseApiUrl = @"https://api.stickerpipe.com/api";
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
         config.HTTPMaximumConnectionsPerHost = 1;
         
-        self.sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseUrl] sessionConfiguration:config];
+        self.stickerSessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseUrl] sessionConfiguration:config];
+        self.sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseUrl]];
         self.getSessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseUrl]];
         
+        self.stickerSessionManager.requestSerializer = [self baseSerializer];
         self.sessionManager.requestSerializer = [self baseSerializer];        
         self.getSessionManager.requestSerializer = [self getSerializer];
     }
