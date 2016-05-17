@@ -3,13 +3,13 @@
 [![Platform](https://cocoapod-badges.herokuapp.com/p/StickerPipe/badge.png)](http://stickerpipe.com)
 [![License](https://cocoapod-badges.herokuapp.com/l/StickerPipe/badge.(png|svg))](http://stickerpipe.com)
 
-**StickerPipe** is a stickers SDK for iOS
+**Stickerpipe** is a stickers SDK for iOS
 
 ![ios](ios.gif)
 
 ## Installation
 
-Get the API key on the [StickerPipe](http://stickerpipe.com/)
+Get the API key on the [Stickerpipe](http://stickerpipe.com/)
 
 CocoaPods:
 ```ruby
@@ -173,4 +173,4 @@ i@stickerpipe.com
 
 ## License
 
-StickerPipe is available under the Apache 2 license. See the [LICENSE](LICENSE) file for more information.
+Stickerpipe is available under the Apache 2 license. See the [LICENSE](LICENSE) file for more information.
