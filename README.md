@@ -13,7 +13,7 @@ Get the API key on the [Stickerpipe](http://stickerpipe.com/)
 
 CocoaPods:
 ```ruby
-pod "StickerPipe", "~> 0.2.5"
+pod "StickerPipe", "~> 0.2.7"
 ```
 # Usage
 
