@@ -206,10 +206,10 @@ static BOOL downloadMaxIm = NO;
     }];
 }
 
-+ (void)getUserInfo:(NSDictionary *)info {
++ (void)getUserInfo:(NSDictionary *)info stickerController:(STKStickerController *)stickerController {
     NSString *packName = info[@"pack"];
-    STKStickerController *sController = [STKStickerController new];
-    [sController showPackInfoControllerWithName:packName];
+    
+    [stickerController showPackInfoControllerWithName:packName];
 }
 
 @end

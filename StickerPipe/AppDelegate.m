@@ -13,6 +13,8 @@
 #import "NSString+MD5.h"
 #import <SSKeychain/SSKeychain.h>
 
+#import "STKStickerController.h"
+
 //demo
 NSString *const apiKey = @"72921666b5ff8651f374747bfefaf7b2";
 
@@ -82,7 +84,8 @@ NSString *const testIOSKey = @"dced537bd6796e0e6dc31b8e79485c6a";
 }
 
 - (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    [STKStickersManager getUserInfo:userInfo];
+    STKStickerController *vc = (STKStickerController *)self.window.rootViewController;
+    [STKStickersManager getUserInfo:userInfo stickerController:vc];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

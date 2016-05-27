@@ -54,6 +54,6 @@
 + (void)sendDeviceToken:(NSData *)deviceToken
                 failure:(void (^)(NSError *))failure;
 
-+ (void)getUserInfo:(NSDictionary *)info;
++ (void)getUserInfo:(NSDictionary *)info stickerController:(STKStickerController *)stickerController;
 
 @end
