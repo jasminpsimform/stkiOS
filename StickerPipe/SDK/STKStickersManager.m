@@ -209,6 +209,9 @@ static BOOL downloadMaxIm = NO;
 + (void)getUserInfo:(NSDictionary *)info stickerController:(STKStickerController *)stickerController {
     NSString *packName = info[@"pack"];
     
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:@"yes" forKey:@"isNotification"];
+    [userDefaults synchronize];
     [stickerController showPackInfoControllerWithName:packName];
 }
 

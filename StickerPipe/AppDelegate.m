@@ -13,7 +13,7 @@
 #import "NSString+MD5.h"
 #import <SSKeychain/SSKeychain.h>
 
-#import "STKStickerController.h"
+#import "STKChatViewController.h"
 
 //demo
 NSString *const apiKey = @"72921666b5ff8651f374747bfefaf7b2";
@@ -84,10 +84,14 @@ NSString *const testIOSKey = @"dced537bd6796e0e6dc31b8e79485c6a";
 }
 
 - (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    STKStickerController *vc = (STKStickerController *)self.window.rootViewController;
-    [STKStickersManager getUserInfo:userInfo stickerController:vc];
+    
+    NSLog(@"%@", userInfo);
+    //TODO: remove stub user info
+    
+    UINavigationController *nvc = (UINavigationController *)self.window.rootViewController;
+    STKChatViewController *vc = (STKChatViewController *)nvc.topViewController;
+    [STKStickersManager getUserInfo:@{@"pack" : @"casual50"} stickerController:vc.stickerController];
 }
-
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

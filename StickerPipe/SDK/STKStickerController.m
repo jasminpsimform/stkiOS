@@ -57,6 +57,9 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
 
 @property (strong, nonatomic) STKStickersEntityService *stickersService;
 
+@property (strong, nonatomic) STKStickersShopViewController *shopViewController;
+@property (strong, nonatomic) STKStickersSettingsViewController *settingsViewController;
+
 - (IBAction)collectionsButtonAction:(id)sender;
 - (IBAction)stickersShopButtonAction:(id)sender;
 - (IBAction)closeError:(id)sender;
@@ -407,14 +410,35 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
 
 - (void)showModalViewController:(UIViewController *)viewController {
     
-    [self hideStickersView];
+    //    [self hideStickersView];
     
     STKOrientationNavigationController *navigationController = [[STKOrientationNavigationController alloc] initWithRootViewController:viewController];
     
     UIViewController *presenter = [self.delegate stickerControllerViewControllerForPresentingModalView];
     
-    [presenter presentViewController:navigationController animated:YES completion:nil];
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    NSString *vc = [defaults objectForKey:@"viewController"];
+    NSString *isNotification = [defaults objectForKey:@"isNotification"];
+    [defaults synchronize];
+    
+    if ([isNotification isEqualToString:@"yes"]) {
+        if ([vc isEqualToString:@"shop"]) {
+            [_shopViewController presentViewController:navigationController animated:YES completion:nil];
+            [self setUserDefaultsValue];
+            
+        } else if ([vc isEqualToString:@"settings"]) {
+            [_settingsViewController presentViewController:navigationController animated:YES completion:nil];
+            [self setUserDefaultsValue];
+            
+        } else {
+            [presenter presentViewController:navigationController animated:YES completion:nil];
+            [self setUserDefaultsValue];
+        }
+    } else {
+        [presenter presentViewController:navigationController animated:YES completion:nil];
+    }
 }
+
 
 - (void)handleRefresh:(UIRefreshControl *)refresh {
     if (self.isNetworkReachable) {
@@ -441,15 +465,15 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
 #pragma mark - Actions
 
 - (void)collectionsButtonAction:(UIButton*)collectionsButton {
-    STKStickersSettingsViewController *vc = [[STKStickersSettingsViewController alloc] initWithNibName:@"STKStickersSettingsViewController" bundle:nil];
-    [self showModalViewController:vc];
+    _settingsViewController = [[STKStickersSettingsViewController alloc] initWithNibName:@"STKStickersSettingsViewController" bundle:nil];
+    [self showModalViewController:_settingsViewController];
 }
 
 - (void)stickersShopButtonAction:(id)sender {
     
-    STKStickersShopViewController *vc = [[STKStickersShopViewController alloc] initWithNibName:@"STKStickersShopViewController" bundle:nil];
+    _shopViewController = [[STKStickersShopViewController alloc] initWithNibName:@"STKStickersShopViewController" bundle:nil];
     self.stickersService.hasNewModifiedPacks = NO;
-    [self showModalViewController:vc];
+    [self showModalViewController:_shopViewController];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:STKOpenShopNotification object:self];
 }
@@ -666,6 +690,13 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
 
 - (void)storageUpdated:(NSNotification*)notification {
     self.keyboardButton.badgeView.hidden = ![self.stickersService hasNewPacks];
+}
+
+#pragma mark - user defaults
+- (void)setUserDefaultsValue {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:@"no" forKey:@"isNotification"];
+    [userDefaults synchronize];
 }
 
 #pragma mark -------

@@ -73,7 +73,20 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:@"settings" forKey:@"viewController"];
+    [userDefaults synchronize];
+    
     [self updateStickerPacks];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:@"currentVC" forKey:@"viewController"];
+    [userDefaults synchronize];
 }
 
 - (NSUInteger)supportedInterfaceOrientations {

@@ -85,6 +85,22 @@ static NSUInteger const productsCount = 2;
     [self.stickersShopWebView.scrollView addSubview:refreshControl];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:@"shop" forKey:@"viewController"];
+    [userDefaults synchronize];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:@"currentVC" forKey:@"viewController"];
+    [userDefaults synchronize];
+}
+
 - (void)checkNetwork {
     __weak typeof(self) wself = self;
     
@@ -272,6 +288,10 @@ static NSUInteger const productsCount = 2;
             [self.stickersShopWebView stringByEvaluatingJavaScriptFromString:@"window.JsInterface.goBack()"];
         });
     }
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:@"currentVC" forKey:@"viewController"];
+    [userDefaults synchronize];
 }
 
 - (IBAction)showCollections:(id)sender {
