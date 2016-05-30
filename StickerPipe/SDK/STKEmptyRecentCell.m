@@ -29,7 +29,7 @@
         UILabel *introLabel = [[UILabel alloc] init];
         introLabel.font = [UIFont fontWithName:@"Helvetica-Neue-Regular" size:14.0];
         introLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        introLabel.text = @"Send emotions with Stickers";
+        introLabel.text = NSLocalizedString(@"Send emotions with Stickers", nil);
         introLabel.textColor = [UIColor colorWithRed:151.0/255.0 green:151.0/255.0 blue:151.0/255.0 alpha:1];
         [self.contentView addSubview:introLabel];
         

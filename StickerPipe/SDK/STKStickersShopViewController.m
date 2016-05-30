@@ -32,8 +32,6 @@ static NSString * const mainUrl = @"http://api.stickerpipe.com/api/v2/web?";
 
 static NSString * const uri = @"http://demo.stickerpipe.com/work/libs/store/js/stickerPipeStore.js";
 
-static NSString * const noInternetMessage = @"No internet connection";
-static NSString * const otherErrorMessage = @"Oops... something went wrong";
 static NSUInteger const productsCount = 2;
 
 @interface STKStickersShopViewController () <UIWebViewDelegate, STKStickersShopJsInterfaceDelegate, STKStickersPurchaseDelegate>
@@ -72,7 +70,7 @@ static NSUInteger const productsCount = 2;
     
     [self setUpButtons];
     
-    self.navigationItem.title = @"Store";
+    self.navigationItem.title = NSLocalizedString(@"Store", nil);
     
     self.jsInterface.delegate = self;
     
@@ -120,7 +118,7 @@ static NSUInteger const productsCount = 2;
 - (void)handleError:(NSError *)error {
     [self.activity stopAnimating];
     self.errorView.hidden = NO;
-    self.errorLabel.text = (error.code == NSURLErrorNotConnectedToInternet) ? noInternetMessage : otherErrorMessage;
+    self.errorLabel.text = (error.code == NSURLErrorNotConnectedToInternet) ? NSLocalizedString(@"No internet connection", nil) : NSLocalizedString(@"Oops... something went wrong", nil);
 }
 
 - (void)handleRefresh:(UIRefreshControl *)refresh {
@@ -389,12 +387,12 @@ static NSUInteger const productsCount = 2;
         
         if (completion) {
             
-            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 completion();
             }];
             [alertController addAction:okAction];
         }
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             if (cancel) {
                 cancel();
             } else {

@@ -46,7 +46,7 @@
     self.tableView.dataSource = self.dataSource;
     self.tableView.delegate = self;
     
-    self.navigationItem.title = @"Settings";
+    self.navigationItem.title = NSLocalizedString(@"Settings", nil);
     
     [self setUpButtons];
     
@@ -103,7 +103,7 @@
     
     self.navigationItem.leftBarButtonItem = closeBarButton;
     
-    self.editBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editAction:)];
+    self.editBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Edit", nil) style:UIBarButtonItemStylePlain target:self action:@selector(editAction:)];
     
     self.navigationItem.rightBarButtonItem = self.editBarButton;
     
@@ -144,7 +144,7 @@
 
 - (IBAction)editAction:(id)sender {
     [self.tableView setEditing:!self.tableView.editing animated:YES];
-    self.editBarButton.title = (self.tableView.editing) ? @"Done" : @"Edit";
+    self.editBarButton.title = (self.tableView.editing) ? NSLocalizedString(@"Done", nil) : NSLocalizedString(@"Edit", nil);
 }
 
 - (IBAction)closeAction:(id)sender {

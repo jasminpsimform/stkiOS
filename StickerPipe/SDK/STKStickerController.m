@@ -33,9 +33,6 @@
 
 static const CGFloat kStickersSectionPaddingTopBottom = 12.0;
 
-static NSString * const noInternetMessage = @"No internet connection";
-static NSString * const otherErrorMessage = @"Oops... something went wrong";
-
 @interface STKStickerController()
 
 @property (strong, nonatomic) UIView *keyboardButtonSuperView;
@@ -451,7 +448,7 @@ static NSString * const otherErrorMessage = @"Oops... something went wrong";
 - (void)handleError:(NSError *)error {
     
     self.errorView.hidden = NO;
-    self.errorLabel.text = (error.code == NSURLErrorNotConnectedToInternet) ? noInternetMessage : otherErrorMessage;
+    self.errorLabel.text = (error.code == NSURLErrorNotConnectedToInternet) ? NSLocalizedString(@"No internet connection", nil) : NSLocalizedString(@"Oops... something went wrong", nil);
     if ([self.delegate respondsToSelector:@selector(stickerControllerErrorHandle:)]) {
         if (self.isNetworkReachable) {
             [self.delegate stickerControllerErrorHandle:error];

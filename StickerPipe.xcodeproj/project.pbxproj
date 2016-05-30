@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		34D77EB51CFC254C0039438B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 34D77EB71CFC254C0039438B /* Localizable.strings */; };
 		6E19A0AC1B788E1B002DC75F /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E19A0AB1B788E1B002DC75F /* StoreKit.framework */; };
 		6E2C2D2F1B84A76A009714CD /* STKOrientationNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2C2D2E1B84A76A009714CD /* STKOrientationNavigationController.m */; };
 		6E5F5A461B5E37C40036214B /* STKStickersSeparator.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E5F5A451B5E37C40036214B /* STKStickersSeparator.m */; };
@@ -86,6 +87,7 @@
 /* Begin PBXFileReference section */
 		1AA04EB236AD472CD61382DF /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		280EB363112837B81F052E19 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		34D77EB61CFC254C0039438B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5A4CC6B4D3CDAB1319028FAD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		6E19A0AB1B788E1B002DC75F /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		6E19A0DE1B7B3216002DC75F /* StickerModel 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "StickerModel 6.xcdatamodel"; sourceTree = "<group>"; };
@@ -469,6 +471,7 @@ StickerPipeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper
 				6EDC5ECA1B41305500EBB034 /* CoreDataService */,
 				806D7979E7EEC278B5A81B4B /* Purchases */,
 				806D79B7ABBFD345173B8FA6 /* Buttons */,
+				34D77EB71CFC254C0039438B /* Localizable.strings */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -799,6 +802,7 @@ StickerPipeTests.xctest */;
 				6EF264631B3C0F830099A657 /* Main.storyboard in Resources */,
 				6EADF3611B46B3CE008005E9 /* StickerPipe.xcassets in Resources */,
 				9ABDDB2D1C845D9C00554561 /* STKStickersShopViewController.xib in Resources */,
+				34D77EB51CFC254C0039438B /* Localizable.strings in Resources */,
 				6EA356371B72581100D540F7 /* STKStickerSettingsCell.xib in Resources */,
 				6E7E2A961B722A0C00DCAFC5 /* STKStickersSettingsViewController.xib in Resources */,
 				9A0716E81C43DD6B004D2ACF /* Launch.xib in Resources */,
@@ -955,6 +959,14 @@ StickerPipeTests.xctest */;
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		34D77EB71CFC254C0039438B /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				34D77EB61CFC254C0039438B /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		6EF264611B3C0F830099A657 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

@@ -66,8 +66,8 @@ static BOOL downloadMaxIm = NO;
         
     } else {
         if (failure) {
-            NSError *error = [NSError errorWithDomain:@"It's not a sticker" code:999 userInfo:nil];
-            failure(error, @"It's not a sticker");
+            NSError *error = [NSError errorWithDomain:NSLocalizedString(@"It's not a sticker", nil) code:999 userInfo:nil];
+            failure(error, NSLocalizedString(@"It's not a sticker", nil));
         }
     }
     
