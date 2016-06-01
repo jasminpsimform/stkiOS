@@ -71,7 +71,7 @@
 		9ABDDB2D1C845D9C00554561 /* STKStickersShopViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ABDDB2B1C845D9C00554561 /* STKStickersShopViewController.xib */; };
 		9AC968301C85919C00D7612B /* STKImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC9682F1C85919C00D7612B /* STKImageManager.m */; };
 		9AF866F41C5FA420002A555B /* STKStickersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF866F31C5FA420002A555B /* STKStickersView.xib */; };
-		DF71B99FAA77DDC25C0F577E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 280EB363112837B81F052E19 /* libPods.a */; };
+		C4D9596CA8605E6415A31B0E /* libPods-StickerPipe.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C8E5888C005C3CA856D908F /* libPods-StickerPipe.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,7 +86,6 @@
 
 /* Begin PBXFileReference section */
 		1AA04EB236AD472CD61382DF /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		280EB363112837B81F052E19 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		34D77EB61CFC254C0039438B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5A4CC6B4D3CDAB1319028FAD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		6E19A0AB1B788E1B002DC75F /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -220,6 +219,9 @@ StickerPipeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper
 		9AC9682E1C85919C00D7612B /* STKImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKImageManager.h; sourceTree = "<group>"; };
 		9AC9682F1C85919C00D7612B /* STKImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKImageManager.m; sourceTree = "<group>"; };
 		9AF866F31C5FA420002A555B /* STKStickersView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STKStickersView.xib; sourceTree = "<group>"; };
+		9C8E5888C005C3CA856D908F /* libPods-StickerPipe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-StickerPipe.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0080459C1D4E359413F5447 /* Pods-StickerPipe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StickerPipe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StickerPipe/Pods-StickerPipe.debug.xcconfig"; sourceTree = "<group>"; };
+		F2F3776D957117B5CEE2B31E /* Pods-StickerPipe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StickerPipe.release.xcconfig"; path = "Pods/Target Support Files/Pods-StickerPipe/Pods-StickerPipe.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,7 +231,7 @@ StickerPipeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper
 			files = (
 				6E19A0AC1B788E1B002DC75F /* StoreKit.framework in Frameworks */,
 				6EDC5ED01B41328000EBB034 /* CoreData.framework in Frameworks */,
-				DF71B99FAA77DDC25C0F577E /* libPods.a in Frameworks */,
+				C4D9596CA8605E6415A31B0E /* libPods-StickerPipe.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,7 +250,7 @@ StickerPipeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper
 			children = (
 				6E19A0AB1B788E1B002DC75F /* StoreKit.framework */,
 				6EDC5ECF1B41328000EBB034 /* CoreData.framework */,
-				280EB363112837B81F052E19 /* libPods.a */,
+				9C8E5888C005C3CA856D908F /* libPods-StickerPipe.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -258,6 +260,8 @@ StickerPipeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper
 			children = (
 				1AA04EB236AD472CD61382DF /* Pods.debug.xcconfig */,
 				5A4CC6B4D3CDAB1319028FAD /* Pods.release.xcconfig */,
+				F0080459C1D4E359413F5447 /* Pods-StickerPipe.debug.xcconfig */,
+				F2F3776D957117B5CEE2B31E /* Pods-StickerPipe.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -718,12 +722,12 @@ StickerPipeTests.xctest */,
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6EF264771B3C0F830099A657 /* Build configuration list for PBXNativeTarget "StickerPipe" */;
 			buildPhases = (
-				CE9DB4273D6D7C917EA92818 /* Check Pods Manifest.lock */,
+				CE9DB4273D6D7C917EA92818 /* 📦 Check Pods Manifest.lock */,
 				6EF264501B3C0F830099A657 /* Sources */,
 				6EF264511B3C0F830099A657 /* Frameworks */,
 				6EF264521B3C0F830099A657 /* Resources */,
-				3818035BAD5BBEC0740E9E3A /* Copy Pods Resources */,
-				46050372AA804383AD6A6ECF /* Embed Pods Frameworks */,
+				3818035BAD5BBEC0740E9E3A /* 📦 Copy Pods Resources */,
+				46050372AA804383AD6A6ECF /* 📦 Embed Pods Frameworks */,
 				9A9E6DE21C7F134F000E831C /* ShellScript */,
 			);
 			buildRules = (
@@ -820,34 +824,34 @@ StickerPipeTests.xctest */;
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3818035BAD5BBEC0740E9E3A /* Copy Pods Resources */ = {
+		3818035BAD5BBEC0740E9E3A /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-StickerPipe/Pods-StickerPipe-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		46050372AA804383AD6A6ECF /* Embed Pods Frameworks */ = {
+		46050372AA804383AD6A6ECF /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-StickerPipe/Pods-StickerPipe-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9A9E6DE21C7F134F000E831C /* ShellScript */ = {
@@ -863,14 +867,14 @@ StickerPipeTests.xctest */;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" 0c5dc9cc90ca8deb6e4e375e9d1fbcc76d193c10 8906f5809c0b26260f246b838f508bdd48c5a2d9abfbb4c49a7d243cdb7ddb5b";
 		};
-		CE9DB4273D6D7C917EA92818 /* Check Pods Manifest.lock */ = {
+		CE9DB4273D6D7C917EA92818 /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1015,7 +1019,7 @@ StickerPipeTests.xctest */;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1053,7 +1057,7 @@ StickerPipeTests.xctest */;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1063,7 +1067,7 @@ StickerPipeTests.xctest */;
 		};
 		6EF264781B3C0F830099A657 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1AA04EB236AD472CD61382DF /* Pods.debug.xcconfig */;
+			baseConfigurationReference = F0080459C1D4E359413F5447 /* Pods-StickerPipe.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1083,7 +1087,7 @@ StickerPipeTests.xctest */;
 		};
 		6EF264791B3C0F830099A657 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5A4CC6B4D3CDAB1319028FAD /* Pods.release.xcconfig */;
+			baseConfigurationReference = F2F3776D957117B5CEE2B31E /* Pods-StickerPipe.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
