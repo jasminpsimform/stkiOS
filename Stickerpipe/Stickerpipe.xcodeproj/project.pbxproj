@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		340553081D006F200038F9B9 /* ResBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 340553071D006F200038F9B9 /* ResBundle.bundle */; };
+		3405530E1D0079940038F9B9 /* ResBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3405530D1D0079940038F9B9 /* ResBundle.bundle */; };
 		34CBB2A31D003EB100E76B3A /* Stickerpipe.h in Headers */ = {isa = PBXBuildFile; fileRef = 34CBB2A21D003EB100E76B3A /* Stickerpipe.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		34CBB2AA1D003EB100E76B3A /* Stickerpipe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34CBB29F1D003EB100E76B3A /* Stickerpipe.framework */; };
 		34CBB2AF1D003EB100E76B3A /* StickerpipeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 34CBB2AE1D003EB100E76B3A /* StickerpipeTests.m */; };
@@ -125,7 +125,7 @@
 
 /* Begin PBXFileReference section */
 		154BBC8E07DAAAA8EA6862BC /* Pods-Stickerpipe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stickerpipe.release.xcconfig"; path = "Pods/Target Support Files/Pods-Stickerpipe/Pods-Stickerpipe.release.xcconfig"; sourceTree = "<group>"; };
-		340553071D006F200038F9B9 /* ResBundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ResBundle.bundle; sourceTree = "<group>"; };
+		3405530D1D0079940038F9B9 /* ResBundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ResBundle.bundle; sourceTree = "<group>"; };
 		34CBB29F1D003EB100E76B3A /* Stickerpipe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Stickerpipe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		34CBB2A21D003EB100E76B3A /* Stickerpipe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Stickerpipe.h; sourceTree = "<group>"; };
 		34CBB2A41D003EB100E76B3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -267,7 +267,7 @@
 		34CBB2951D003EB100E76B3A = {
 			isa = PBXGroup;
 			children = (
-				340553071D006F200038F9B9 /* ResBundle.bundle */,
+				3405530D1D0079940038F9B9 /* ResBundle.bundle */,
 				34CBB2A11D003EB100E76B3A /* Stickerpipe */,
 				34CBB2AD1D003EB100E76B3A /* StickerpipeTests */,
 				34CBB2A01D003EB100E76B3A /* Products */,
@@ -595,7 +595,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				340553081D006F200038F9B9 /* ResBundle.bundle in Resources */,
+				3405530E1D0079940038F9B9 /* ResBundle.bundle in Resources */,
 				34CBB3311D003F3800E76B3A /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
