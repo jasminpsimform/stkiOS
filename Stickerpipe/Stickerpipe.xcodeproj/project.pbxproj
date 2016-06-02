@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		340553081D006F200038F9B9 /* ResBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 340553071D006F200038F9B9 /* ResBundle.bundle */; };
 		34CBB2A31D003EB100E76B3A /* Stickerpipe.h in Headers */ = {isa = PBXBuildFile; fileRef = 34CBB2A21D003EB100E76B3A /* Stickerpipe.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		34CBB2AA1D003EB100E76B3A /* Stickerpipe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34CBB29F1D003EB100E76B3A /* Stickerpipe.framework */; };
 		34CBB2AF1D003EB100E76B3A /* StickerpipeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 34CBB2AE1D003EB100E76B3A /* StickerpipeTests.m */; };
@@ -109,12 +110,6 @@
 		34CBB38C1D003F3800E76B3A /* UIImage+Tint.m in Sources */ = {isa = PBXBuildFile; fileRef = 34CBB3281D003F3800E76B3A /* UIImage+Tint.m */; };
 		34CBB38D1D003F3800E76B3A /* UIImageView+Stickers.h in Headers */ = {isa = PBXBuildFile; fileRef = 34CBB3291D003F3800E76B3A /* UIImageView+Stickers.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		34CBB38E1D003F3800E76B3A /* UIImageView+Stickers.m in Sources */ = {isa = PBXBuildFile; fileRef = 34CBB32A1D003F3800E76B3A /* UIImageView+Stickers.m */; };
-		34CBB3AA1D00407700E76B3A /* StickerModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 34CBB3991D00407700E76B3A /* StickerModel.xcdatamodeld */; };
-		34CBB3AB1D00407700E76B3A /* Stickerpipe.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34CBB3A51D00407700E76B3A /* Stickerpipe.xcassets */; };
-		34CBB3AC1D00407700E76B3A /* STKStickerSettingsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34CBB3A61D00407700E76B3A /* STKStickerSettingsCell.xib */; };
-		34CBB3AD1D00407700E76B3A /* STKStickersSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34CBB3A71D00407700E76B3A /* STKStickersSettingsViewController.xib */; };
-		34CBB3AE1D00407700E76B3A /* STKStickersShopViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34CBB3A81D00407700E76B3A /* STKStickersShopViewController.xib */; };
-		34CBB3AF1D00407700E76B3A /* STKStickersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34CBB3A91D00407700E76B3A /* STKStickersView.xib */; };
 		73D2C3C5EA69F269A5D26BC3 /* libPods-Stickerpipe.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B953AF9381999F2D95836189 /* libPods-Stickerpipe.a */; };
 /* End PBXBuildFile section */
 
@@ -130,6 +125,7 @@
 
 /* Begin PBXFileReference section */
 		154BBC8E07DAAAA8EA6862BC /* Pods-Stickerpipe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stickerpipe.release.xcconfig"; path = "Pods/Target Support Files/Pods-Stickerpipe/Pods-Stickerpipe.release.xcconfig"; sourceTree = "<group>"; };
+		340553071D006F200038F9B9 /* ResBundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ResBundle.bundle; sourceTree = "<group>"; };
 		34CBB29F1D003EB100E76B3A /* Stickerpipe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Stickerpipe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		34CBB2A21D003EB100E76B3A /* Stickerpipe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Stickerpipe.h; sourceTree = "<group>"; };
 		34CBB2A41D003EB100E76B3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -237,23 +233,6 @@
 		34CBB3291D003F3800E76B3A /* UIImageView+Stickers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Stickers.h"; sourceTree = "<group>"; };
 		34CBB32A1D003F3800E76B3A /* UIImageView+Stickers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Stickers.m"; sourceTree = "<group>"; };
 		34CBB3931D003F9900E76B3A /* ResBundle.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ResBundle.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		34CBB3951D003F9900E76B3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		34CBB39A1D00407700E76B3A /* StickerModel 10.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "StickerModel 10.xcdatamodel"; sourceTree = "<group>"; };
-		34CBB39B1D00407700E76B3A /* StickerModel 11.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "StickerModel 11.xcdatamodel"; sourceTree = "<group>"; };
-		34CBB39C1D00407700E76B3A /* StickerModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "StickerModel 2.xcdatamodel"; sourceTree = "<group>"; };
-		34CBB39D1D00407700E76B3A /* StickerModel 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "StickerModel 3.xcdatamodel"; sourceTree = "<group>"; };
-		34CBB39E1D00407700E76B3A /* StickerModel 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "StickerModel 4.xcdatamodel"; sourceTree = "<group>"; };
-		34CBB39F1D00407700E76B3A /* StickerModel 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "StickerModel 5.xcdatamodel"; sourceTree = "<group>"; };
-		34CBB3A01D00407700E76B3A /* StickerModel 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "StickerModel 6.xcdatamodel"; sourceTree = "<group>"; };
-		34CBB3A11D00407700E76B3A /* StickerModel 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "StickerModel 7.xcdatamodel"; sourceTree = "<group>"; };
-		34CBB3A21D00407700E76B3A /* StickerModel 8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "StickerModel 8.xcdatamodel"; sourceTree = "<group>"; };
-		34CBB3A31D00407700E76B3A /* StickerModel 9.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "StickerModel 9.xcdatamodel"; sourceTree = "<group>"; };
-		34CBB3A41D00407700E76B3A /* StickerModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StickerModel.xcdatamodel; sourceTree = "<group>"; };
-		34CBB3A51D00407700E76B3A /* Stickerpipe.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Stickerpipe.xcassets; sourceTree = "<group>"; };
-		34CBB3A61D00407700E76B3A /* STKStickerSettingsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STKStickerSettingsCell.xib; sourceTree = "<group>"; };
-		34CBB3A71D00407700E76B3A /* STKStickersSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STKStickersSettingsViewController.xib; sourceTree = "<group>"; };
-		34CBB3A81D00407700E76B3A /* STKStickersShopViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STKStickersShopViewController.xib; sourceTree = "<group>"; };
-		34CBB3A91D00407700E76B3A /* STKStickersView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STKStickersView.xib; sourceTree = "<group>"; };
 		B953AF9381999F2D95836189 /* libPods-Stickerpipe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Stickerpipe.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5171DBA0A2BC69DB68B431A /* Pods-Stickerpipe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stickerpipe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Stickerpipe/Pods-Stickerpipe.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -288,9 +267,9 @@
 		34CBB2951D003EB100E76B3A = {
 			isa = PBXGroup;
 			children = (
+				340553071D006F200038F9B9 /* ResBundle.bundle */,
 				34CBB2A11D003EB100E76B3A /* Stickerpipe */,
 				34CBB2AD1D003EB100E76B3A /* StickerpipeTests */,
-				34CBB3941D003F9900E76B3A /* ResBundle */,
 				34CBB2A01D003EB100E76B3A /* Products */,
 				B68CA329599B5A5834ED189D /* Pods */,
 				DD7E5DB7294450B6B339BF97 /* Frameworks */,
@@ -430,20 +409,6 @@
 				34CBB32A1D003F3800E76B3A /* UIImageView+Stickers.m */,
 			);
 			path = SDK;
-			sourceTree = "<group>";
-		};
-		34CBB3941D003F9900E76B3A /* ResBundle */ = {
-			isa = PBXGroup;
-			children = (
-				34CBB3951D003F9900E76B3A /* Info.plist */,
-				34CBB3991D00407700E76B3A /* StickerModel.xcdatamodeld */,
-				34CBB3A51D00407700E76B3A /* Stickerpipe.xcassets */,
-				34CBB3A61D00407700E76B3A /* STKStickerSettingsCell.xib */,
-				34CBB3A71D00407700E76B3A /* STKStickersSettingsViewController.xib */,
-				34CBB3A81D00407700E76B3A /* STKStickersShopViewController.xib */,
-				34CBB3A91D00407700E76B3A /* STKStickersView.xib */,
-			);
-			path = ResBundle;
 			sourceTree = "<group>";
 		};
 		B68CA329599B5A5834ED189D /* Pods */ = {
@@ -588,6 +553,9 @@
 		34CBB2961D003EB100E76B3A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					New,
+				);
 				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = Alexander908;
 				TargetAttributes = {
@@ -627,6 +595,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				340553081D006F200038F9B9 /* ResBundle.bundle in Resources */,
 				34CBB3311D003F3800E76B3A /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -642,11 +611,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				34CBB3AB1D00407700E76B3A /* Stickerpipe.xcassets in Resources */,
-				34CBB3AF1D00407700E76B3A /* STKStickersView.xib in Resources */,
-				34CBB3AD1D00407700E76B3A /* STKStickersSettingsViewController.xib in Resources */,
-				34CBB3AC1D00407700E76B3A /* STKStickerSettingsCell.xib in Resources */,
-				34CBB3AE1D00407700E76B3A /* STKStickersShopViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -753,7 +717,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				34CBB3AA1D00407700E76B3A /* StickerModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -930,7 +893,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = ResBundle/Info.plist;
+				INFOPLIST_FILE = ResBundle.bundle/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = STK.ResBundle;
@@ -947,7 +910,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = ResBundle/Info.plist;
+				INFOPLIST_FILE = ResBundle.bundle/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = STK.ResBundle;
@@ -998,29 +961,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		34CBB3991D00407700E76B3A /* StickerModel.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				34CBB39A1D00407700E76B3A /* StickerModel 10.xcdatamodel */,
-				34CBB39B1D00407700E76B3A /* StickerModel 11.xcdatamodel */,
-				34CBB39C1D00407700E76B3A /* StickerModel 2.xcdatamodel */,
-				34CBB39D1D00407700E76B3A /* StickerModel 3.xcdatamodel */,
-				34CBB39E1D00407700E76B3A /* StickerModel 4.xcdatamodel */,
-				34CBB39F1D00407700E76B3A /* StickerModel 5.xcdatamodel */,
-				34CBB3A01D00407700E76B3A /* StickerModel 6.xcdatamodel */,
-				34CBB3A11D00407700E76B3A /* StickerModel 7.xcdatamodel */,
-				34CBB3A21D00407700E76B3A /* StickerModel 8.xcdatamodel */,
-				34CBB3A31D00407700E76B3A /* StickerModel 9.xcdatamodel */,
-				34CBB3A41D00407700E76B3A /* StickerModel.xcdatamodel */,
-			);
-			currentVersion = 34CBB39B1D00407700E76B3A /* StickerModel 11.xcdatamodel */;
-			path = StickerModel.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 34CBB2961D003EB100E76B3A /* Project object */;
 }
