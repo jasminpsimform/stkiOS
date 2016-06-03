@@ -6,6 +6,20 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		340553401D0089280038F9B9 /* Framework */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 340553431D0089280038F9B9 /* Build configuration list for PBXAggregateTarget "Framework" */;
+			buildPhases = (
+				340553441D0089350038F9B9 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = Framework;
+			productName = Framework;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		34CBB2A31D003EB100E76B3A /* Stickerpipe.h in Headers */ = {isa = PBXBuildFile; fileRef = 34CBB2A21D003EB100E76B3A /* Stickerpipe.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		34CBB2AA1D003EB100E76B3A /* Stickerpipe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34CBB29F1D003EB100E76B3A /* Stickerpipe.framework */; };
@@ -572,6 +586,7 @@
 				34CBB38F1D003F9900E76B3A /* Sources */,
 				34CBB3901D003F9900E76B3A /* Frameworks */,
 				34CBB3911D003F9900E76B3A /* Resources */,
+				3472B1551D016E1F00B2844A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -591,6 +606,9 @@
 				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = Alexander908;
 				TargetAttributes = {
+					340553401D0089280038F9B9 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
 					34CBB29E1D003EB100E76B3A = {
 						CreatedOnToolsVersion = 7.3.1;
 					};
@@ -618,6 +636,7 @@
 				34CBB29E1D003EB100E76B3A /* Stickerpipe */,
 				34CBB2A81D003EB100E76B3A /* StickerpipeTests */,
 				34CBB3921D003F9900E76B3A /* ResBundle */,
+				340553401D0089280038F9B9 /* Framework */,
 			);
 		};
 /* End PBXProject section */
@@ -667,6 +686,32 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		340553441D0089350038F9B9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "REVEAL_ARCHIVE_IN_FINDER=true\n\nFRAMEWORK_NAME=\"${PROJECT_NAME}\"\n\nSIMULATOR_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/${FRAMEWORK_NAME}.framework\"\n\nDEVICE_LIBRARY_PATH=\"${BUILD_DIR}/${CONFIGURATION}-iphoneos/${FRAMEWORK_NAME}.framework\"\n\nUNIVERSAL_LIBRARY_DIR=\"${SRCROOT}/Framework\"\n\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${FRAMEWORK_NAME}.framework\"\n\n\n######################\n# Build Frameworks\n######################\n\n#xcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphonesimulator | echo\n\n#xcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build CONFIGURATION_BUILD_DIR=${BUILD_DIR}/${CONFIGURATION}-iphoneos | echo\n\n#xcodebuild -target ${PROJECT_NAME} ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk iphoneos  BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" | echo\n\n#xcodebuild -target ${PROJECT_NAME} ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk iphonesimulator  BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" | echo\n\n\n######################\n# Create directory for universal\n######################\n\nrm -rf \"${UNIVERSAL_LIBRARY_DIR}\"\n\nmkdir \"${UNIVERSAL_LIBRARY_DIR}\"\n\nmkdir \"${FRAMEWORK}\"\n\n\n######################\n# Copy files Framework\n######################\n\ncp -r \"${DEVICE_LIBRARY_PATH}/.\" \"${FRAMEWORK}\"\n\n\n######################\n# Make fat universal binary\n######################\n\nlipo \"${SIMULATOR_LIBRARY_PATH}/${FRAMEWORK_NAME}\" \"${DEVICE_LIBRARY_PATH}/${FRAMEWORK_NAME}\" -create -output \"${FRAMEWORK}/${FRAMEWORK_NAME}\" | echo\n\n\n######################\n# On Release, copy the result to desktop folder\n######################\n\nif [ \"${CONFIGURATION}\" == \"Release\" ]; then\nmkdir \"${HOME}/Desktop/${FRAMEWORK_NAME}-${CONFIGURATION}-iphoneuniversal/\"\n#cp -r \"${FRAMEWORK}\" \"${HOME}/Desktop/${FRAMEWORK_NAME}-${CONFIGURATION}-iphoneuniversal/\"\nfi\n\n\n######################\n# If needed, open the Framework folder\n######################\n\nif [ ${REVEAL_ARCHIVE_IN_FINDER} = true ]; then\nif [ \"${CONFIGURATION}\" == \"Release\" ]; then\nopen \"${HOME}/Desktop/${FRAMEWORK_NAME}-${CONFIGURATION}-iphoneuniversal/\"\nelse\nopen \"${UNIVERSAL_LIBRARY_DIR}/\"\nfi\nfi";
+		};
+		3472B1551D016E1F00B2844A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
 		};
 		44F01F3D687A8A279498BF9B /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -780,6 +825,20 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		340553411D0089280038F9B9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		340553421D0089280038F9B9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		34CBB2B11D003EB100E76B3A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -961,6 +1020,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		340553431D0089280038F9B9 /* Build configuration list for PBXAggregateTarget "Framework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				340553411D0089280038F9B9 /* Debug */,
+				340553421D0089280038F9B9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		34CBB2991D003EB100E76B3A /* Build configuration list for PBXProject "Stickerpipe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
