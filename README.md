@@ -18,6 +18,11 @@ pod "StickerPipe", "~> 0.3.0"
 ```
 # Usage
 
+For import framework to project use:
+```objc
+@import Stickerpipe
+```
+
 ### API key 
 
 Add API key in your AppDelegate.m 
