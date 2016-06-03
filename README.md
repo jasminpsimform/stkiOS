@@ -13,7 +13,8 @@ Get the API key on the [Stickerpipe](http://stickerpipe.com/)
 
 CocoaPods:
 ```ruby
-pod "StickerPipe", "~> 0.2.7"
+use_frameworks!
+pod "StickerPipe", "~> 0.3.0"
 ```
 # Usage
 
@@ -122,7 +123,8 @@ method call to delegate method:
 
 Add
 ```objc
-[STKStickersManager getUserInfo:userInfo];
+STKStickerController *stickerController = ...
+[STKStickersManager getUserInfo:userInfo stickerController:stickerController];
 ```
 method call to delegate method:
 ```objc
