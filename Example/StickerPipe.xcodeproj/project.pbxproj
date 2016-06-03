@@ -1,0 +1,594 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		337294F0029B18B6FD216493 /* Pods_StickerPipe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 884BEBB88521743B654F9403 /* Pods_StickerPipe.framework */; };
+		6E19A0AC1B788E1B002DC75F /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E19A0AB1B788E1B002DC75F /* StoreKit.framework */; };
+		6EADF3981B46D13F008005E9 /* STKChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EADF3971B46D13F008005E9 /* STKChatViewController.m */; };
+		6EADF39B1B46D4EE008005E9 /* STKChatStickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EADF39A1B46D4EE008005E9 /* STKChatStickerCell.m */; };
+		6EDC5ED01B41328000EBB034 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EDC5ECF1B41328000EBB034 /* CoreData.framework */; };
+		6EF2645A1B3C0F830099A657 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EF264591B3C0F830099A657 /* main.m */; };
+		6EF2645D1B3C0F830099A657 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EF2645C1B3C0F830099A657 /* AppDelegate.m */; };
+		6EF264631B3C0F830099A657 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EF264611B3C0F830099A657 /* Main.storyboard */; };
+		6EF264651B3C0F830099A657 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EF264641B3C0F830099A657 /* Images.xcassets */; };
+		6EF264741B3C0F830099A657 /* StickerFactoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EF264731B3C0F830099A657 /* StickerFactoryTests.m */; };
+		9A0716E81C43DD6B004D2ACF /* Launch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A0716E71C43DD6B004D2ACF /* Launch.xib */; };
+		9A1F16A41C47EBF500C22F73 /* STKChatTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1F16A31C47EBF500C22F73 /* STKChatTextCell.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6EF2646E1B3C0F830099A657 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6EF2644C1B3C0F830099A657 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6EF264531B3C0F830099A657;
+			remoteInfo = StickerFactory;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1AA04EB236AD472CD61382DF /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		5A4CC6B4D3CDAB1319028FAD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		6E19A0AB1B788E1B002DC75F /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		6EADF3961B46D13F008005E9 /* STKChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKChatViewController.h; sourceTree = "<group>"; };
+		6EADF3971B46D13F008005E9 /* STKChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKChatViewController.m; sourceTree = "<group>"; wrapsLines = 1; };
+		6EADF3991B46D4EE008005E9 /* STKChatStickerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKChatStickerCell.h; sourceTree = "<group>"; };
+		6EADF39A1B46D4EE008005E9 /* STKChatStickerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKChatStickerCell.m; sourceTree = "<group>"; };
+		6EDC5ECF1B41328000EBB034 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		6EF264541B3C0F830099A657 /* StickerPipe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StickerPipe.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6EF264581B3C0F830099A657 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6EF264591B3C0F830099A657 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		6EF2645B1B3C0F830099A657 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		6EF2645C1B3C0F830099A657 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		6EF264621B3C0F830099A657 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		6EF264641B3C0F830099A657 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		6EF2646D1B3C0F830099A657 /* StickerPipe
+StickerPipe
+StickerPipeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "StickerPipe\nStickerPipe\nStickerPipeTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6EF264721B3C0F830099A657 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6EF264731B3C0F830099A657 /* StickerFactoryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StickerFactoryTests.m; sourceTree = "<group>"; };
+		884BEBB88521743B654F9403 /* Pods_StickerPipe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StickerPipe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A0716E71C43DD6B004D2ACF /* Launch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Launch.xib; sourceTree = "<group>"; };
+		9A1F16A21C47EBF500C22F73 /* STKChatTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKChatTextCell.h; sourceTree = "<group>"; };
+		9A1F16A31C47EBF500C22F73 /* STKChatTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKChatTextCell.m; sourceTree = "<group>"; };
+		F0080459C1D4E359413F5447 /* Pods-StickerPipe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StickerPipe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StickerPipe/Pods-StickerPipe.debug.xcconfig"; sourceTree = "<group>"; };
+		F2F3776D957117B5CEE2B31E /* Pods-StickerPipe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StickerPipe.release.xcconfig"; path = "Pods/Target Support Files/Pods-StickerPipe/Pods-StickerPipe.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6EF264511B3C0F830099A657 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6E19A0AC1B788E1B002DC75F /* StoreKit.framework in Frameworks */,
+				6EDC5ED01B41328000EBB034 /* CoreData.framework in Frameworks */,
+				337294F0029B18B6FD216493 /* Pods_StickerPipe.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6EF2646A1B3C0F830099A657 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		47FB3E470E9D34BB5596AC37 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6E19A0AB1B788E1B002DC75F /* StoreKit.framework */,
+				6EDC5ECF1B41328000EBB034 /* CoreData.framework */,
+				884BEBB88521743B654F9403 /* Pods_StickerPipe.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		65DF010521239CF1FEE738E4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1AA04EB236AD472CD61382DF /* Pods.debug.xcconfig */,
+				5A4CC6B4D3CDAB1319028FAD /* Pods.release.xcconfig */,
+				F0080459C1D4E359413F5447 /* Pods-StickerPipe.debug.xcconfig */,
+				F2F3776D957117B5CEE2B31E /* Pods-StickerPipe.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		6EADF39C1B46D4F4008005E9 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				9A1F16A61C47F05600C22F73 /* TextCell */,
+				9A1F16A51C47F04700C22F73 /* StickerCell */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		6EF2644B1B3C0F830099A657 = {
+			isa = PBXGroup;
+			children = (
+				6EF264561B3C0F830099A657 /* StickerPipe */,
+				6EF264701B3C0F830099A657 /* StickerPipeTests */,
+				6EF264551B3C0F830099A657 /* Products */,
+				65DF010521239CF1FEE738E4 /* Pods */,
+				47FB3E470E9D34BB5596AC37 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		6EF264551B3C0F830099A657 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6EF264541B3C0F830099A657 /* StickerPipe.app */,
+				6EF2646D1B3C0F830099A657 /* StickerPipe
+StickerPipe
+StickerPipeTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6EF264561B3C0F830099A657 /* StickerPipe */ = {
+			isa = PBXGroup;
+			children = (
+				6EF2645B1B3C0F830099A657 /* AppDelegate.h */,
+				6EF2645C1B3C0F830099A657 /* AppDelegate.m */,
+				6EADF3961B46D13F008005E9 /* STKChatViewController.h */,
+				6EADF3971B46D13F008005E9 /* STKChatViewController.m */,
+				6EADF39C1B46D4F4008005E9 /* Cells */,
+				6EF264611B3C0F830099A657 /* Main.storyboard */,
+				6EF264641B3C0F830099A657 /* Images.xcassets */,
+				6EF264571B3C0F830099A657 /* Supporting Files */,
+				9A0716E71C43DD6B004D2ACF /* Launch.xib */,
+			);
+			path = StickerPipe;
+			sourceTree = "<group>";
+		};
+		6EF264571B3C0F830099A657 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6EF264581B3C0F830099A657 /* Info.plist */,
+				6EF264591B3C0F830099A657 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6EF264701B3C0F830099A657 /* StickerPipeTests */ = {
+			isa = PBXGroup;
+			children = (
+				6EF264731B3C0F830099A657 /* StickerFactoryTests.m */,
+				6EF264711B3C0F830099A657 /* Supporting Files */,
+			);
+			path = StickerPipeTests;
+			sourceTree = "<group>";
+		};
+		6EF264711B3C0F830099A657 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6EF264721B3C0F830099A657 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9A1F16A51C47F04700C22F73 /* StickerCell */ = {
+			isa = PBXGroup;
+			children = (
+				6EADF3991B46D4EE008005E9 /* STKChatStickerCell.h */,
+				6EADF39A1B46D4EE008005E9 /* STKChatStickerCell.m */,
+			);
+			name = StickerCell;
+			sourceTree = "<group>";
+		};
+		9A1F16A61C47F05600C22F73 /* TextCell */ = {
+			isa = PBXGroup;
+			children = (
+				9A1F16A21C47EBF500C22F73 /* STKChatTextCell.h */,
+				9A1F16A31C47EBF500C22F73 /* STKChatTextCell.m */,
+			);
+			name = TextCell;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6EF264531B3C0F830099A657 /* StickerPipe */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6EF264771B3C0F830099A657 /* Build configuration list for PBXNativeTarget "StickerPipe" */;
+			buildPhases = (
+				CE9DB4273D6D7C917EA92818 /* 📦 Check Pods Manifest.lock */,
+				6EF264501B3C0F830099A657 /* Sources */,
+				6EF264511B3C0F830099A657 /* Frameworks */,
+				6EF264521B3C0F830099A657 /* Resources */,
+				3818035BAD5BBEC0740E9E3A /* 📦 Copy Pods Resources */,
+				46050372AA804383AD6A6ECF /* 📦 Embed Pods Frameworks */,
+				9A9E6DE21C7F134F000E831C /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StickerPipe;
+			productName = StickerFactory;
+			productReference = 6EF264541B3C0F830099A657 /* StickerPipe.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6EF2646C1B3C0F830099A657 /* StickerPipeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6EF2647A1B3C0F830099A657 /* Build configuration list for PBXNativeTarget "StickerPipeTests" */;
+			buildPhases = (
+				6EF264691B3C0F830099A657 /* Sources */,
+				6EF2646A1B3C0F830099A657 /* Frameworks */,
+				6EF2646B1B3C0F830099A657 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6EF2646F1B3C0F830099A657 /* PBXTargetDependency */,
+			);
+			name = StickerPipeTests;
+			productName = StickerFactoryTests;
+			productReference = 6EF2646D1B3C0F830099A657 /* StickerPipe
+StickerPipe
+StickerPipeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6EF2644C1B3C0F830099A657 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = "908 Inc";
+				TargetAttributes = {
+					6EF264531B3C0F830099A657 = {
+						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = Q5ZE6268FL;
+					};
+					6EF2646C1B3C0F830099A657 = {
+						CreatedOnToolsVersion = 6.3.2;
+						TestTargetID = 6EF264531B3C0F830099A657;
+					};
+				};
+			};
+			buildConfigurationList = 6EF2644F1B3C0F830099A657 /* Build configuration list for PBXProject "StickerPipe" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6EF2644B1B3C0F830099A657;
+			productRefGroup = 6EF264551B3C0F830099A657 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6EF264531B3C0F830099A657 /* StickerPipe */,
+				6EF2646C1B3C0F830099A657 /* StickerPipeTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6EF264521B3C0F830099A657 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6EF264631B3C0F830099A657 /* Main.storyboard in Resources */,
+				9A0716E81C43DD6B004D2ACF /* Launch.xib in Resources */,
+				6EF264651B3C0F830099A657 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6EF2646B1B3C0F830099A657 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3818035BAD5BBEC0740E9E3A /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-StickerPipe/Pods-StickerPipe-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		46050372AA804383AD6A6ECF /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-StickerPipe/Pods-StickerPipe-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9A9E6DE21C7F134F000E831C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 0c5dc9cc90ca8deb6e4e375e9d1fbcc76d193c10 8906f5809c0b26260f246b838f508bdd48c5a2d9abfbb4c49a7d243cdb7ddb5b";
+		};
+		CE9DB4273D6D7C917EA92818 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6EF264501B3C0F830099A657 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6EADF39B1B46D4EE008005E9 /* STKChatStickerCell.m in Sources */,
+				6EF2645D1B3C0F830099A657 /* AppDelegate.m in Sources */,
+				9A1F16A41C47EBF500C22F73 /* STKChatTextCell.m in Sources */,
+				6EF2645A1B3C0F830099A657 /* main.m in Sources */,
+				6EADF3981B46D13F008005E9 /* STKChatViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6EF264691B3C0F830099A657 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6EF264741B3C0F830099A657 /* StickerFactoryTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6EF2646F1B3C0F830099A657 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6EF264531B3C0F830099A657 /* StickerPipe */;
+			targetProxy = 6EF2646E1B3C0F830099A657 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		6EF264611B3C0F830099A657 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6EF264621B3C0F830099A657 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		6EF264751B3C0F830099A657 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6EF264761B3C0F830099A657 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6EF264781B3C0F830099A657 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F0080459C1D4E359413F5447 /* Pods-StickerPipe.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = StickerPipe/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.stickerpipe.demo;
+				PRODUCT_NAME = StickerPipe;
+				PROVISIONING_PROFILE = "";
+			};
+			name = Debug;
+		};
+		6EF264791B3C0F830099A657 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F2F3776D957117B5CEE2B31E /* Pods-StickerPipe.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = StickerPipe/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.stickerpipe.demo;
+				PRODUCT_NAME = StickerPipe;
+				PROVISIONING_PROFILE = "";
+			};
+			name = Release;
+		};
+		6EF2647B1B3C0F830099A657 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = StickerPipeTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "-08.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "StickerPipe\nStickerPipe\nStickerPipeTests";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StickerPipe.app/StickerPipe";
+			};
+			name = Debug;
+		};
+		6EF2647C1B3C0F830099A657 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = StickerPipeTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "-08.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "StickerPipe\nStickerPipe\nStickerPipeTests";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StickerPipe.app/StickerPipe";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6EF2644F1B3C0F830099A657 /* Build configuration list for PBXProject "StickerPipe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6EF264751B3C0F830099A657 /* Debug */,
+				6EF264761B3C0F830099A657 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6EF264771B3C0F830099A657 /* Build configuration list for PBXNativeTarget "StickerPipe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6EF264781B3C0F830099A657 /* Debug */,
+				6EF264791B3C0F830099A657 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6EF2647A1B3C0F830099A657 /* Build configuration list for PBXNativeTarget "StickerPipeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6EF2647B1B3C0F830099A657 /* Debug */,
+				6EF2647C1B3C0F830099A657 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6EF2644C1B3C0F830099A657 /* Project object */;
+}
