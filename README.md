@@ -28,7 +28,7 @@ For import framework to project use:
 Add API key in your AppDelegate.m 
 
 ```objc
-[STKStickersManager initWitApiKey:@"API_KEY"];
+[STKStickersManager initWithApiKey:@"API_KEY"];
 [STKStickersManager setStartTimeInterval];
 ```
 
