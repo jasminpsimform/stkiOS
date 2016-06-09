@@ -12,4 +12,6 @@ pod 'RMStore/NSUserDefaultsPersistence'
 pod 'SSKeychain', '~> 1.3'
 pod "StickerPipe"
 
+pod 'AFNetworking'
+
 end

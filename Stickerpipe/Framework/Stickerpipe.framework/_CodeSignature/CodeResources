@@ -4,10 +4,6 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>.DS_Store</key>
-		<data>
-		dBnJ9fU40TqsPpyHMn9S69x4Zkg=
-		</data>
 		<key>Headers/NSManagedObject+STKAdditions.h</key>
 		<data>
 		ofPN97Qq1f69ogzw25FfNaHNmio=
@@ -86,11 +82,11 @@
 		</data>
 		<key>Headers/STKStickerController.h</key>
 		<data>
-		4jNFmao+r1E9/D8cHOTRDS2FwNw=
+		EEWeTrSasZQckaCO5mNuen1BfVg=
 		</data>
 		<key>Headers/STKStickerDelegateManager.h</key>
 		<data>
-		AGB8zT1APTZBKBuKFLoaGW18sqo=
+		dih4gjsigITqXwqK5So7ZGXkP9Q=
 		</data>
 		<key>Headers/STKStickerHeaderCell.h</key>
 		<data>
@@ -146,7 +142,7 @@
 		</data>
 		<key>Headers/STKStickersManager.h</key>
 		<data>
-		SfYM6eF7VEO9frXvDNsJT5NJ1TU=
+		cEjw+zyPSdECdnf2r5RlhEG8+vE=
 		</data>
 		<key>Headers/STKStickersPurchaseService.h</key>
 		<data>
@@ -214,22 +210,13 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		fDx7gMXkbRJqkBy7UJT0V8YUPk0=
+		un+BuIqfru/wZOApAD+FDqLgiaI=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
 		2G4+U5gv2qm4mRNwHKg5VMTGNZE=
 		</data>
 		<key>en.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			0gkvTPsg5gZZvrAhV1mZu83TNlY=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>fr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -454,22 +441,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			4jNFmao+r1E9/D8cHOTRDS2FwNw=
+			EEWeTrSasZQckaCO5mNuen1BfVg=
 			</data>
 			<key>hash2</key>
 			<data>
-			mrmfLgwAWHhO+/G5qRfYFfZJMiAi25n7s5oDcW9Ip0A=
+			j2Qa1hno6d0rD8vuiBZWzZIUWpNcqSuRnH68OaQvXaE=
 			</data>
 		</dict>
 		<key>Headers/STKStickerDelegateManager.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			AGB8zT1APTZBKBuKFLoaGW18sqo=
+			dih4gjsigITqXwqK5So7ZGXkP9Q=
 			</data>
 			<key>hash2</key>
 			<data>
-			D7GM04fHwvFa/RkyoUS11sb518XnEX13A8Hq7na3HhA=
+			ppqnn+07MDn61/EmE5ei/XnlzRnBpBALiuhYWtawWhw=
 			</data>
 		</dict>
 		<key>Headers/STKStickerHeaderCell.h</key>
@@ -619,11 +606,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			SfYM6eF7VEO9frXvDNsJT5NJ1TU=
+			cEjw+zyPSdECdnf2r5RlhEG8+vE=
 			</data>
 			<key>hash2</key>
 			<data>
-			VDYxTWQK+30rsY7uFfJOrE+MSmfkW/4SxMzhvPId4B0=
+			tY7Pus7ndW4hNrzG4v8PndzNfAgCTeyvUzItDIv15Cg=
 			</data>
 		</dict>
 		<key>Headers/STKStickersPurchaseService.h</key>
@@ -814,19 +801,6 @@
 			</data>
 		</dict>
 		<key>en.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			0gkvTPsg5gZZvrAhV1mZu83TNlY=
-			</data>
-			<key>hash2</key>
-			<data>
-			/dhULEnNKKHuMxdAnZzZkDQrrHvq7HcPtev2Dn//+Rg=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>fr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>

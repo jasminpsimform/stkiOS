@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		337294F0029B18B6FD216493 /* Pods_StickerPipe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 884BEBB88521743B654F9403 /* Pods_StickerPipe.framework */; };
+		347D807F1D08784900C21C36 /* Pods_StickerPipe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 884BEBB88521743B654F9403 /* Pods_StickerPipe.framework */; };
 		6E19A0AC1B788E1B002DC75F /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E19A0AB1B788E1B002DC75F /* StoreKit.framework */; };
 		6EADF3981B46D13F008005E9 /* STKChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EADF3971B46D13F008005E9 /* STKChatViewController.m */; };
 		6EADF39B1B46D4EE008005E9 /* STKChatStickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EADF39A1B46D4EE008005E9 /* STKChatStickerCell.m */; };
@@ -65,9 +65,9 @@ StickerPipeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				347D807F1D08784900C21C36 /* Pods_StickerPipe.framework in Frameworks */,
 				6E19A0AC1B788E1B002DC75F /* StoreKit.framework in Frameworks */,
 				6EDC5ED01B41328000EBB034 /* CoreData.framework in Frameworks */,
-				337294F0029B18B6FD216493 /* Pods_StickerPipe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,7 +436,7 @@ StickerPipeTests.xctest */;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -474,7 +474,7 @@ StickerPipeTests.xctest */;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -490,6 +490,7 @@ StickerPipeTests.xctest */;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -510,6 +511,7 @@ StickerPipeTests.xctest */;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
