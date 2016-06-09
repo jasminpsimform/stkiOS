@@ -56,7 +56,7 @@ NSString *const apiKey = @"72921666b5ff8651f374747bfefaf7b2";
     [Crashlytics startWithAPIKey:@"0c5dc9cc90ca8deb6e4e375e9d1fbcc76d193c10"];
     [CrashlyticsKit setUserIdentifier:[self userId]];
     
-    [STKStickersManager initWitApiKey: apiKey];
+    [STKStickersManager initWithApiKey: apiKey];
     [STKStickersManager setStartTimeInterval];
     [STKStickersManager setUserKey:[self userId]];
     
@@ -64,7 +64,7 @@ NSString *const apiKey = @"72921666b5ff8651f374747bfefaf7b2";
     [STKStickersManager setPriceBWithLabel:@"0.99 USD" andValue:0.99f];
     [STKStickersManager setPriceCwithLabel:@"1.99 USD" andValue:1.99f];
     
-    [STKStickersManager setUserIsSubscriber:NO];
+    [STKStickersManager setUserAsSubscriber:NO];
     
     [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
     [[UIApplication sharedApplication] registerForRemoteNotifications];
