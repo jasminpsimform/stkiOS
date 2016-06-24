@@ -12,8 +12,14 @@
 
 @interface STKStickerViewCell : UICollectionViewCell
 
+//- (void) configureWithStickerMessage:(NSString*)stickerMessage
+//                         placeholder:(UIImage*)placeholder
+//                    placeholderColor:(UIColor*)placeholderColor;
+
 - (void) configureWithStickerMessage:(NSString*)stickerMessage
                          placeholder:(UIImage*)placeholder
-                    placeholderColor:(UIColor*)placeholderColor;
+                    placeholderColor:(UIColor*)placeholderColor
+                      collectionView:(UICollectionView *)collectionView
+              cellForItemAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

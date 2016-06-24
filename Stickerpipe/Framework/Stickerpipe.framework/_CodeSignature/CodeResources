@@ -4,6 +4,14 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>.DS_Store</key>
+		<data>
+		XfZEGjdrjBtA2eS1IYQdg//nqVg=
+		</data>
+		<key>Headers/.DS_Store</key>
+		<data>
+		YhidtJSeYfNXjkMdTFL4qrxzuZo=
+		</data>
 		<key>Headers/NSManagedObject+STKAdditions.h</key>
 		<data>
 		ofPN97Qq1f69ogzw25FfNaHNmio=
@@ -26,7 +34,7 @@
 		</data>
 		<key>Headers/STKAnalyticService.h</key>
 		<data>
-		e5aCSAhhbRfjVkb3UN42aveVNcE=
+		m7j7Sb0CWlwBoMWX1wOzdmegv0Q=
 		</data>
 		<key>Headers/STKAnalyticsAPIClient.h</key>
 		<data>
@@ -50,7 +58,7 @@
 		</data>
 		<key>Headers/STKEmptyRecentCell.h</key>
 		<data>
-		enQFJygvSRI3nZsELC2D4j3jUH4=
+		9iF6lw67T6O70qzxQRywREI4ZbM=
 		</data>
 		<key>Headers/STKImageManager.h</key>
 		<data>
@@ -82,19 +90,19 @@
 		</data>
 		<key>Headers/STKStickerController.h</key>
 		<data>
-		EEWeTrSasZQckaCO5mNuen1BfVg=
+		/8EgE/845TR2UIrUSpQUeFFHAKU=
 		</data>
 		<key>Headers/STKStickerDelegateManager.h</key>
 		<data>
-		dih4gjsigITqXwqK5So7ZGXkP9Q=
+		spdP0m83gg5huWdSMydF43cdqgQ=
 		</data>
 		<key>Headers/STKStickerHeaderCell.h</key>
 		<data>
-		FIfLkmqGxhVQ4T7yxzA9EmewR3A=
+		DqdiD/SJyunuNbmn7/MUdafe8fY=
 		</data>
 		<key>Headers/STKStickerHeaderDelegateManager.h</key>
 		<data>
-		SGiiMoBX5MLLx1SFqBMgJiHQVFk=
+		RzEc3TdGK5n6KDBODP59ZKB1iTI=
 		</data>
 		<key>Headers/STKStickerObject.h</key>
 		<data>
@@ -112,6 +120,10 @@
 		<data>
 		y2PQX6TJrBE4ir/VfYdYGTnM2pY=
 		</data>
+		<key>Headers/STKStickerPipe.h</key>
+		<data>
+		JBiyAgZFBlIYKQv/vwEEk0Apx7o=
+		</data>
 		<key>Headers/STKStickerProtocol.h</key>
 		<data>
 		S1TAhT+kdcw7q0O02XTO0AsDehs=
@@ -122,7 +134,7 @@
 		</data>
 		<key>Headers/STKStickerViewCell.h</key>
 		<data>
-		EjUhnxgbB5rrc6vK3puhqqjycj8=
+		mPEGHOoyJF2JWZK0cKpxJPf+pVY=
 		</data>
 		<key>Headers/STKStickersApiService.h</key>
 		<data>
@@ -158,7 +170,7 @@
 		</data>
 		<key>Headers/STKStickersSettingsViewController.h</key>
 		<data>
-		mREzBrhg4rJo4HeqeWmFd9+T+ak=
+		OGc/De56EfDlMy+CTKcMiJxDE6M=
 		</data>
 		<key>Headers/STKStickersShopJsInterface.h</key>
 		<data>
@@ -166,7 +178,7 @@
 		</data>
 		<key>Headers/STKStickersShopViewController.h</key>
 		<data>
-		bN+IEQ3OH861YGrL6kE9u4Sl8pk=
+		d/02yhhnM6x83vVm91TIOfeZEQc=
 		</data>
 		<key>Headers/STKTableViewDataSource.h</key>
 		<data>
@@ -220,7 +232,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			0gkvTPsg5gZZvrAhV1mZu83TNlY=
+			B/Yd9V0smNVoDiE6bsCKFpPzSsA=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -287,11 +299,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			e5aCSAhhbRfjVkb3UN42aveVNcE=
+			m7j7Sb0CWlwBoMWX1wOzdmegv0Q=
 			</data>
 			<key>hash2</key>
 			<data>
-			58iwo3yTfJSGUOum2yOOQwwWvNuDM9sB0mMPogbDmiM=
+			mzdJCS9zgAF5RRUj533j6kQApOOznLTDiNk3fHc2J34=
 			</data>
 		</dict>
 		<key>Headers/STKAnalyticsAPIClient.h</key>
@@ -353,11 +365,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			enQFJygvSRI3nZsELC2D4j3jUH4=
+			9iF6lw67T6O70qzxQRywREI4ZbM=
 			</data>
 			<key>hash2</key>
 			<data>
-			iD1lsjTJvFtGSqW/fgsjzCD56ej4ugFUL7ZoMoH59p4=
+			nAt5jQnNZ322J6sa6YhXJnIsL8RfYy6TtZ9omfKEVvE=
 			</data>
 		</dict>
 		<key>Headers/STKImageManager.h</key>
@@ -441,44 +453,44 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			EEWeTrSasZQckaCO5mNuen1BfVg=
+			/8EgE/845TR2UIrUSpQUeFFHAKU=
 			</data>
 			<key>hash2</key>
 			<data>
-			j2Qa1hno6d0rD8vuiBZWzZIUWpNcqSuRnH68OaQvXaE=
+			8PSpBNAUQtdHz6lmxSse6b9EahTYdFH7mOePjk6YReQ=
 			</data>
 		</dict>
 		<key>Headers/STKStickerDelegateManager.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			dih4gjsigITqXwqK5So7ZGXkP9Q=
+			spdP0m83gg5huWdSMydF43cdqgQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			ppqnn+07MDn61/EmE5ei/XnlzRnBpBALiuhYWtawWhw=
+			+ETvaK4LyCdinuR5SMi0FDOFpolOSy4zOI7hpSNdHtg=
 			</data>
 		</dict>
 		<key>Headers/STKStickerHeaderCell.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			FIfLkmqGxhVQ4T7yxzA9EmewR3A=
+			DqdiD/SJyunuNbmn7/MUdafe8fY=
 			</data>
 			<key>hash2</key>
 			<data>
-			6VBg6CzGNDlS7uR5PWxTjoKeKmwuO0t+Oo/CczuOPfw=
+			S+zjXZ8ZQDtA4T9YJ/EFac3EGIp1SOvQI2+cuZRpvsQ=
 			</data>
 		</dict>
 		<key>Headers/STKStickerHeaderDelegateManager.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			SGiiMoBX5MLLx1SFqBMgJiHQVFk=
+			RzEc3TdGK5n6KDBODP59ZKB1iTI=
 			</data>
 			<key>hash2</key>
 			<data>
-			baMbxxAyZ22Q5Ei7BLbJ9tsuPImIin2Nq8S5l7bzxf4=
+			Xn0Soe/BLZ02wFJs/U615QAgyf/acF6KrxAx3DMuq2Y=
 			</data>
 		</dict>
 		<key>Headers/STKStickerObject.h</key>
@@ -525,6 +537,17 @@
 			xxT+JLvMeCvNymqDuT426U4fcaJngP1C7fIkX/+8TdA=
 			</data>
 		</dict>
+		<key>Headers/STKStickerPipe.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			JBiyAgZFBlIYKQv/vwEEk0Apx7o=
+			</data>
+			<key>hash2</key>
+			<data>
+			yXLGoEdKS5EqqryEBzn3DZfGowN/vBxzE1++nom2iCk=
+			</data>
+		</dict>
 		<key>Headers/STKStickerProtocol.h</key>
 		<dict>
 			<key>hash</key>
@@ -551,11 +574,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			EjUhnxgbB5rrc6vK3puhqqjycj8=
+			mPEGHOoyJF2JWZK0cKpxJPf+pVY=
 			</data>
 			<key>hash2</key>
 			<data>
-			+oydBtBdcclzgOqZU4r06fHKkPV8eXBnE6aRtSBY8mI=
+			60Q5IF4Lg2KP8rhAsRreegaU1fxoIkRQB7cHECgZEEU=
 			</data>
 		</dict>
 		<key>Headers/STKStickersApiService.h</key>
@@ -650,11 +673,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			mREzBrhg4rJo4HeqeWmFd9+T+ak=
+			OGc/De56EfDlMy+CTKcMiJxDE6M=
 			</data>
 			<key>hash2</key>
 			<data>
-			ZiZ1fkT/ChJwRCUQ8jbxWHSVcyfxuc1gGRXVcvdynyQ=
+			DKvzEjyZt8Asu9co3+ZIlT+Vfl7iCWQRm4HYtdrhesw=
 			</data>
 		</dict>
 		<key>Headers/STKStickersShopJsInterface.h</key>
@@ -672,11 +695,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			bN+IEQ3OH861YGrL6kE9u4Sl8pk=
+			d/02yhhnM6x83vVm91TIOfeZEQc=
 			</data>
 			<key>hash2</key>
 			<data>
-			be+/eUMVSAEar68kp8tqTbkkqwxxTkq5BGc9LN9n9as=
+			1p/ylWrjHGsVb65LM3oVqYL2b/l8hVRxIIUZHD5yq8k=
 			</data>
 		</dict>
 		<key>Headers/STKTableViewDataSource.h</key>
@@ -804,11 +827,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			0gkvTPsg5gZZvrAhV1mZu83TNlY=
+			B/Yd9V0smNVoDiE6bsCKFpPzSsA=
 			</data>
 			<key>hash2</key>
 			<data>
-			/dhULEnNKKHuMxdAnZzZkDQrrHvq7HcPtev2Dn//+Rg=
+			Qw3sqjmE4o0IGAq/LhXEMop8oXHXQB5dTtW0Zedg4Z4=
 			</data>
 			<key>optional</key>
 			<true/>
