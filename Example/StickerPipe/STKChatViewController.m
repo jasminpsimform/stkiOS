@@ -99,7 +99,7 @@
 #pragma mark - Notifications
 
 - (void)didUpdateStickersCache:(NSNotification*) notification {
-//    [self.tableView reloadData];
+
 }
 
 - (void)didShowKeyboard:(NSNotification*)notification {
