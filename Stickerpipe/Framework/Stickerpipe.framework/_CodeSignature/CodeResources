@@ -8,6 +8,10 @@
 		<data>
 		XfZEGjdrjBtA2eS1IYQdg//nqVg=
 		</data>
+		<key>Assets.car</key>
+		<data>
+		+dW5q79gWdcqbp2OgkP4xoFLVYU=
+		</data>
 		<key>Headers/.DS_Store</key>
 		<data>
 		YhidtJSeYfNXjkMdTFL4qrxzuZo=
@@ -228,18 +232,20 @@
 		<data>
 		2G4+U5gv2qm4mRNwHKg5VMTGNZE=
 		</data>
-		<key>en.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			B/Yd9V0smNVoDiE6bsCKFpPzSsA=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
 	</dict>
 	<key>files2</key>
 	<dict>
+		<key>Assets.car</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			+dW5q79gWdcqbp2OgkP4xoFLVYU=
+			</data>
+			<key>hash2</key>
+			<data>
+			jqWZyR9llmXl+JGUo8m1kaA0N5u/2jVE59IBBz6yGQk=
+			</data>
+		</dict>
 		<key>Headers/NSManagedObject+STKAdditions.h</key>
 		<dict>
 			<key>hash</key>
@@ -822,19 +828,6 @@
 			<data>
 			yEnkIgNrrv9/HXuZtYDCQTcQfy+LL/4L5omIGhPtIf0=
 			</data>
-		</dict>
-		<key>en.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			B/Yd9V0smNVoDiE6bsCKFpPzSsA=
-			</data>
-			<key>hash2</key>
-			<data>
-			Qw3sqjmE4o0IGAq/LhXEMop8oXHXQB5dTtW0Zedg4Z4=
-			</data>
-			<key>optional</key>
-			<true/>
 		</dict>
 	</dict>
 	<key>rules</key>
