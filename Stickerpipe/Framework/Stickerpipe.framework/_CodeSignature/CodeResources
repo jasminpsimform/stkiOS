@@ -4,18 +4,6 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>.DS_Store</key>
-		<data>
-		XfZEGjdrjBtA2eS1IYQdg//nqVg=
-		</data>
-		<key>Assets.car</key>
-		<data>
-		+dW5q79gWdcqbp2OgkP4xoFLVYU=
-		</data>
-		<key>Headers/.DS_Store</key>
-		<data>
-		YhidtJSeYfNXjkMdTFL4qrxzuZo=
-		</data>
 		<key>Headers/NSManagedObject+STKAdditions.h</key>
 		<data>
 		ofPN97Qq1f69ogzw25FfNaHNmio=
@@ -235,17 +223,6 @@
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>Assets.car</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			+dW5q79gWdcqbp2OgkP4xoFLVYU=
-			</data>
-			<key>hash2</key>
-			<data>
-			jqWZyR9llmXl+JGUo8m1kaA0N5u/2jVE59IBBz6yGQk=
-			</data>
-		</dict>
 		<key>Headers/NSManagedObject+STKAdditions.h</key>
 		<dict>
 			<key>hash</key>
