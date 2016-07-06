@@ -10,6 +10,8 @@
 #import "STKChatStickerCell.h"
 #import "STKChatTextCell.h"
 
+#import "AppDelegate.h"
+
 @import Stickerpipe;
 
 @interface STKChatViewController() <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, STKStickerControllerDelegate, UIAlertViewDelegate> {
@@ -77,6 +79,8 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateStickersCache:) name:STKStickersCacheDidUpdateStickersNotification object:nil];
+    
+    [(AppDelegate *)[[UIApplication sharedApplication] delegate] checkForNotifications];
 }
 
 - (void)viewDidLayoutSubviews {

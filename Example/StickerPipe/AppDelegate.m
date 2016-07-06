@@ -23,6 +23,8 @@ NSString *const apiKey = @"72921666b5ff8651f374747bfefaf7b2";
 
 @interface AppDelegate ()
 
+@property (nonatomic, strong) NSDictionary * remoteNotifiInfo;
+
 @end
 
 @implementation AppDelegate
@@ -69,6 +71,8 @@ NSString *const apiKey = @"72921666b5ff8651f374747bfefaf7b2";
     [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
     [[UIApplication sharedApplication] registerForRemoteNotifications];
     
+    self.remoteNotifiInfo = [launchOptions objectForKey: UIApplicationLaunchOptionsRemoteNotificationKey];
+    
     return YES;
 }
 
@@ -106,6 +110,12 @@ NSString *const apiKey = @"72921666b5ff8651f374747bfefaf7b2";
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)checkForNotifications {
+    if (self.remoteNotifiInfo) {
+        [self application:[UIApplication sharedApplication] didReceiveRemoteNotification:self.remoteNotifiInfo];
+    }
 }
 
 @end
