@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name            = 'StickerPipe'
-  s.version         = '0.3.10'
+  s.version         = '0.3.11'
   s.platform        = :ios, '8.0'
   s.summary         = 'Easy stickers SDK for integration in messangers.'
   s.homepage        = "https://github.com/908Inc/stkiOS"
