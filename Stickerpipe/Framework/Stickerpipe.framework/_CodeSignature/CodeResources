@@ -138,7 +138,7 @@
 		</data>
 		<key>Headers/STKStickersConstants.h</key>
 		<data>
-		D/A4N+jAmVTwA/r68UK0hoOUqCU=
+		73o4Au7EK2lvABR00MJGzuNNkwM=
 		</data>
 		<key>Headers/STKStickersEntityService.h</key>
 		<data>
@@ -146,7 +146,7 @@
 		</data>
 		<key>Headers/STKStickersManager.h</key>
 		<data>
-		cEjw+zyPSdECdnf2r5RlhEG8+vE=
+		1Bt3l4qc3TqACaU0s4ZSraqR8Aw=
 		</data>
 		<key>Headers/STKStickersPurchaseService.h</key>
 		<data>
@@ -186,7 +186,7 @@
 		</data>
 		<key>Headers/Stickerpipe.h</key>
 		<data>
-		Bg4ICL8AFQAjMCnqOCF4gFf/HKg=
+		XXg/fD9ILsrTWJMtlAOVw58wc0s=
 		</data>
 		<key>Headers/UIImage+CustomBundle.h</key>
 		<data>
@@ -590,11 +590,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			D/A4N+jAmVTwA/r68UK0hoOUqCU=
+			73o4Au7EK2lvABR00MJGzuNNkwM=
 			</data>
 			<key>hash2</key>
 			<data>
-			Q0cKtUK/7sSylNnytRcLknpNSfQQmtuV7Ov8l6+qlYk=
+			HENIf/k+Y8kt86qrEJYSA3LjrkWeX/JzSpP+687q9/Q=
 			</data>
 		</dict>
 		<key>Headers/STKStickersEntityService.h</key>
@@ -612,11 +612,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			cEjw+zyPSdECdnf2r5RlhEG8+vE=
+			1Bt3l4qc3TqACaU0s4ZSraqR8Aw=
 			</data>
 			<key>hash2</key>
 			<data>
-			tY7Pus7ndW4hNrzG4v8PndzNfAgCTeyvUzItDIv15Cg=
+			pw1BI6Dt9+f1YsVr+ojtaaA1FXnu+nHFGy963+SMb4I=
 			</data>
 		</dict>
 		<key>Headers/STKStickersPurchaseService.h</key>
@@ -722,11 +722,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Bg4ICL8AFQAjMCnqOCF4gFf/HKg=
+			XXg/fD9ILsrTWJMtlAOVw58wc0s=
 			</data>
 			<key>hash2</key>
 			<data>
-			DgSLMzkuDJvUY8oK4wuLogyDPplOywHndWLW6q4nRwE=
+			42eLjBXiH+XtA5F/BKTg+epWUyUZpsxRCEFXl/NtOxM=
 			</data>
 		</dict>
 		<key>Headers/UIImage+CustomBundle.h</key>
