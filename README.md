@@ -144,7 +144,7 @@ To receive correct statistic about number of sent stickers and messages call thi
     [self.stickerController userMessageSent];
 ```
 
-## Сustomizations
+### Сustomizations
 
 **You can change default placeholders color and shop content color:**
 
