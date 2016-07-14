@@ -68,7 +68,7 @@ To sell content via internal currency, you have to set your prices to sdk. This 
 If you want to use subscription model, you need to set subscription flag to sdk, when user became or ceased to be subscriber(or premium user). After this, content with B price point be available for free for subscribers(premium users)
 
 ```objc
-    [STKStickersManager setUserIsSubscriber:NO];
+    [STKStickersManager setUserAsSubscriber:NO];
 ```
 
 You hava to subscribe on purchase notification
@@ -136,26 +136,17 @@ method call to delegate method:
 - (void) application:(UIApplication )application didReceiveRemoteNotification:(NSDictionary )userInfo
 ```
 
-### Text message send
+### Statistics
+
+To receive correct statistic about number of sent stickers and messages call this method after user will send the message
 
 ```objc
-    [self.stickerController textMessageSent:message];
-
-```
-
-
-## Layout sticker fames 
-
-```objc
-- (void)viewDidLayoutSubviews {
-[super viewDidLayoutSubviews];
-[self.stickerController updateFrames];
-}
+    [self.stickerController userMessageSent];
 ```
 
 ## Сustomizations
 
-**You can change default placeholders color:**
+**You can change default placeholders color and shop content color:**
 
 
 Placeholder in stickers view
@@ -168,6 +159,12 @@ Placeholder in stickers view header
 
 ```objc
 [self.stickerController setColorForStickersHeaderPlaceholderColor:[UIColor blueColor]];
+```
+
+Shop content color
+
+```objc
+[STKStickersManager setShopContentColor:[UIColor greenColor]];
 ```
 
 ## Credits
