@@ -9,270 +9,245 @@
 #import "STKChatViewController.h"
 #import "STKChatStickerCell.h"
 #import "STKChatTextCell.h"
-
 #import "AppDelegate.h"
 
 @import Stickerpipe;
 
 @interface STKChatViewController() <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, STKStickerControllerDelegate, UIAlertViewDelegate> {
-    
     NSString *packName;
     NSString *packPrice;
 }
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UITextView *inputTextView;
-@property (weak, nonatomic) IBOutlet UIView *textInputPanel;
-@property (weak, nonatomic) IBOutlet UIButton *sendButton;
+@property (nonatomic, weak) IBOutlet UITableView *tableView;
+@property (nonatomic, weak) IBOutlet UITextView *inputTextView;
+@property (nonatomic, weak) IBOutlet UIView *textInputPanel;
+@property (nonatomic, weak) IBOutlet UIButton *sendButton;
+@property (nonatomic, weak) IBOutlet UIView *errorView;
+@property (nonatomic, weak) IBOutlet UICollectionView *suggestCollectionView;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *textViewHeightConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *bottomViewConstraint;
 
-@property (assign, nonatomic) BOOL isKeyboardShowed;
-
-@property (strong, nonatomic) NSMutableArray *dataSource;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *textViewHeightConstraint;
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomViewConstraint;
-@property (weak, nonatomic) IBOutlet UIView *errorView;
-
-@property (strong, nonatomic) STKStickerController *stickerController;
+@property (nonatomic, strong) NSMutableArray *dataSource;
+@property (nonatomic, strong) STKStickerController *stickerController;
 
 - (IBAction)sendClicked:(id)sender;
-@property (weak, nonatomic) IBOutlet UICollectionView *suggestCollectionView;
 
 @end
 
 @implementation STKChatViewController
 
+static NSString* const kStickerCellId = @"Cell";
+static NSString* const kChatCellId = @"textCell";
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    //    self.dataSource = [@[@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_china]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bike]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_bigsmile]]",@"[[pinkgorilla_dontknow]]",@"[[flowers_flower1]]"] mutableCopy];
-    
+
     self.dataSource = [@[@"[[1774]]", @"[[1778]]", @"[[1609]]", @"[[1624]]", @"[[1776]]", @"[[sonya45_1844]]"] mutableCopy];
     self.inputTextView.layer.cornerRadius = 7.0;
     self.inputTextView.layer.borderWidth = 1.0;
-    self.inputTextView.layer.borderColor = [UIColor colorWithRed:0.84 green:0.84 blue:0.85 alpha:1].CGColor;
-    
+    self.inputTextView.layer.borderColor = [UIColor colorWithRed: 0.84 green: 0.84 blue: 0.85 alpha: 1].CGColor;
+
     self.textInputPanel.layer.borderWidth = 1.0;
-    self.textInputPanel.layer.borderColor = [UIColor colorWithRed:0.82 green:0.82 blue:0.82 alpha:1].CGColor;
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(willHideKeyboard:)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didShowKeyboard:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchasePack:) name:STKPurchasePackNotification object:nil];
-    
+    self.textInputPanel.layer.borderColor = [UIColor colorWithRed: 0.82 green: 0.82 blue: 0.82 alpha: 1].CGColor;
+
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(willHideKeyboard:)
+                                                 name: UIKeyboardWillHideNotification
+                                               object: nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(didShowKeyboard:)
+                                                 name: UIKeyboardWillShowNotification
+                                               object: nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(purchasePack:) name: STKPurchasePackNotification object: nil];
+
     //tap gesture
-    
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(textViewDidTap:)];
-    [self.inputTextView addGestureRecognizer:tapGesture];
-    
+
+    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget: self action: @selector(textViewDidTap:)];
+    [self.inputTextView addGestureRecognizer: tapGesture];
+
     [self scrollTableViewToBottom];
-    
-    self.stickerController = [[STKStickerController alloc] init];
+
+    self.stickerController = [STKStickerController new];
     self.stickerController.delegate = self;
     self.stickerController.textInputView = self.inputTextView;
     self.stickerController.suggestCollectionView = self.suggestCollectionView;
-    self.tableView.rowHeight = UITableViewAutomaticDimension;
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateStickersCache:) name:STKStickersCacheDidUpdateStickersNotification object:nil];
-    
-    [(AppDelegate *)[[UIApplication sharedApplication] delegate] checkForNotifications];
-}
 
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    [self.stickerController updateFrames];
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+
+    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(didUpdateStickersCache:) name: STKStickersCacheDidUpdateStickersNotification object: nil];
+
+    [(AppDelegate* )[UIApplication sharedApplication].delegate checkForNotifications];
 }
 
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver: self];
 }
+
 
 #pragma mark - UI Methods
 
-- (void) scrollTableViewToBottom {
-    
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.dataSource.count - 1 inSection:0];
-    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+- (void)scrollTableViewToBottom {
+    NSIndexPath* indexPath = [NSIndexPath indexPathForRow: self.dataSource.count - 1 inSection: 0];
+    [self.tableView scrollToRowAtIndexPath: indexPath atScrollPosition: UITableViewScrollPositionBottom animated: YES];
 }
+
 
 #pragma mark - Notifications
 
-- (void)didUpdateStickersCache:(NSNotification*) notification {
+- (void)didUpdateStickersCache: (NSNotification*)notification {
 
 }
 
-- (void)didShowKeyboard:(NSNotification*)notification {
-    
+- (void)didShowKeyboard: (NSNotification*)notification {
     CGRect keyboardBounds = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    
-    UIViewAnimationCurve curve = [[notification.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] integerValue];
+
+    UIViewAnimationCurve curve = (UIViewAnimationCurve) [notification.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue];
     CGFloat keyboardHeight = keyboardBounds.size.height;
-    
+
     CGFloat animationDuration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue];
-    
+
     self.bottomViewConstraint.constant = keyboardHeight;
-    
-    
-    [UIView animateWithDuration:animationDuration animations:^{
-        [UIView setAnimationCurve:curve];
+
+    [UIView animateWithDuration: animationDuration animations: ^ {
+        [UIView setAnimationCurve: curve];
         [self.view layoutIfNeeded];
     }];
-    
-    self.isKeyboardShowed = YES;
+
     [self scrollTableViewToBottom];
 }
 
-
-- (void)willHideKeyboard:(NSNotification*)notification {
-    
-    self.isKeyboardShowed = NO;
-    
+- (void)willHideKeyboard: (NSNotification*)notification {
     CGFloat animationDuration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue];
-    
+
     self.bottomViewConstraint.constant = 0;
-    
-    [UIView animateWithDuration:animationDuration animations:^{
+
+    [UIView animateWithDuration: animationDuration animations: ^ {
         [self.view layoutIfNeeded];
     }];
 }
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView: (UITableView*)tableView numberOfRowsInSection: (NSInteger)section {
     return self.dataSource.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    NSString *message = self.dataSource[indexPath.row];
-    
-    if ([STKStickersManager isStickerMessage:message]) {
-        STKChatStickerCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell"];
-        
-        [cell fillWithStickerMessage:message downloaded:[self.stickerController isStickerPackDownloaded:message]];
-        
+- (UITableViewCell*)tableView: (UITableView*)tableView cellForRowAtIndexPath: (NSIndexPath*)indexPath {
+    NSString* message = self.dataSource[(NSUInteger) indexPath.row];
+
+    if ([STKStickersManager isStickerMessage: message]) {
+        STKChatStickerCell* cell = [self.tableView dequeueReusableCellWithIdentifier: kStickerCellId];
+
+        [cell fillWithStickerMessage: message downloaded: [self.stickerController isStickerPackDownloaded: message]];
+
         return cell;
     } else {
-        STKChatTextCell *cell = [self.tableView
-                                 dequeueReusableCellWithIdentifier:@"textCell"];
-        
-        [cell fillWithTextMessage:message];
+        STKChatTextCell* cell = [self.tableView dequeueReusableCellWithIdentifier: kChatCellId];
+
+        [cell fillWithTextMessage: message];
         return cell;
     }
-    return nil;
 }
 
 #pragma mark - UITableViewDelegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    id cell = [tableView cellForRowAtIndexPath:indexPath];
-    if ([cell isKindOfClass:[STKChatStickerCell class]]) {
-        [self.stickerController showPackInfoControllerWithStickerMessage:self.dataSource[indexPath.row]];
+- (void)tableView: (UITableView*)tableView didSelectRowAtIndexPath: (NSIndexPath*)indexPath {
+    if ([[tableView cellForRowAtIndexPath: indexPath] isKindOfClass: [STKChatStickerCell class]]) {
+        [self.stickerController showPackInfoControllerWithStickerMessage: self.dataSource[(NSUInteger) indexPath.row]];
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *message = self.dataSource[indexPath.row];
-    return ([STKStickersManager isStickerMessage:message]) ? 160 : 40;
+- (CGFloat)tableView: (UITableView*)tableView estimatedHeightForRowAtIndexPath: (NSIndexPath*)indexPath {
+    return ([STKStickersManager isStickerMessage: self.dataSource[(NSUInteger) indexPath.row]]) ? 160 : 40;
 }
 
 #pragma mark - STKStickerControllerDelegate
 
-- (void)stickerController:(STKStickerController *)stickerController didSelectStickerWithMessage:(NSString *)message {
-    STKChatStickerCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell"];
-    [cell fillWithStickerMessage:message downloaded:[self.stickerController isStickerPackDownloaded:message]];
-    
-    [self addMessage:message];
+- (void)stickerController: (STKStickerController*)stickerController didSelectStickerWithMessage: (NSString*)message {
+    STKChatStickerCell* cell = [self.tableView dequeueReusableCellWithIdentifier: kStickerCellId];
+    [cell fillWithStickerMessage: message downloaded: [self.stickerController isStickerPackDownloaded: message]];
+
+    [self addMessage: message];
+
+    [self.stickerController stickerMessageSendStatistic];
 }
 
-- (UIViewController *)stickerControllerViewControllerForPresentingModalView {
+- (UIViewController*)stickerControllerViewControllerForPresentingModalView {
     return self;
 }
 
-- (void)stickerControllerErrorHandle:(NSError *)error {
+- (void)stickerControllerErrorHandle: (NSError*)error {
     self.errorView.hidden = NO;
 }
 
-- (void)addMessage:(NSString *)message {
+- (void)addMessage: (NSString*)message {
     [self.tableView beginUpdates];
-    [self.dataSource addObject:message];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.dataSource.count - 1 inSection:0];
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
+    [self.dataSource addObject: message];
+    NSIndexPath* indexPath = [NSIndexPath indexPathForRow: self.dataSource.count - 1 inSection: 0];
+    [self.tableView insertRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationBottom];
     [self.tableView endUpdates];
     [self scrollTableViewToBottom];
 }
 
+
 #pragma mark - UITextViewDelegate
 
-- (void)textViewDidChange:(UITextView *)textView  {
+- (void)textViewDidChange: (UITextView*)textView {
     self.sendButton.enabled = textView.text.length > 0;
     self.textViewHeightConstraint.constant = textView.contentSize.height;
-    self.stickerController.keyboardButton.hidden = textView.text.length > 0;
+
+    [textView layoutSubviews];
 }
+
 
 #pragma mark - Gesture
 
-- (void) textViewDidTap:(UITapGestureRecognizer*) gestureRecognizer {
+- (void)textViewDidTap: (UITapGestureRecognizer*)gestureRecognizer {
     [self.inputTextView becomeFirstResponder];
 }
 
-#pragma mark - Property
-
-- (STKStickerController *)stickerController {
-    if (!_stickerController) {
-        _stickerController = [STKStickerController new];
-        _stickerController.delegate = self;
-        _stickerController.textInputView = self.inputTextView;
-    }
-    return _stickerController;
-}
 
 #pragma mark - Actions
 
-- (void)sendClicked:(id)sender {
-     NSString *message = self.inputTextView.text;
+- (void)sendClicked: (id)sender {
+    NSString* message = self.inputTextView.text;
     if (message.length > 0) {
-        [self addMessage:message];
-        [self.stickerController textMessageSent:message];
+        [self addMessage: message];
+        [self.stickerController textMessageSendStatistic];
         self.inputTextView.text = @"";
         self.textViewHeightConstraint.constant = 33;
     }
 }
 
+
 #pragma mark - PurchasePack
 
-- (void)purchasePack:(NSNotification *)notification {
-    
+- (void)purchasePack: (NSNotification*)notification {
     packName = notification.userInfo[@"packName"];
     packPrice = notification.userInfo[@"packPrice"];
-    
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:NSLocalizedString(@"Purchase this stickers pack?", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) otherButtonTitles:NSLocalizedString(@"OK", nil), nil];
+
+    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle: @"" message: @"Purchase this stickers pack?" delegate: self cancelButtonTitle: @"Cancel" otherButtonTitles: @"OK", nil];
     alertView.delegate = self;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
+    dispatch_async(dispatch_get_main_queue(), ^ {
+
         [alertView show];
     });
-    //    STKPurchaseService *purchaseService = [STKPurchaseService new];
-    //    [purchaseService purchaseFailed];
 }
+
 
 #pragma mark - Alert controller delegate
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
+- (void)alertView: (UIAlertView*)alertView clickedButtonAtIndex: (NSInteger)buttonIndex {
+
     switch (buttonIndex) {
         case 0:
-            [[STKStickersPurchaseService sharedInstance] purchaseFailedError:nil];
+            [[STKStickersPurchaseService sharedInstance] purchaseFailedError: nil];
             break;
-        case 1:[[STKStickersPurchaseService sharedInstance] purchasInternalPackName:packName andPackPrice:packPrice];
-            
+        case 1:
+            [[STKStickersPurchaseService sharedInstance] purchasInternalPackName: packName andPackPrice: packPrice];
+
         default:
             break;
     }

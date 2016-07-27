@@ -19,7 +19,7 @@
     
 }
 
-- (void) fillWithStickerMessage:(NSString*) message downloaded:(BOOL) downloaded {
+- (void) fillWithStickerMessage:(NSString *)message downloaded:(BOOL)downloaded {
     if ([STKStickersManager isStickerMessage:message]) {
         [self.stickerImageView stk_setStickerWithMessage:message placeholder:nil placeholderColor:nil progress:nil completion:nil];
         

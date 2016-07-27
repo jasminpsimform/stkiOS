@@ -11,6 +11,7 @@
 #import <Crashlytics/Crashlytics.h>
 #import "NSString+MD5.h"
 #import <SSKeychain/SSKeychain.h>
+
 #import "STKChatViewController.h"
 
 @import Stickerpipe;
@@ -18,8 +19,15 @@
 //demo
 NSString *const apiKey = @"72921666b5ff8651f374747bfefaf7b2";
 
+//Biber
+//NSString *const apiKey = @"56af2004049b4c0017ff571088a55e9b";
+
+
 //test
 //NSString *const testIOSKey = @"f06190d9d63cd2f4e7b124612f63c56c";
+
+//for push
+NSString *const testIOSKey = @"dced537bd6796e0e6dc31b8e79485c6a";
 
 @interface AppDelegate ()
 
@@ -29,14 +37,12 @@ NSString *const apiKey = @"72921666b5ff8651f374747bfefaf7b2";
 
 @implementation AppDelegate
 
--(NSString *)getUniqueDeviceIdentifierAsString
-{
+-(NSString *)getUniqueDeviceIdentifierAsString {
     
     NSString *appName=[[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleNameKey];
     
     NSString *strApplicationUUID = [SSKeychain passwordForService:appName account:@"incoding"];
-    if (strApplicationUUID == nil)
-    {
+    if (strApplicationUUID == nil) {
         strApplicationUUID  = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
         [SSKeychain setPassword:strApplicationUUID forService:appName account:@"incoding"];
     }
@@ -73,6 +79,11 @@ NSString *const apiKey = @"72921666b5ff8651f374747bfefaf7b2";
     
     self.remoteNotifiInfo = [launchOptions objectForKey: UIApplicationLaunchOptionsRemoteNotificationKey];
     
+//    UIColor *color = [UIColor colorWithRed:256/255 green:256/255 blue:10/255 alpha:1];
+//    [[UINavigationBar appearance] setBackgroundColor:color];
+    
+//    [STKStickersManager setShopContentColor:[UIColor redColor]];
+    
     return YES;
 }
 
@@ -85,11 +96,13 @@ NSString *const apiKey = @"72921666b5ff8651f374747bfefaf7b2";
 }
 
 - (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    
-    UINavigationController *nvc = (UINavigationController *)self.window.rootViewController;
-    STKChatViewController *vc = (STKChatViewController *)nvc.topViewController;
-    [STKStickersManager getUserInfo:userInfo stickerController:vc.stickerController];
+//    dispatch_async(dispatch_get_main_queue(), ^{
+        UINavigationController *nvc = (UINavigationController *)self.window.rootViewController;
+        STKChatViewController *vc = (STKChatViewController *)nvc.topViewController;
+        [STKStickersManager getUserInfo:userInfo stickerController:vc.stickerController];
+//    });
 }
+
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

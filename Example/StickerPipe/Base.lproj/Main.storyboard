@@ -201,7 +201,7 @@
                         <outlet property="errorView" destination="kVW-oW-gEu" id="5nA-zq-7Yt"/>
                         <outlet property="inputTextView" destination="UEI-iu-DOR" id="w8J-PG-Yd1"/>
                         <outlet property="sendButton" destination="ig2-vE-R0S" id="Tnj-ic-9ba"/>
-                        <outlet property="suggestCollectionView" destination="0SV-dG-Eil" id="kBR-E9-pA0"/>
+                        <outlet property="suggestCollectionView" destination="0SV-dG-Eil" id="CSv-XQ-d8D"/>
                         <outlet property="tableView" destination="Ia5-oU-XSp" id="x5Z-OE-v4Z"/>
                         <outlet property="textInputPanel" destination="ala-hF-VUk" id="B9k-ro-T9z"/>
                         <outlet property="textViewHeightConstraint" destination="cb2-Yx-HZ8" id="uF0-j3-hmo"/>

@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-
 @class STKStickerController;
 
 @interface STKChatViewController : UIViewController
