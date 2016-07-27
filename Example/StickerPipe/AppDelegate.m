@@ -19,16 +19,6 @@
 //demo
 NSString *const apiKey = @"72921666b5ff8651f374747bfefaf7b2";
 
-//Biber
-//NSString *const apiKey = @"56af2004049b4c0017ff571088a55e9b";
-
-
-//test
-//NSString *const testIOSKey = @"f06190d9d63cd2f4e7b124612f63c56c";
-
-//for push
-NSString *const testIOSKey = @"dced537bd6796e0e6dc31b8e79485c6a";
-
 @interface AppDelegate ()
 
 @property (nonatomic, strong) NSDictionary * remoteNotifiInfo;

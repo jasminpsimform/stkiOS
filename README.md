@@ -152,15 +152,15 @@ Call textMessageSendStatistic after user send each text message
 
 ```objc
 - (void)yourTextMessageDidSend {
-[self.stickerController textMessageSendStatistic];
+    [self.stickerController textMessageSendStatistic];
 }
 ```
 
 Call stickerMessageSendStatistic after user send each sticker in delegate method to STKStickerController
 
 ```objc
-- (void)stickerController:(STKStickerController )stickerController didSelectStickerWithMessage:(NSString )message {
-[self.stickerController stickerMessageSendStatistic];
+- (void)stickerController:(STKStickerController *)stickerController didSelectStickerWithMessage:(NSString *)message {
+    [self.stickerController stickerMessageSendStatistic];
 }
 ```
 
