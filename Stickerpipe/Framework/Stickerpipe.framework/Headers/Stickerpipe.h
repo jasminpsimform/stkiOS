@@ -71,4 +71,8 @@ FOUNDATION_EXPORT const unsigned char StickerpipeVersionString[];
 #import "STKUUIDManager.h"
 #import "UIImage+CustomBundle.h"
 
+#import "STKSearchDelegateManager.h"
+#import "STKSearchManager.h"
+#import "STKSearchModel.h"
+
 

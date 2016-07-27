@@ -14,7 +14,7 @@ Get the API key on the [Stickerpipe](http://stickerpipe.com/)
 CocoaPods:
 ```ruby
 use_frameworks!
-pod "StickerPipe", "~> 0.3.12"
+pod "StickerPipe", "~> 0.3.13"
 ```
 # Usage
 
@@ -136,13 +136,34 @@ method call to delegate method:
 - (void) application:(UIApplication )application didReceiveRemoteNotification:(NSDictionary )userInfo
 ```
 
-### Statistics
+### Suggests
 
-To receive correct statistic about number of sent stickers and messages call this method after user will send the message
+To add suggestions about stickers you should add UICollectionView to appropriate place on you screen, for example above UITextView. Then set your collection view to STKStickerController
 
 ```objc
-    [self.stickerController userMessageSent];
+self.stickerController.suggestCollectionView = self.yourCollectionView;
 ```
+
+### Statistics
+
+To receive correct statistic about number of sent stickers and messages you should call pair of methods textMessageSendStatistic and stickerMessageSendStatistic.
+
+Call textMessageSendStatistic after user send each text message
+
+```objc
+- (void)yourTextMessageDidSend {
+[self.stickerController textMessageSendStatistic];
+}
+```
+
+Call stickerMessageSendStatistic after user send each sticker in delegate method to STKStickerController
+
+```objc
+- (void)stickerController:(STKStickerController )stickerController didSelectStickerWithMessage:(NSString )message {
+[self.stickerController stickerMessageSendStatistic];
+}
+```
+
 
 ### Сustomizations
 

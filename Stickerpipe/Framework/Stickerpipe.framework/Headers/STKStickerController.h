@@ -48,9 +48,14 @@
 
 @property (nonatomic) BOOL isNetworkReachable;
 
-//@property (nonatomic, strong) UIColor *stickersShopTintColor;
 
-- (void)updateFrames;
+@property (weak, nonatomic) IBOutlet UICollectionView *stickersCollectionView;
+
+
+@property (strong, nonatomic) UICollectionView *suggestCollectionView;
+@property (assign, nonatomic) BOOL isSuggestArrayNotEmpty;
+
+//@property (nonatomic, strong) UIColor *stickersShopTintColor;
 
 - (void)reloadStickersView;
 
@@ -70,7 +75,8 @@
 
 - (void)setColorForStickersHeaderPlaceholderColor:(UIColor*) color;
 
-- (void)textMessageSent:(NSString *)message;
+- (void)textMessageSendStatistic;
+- (void)stickerMessageSendStatistic;
 
 - (void)handleError:(NSError *)error;
 
@@ -79,5 +85,8 @@
 - (void)setupInternalStickersView;
 
 - (void)showKeyboard;
+
+- (void)showSuggestCollectionView;
+- (void)hideSuggestCollectionView;
 
 @end

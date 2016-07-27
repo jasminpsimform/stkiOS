@@ -36,6 +36,7 @@
 @property (strong, nonatomic) STKStickerController *stickerController;
 
 - (IBAction)sendClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UICollectionView *suggestCollectionView;
 
 @end
 
@@ -76,6 +77,7 @@
     self.stickerController = [[STKStickerController alloc] init];
     self.stickerController.delegate = self;
     self.stickerController.textInputView = self.inputTextView;
+    self.stickerController.suggestCollectionView = self.suggestCollectionView;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateStickersCache:) name:STKStickersCacheDidUpdateStickersNotification object:nil];
