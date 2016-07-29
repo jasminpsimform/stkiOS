@@ -109,15 +109,13 @@ Use delegate method for reciving sticker messages from sticker view controller
 Sticker image can be displayed in UIImageView by message:
 ```objc
 stk_setStickerWithMessage: placeholder: placeholderColor: progress: completion:
-}
 ```
 
 Image for sticker can be get by sticker message:
 ```objc
 [self.stickerController.imageManager getImageForStickerMessage:message withProgress:^(NSTimeInterval progress) {
-
 } andCompletion:^(NSError error, UIImage stickerImage) {
-yourImageView.image = stickerImage;
+    yourImageView.image = stickerImage;
 }];
 ```
 
