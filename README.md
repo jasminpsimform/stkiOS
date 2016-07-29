@@ -71,7 +71,7 @@ If you want to use subscription model, you need to set subscription flag to sdk,
     [STKStickersManager setUserAsSubscriber:NO];
 ```
 
-You hava to subscribe on purchase notification
+You have to subscribe on purchase notification
  ```objc
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchasePack:) name:STKPurchasePackNotification object:nil];
     
@@ -104,6 +104,21 @@ Use delegate method for reciving sticker messages from sticker view controller
     //Send sticker message
     
 }
+```
+
+Sticker image can be displayed in UIImageView by message:
+```objc
+stk_setStickerWithMessage: placeholder: placeholderColor: progress: completion:
+}
+```
+
+Image for sticker can be get by sticker message:
+```objc
+[self.stickerController.imageManager getImageForStickerMessage:message withProgress:^(NSTimeInterval progress) {
+
+} andCompletion:^(NSError error, UIImage stickerImage) {
+yourImageView.image = stickerImage;
+}];
 ```
 
 Use delegate method to set base controller for presenting modal controllers 
