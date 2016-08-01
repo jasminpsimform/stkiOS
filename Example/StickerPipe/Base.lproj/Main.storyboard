@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="KXI-Gp-cB2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="KXI-Gp-cB2">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -57,7 +57,7 @@
                                 <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                                 <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="160" id="cYY-dQ-3W2" customClass="STKChatStickerCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="cYY-dQ-3W2" customClass="STKChatStickerCell">
                                         <rect key="frame" x="0.0" y="22" width="320" height="160"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cYY-dQ-3W2" id="zHO-0R-UvJ">
@@ -71,10 +71,10 @@
                                                     </state>
                                                 </button>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="77l-po-v5c">
-                                                    <rect key="frame" x="148" y="0.0" width="160" height="159.5"/>
+                                                    <rect key="frame" x="148" y="0.0" width="160" height="160"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="160" id="HMQ-zB-fs1"/>
-                                                        <constraint firstAttribute="height" constant="159.5" id="ksz-Tl-ph5"/>
+                                                        <constraint firstAttribute="height" constant="160" id="ksz-Tl-ph5" userLabel="height = 160"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
@@ -155,19 +155,19 @@
                                     <constraint firstAttribute="bottom" secondItem="iF0-KH-iqC" secondAttribute="bottom" id="uOq-t0-xFi"/>
                                 </constraints>
                             </view>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="0SV-dG-Eil">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="pcm-wv-x2A">
                                 <rect key="frame" x="0.0" y="439" width="320" height="80"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="gnf-Ff-dGF"/>
+                                    <constraint firstAttribute="height" constant="80" id="udz-2L-sga"/>
                                 </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="9AG-TP-fSa">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="4oo-yg-BbZ">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="ZeC-V8-Bab">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="hCC-Z3-m9C">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -184,25 +184,25 @@
                             <constraint firstItem="JQM-oh-qW5" firstAttribute="top" secondItem="ala-hF-VUk" secondAttribute="bottom" id="1Mo-za-2Xq"/>
                             <constraint firstAttribute="trailing" secondItem="kVW-oW-gEu" secondAttribute="trailing" id="7AL-2v-cDy"/>
                             <constraint firstItem="Ia5-oU-XSp" firstAttribute="leading" secondItem="uP5-MA-l9y" secondAttribute="leading" id="Az0-YQ-X2b"/>
-                            <constraint firstItem="0SV-dG-Eil" firstAttribute="trailing" secondItem="Ia5-oU-XSp" secondAttribute="trailing" id="DiV-8Q-FNa"/>
                             <constraint firstItem="Ia5-oU-XSp" firstAttribute="top" secondItem="8is-ep-zV4" secondAttribute="bottom" id="ETm-TC-lvj"/>
                             <constraint firstItem="ala-hF-VUk" firstAttribute="top" secondItem="Ia5-oU-XSp" secondAttribute="bottom" id="F1l-Px-6la"/>
                             <constraint firstAttribute="trailing" secondItem="ala-hF-VUk" secondAttribute="trailing" id="Feh-uN-MtQ"/>
                             <constraint firstItem="ala-hF-VUk" firstAttribute="leading" secondItem="uP5-MA-l9y" secondAttribute="leading" id="Gdz-2M-SbC"/>
-                            <constraint firstItem="0SV-dG-Eil" firstAttribute="leading" secondItem="Ia5-oU-XSp" secondAttribute="leading" id="RzF-tr-bgw"/>
                             <constraint firstItem="kVW-oW-gEu" firstAttribute="top" secondItem="8is-ep-zV4" secondAttribute="bottom" id="S6z-e4-7ac"/>
-                            <constraint firstItem="ala-hF-VUk" firstAttribute="top" secondItem="0SV-dG-Eil" secondAttribute="bottom" id="cFx-Hy-uwR"/>
+                            <constraint firstItem="ala-hF-VUk" firstAttribute="top" secondItem="pcm-wv-x2A" secondAttribute="bottom" id="SCl-IN-t84"/>
                             <constraint firstAttribute="trailing" secondItem="Ia5-oU-XSp" secondAttribute="trailing" id="mNk-dz-gFH"/>
+                            <constraint firstItem="pcm-wv-x2A" firstAttribute="leading" secondItem="Ia5-oU-XSp" secondAttribute="leading" id="rt3-Vw-txM"/>
+                            <constraint firstItem="pcm-wv-x2A" firstAttribute="trailing" secondItem="Ia5-oU-XSp" secondAttribute="trailing" id="scp-Jk-CgJ"/>
                             <constraint firstItem="kVW-oW-gEu" firstAttribute="leading" secondItem="uP5-MA-l9y" secondAttribute="leading" id="tTd-oS-YAF"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Demo Chat" id="UNQ-G8-HQD"/>
                     <connections>
                         <outlet property="bottomViewConstraint" destination="1Mo-za-2Xq" id="CCL-6Y-EUU"/>
+                        <outlet property="collectionView" destination="pcm-wv-x2A" id="hTW-TZ-AQe"/>
                         <outlet property="errorView" destination="kVW-oW-gEu" id="5nA-zq-7Yt"/>
                         <outlet property="inputTextView" destination="UEI-iu-DOR" id="w8J-PG-Yd1"/>
                         <outlet property="sendButton" destination="ig2-vE-R0S" id="Tnj-ic-9ba"/>
-                        <outlet property="suggestCollectionView" destination="0SV-dG-Eil" id="CSv-XQ-d8D"/>
                         <outlet property="tableView" destination="Ia5-oU-XSp" id="x5Z-OE-v4Z"/>
                         <outlet property="textInputPanel" destination="ala-hF-VUk" id="B9k-ro-T9z"/>
                         <outlet property="textViewHeightConstraint" destination="cb2-Yx-HZ8" id="uF0-j3-hmo"/>

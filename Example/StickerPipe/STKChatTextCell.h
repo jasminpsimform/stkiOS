@@ -10,7 +10,7 @@
 
 @interface STKChatTextCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *textMessage;
-- (void)fillWithTextMessage:(NSString *)message;
+@property (weak, nonatomic) IBOutlet UILabel* textMessage;
+- (void)fillWithTextMessage: (NSString*)message;
 
 @end

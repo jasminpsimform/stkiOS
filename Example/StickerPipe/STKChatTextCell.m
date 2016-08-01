@@ -11,16 +11,17 @@
 @implementation STKChatTextCell
 
 - (void)awakeFromNib {
-    // Initialization code
+	// Initialization code
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
+- (void)setSelected: (BOOL)selected animated: (BOOL)animated {
+	[super setSelected: selected animated: animated];
 
-    // Configure the view for the selected state
+	// Configure the view for the selected state
 }
-- (void)fillWithTextMessage:(NSString *)message {
-    self.textMessage.text = message;
+
+- (void)fillWithTextMessage: (NSString*)message {
+	self.textMessage.text = message;
 }
 
 @end
