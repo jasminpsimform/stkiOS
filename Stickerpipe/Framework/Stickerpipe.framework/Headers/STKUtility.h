@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 908 Inc. All rights reserved.
 //
 
+
 @interface STKUtility : NSObject
 
 + (NSArray*)trimmedPackNameAndStickerNameWithMessage: (NSString*)message;
