@@ -158,6 +158,10 @@ self.stickerController.suggestCollectionView = self.yourCollectionView;
 ```
 Enable your suggests with showSuggests property
 
+```objc
+self.stickerController.showSuggests = YES;
+```
+
 ### Statistics
 
 To receive correct statistic about number of sent stickers and messages you should call pair of methods textMessageSendStatistic and stickerMessageSendStatistic.
