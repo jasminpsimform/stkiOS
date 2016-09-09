@@ -151,11 +151,12 @@ method call to delegate method:
 
 ### Suggests
 
-To add suggestions about stickers you should add UICollectionView to appropriate place on you screen, for example above UITextView. Then set your collection view to STKStickerController
+To add suggestions about stickers you should add UICollectionView to appropriate place on you screen, for example above UITextView. Then attach your collection view to STKStickerController
 
 ```objc
 self.stickerController.suggestCollectionView = self.yourCollectionView;
 ```
+Enable your suggests with showSuggests property
 
 ### Statistics
 
