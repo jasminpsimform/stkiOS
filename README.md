@@ -208,7 +208,7 @@ Shop content color
 
 ## Credits
 
-Stickerpipe
+Add custom Stickers to iMessage with Stickerpipe - http://stickerpipe.com/add-stickers-to-imessage
 
 ## Contact
 
