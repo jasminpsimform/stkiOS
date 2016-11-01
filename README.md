@@ -16,16 +16,16 @@ CocoaPods:
 use_frameworks!
 pod "StickerPipe", "~> 0.3.17"
 ```
-# Usage
+## Usage
 
 For import framework to project use:
 ```objc
 @import Stickerpipe
 ```
 
-### API key 
+### Initializing 
 
-Add API key in your AppDelegate.m 
+Set API key in your AppDelegate.m 
 
 ```objc
 [STKStickersManager initWithApiKey:@"API_KEY"];
@@ -36,7 +36,7 @@ You can get your own API Key on http://stickerpipe.com to have customized packs 
 
 ### Users
 
-Set your registered key with STKStickersManager method:
+User id required, and need for retrieving stickers packs. Set it to sdk, when you receive user id.
 
 ```objc
 [STKStickersManager setUserKey:@"USER_ID"];
@@ -44,13 +44,12 @@ Set your registered key with STKStickersManager method:
 
 ### Presenting
 
-Init STKStickerController and add stickersView like inputView for your UITextView/UITextField
+Init STKStickerController and add stickersView like inputView for your UITextView/UITextField. Storing stickerController instance is up to you
 
 ```objc
 @property (strong, nonatomic) STKStickerController *stickerController;
 
-
- self.stickerController.textInputView = self.inputTextView;
+self.stickerController.textInputView = self.inputTextView;
 ```
 
 Use delegate method for reciving sticker messages from sticker view controller
