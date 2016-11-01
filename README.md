@@ -19,7 +19,7 @@ pod "StickerPipe", "~> 0.3.17"
 
 #### or manualy (iOS 7 and later)
 
-Add content of Framework folder to your project
+Add content of Framework folder to your project. You can also get sources from [here](https://github.com/908Inc/stickerpipe-ios-sdk) for low-level customization
 
 ## Usage
 
