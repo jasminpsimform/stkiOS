@@ -11,11 +11,15 @@
 
 Get the API key on the [Stickerpipe](http://stickerpipe.com/)
 
-CocoaPods:
+#### Using CocoaPods:
 ```ruby
 use_frameworks!
 pod "StickerPipe", "~> 0.3.17"
 ```
+#### or manualy
+
+Add content of Framework folder to your project
+
 ## Usage
 
 For import framework to project use:
