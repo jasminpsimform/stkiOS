@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
   s.dependency       'RMStore/NSUserDefaultsPersistence'
   s.dependency       'SDWebImage', '~> 3.7'
 
-  s.resource = 'Stickerpipe/Bundle/ResBundle.bundle'
+  s.resource = 'Stickerpipe/Framework/ResBundle.bundle'
 
   s.module_name = 'Stickerpipe'
 
