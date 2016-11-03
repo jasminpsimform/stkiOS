@@ -11,21 +11,26 @@
 
 Get the API key on the [Stickerpipe](http://stickerpipe.com/)
 
-CocoaPods:
+#### Using CocoaPods (iOS 8 and later)
 ```ruby
 use_frameworks!
-pod "StickerPipe", "~> 0.3.16"
+pod "StickerPipe", "~> 0.3.17"
 ```
-# Usage
+
+#### or manualy (iOS 7 and later)
+
+Add content of Framework folder to your project. You can also get sources from [here](https://github.com/908Inc/stickerpipe-ios-sdk) for low-level customization
+
+## Usage
 
 For import framework to project use:
 ```objc
 @import Stickerpipe
 ```
 
-### API key 
+### Initializing 
 
-Add API key in your AppDelegate.m 
+Set API key in your AppDelegate.m 
 
 ```objc
 [STKStickersManager initWithApiKey:@"API_KEY"];
@@ -36,63 +41,20 @@ You can get your own API Key on http://stickerpipe.com to have customized packs 
 
 ### Users
 
+User id required, and need for retrieving stickers packs. Set it to sdk, when you receive user id.
+
 ```objc
 [STKStickersManager setUserKey:@"USER_ID"];
 ```
 
-You have an ability to sell content via your internal currency, inApp purchases or provide via subscription model. We use price points for selling our content. Currently we have A, B and C price points. We use A to mark FREE content and B/C for the paid content. Basically B is equal to 0.99$ and C equal to 1.99$ but the actual price can be vary depend on the countries and others circumstances.
+### Presenting
 
-
-To sell content via inApp purchases, you have to create products for B and C content at your iTunes Connect developer console and then set ids to sdk
-
-### In-app purchase product identifiers 
-
-```objc
-   [STKStickersManager setPriceBProductId:@"com.priceB.example"         andPriceCProductId:@"com.priceC.example"];
-```
-To sell content via internal currency, you have to set your prices to sdk. This price labels will be showed at stickers shop, values you will received at callback from shop.
-
-
-### Internal currency
-
- ```objc
-    [STKStickersManager setPriceBWithLabel:@"0.99 USD" andValue:0.99f];
-    [STKStickersManager setPriceCwithLabel:@"1.99 USD" andValue:1.99f];
-```
-
- When your purchase was failed you have to call failed method:
- ```objc
- [[STKStickersPurchaseService sharedInstance] purchaseFailedError:error];
- ```
-### Subscription 
-If you want to use subscription model, you need to set subscription flag to sdk, when user became or ceased to be subscriber(or premium user). After this, content with B price point be available for free for subscribers(premium users)
-
-```objc
-    [STKStickersManager setUserAsSubscriber:NO];
-```
-
-You have to subscribe on purchase notification
- ```objc
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchasePack:) name:STKPurchasePackNotification object:nil];
-    
-- (void)purchasePack:(NSNotification *)notification {
-    packName = notification.userInfo[@"packName"];
-    packPrice = notification.userInfo[@"packPrice"];
-}
- ```
-  When your purchase was succeeded you have to call success method:
- ```objc
- [[STKStickersPurchaseService sharedInstance] purchasInternalPackName:packName andPackPrice:packPrice];
- ```
-
-
-Init STKStickerController and add stickersView like inputView for your UITextView/UITextField
+Init STKStickerController and add stickersView like inputView for your UITextView/UITextField. Storing stickerController instance is up to you
 
 ```objc
 @property (strong, nonatomic) STKStickerController *stickerController;
 
-
- self.stickerController.textInputView = self.inputTextView;
+self.stickerController.textInputView = self.inputTextView;
 ```
 
 Use delegate method for reciving sticker messages from sticker view controller
