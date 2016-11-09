@@ -12,6 +12,7 @@
 Get the API key on the [Stickerpipe](http://stickerpipe.com/)
 
 #### Using CocoaPods (iOS 8 and later)
+
 ```ruby
 use_frameworks!
 pod "StickerPipe", "~> 0.3.18"
@@ -23,9 +24,16 @@ Add content of Framework folder to your project. You can also get sources from [
 
 ## Usage
 
-For import framework to project use:
-```objc
+Import framework with:
+
+swift:
+```swift
 @import Stickerpipe
+```
+
+objC:
+```ojbc
+#import <Stickerpipe/Stickerpipe.h>
 ```
 
 ### Initializing 
@@ -48,7 +56,7 @@ User id required, and need for retrieving stickers packs. Set it to sdk, when yo
 
 ### Presenting
 
-Init STKStickerController and add stickersView like inputView for your UITextView/UITextField. Storing stickerController instance is up to you
+Init STKStickerController and add stickersView as inputView for your UITextView/UITextField. Storing stickerController instance is up to you
 
 ```objc
 @property (strong, nonatomic) STKStickerController *stickerController;
@@ -56,36 +64,32 @@ Init STKStickerController and add stickersView like inputView for your UITextVie
 self.stickerController.textInputView = self.inputTextView;
 ```
 
-Use delegate method for reciving sticker messages from sticker view controller
-
+Use delegate method for recieving sticker messages from sticker view controller
 
 ```objc
-- (void)stickerController:(STKStickerController *)stickerController didSelectStickerWithMessage:(NSString *)message {
-    
-    //Send sticker message
-    
-}
+- (void)  stickerController:(STKStickerController *)stickerController 
+didSelectStickerWithMessage:(NSString *)message;
 ```
 
-Sticker image can be displayed in UIImageView by message:
+and display it with UIImageView:
+
 ```objc
-stk_setStickerWithMessage: placeholder: placeholderColor: progress: completion:
+- (void)stk_setStickerWithMessage: (NSString*)stickerMessage
+					   completion: (STKCompletionBlock)completion;
 ```
 
-Image for sticker can be get by sticker message:
+or just retrieve an image for custom processing with imageManager property:
+
 ```objc
-[self.stickerController.imageManager getImageForStickerMessage:message withProgress:^(NSTimeInterval progress) {
-} andCompletion:^(NSError error, UIImage stickerImage) {
-    yourImageView.image = stickerImage;
-}];
+- (void)getImageForStickerMessage: (NSString*)stickerMessage 
+                     withProgress: (STKDownloadingProgressBlock)progressBlock 
+                    andCompletion: (STKCompletionBlock)completion;
 ```
 
-Use delegate method to set base controller for presenting modal controllers 
+Return you controller from delegate method for presenting modal controllers:
 
 ```objc
-- (UIViewController *)stickerControllerViewControllerForPresentingModalView {
-    return self;
-}
+- (UIViewController*)stickerControllerViewControllerForPresentingModalView;
 ```
 
 ### Push notifications
