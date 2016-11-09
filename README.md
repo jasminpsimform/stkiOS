@@ -14,7 +14,7 @@ Get the API key on the [Stickerpipe](http://stickerpipe.com/)
 #### Using CocoaPods (iOS 8 and later)
 ```ruby
 use_frameworks!
-pod "StickerPipe", "~> 0.3.17"
+pod "StickerPipe", "~> 0.3.18"
 ```
 
 #### or manualy (iOS 7 and later)
