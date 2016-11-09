@@ -86,7 +86,7 @@ or just retrieve an image for custom processing with imageManager property:
                     andCompletion: (STKCompletionBlock)completion;
 ```
 
-Return you controller from delegate method for presenting modal controllers:
+Return your controller from delegate method for presenting modal controllers:
 
 ```objc
 - (UIViewController*)stickerControllerViewControllerForPresentingModalView;
