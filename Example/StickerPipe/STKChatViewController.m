@@ -243,8 +243,6 @@ static NSString* const kTextCellId = @"textCell";
 		case 0:
 			[[STKStickersPurchaseService sharedInstance] purchaseFailedError: nil];
 			break;
-		case 1:
-            [[STKStickersPurchaseService sharedInstance] purchasInternalPackName:self.packName andPackPrice:self.packPrice];
 		default:
 			break;
 	}

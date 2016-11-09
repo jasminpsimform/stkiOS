@@ -206,7 +206,6 @@ StickerPipeTests.xctest */,
 				6EF264521B3C0F830099A657 /* Resources */,
 				3818035BAD5BBEC0740E9E3A /* [CP] Copy Pods Resources */,
 				46050372AA804383AD6A6ECF /* [CP] Embed Pods Frameworks */,
-				9A9E6DE21C7F134F000E831C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -326,19 +325,6 @@ StickerPipeTests.xctest */;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-StickerPipe/Pods-StickerPipe-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9A9E6DE21C7F134F000E831C /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" 0c5dc9cc90ca8deb6e4e375e9d1fbcc76d193c10 8906f5809c0b26260f246b838f508bdd48c5a2d9abfbb4c49a7d243cdb7ddb5b";
-		};
 		CE9DB4273D6D7C917EA92818 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -351,7 +337,7 @@ StickerPipeTests.xctest */;
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

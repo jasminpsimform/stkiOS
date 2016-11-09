@@ -14,7 +14,7 @@
 		</data>
 		<key>Headers/STKPurchaseService.h</key>
 		<data>
-		T3FxorBH1H2RcMMt8i4Hsgn/tww=
+		9tYv67d3VimaoyqjgUVaxvYn/mE=
 		</data>
 		<key>Headers/STKShowStickerButton.h</key>
 		<data>
@@ -22,31 +22,23 @@
 		</data>
 		<key>Headers/STKStickerController.h</key>
 		<data>
-		MhfLX0N7HZ9xIQZ73i8OHIt9vyA=
+		PRp+dLp1aIf9xwfYjSw9DX8yK+w=
 		</data>
 		<key>Headers/STKStickersConstants.h</key>
 		<data>
-		ic7gBRDcDi9mkUljZApm68UL19I=
+		bAnsOF6hUB+nabG9zQTt232a2z8=
 		</data>
 		<key>Headers/STKStickersManager.h</key>
 		<data>
-		wnxKIBp10fI8UsdRdC4qG9obnms=
+		3+ymK9YdwieUfa6a5Ulmdbarpv4=
 		</data>
 		<key>Headers/STKStickersPurchaseService.h</key>
 		<data>
 		vZJw+BhTDdduKCBvV3Q2L3Xni2w=
 		</data>
-		<key>Headers/STKUtility.h</key>
-		<data>
-		/4XtGwAmrxPTvNkL2agn7g58eCE=
-		</data>
 		<key>Headers/Stickerpipe.h</key>
 		<data>
-		E8bRiDrvmWOu0gDlERDe/XQhnMo=
-		</data>
-		<key>Headers/UIImage+Tint.h</key>
-		<data>
-		M7j3XyogEEPua/SfNrlOwXpT3Co=
+		U0czSq/JSDMJjnPLGQXTMVnpG7g=
 		</data>
 		<key>Headers/UIImageView+Stickers.h</key>
 		<data>
@@ -93,11 +85,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			T3FxorBH1H2RcMMt8i4Hsgn/tww=
+			9tYv67d3VimaoyqjgUVaxvYn/mE=
 			</data>
 			<key>hash2</key>
 			<data>
-			RX9lusYpXfXNQls5rQ+02G+78X2IWJok3R6beYEoz54=
+			upNaKLTpv5Pf5lpfd/bI1b4lRrexdynFzMy8xgD+X+4=
 			</data>
 		</dict>
 		<key>Headers/STKShowStickerButton.h</key>
@@ -115,33 +107,33 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			MhfLX0N7HZ9xIQZ73i8OHIt9vyA=
+			PRp+dLp1aIf9xwfYjSw9DX8yK+w=
 			</data>
 			<key>hash2</key>
 			<data>
-			r3EbNfsnyqHifWqdceO3RVqPkiDnmpaVQ0nLRLdb/08=
+			AtpVx+w3Id+sdbu+HBWXSpQNv89xlx4t34i6Ghvxnwg=
 			</data>
 		</dict>
 		<key>Headers/STKStickersConstants.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			ic7gBRDcDi9mkUljZApm68UL19I=
+			bAnsOF6hUB+nabG9zQTt232a2z8=
 			</data>
 			<key>hash2</key>
 			<data>
-			VdSeRQRu5srRWcIkEf2DSh93puEpVCosqefuJfbtLA0=
+			qcAHgtuRw2qoCHLkNdOV0o/2j7yicfSUJs0FiXcUTh8=
 			</data>
 		</dict>
 		<key>Headers/STKStickersManager.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			wnxKIBp10fI8UsdRdC4qG9obnms=
+			3+ymK9YdwieUfa6a5Ulmdbarpv4=
 			</data>
 			<key>hash2</key>
 			<data>
-			NsL7vyefFkihwaHv+bsQ2RVX0KlWXnCIiyjoXGKoHAU=
+			I7RfuS4DvehP1TFi84dEKjlWNZlm0aWeZAJUrUqeI+Q=
 			</data>
 		</dict>
 		<key>Headers/STKStickersPurchaseService.h</key>
@@ -155,37 +147,15 @@
 			T6saJH/A9zeeHAgO+IjEquJPhpvZQy2mOjUwon+5MPE=
 			</data>
 		</dict>
-		<key>Headers/STKUtility.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			/4XtGwAmrxPTvNkL2agn7g58eCE=
-			</data>
-			<key>hash2</key>
-			<data>
-			SriJLXaNtptE/ZrFkZ2qsrF+nTg9gE4XlYL5QuFpwBU=
-			</data>
-		</dict>
 		<key>Headers/Stickerpipe.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			E8bRiDrvmWOu0gDlERDe/XQhnMo=
+			U0czSq/JSDMJjnPLGQXTMVnpG7g=
 			</data>
 			<key>hash2</key>
 			<data>
-			nnahJYcecdShda+PznV0wz74trZ565eVOoQJLfcIZ6s=
-			</data>
-		</dict>
-		<key>Headers/UIImage+Tint.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			M7j3XyogEEPua/SfNrlOwXpT3Co=
-			</data>
-			<key>hash2</key>
-			<data>
-			g1SqcVUKEVLMpqm1aTyPcFK/yeGHHoxw3GA4pVKke6c=
+			UA17YPY/0tdqeNAcDqVLjA1MMPm/bnaYgP0TRcu8qdw=
 			</data>
 		</dict>
 		<key>Headers/UIImageView+Stickers.h</key>

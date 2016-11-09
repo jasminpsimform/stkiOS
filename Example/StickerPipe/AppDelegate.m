@@ -6,8 +6,6 @@
 //  Copyright (c) 2015 908. All rights reserved.
 //
 
-#import <Fabric/Fabric.h>
-#import <Crashlytics/Crashlytics.h>
 #import <SSKeychain/SSKeychain.h>
 #import "AppDelegate.h"
 #import "NSString+MD5.h"
@@ -46,10 +44,6 @@ NSString* const apiKey = @"72921666b5ff8651f374747bfefaf7b2";
 
 - (BOOL)application: (UIApplication*)application didFinishLaunchingWithOptions: (NSDictionary*)launchOptions {
 	// Override point for customization after application launch.
-	[Fabric with: @[[Crashlytics class]]];
-	[Crashlytics startWithAPIKey: @"0c5dc9cc90ca8deb6e4e375e9d1fbcc76d193c10"];
-	[CrashlyticsKit setUserIdentifier: [self userId]];
-
 	[STKStickersManager initWithApiKey: apiKey];
 	[STKStickersManager setStartTimeInterval];
 	[STKStickersManager setUserKey: [self userId]];
