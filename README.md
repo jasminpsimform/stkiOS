@@ -12,6 +12,7 @@
 Get the API key on the [Stickerpipe](http://stickerpipe.com/)
 
 #### Using CocoaPods (iOS 8 and later)
+
 ```ruby
 use_frameworks!
 pod "StickerPipe", "~> 0.3.18"
@@ -21,12 +22,21 @@ pod "StickerPipe", "~> 0.3.18"
 
 Add content of Framework folder to your project. You can also get sources from [here](https://github.com/908Inc/stickerpipe-ios-sdk) for low-level customization
 
+
 ## Usage
 
-For import framework to project use:
-```objc
+Import framework with:
+
+swift:
+```swift
 @import Stickerpipe
 ```
+
+objC:
+```ojbc
+#import <Stickerpipe/Stickerpipe.h>
+```
+
 
 ### Initializing 
 
@@ -34,10 +44,10 @@ Set API key in your AppDelegate.m
 
 ```objc
 [STKStickersManager initWithApiKey:@"API_KEY"];
-[STKStickersManager setStartTimeInterval];
 ```
 
 You can get your own API Key on http://stickerpipe.com to have customized packs set.
+
 
 ### Users
 
@@ -47,9 +57,10 @@ User id required, and need for retrieving stickers packs. Set it to sdk, when yo
 [STKStickersManager setUserKey:@"USER_ID"];
 ```
 
+
 ### Presenting
 
-Init STKStickerController and add stickersView like inputView for your UITextView/UITextField. Storing stickerController instance is up to you
+Init STKStickerController and add stickersView as inputView for your UITextView/UITextField. Storing stickerController instance is up to you
 
 ```objc
 @property (strong, nonatomic) STKStickerController *stickerController;
@@ -57,37 +68,40 @@ Init STKStickerController and add stickersView like inputView for your UITextVie
 self.stickerController.textInputView = self.inputTextView;
 ```
 
-Use delegate method for reciving sticker messages from sticker view controller
 
+### Stickers
 
-```objc
-- (void)stickerController:(STKStickerController *)stickerController didSelectStickerWithMessage:(NSString *)message {
-    
-    //Send sticker message
-    
-}
-```
-
-Sticker image can be displayed in UIImageView by message:
-```objc
-stk_setStickerWithMessage: placeholder: placeholderColor: progress: completion:
-```
-
-Image for sticker can be get by sticker message:
-```objc
-[self.stickerController.imageManager getImageForStickerMessage:message withProgress:^(NSTimeInterval progress) {
-} andCompletion:^(NSError error, UIImage stickerImage) {
-    yourImageView.image = stickerImage;
-}];
-```
-
-Use delegate method to set base controller for presenting modal controllers 
+Use delegate method for recieving sticker messages from sticker view controller
 
 ```objc
-- (UIViewController *)stickerControllerViewControllerForPresentingModalView {
-    return self;
-}
+- (void)  stickerController:(STKStickerController *)stickerController 
+didSelectStickerWithMessage:(NSString *)message;
 ```
+
+and display it with UIImageView:
+
+```objc
+- (void)stk_setStickerWithMessage: (NSString*)stickerMessage
+					   completion: (STKCompletionBlock)completion;
+```
+
+or just retrieve an image for custom processing with imageManager property:
+
+```objc
+- (void)getImageForStickerMessage: (NSString*)stickerMessage 
+                     withProgress: (STKDownloadingProgressBlock)progressBlock 
+                    andCompletion: (STKCompletionBlock)completion;
+```
+
+
+### Modals
+
+Return your controller from delegate method for presenting modal controllers:
+
+```objc
+- (UIViewController*)stickerControllerViewControllerForPresentingModalView;
+```
+
 
 ### Push notifications
 Register to push notifications in AppDelegate. 
@@ -111,6 +125,7 @@ method call to delegate method:
 - (void) application:(UIApplication )application didReceiveRemoteNotification:(NSDictionary )userInfo
 ```
 
+
 ### Suggests
 
 To add suggestions about stickers you should add UICollectionView to appropriate place on you screen, for example above UITextView. Then attach your collection view to STKStickerController
@@ -123,6 +138,7 @@ Enable your suggests with showSuggests property
 ```objc
 self.stickerController.showSuggests = YES;
 ```
+
 
 ### Statistics
 
