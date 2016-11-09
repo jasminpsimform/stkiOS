@@ -22,6 +22,7 @@ pod "StickerPipe", "~> 0.3.18"
 
 Add content of Framework folder to your project. You can also get sources from [here](https://github.com/908Inc/stickerpipe-ios-sdk) for low-level customization
 
+
 ## Usage
 
 Import framework with:
@@ -36,6 +37,7 @@ objC:
 #import <Stickerpipe/Stickerpipe.h>
 ```
 
+
 ### Initializing 
 
 Set API key in your AppDelegate.m 
@@ -46,6 +48,7 @@ Set API key in your AppDelegate.m
 
 You can get your own API Key on http://stickerpipe.com to have customized packs set.
 
+
 ### Users
 
 User id required, and need for retrieving stickers packs. Set it to sdk, when you receive user id.
@@ -53,6 +56,7 @@ User id required, and need for retrieving stickers packs. Set it to sdk, when yo
 ```objc
 [STKStickersManager setUserKey:@"USER_ID"];
 ```
+
 
 ### Presenting
 
@@ -63,6 +67,9 @@ Init STKStickerController and add stickersView as inputView for your UITextView/
 
 self.stickerController.textInputView = self.inputTextView;
 ```
+
+
+### Stickers
 
 Use delegate method for recieving sticker messages from sticker view controller
 
@@ -86,11 +93,15 @@ or just retrieve an image for custom processing with imageManager property:
                     andCompletion: (STKCompletionBlock)completion;
 ```
 
+
+### Modals
+
 Return your controller from delegate method for presenting modal controllers:
 
 ```objc
 - (UIViewController*)stickerControllerViewControllerForPresentingModalView;
 ```
+
 
 ### Push notifications
 Register to push notifications in AppDelegate. 
@@ -114,6 +125,7 @@ method call to delegate method:
 - (void) application:(UIApplication )application didReceiveRemoteNotification:(NSDictionary )userInfo
 ```
 
+
 ### Suggests
 
 To add suggestions about stickers you should add UICollectionView to appropriate place on you screen, for example above UITextView. Then attach your collection view to STKStickerController
@@ -126,6 +138,7 @@ Enable your suggests with showSuggests property
 ```objc
 self.stickerController.showSuggests = YES;
 ```
+
 
 ### Statistics
 
