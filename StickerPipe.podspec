@@ -13,12 +13,12 @@ Pod::Spec.new do |s|
 
   s.framework       = 'CoreData'
   s.requires_arc    = true
-  s.dependency       'AFNetworking', '~> 3.1.0'
-  s.dependency       'DFImageManager', '~> 0.8.0'
-  s.dependency       'RMStore', '~> 0.7.1'
+  s.dependency       'AFNetworking', '3.1.0'
+  s.dependency       'DFImageManager', '0.8.0'
+  s.dependency       'RMStore', '0.7.1'
   s.dependency       'RMStore/KeychainPersistence'
   s.dependency       'RMStore/NSUserDefaultsPersistence'
-  s.dependency       'SDWebImage', '~> 3.8.2'
+  s.dependency       'SDWebImage', '3.8.2'
 
   s.resource = 'Stickerpipe/Framework/ResBundle.bundle'
 

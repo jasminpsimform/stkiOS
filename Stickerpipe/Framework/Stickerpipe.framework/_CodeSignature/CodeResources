@@ -4,6 +4,10 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>Assets.car</key>
+		<data>
+		96jflB6nVUhhLrxlwd6wj7kDYb8=
+		</data>
 		<key>Headers/STKBadgeView.h</key>
 		<data>
 		brccPSwlItZ62wPA4EfcHV9fM6g=
@@ -11,10 +15,6 @@
 		<key>Headers/STKImageManager.h</key>
 		<data>
 		V0PqXXsgEjKzP95E8ggdFVQvchQ=
-		</data>
-		<key>Headers/STKPurchaseService.h</key>
-		<data>
-		9tYv67d3VimaoyqjgUVaxvYn/mE=
 		</data>
 		<key>Headers/STKShowStickerButton.h</key>
 		<data>
@@ -32,13 +32,9 @@
 		<data>
 		3+ymK9YdwieUfa6a5Ulmdbarpv4=
 		</data>
-		<key>Headers/STKStickersPurchaseService.h</key>
-		<data>
-		vZJw+BhTDdduKCBvV3Q2L3Xni2w=
-		</data>
 		<key>Headers/Stickerpipe.h</key>
 		<data>
-		U0czSq/JSDMJjnPLGQXTMVnpG7g=
+		H5IL5d5KrfWUfld62J7ieDir1nw=
 		</data>
 		<key>Headers/UIImageView+Stickers.h</key>
 		<data>
@@ -46,7 +42,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		DmHUuT2sQJC9konHLok+zbVSY+U=
+		WNfq1nFaajpJlOWmtPJdgyARdIY=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -56,9 +52,76 @@
 		<data>
 		3Dmgi/U/b2yDo9Z6j/qwlYsIawg=
 		</data>
+		<key>StickerModel.momd/StickerModel 10.mom</key>
+		<data>
+		4woAY2W3dNkVLwRHvyRfnjR9CHw=
+		</data>
+		<key>StickerModel.momd/StickerModel 11.mom</key>
+		<data>
+		k7oPeUghux2Q1i7LThIueaMOsyQ=
+		</data>
+		<key>StickerModel.momd/StickerModel 12.mom</key>
+		<data>
+		lWWzdZl4lbEfI6bAIyhV1zyArXY=
+		</data>
+		<key>StickerModel.momd/StickerModel 12.omo</key>
+		<data>
+		PGIK65WuZ/bDOpSYuYWapl4mKUU=
+		</data>
+		<key>StickerModel.momd/StickerModel 2.mom</key>
+		<data>
+		M/P1KR6nVXAEcieRUQG+dS/j9DQ=
+		</data>
+		<key>StickerModel.momd/StickerModel 3.mom</key>
+		<data>
+		Az8qJUcWsLlRGpSfbTr3VfyMmmQ=
+		</data>
+		<key>StickerModel.momd/StickerModel 4.mom</key>
+		<data>
+		xafIK41HwV+hkPVFf7oTQFgJ1YE=
+		</data>
+		<key>StickerModel.momd/StickerModel 5.mom</key>
+		<data>
+		RkTqZx1R7D5vFwaK5UyhOBTUOYY=
+		</data>
+		<key>StickerModel.momd/StickerModel 6.mom</key>
+		<data>
+		urVDDWbG54/XLqnTc2isv80HGEE=
+		</data>
+		<key>StickerModel.momd/StickerModel 7.mom</key>
+		<data>
+		EzSiRXe09B7Fkk8dXQn0t5zmfaQ=
+		</data>
+		<key>StickerModel.momd/StickerModel 8.mom</key>
+		<data>
+		4woAY2W3dNkVLwRHvyRfnjR9CHw=
+		</data>
+		<key>StickerModel.momd/StickerModel 9.mom</key>
+		<data>
+		k7oPeUghux2Q1i7LThIueaMOsyQ=
+		</data>
+		<key>StickerModel.momd/StickerModel.mom</key>
+		<data>
+		mSapwWdLZQB5rifikTM4NmSvgBo=
+		</data>
+		<key>StickerModel.momd/VersionInfo.plist</key>
+		<data>
+		IcCRTgbs8EFxofgvz8jeKTQA99E=
+		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
+		<key>Assets.car</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			96jflB6nVUhhLrxlwd6wj7kDYb8=
+			</data>
+			<key>hash2</key>
+			<data>
+			dMewI+YFnd8c4DDiqPCqcrp8nn+t9QTo4RhUCU3AU4A=
+			</data>
+		</dict>
 		<key>Headers/STKBadgeView.h</key>
 		<dict>
 			<key>hash</key>
@@ -79,17 +142,6 @@
 			<key>hash2</key>
 			<data>
 			EAnHjZHu8B7H1ju9ugNQGmyPk4VvXFEny3pYqtxnl6g=
-			</data>
-		</dict>
-		<key>Headers/STKPurchaseService.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			9tYv67d3VimaoyqjgUVaxvYn/mE=
-			</data>
-			<key>hash2</key>
-			<data>
-			upNaKLTpv5Pf5lpfd/bI1b4lRrexdynFzMy8xgD+X+4=
 			</data>
 		</dict>
 		<key>Headers/STKShowStickerButton.h</key>
@@ -136,26 +188,15 @@
 			I7RfuS4DvehP1TFi84dEKjlWNZlm0aWeZAJUrUqeI+Q=
 			</data>
 		</dict>
-		<key>Headers/STKStickersPurchaseService.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			vZJw+BhTDdduKCBvV3Q2L3Xni2w=
-			</data>
-			<key>hash2</key>
-			<data>
-			T6saJH/A9zeeHAgO+IjEquJPhpvZQy2mOjUwon+5MPE=
-			</data>
-		</dict>
 		<key>Headers/Stickerpipe.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			U0czSq/JSDMJjnPLGQXTMVnpG7g=
+			H5IL5d5KrfWUfld62J7ieDir1nw=
 			</data>
 			<key>hash2</key>
 			<data>
-			UA17YPY/0tdqeNAcDqVLjA1MMPm/bnaYgP0TRcu8qdw=
+			TaD3gBGNf7omz41zUrQ1B7x1LeOdQoIjo7P/VkFf6Rg=
 			</data>
 		</dict>
 		<key>Headers/UIImageView+Stickers.h</key>
@@ -189,6 +230,160 @@
 			<key>hash2</key>
 			<data>
 			rBuNY9+tOxbtQwrZrSW5yYNBpCCbf5h74GpAHW79KdI=
+			</data>
+		</dict>
+		<key>StickerModel.momd/StickerModel 10.mom</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			4woAY2W3dNkVLwRHvyRfnjR9CHw=
+			</data>
+			<key>hash2</key>
+			<data>
+			oGFwGmo8sc77RaKR+/cdTqs1NJa37zUG5Uv5TFQDASo=
+			</data>
+		</dict>
+		<key>StickerModel.momd/StickerModel 11.mom</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			k7oPeUghux2Q1i7LThIueaMOsyQ=
+			</data>
+			<key>hash2</key>
+			<data>
+			kPboE3PjYagzMdTYf9bkpviW5yGLFeH2vgcCA4eeJ+4=
+			</data>
+		</dict>
+		<key>StickerModel.momd/StickerModel 12.mom</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			lWWzdZl4lbEfI6bAIyhV1zyArXY=
+			</data>
+			<key>hash2</key>
+			<data>
+			RHYBDJys7RaUxQnZJEiOrhCSOWX+TsmilpDsMj6Pyt8=
+			</data>
+		</dict>
+		<key>StickerModel.momd/StickerModel 12.omo</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			PGIK65WuZ/bDOpSYuYWapl4mKUU=
+			</data>
+			<key>hash2</key>
+			<data>
+			7LzFZeZed81c+eOsNnjE6GTxXb08K1bYSV+mR6+bhDg=
+			</data>
+		</dict>
+		<key>StickerModel.momd/StickerModel 2.mom</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			M/P1KR6nVXAEcieRUQG+dS/j9DQ=
+			</data>
+			<key>hash2</key>
+			<data>
+			cVv8jhuH2uBefXJMibShj0SD2QwyOxBO3R5cMClDmuA=
+			</data>
+		</dict>
+		<key>StickerModel.momd/StickerModel 3.mom</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			Az8qJUcWsLlRGpSfbTr3VfyMmmQ=
+			</data>
+			<key>hash2</key>
+			<data>
+			ntMvteD34U6ZSOVI0goCYtngrgg+BOIPQaoDqwlQxuc=
+			</data>
+		</dict>
+		<key>StickerModel.momd/StickerModel 4.mom</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			xafIK41HwV+hkPVFf7oTQFgJ1YE=
+			</data>
+			<key>hash2</key>
+			<data>
+			C7mG3KGE6gMga1d8HXGf44pak/QVIuy26yBa8KITKrM=
+			</data>
+		</dict>
+		<key>StickerModel.momd/StickerModel 5.mom</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			RkTqZx1R7D5vFwaK5UyhOBTUOYY=
+			</data>
+			<key>hash2</key>
+			<data>
+			yLr6wWyGjVZavliLlGCxAWEDNEs8EMbXOCoLjM+/mCM=
+			</data>
+		</dict>
+		<key>StickerModel.momd/StickerModel 6.mom</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			urVDDWbG54/XLqnTc2isv80HGEE=
+			</data>
+			<key>hash2</key>
+			<data>
+			wjtuk16SDf3IW4aHEIa1JYH86SCvKVeet66bCviOhX4=
+			</data>
+		</dict>
+		<key>StickerModel.momd/StickerModel 7.mom</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			EzSiRXe09B7Fkk8dXQn0t5zmfaQ=
+			</data>
+			<key>hash2</key>
+			<data>
+			CQT6fY87fgBdX8V0Cj4AR0S4bL2dxn7gVczQTcEyWZE=
+			</data>
+		</dict>
+		<key>StickerModel.momd/StickerModel 8.mom</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			4woAY2W3dNkVLwRHvyRfnjR9CHw=
+			</data>
+			<key>hash2</key>
+			<data>
+			oGFwGmo8sc77RaKR+/cdTqs1NJa37zUG5Uv5TFQDASo=
+			</data>
+		</dict>
+		<key>StickerModel.momd/StickerModel 9.mom</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			k7oPeUghux2Q1i7LThIueaMOsyQ=
+			</data>
+			<key>hash2</key>
+			<data>
+			kPboE3PjYagzMdTYf9bkpviW5yGLFeH2vgcCA4eeJ+4=
+			</data>
+		</dict>
+		<key>StickerModel.momd/StickerModel.mom</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			mSapwWdLZQB5rifikTM4NmSvgBo=
+			</data>
+			<key>hash2</key>
+			<data>
+			ls9yH2tcFywYIcV7ooqE/Wt7c5ZCHj5DkvGZMlJmeQw=
+			</data>
+		</dict>
+		<key>StickerModel.momd/VersionInfo.plist</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			IcCRTgbs8EFxofgvz8jeKTQA99E=
+			</data>
+			<key>hash2</key>
+			<data>
+			WCFBUG1qtWFvYsDy2jfu6GGGWtgzNYOHRgI+05lHEPE=
 			</data>
 		</dict>
 	</dict>
