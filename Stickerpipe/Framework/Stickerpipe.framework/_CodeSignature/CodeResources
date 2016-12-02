@@ -10,7 +10,7 @@
 		</data>
 		<key>Headers/STKImageManager.h</key>
 		<data>
-		V0PqXXsgEjKzP95E8ggdFVQvchQ=
+		I1xXF+5lyRJKETJNr82nYAHsGIQ=
 		</data>
 		<key>Headers/STKShowStickerButton.h</key>
 		<data>
@@ -18,15 +18,15 @@
 		</data>
 		<key>Headers/STKStickerController.h</key>
 		<data>
-		PRp+dLp1aIf9xwfYjSw9DX8yK+w=
+		P0yPzVvNbf7q9iAMKOvVrP94YRw=
 		</data>
 		<key>Headers/STKStickersConstants.h</key>
 		<data>
-		bAnsOF6hUB+nabG9zQTt232a2z8=
+		EyZ3/qHjfUiEDjLcbKk+GUYnLfI=
 		</data>
 		<key>Headers/STKStickersManager.h</key>
 		<data>
-		3+ymK9YdwieUfa6a5Ulmdbarpv4=
+		62J5HkXw6K8POizs2d8MPrGgNxI=
 		</data>
 		<key>Headers/Stickerpipe.h</key>
 		<data>
@@ -38,7 +38,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		WNfq1nFaajpJlOWmtPJdgyARdIY=
+		dM31hBYvo5WwkZ9eZj4UO+dQVfg=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -62,11 +62,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			V0PqXXsgEjKzP95E8ggdFVQvchQ=
+			I1xXF+5lyRJKETJNr82nYAHsGIQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			EAnHjZHu8B7H1ju9ugNQGmyPk4VvXFEny3pYqtxnl6g=
+			TeUgX6QZ7TjqITU6Hg0qc+cnDACRS00NDnubn4LlvK0=
 			</data>
 		</dict>
 		<key>Headers/STKShowStickerButton.h</key>
@@ -84,33 +84,33 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			PRp+dLp1aIf9xwfYjSw9DX8yK+w=
+			P0yPzVvNbf7q9iAMKOvVrP94YRw=
 			</data>
 			<key>hash2</key>
 			<data>
-			AtpVx+w3Id+sdbu+HBWXSpQNv89xlx4t34i6Ghvxnwg=
+			nsjgjTBS3Wb2dV7K1XhFOQqjmaswEaZZ8klkOcWmCpI=
 			</data>
 		</dict>
 		<key>Headers/STKStickersConstants.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			bAnsOF6hUB+nabG9zQTt232a2z8=
+			EyZ3/qHjfUiEDjLcbKk+GUYnLfI=
 			</data>
 			<key>hash2</key>
 			<data>
-			qcAHgtuRw2qoCHLkNdOV0o/2j7yicfSUJs0FiXcUTh8=
+			oqC4sNiBSz3SeE1hWe6AqA7f8U5pWdeSp7lSDlt0YOM=
 			</data>
 		</dict>
 		<key>Headers/STKStickersManager.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			3+ymK9YdwieUfa6a5Ulmdbarpv4=
+			62J5HkXw6K8POizs2d8MPrGgNxI=
 			</data>
 			<key>hash2</key>
 			<data>
-			I7RfuS4DvehP1TFi84dEKjlWNZlm0aWeZAJUrUqeI+Q=
+			lGQ1r8xpf1+XBENU1rLvUN1/zry7u+d3xtVw/Snje88=
 			</data>
 		</dict>
 		<key>Headers/Stickerpipe.h</key>
