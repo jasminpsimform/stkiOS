@@ -53,7 +53,7 @@ You can get your own API Key on http://stickerpipe.com to have customized packs 
 
 User id is required. After it specified, our SDK can provide user-specific packs customization. All changes to displayed packs settings are stored for thus unique keys.
 
-After retrieving user_id, set it to STKStickersManager with:
+After retrieving user id, set it to STKStickersManager with:
 
 ```objc
 [STKStickersManager setUserKey:@"USER_ID"];
