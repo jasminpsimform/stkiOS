@@ -15,12 +15,12 @@ Get the API key on the [Stickerpipe](http://stickerpipe.com/)
 
 ```ruby
 use_frameworks!
-pod "StickerPipe", "~> 0.3.30"
+pod "StickerPipe", "~> 0.4.0"
 ```
 
 #### or manualy (iOS 7 and later)
 
-Add content of Framework folder to your project. You can also get sources from [here](https://github.com/908Inc/stickerpipe-ios-sdk) for low-level customization
+Add content of Framework folder to your project. You can also get sources from [here](https://github.com/908Inc/stickerpipe-ios-sdk) for low-level customization and iOS 7 support
 
 
 ## Usage
