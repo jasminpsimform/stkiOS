@@ -1,4 +1,4 @@
-target “StickerPipe” do
+target 'StickerPipe' do
 
 platform :ios, '8.0'
 
@@ -8,6 +8,6 @@ pod 'RMStore', '~> 0.7'
 pod 'RMStore/KeychainPersistence'
 pod 'RMStore/NSUserDefaultsPersistence'
 pod 'SSKeychain', '~> 1.3'
-pod 'StickerPipe'
+pod 'StickerPipe', :path => '~/Work/908iOS/stickerpipe-ios-sdk'
 
 end
