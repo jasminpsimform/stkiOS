@@ -78,9 +78,6 @@ void STKLog(NSString* format, ...) {
 
 
 + (NSBundle*)getResourceBundle {
-	NSString* bundlePath = [[NSBundle mainBundle] pathForResource: @"ResBundle" ofType: @"bundle"];
-	NSBundle* bundle = [NSBundle bundleWithPath: bundlePath];
-
 	return [NSBundle bundleForClass: self];
 }
 

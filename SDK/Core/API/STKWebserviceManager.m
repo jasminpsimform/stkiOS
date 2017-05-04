@@ -3,6 +3,8 @@
 // Copyright (c) 2016 908 Inc. All rights reserved.
 //
 
+#import <SDWebImage/SDWebImageDownloader.h>
+
 #import "STKWebserviceManager.h"
 #import "AFHTTPSessionManager.h"
 #import "STKStickersManager.h"
