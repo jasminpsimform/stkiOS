@@ -138,8 +138,17 @@ static STKConstStringKey kSdkVersion = @"0.3.3";
 }
 
 - (NSString*)localization {
-	return [[NSUserDefaults standardUserDefaults] stringForKey: kLocalizationDefaultsKey] ?:
-			[NSLocale preferredLanguages][0];
+	NSString* predefinedLocalization = [[NSUserDefaults standardUserDefaults] stringForKey: kLocalizationDefaultsKey];
+
+	if (predefinedLocalization) {
+		return predefinedLocalization;
+	} else {
+		NSString* language = [NSLocale preferredLanguages].firstObject;
+		NSDictionary* languageDic = [NSLocale componentsFromLocaleIdentifier: language];
+		NSString* languageCode = languageDic[@"kCFLocaleLanguageCodeKey"];
+
+		return languageCode;
+	}
 }
 
 - (void)searchStickersWithSearchModel: (STKSearchModel*)searchModel completion: (void (^)(NSArray* stickers))completion {
