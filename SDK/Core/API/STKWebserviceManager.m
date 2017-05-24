@@ -56,7 +56,7 @@ static STKConstStringKey kPacksURL = @"shop/my";
 static STKConstStringKey kStatisticUrl = @"statistics";
 static STKConstStringKey kSearchURL = @"search";
 static STKConstStringKey kSTKApiVersion = @"v2";
-static STKConstStringKey kSdkVersion = @"0.3.3";
+static STKConstStringKey kSdkVersion = @"0.4.4";
 
 + (instancetype)sharedInstance {
 	static STKWebserviceManager* sharedInstance = nil;
