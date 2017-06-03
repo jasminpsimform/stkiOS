@@ -11,7 +11,7 @@
 #import "STKChatTextCell.h"
 #import "AppDelegate.h"
 #import <Stickerpipe/STKStickersPurchaseService.h>
-#import <Stickerpipe.h>
+@import Stickerpipe;
 
 @interface STKChatViewController () <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, STKStickerControllerDelegate, UIAlertViewDelegate>
 

@@ -7,9 +7,7 @@
 //
 
 #import "STKChatStickerCell.h"
-#import <Stickerpipe.h>
-#import <Stickerpipe/UIImage+Tint.h>
-//@import Stickerpipe;
+@import Stickerpipe;
 
 @implementation STKChatStickerCell
 
