@@ -11,7 +11,7 @@
 #import "NSString+MD5.h"
 #import "STKChatViewController.h"
 
-#import <Stickerpipe.h>
+@import Stickerpipe;
 
 //demo
 NSString* const apiKey = @"72921666b5ff8651f374747bfefaf7b2";
