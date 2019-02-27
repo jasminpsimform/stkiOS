@@ -23,6 +23,8 @@
 
 - (void)setStickerPlaceholder: (UIImage*)stickerPlaceholder;
 
+// Check Changes
+
 @property (nonatomic) STKStickerDelegateManager* stickerDelegateManager;
 
 @end
