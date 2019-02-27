@@ -21,7 +21,7 @@
 														 progress: nil
 														completed: ^ (UIImage* image, NSData* data, NSError* error, BOOL finished) {
 															if (image && finished) {
-																[[SDImageCache sharedImageCache] storeImage: image forKey: [self.stickerID stringValue]];
+                                                                [[SDImageCache sharedImageCache] storeImage:image forKey:[self.stickerID stringValue] completion:nil];
 															}
 														}];
 }

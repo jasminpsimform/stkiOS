@@ -33,24 +33,24 @@
     
     NSString* density = [STKStickersManager downloadMaxImages] ? [STKUtility maxDensity] : [STKUtility scaleString];
 
-	[[SDImageCache sharedImageCache] queryDiskCacheForKey: stickerName done: ^ (UIImage* image, SDImageCacheType cacheType) {
-		if (image) {
-			completion(nil, image);
-		} else {
-			[[STKWebserviceManager sharedInstance] getStickerInfoWithId: stickerName success: ^ (id response) {
-				NSURL* urlString = [NSURL URLWithString: response[@"data"][@"image"][density]];
-				self.imageTask = [[STKWebserviceManager sharedInstance] downloadImageWithURL: urlString
-																				  completion: ^ (UIImage* downloadedImage, NSData* data, NSError* error, BOOL finished) {
-																					  if (downloadedImage && finished) {
-																						  [[SDImageCache sharedImageCache] storeImage: downloadedImage forKey: stickerName];
-																						  if (completion) {
-																							  completion(nil, downloadedImage);
-																						  }
-																					  }
-																				  }];
-			}                                                   failure: nil];
-		}
-	}];
+    [[SDImageCache sharedImageCache] queryCacheOperationForKey:stickerName done:^(UIImage * _Nullable image, NSData * _Nullable data, SDImageCacheType cacheType) {
+        if (image) {
+            completion(nil, image);
+        } else {
+            [[STKWebserviceManager sharedInstance] getStickerInfoWithId: stickerName success: ^ (id response) {
+                NSURL* urlString = [NSURL URLWithString: response[@"data"][@"image"][density]];
+                self.imageTask = [[STKWebserviceManager sharedInstance] downloadImageWithURL: urlString
+                                                                                  completion: ^ (UIImage* downloadedImage, NSData* data, NSError* error, BOOL finished) {
+                                                                                      if (downloadedImage && finished) {
+                                                                                          [[SDImageCache sharedImageCache] storeImage:downloadedImage forKey:stickerName completion:nil];
+                                                                                          if (completion) {
+                                                                                              completion(nil, downloadedImage);
+                                                                                          }
+                                                                                      }
+                                                                                  }];
+            }                                                   failure: nil];
+        }
+    }];
 }
 
 @end

@@ -8,6 +8,6 @@ pod 'RMStore', '~> 0.7'
 pod 'RMStore/KeychainPersistence'
 pod 'RMStore/NSUserDefaultsPersistence'
 pod 'SSKeychain', '~> 1.3'
-pod 'StickerPipe'
+pod 'StickerPipe', :git => 'https://github.com/jasminpsimform/stkiOS'
 
 end

@@ -88,29 +88,29 @@
 	NSCharacterSet* characterSet = [NSCharacterSet characterSetWithCharactersInString: @"[]"];
 	NSString* stickerName = [stickerMessage stringByTrimmingCharactersInSet: characterSet];
 
-	[[SDImageCache sharedImageCache] queryDiskCacheForKey: stickerName done: ^ (UIImage* image, SDImageCacheType cacheType) {
-		if (image) {
-			weakSelf.imageView.image = image;
-			[weakSelf setNeedsLayout];
-		} else {
-			[[STKWebserviceManager sharedInstance] getStickerInfoWithId: stickerName success: ^ (id response) {
-				NSString* urlString = response[@"data"][@"image"][[STKUtility scaleString]];
-
-				self.imageOperation = [[STKWebserviceManager sharedInstance] downloadImageWithURL: [NSURL URLWithString: urlString]
-																					   completion: ^ (UIImage* downloadedImage, NSData* data, NSError* error, BOOL finished) {
-																						   if (downloadedImage && finished) {
-																							   [[SDImageCache sharedImageCache] storeImage: downloadedImage forKey: stickerName];
-																							   if ([self.stickerMessage isEqualToString: stickerMessage]) {
-																								   dispatch_async(dispatch_get_main_queue(), ^ {
-																									   weakSelf.imageView.image = downloadedImage;
-																									   [weakSelf setNeedsLayout];
-																								   });
-																							   }
-																						   }
-																					   }];
-			}                                                   failure: nil];
-		}
-	}];
+    [[SDImageCache sharedImageCache] queryCacheOperationForKey: stickerName done:^(UIImage * _Nullable image, NSData * _Nullable data, SDImageCacheType cacheType) {
+        if (image) {
+            weakSelf.imageView.image = image;
+            [weakSelf setNeedsLayout];
+        } else {
+            [[STKWebserviceManager sharedInstance] getStickerInfoWithId: stickerName success: ^ (id response) {
+                NSString* urlString = response[@"data"][@"image"][[STKUtility scaleString]];
+                
+                self.imageOperation = [[STKWebserviceManager sharedInstance] downloadImageWithURL: [NSURL URLWithString: urlString]
+                                                                                       completion: ^ (UIImage* downloadedImage, NSData* data, NSError* error, BOOL finished) {
+                                                                                           if (downloadedImage && finished) {
+                                                                                               [[SDImageCache sharedImageCache] storeImage:downloadedImage forKey:stickerName completion:nil];
+                                                                                               if ([self.stickerMessage isEqualToString: stickerMessage]) {
+                                                                                                   dispatch_async(dispatch_get_main_queue(), ^ {
+                                                                                                       weakSelf.imageView.image = downloadedImage;
+                                                                                                       [weakSelf setNeedsLayout];
+                                                                                                   });
+                                                                                               }
+                                                                                           }
+                                                                                       }];
+            }                                                   failure: nil];
+        }
+    }];
 }
 
 - (UIImage*)returnStickerImage {
