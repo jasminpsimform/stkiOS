@@ -17,6 +17,7 @@
 #import "NSLayoutConstraint+Addictions.h"
 #import "UIImage+CustomBundle.h"
 #import "helper.h"
+#import <SDWebImage/SDImageCache.h>
 
 @interface STKStickerViewCell ()
 
@@ -54,7 +55,6 @@
 - (void)prepareForReuse {
 	[self.imageOperation cancel];
 	self.imageView.image = nil;
-	[self.imageView sd_cancelCurrentAnimationImagesLoad];
 	[[SDWebImageManager sharedManager] cancelAll];
 }
 

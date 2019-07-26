@@ -12,6 +12,7 @@
 #import "STKWebserviceManager.h"
 #import "STKUtility.h"
 #import "STKStickersManager.h"
+#import <SDWebImage/SDImageCache.h>
 
 @implementation STKImageManager
 

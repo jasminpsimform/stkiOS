@@ -107,7 +107,7 @@
 }
 
 - (void)stk_cancelStickerImageLoading: (UIImageView*)stickerImageView {
-	[stickerImageView sd_cancelCurrentAnimationImagesLoad];
+	
 }
 
 @end

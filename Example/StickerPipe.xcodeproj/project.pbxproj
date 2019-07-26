@@ -296,7 +296,7 @@ StickerPipeTests.xctest */;
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-StickerPipe/Pods-StickerPipe-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-StickerPipe/Pods-StickerPipe-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
 				"${BUILT_PRODUCTS_DIR}/DFImageManager/DFImageManager.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
@@ -319,7 +319,7 @@ StickerPipeTests.xctest */;
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-StickerPipe/Pods-StickerPipe-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-StickerPipe/Pods-StickerPipe-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CE9DB4273D6D7C917EA92818 /* [CP] Check Pods Manifest.lock */ = {
