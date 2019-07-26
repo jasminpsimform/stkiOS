@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.dependency       'AFNetworking', '3.1.0'
   s.dependency       'DFImageManager', '0.8.0'
   s.dependency       'MBProgressHUD', '1.0.0'
-  s.dependency       'SDWebImage', '4.4.6'
+  s.dependency       'SDWebImage', '5.0.6'
 
   s.resource = 'SDK/Resources/*'
   s.source_files  = "SDK/**/*.{h,m}"
