@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
 
   s.framework       = 'CoreData'
   s.requires_arc    = true
-  s.dependency       'AFNetworking', '3.2.0'
+  s.dependency       'AFNetworking', '4.0.1'
   s.dependency       'DFImageManager', '0.8.0'
   s.dependency       'MBProgressHUD', '1.0.0'
   s.dependency       'SDWebImage', '5.0.6'
