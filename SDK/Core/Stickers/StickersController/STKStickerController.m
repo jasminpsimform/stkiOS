@@ -30,6 +30,7 @@
 #import "UIView+ActivityIndicator.h"
 #import "MBProgressHUD.h"
 #import "UIView+CordsAdditions.h"
+#import "UIAlertController+ShortMessage.h"
 
 @interface STKStickerController () <UITextViewDelegate, STKStickersSettingsViewControllerDelegate, STKStickersShopViewControllerDelegate, STKStickerHeaderCollectionViewDelegate>
 
@@ -387,6 +388,7 @@ void *modifiedPacksContext = &modifiedPacksContext;
 }
 
 - (void)stickersShopButtonAction: (id)sender {
+    return;
 	if (!_shopViewController) {
 		_shopViewController = [STKStickersShopViewController viewControllerFromNib: @"STKStickersShopViewController"];
 

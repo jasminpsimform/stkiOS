@@ -7,7 +7,7 @@
 //
 
 #import "STKStickersShopViewController.h"
-#import "UIWebView+AFNetworking.h"
+#import "WKWebView+AFNetworking.h"
 #import "STKStickersManager.h"
 #import "STKInAppProductsManager.h"
 #import "STKStickersConstants.h"
@@ -24,7 +24,7 @@
 static NSString* const uri = @"http://demo.stickerpipe.com/work/libs/store/js/stickerPipeStore.js";
 static NSUInteger const productsCount = 2;
 
-@interface STKStickersShopViewController () <UIWebViewDelegate, STKStickersShopJsInterfaceDelegate, STKStickersPurchaseDelegate>
+@interface STKStickersShopViewController () <WKNavigationDelegate, STKStickersShopJsInterfaceDelegate, STKStickersPurchaseDelegate>
 
 @property (nonatomic) STKStickersShopJsInterface* jsInterface;
 @property (nonatomic) STKStickersEntityService* entityService;
@@ -65,6 +65,7 @@ static NSUInteger const productsCount = 2;
 
 	[[STKWebserviceManager sharedInstance] startCheckingNetwork];
 	//
+    self.stickersShopWebView.navigationDelegate = self;
 }
 
 - (void)viewWillAppear: (BOOL)animated {
@@ -148,11 +149,11 @@ static NSUInteger const productsCount = 2;
 
 - (void)loadStickersShop {
 	[self setJSContext];
-	[self.stickersShopWebView loadRequest: [self shopRequest] progress: nil success: ^ NSString*(NSHTTPURLResponse* response, NSString* HTML) {
-		return HTML;
-	}                             failure: ^ (NSError* error) {
-		[self handleError: error];
-	}];
+    [self.stickersShopWebView loadRequest:[self shopRequest] navigation:[WKNavigation new] progress:nil success:^NSString * _Nonnull(NSHTTPURLResponse * _Nonnull response, NSString * _Nonnull HTML) {
+        return HTML;
+    } failure:^(NSError * _Nonnull error) {
+        [self handleError: error];
+    }];
 }
 
 - (void)setUpButtons {
@@ -233,12 +234,15 @@ static NSUInteger const productsCount = 2;
 }
 
 
-#pragma mark - UIWebviewDelegate
-
-- (void)webView: (UIWebView*)webView didFailLoadWithError: (NSError*)error {
-	[self handleError: error];
+#pragma mark - WKNavigationDelegate
+    
+-(void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    [self handleError: error];
 }
 
+-(void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    [self handleError: error];
+}
 
 #pragma mark - STKStickersShopJsInterfaceDelegate
 

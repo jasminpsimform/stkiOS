@@ -171,17 +171,18 @@ static STKConstStringKey kSdkVersion = @"0.4.4";
 			@"limit": searchModel.limit
 	};
 
-	[self.getSessionManager GET: kSearchURL parameters: params progress: nil success: ^ (NSURLSessionDataTask* task, id responseObject) {
-		if (completion) {
-			completion(responseObject[@"data"]);
-		}
-	}                   failure: ^ (NSURLSessionDataTask* task, NSError* error) {
-		[self sendAnErrorWithCategory: funcName p1: @"" p2: @""];
+    [self.getSessionManager GET:kSearchURL parameters: params headers: nil progress: nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if (completion) {
+            completion(responseObject[@"data"]);
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [self sendAnErrorWithCategory: funcName p1: @"" p2: @""];
 
-		if (completion) {
-			completion(nil);
-		}
-	}];
+        if (completion) {
+            completion(nil);
+        }
+    }];
+
 }
 
 - (void)loadStickerPackWithName: (NSString*)packName andPricePoint: (NSString*)pricePoint
@@ -192,7 +193,7 @@ static STKConstStringKey kSdkVersion = @"0.4.4";
 	NSString* route = [NSString stringWithFormat: @"packs/%@", packName];
 	NSDictionary* params = @{@"purchase_type": [self purchaseType: pricePoint]};
 
-	[self.stickerSessionManager POST: route parameters: params progress: nil success: ^ (NSURLSessionDataTask* task, id responseObject) {
+	[self.stickerSessionManager POST: route parameters: params headers: nil progress: nil success: ^ (NSURLSessionDataTask* task, id responseObject) {
 		if (success) {
 			success(responseObject);
 		}
@@ -211,7 +212,7 @@ static STKConstStringKey kSdkVersion = @"0.4.4";
 
 	NSDictionary* params = @{@"is_subscriber": @([STKStickersManager isSubscriber])};
 
-	[self.getSessionManager GET: kPacksURL parameters: params progress: nil success: ^ (NSURLSessionDataTask* task, id responseObject) {
+	[self.getSessionManager GET: kPacksURL parameters: params headers: nil progress: nil success: ^ (NSURLSessionDataTask* task, id responseObject) {
 		//TODO: check, if this needed
 		NSTimeInterval timeInterval = [responseObject[@"meta"][@"shop_last_modified"] doubleValue];
 
@@ -244,7 +245,7 @@ static STKConstStringKey kSdkVersion = @"0.4.4";
 		[array addObject: [statistic dictionary]];
 	}
 
-	[self.analyticSessionManager POST: kStatisticUrl parameters: array progress: nil success: ^ (NSURLSessionDataTask* task, id responseObject) {
+	[self.analyticSessionManager POST: kStatisticUrl parameters: array headers: nil progress: nil success: ^ (NSURLSessionDataTask* task, id responseObject) {
 		if (success) {
 			success(responseObject);
 		}
@@ -275,7 +276,7 @@ static STKConstStringKey kSdkVersion = @"0.4.4";
 
 	NSString* route = [NSString stringWithFormat: @"content/%@", contentId];
 
-	[self.backgroundSessionManager GET: route parameters: nil progress: nil success: ^ (NSURLSessionDataTask* task, id responseObject) {
+	[self.backgroundSessionManager GET: route parameters: nil headers: nil progress: nil success: ^ (NSURLSessionDataTask* task, id responseObject) {
 		if (success) {
 			success(responseObject);
 		}
@@ -295,7 +296,7 @@ static STKConstStringKey kSdkVersion = @"0.4.4";
 
 	NSString* funcName = @"getStickerPackWithName";
 
-	[self.backgroundSessionManager GET: route parameters: nil progress: nil success: ^ (NSURLSessionDataTask* task, id responseObject) {
+	[self.backgroundSessionManager GET: route parameters: nil headers: nil progress: nil success: ^ (NSURLSessionDataTask* task, id responseObject) {
 		if (success) {
 			success(responseObject);
 		}
@@ -315,7 +316,7 @@ static STKConstStringKey kSdkVersion = @"0.4.4";
 
 	NSString* route = [NSString stringWithFormat: @"packs/%@", packName];
 
-	[self.backgroundSessionManager DELETE: route parameters: nil success: ^ (NSURLSessionDataTask* task, id responseObject) {
+	[self.backgroundSessionManager DELETE: route parameters: nil headers: nil success: ^ (NSURLSessionDataTask* task, id responseObject) {
 		if (success) {
 			success(responseObject);
 		}
@@ -345,7 +346,7 @@ static STKConstStringKey kSdkVersion = @"0.4.4";
 - (void)sendDeviceToken: (NSString*)token failure: (void (^)(NSError*))failure {
 	NSString* funcName = @"sendDeviceToken";
 
-	[self.backgroundSessionManager POST: @"token" parameters: @{@"token": token} progress: nil success: nil failure: ^ (NSURLSessionDataTask* _Nullable task, NSError* _Nonnull error) {
+	[self.backgroundSessionManager POST: @"token" parameters: @{@"token": token} headers: nil progress: nil success: nil failure: ^ (NSURLSessionDataTask* _Nullable task, NSError* _Nonnull error) {
 		[self sendAnErrorWithCategory: funcName p1: token p2: @""];
 
 		if (failure) {

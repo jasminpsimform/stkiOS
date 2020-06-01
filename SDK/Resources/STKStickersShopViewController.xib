@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_0" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <deployment version="4352" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,7 +12,7 @@
                 <outlet property="activity" destination="ZW6-a0-zxE" id="MGe-TP-6ie"/>
                 <outlet property="errorLabel" destination="oQu-ef-aM4" id="wzF-lX-mYx"/>
                 <outlet property="errorView" destination="bye-yx-wre" id="zRt-xu-X3k"/>
-                <outlet property="stickersShopWebView" destination="85M-hS-3E7" id="DyW-KK-vkf"/>
+                <outlet property="stickersShopWebView" destination="mbc-nH-8UK" id="Xpa-hq-8eU"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -23,22 +21,22 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <webView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="85M-hS-3E7">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                    <color key="backgroundColor" red="0.28958413004875183" green="0.31462949514389038" blue="0.32950475811958313" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <dataDetectorType key="dataDetectorTypes"/>
-                    <connections>
-                        <outlet property="delegate" destination="-1" id="w8E-gP-Sih"/>
-                    </connections>
-                </webView>
-                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ZW6-a0-zxE">
-                    <rect key="frame" x="290" y="290" width="20" height="20"/>
+                <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mbc-nH-8UK">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <wkWebViewConfiguration key="configuration">
+                        <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                        <wkPreferences key="preferences"/>
+                    </wkWebViewConfiguration>
+                </wkWebView>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ZW6-a0-zxE">
+                    <rect key="frame" x="150" y="274" width="20" height="20"/>
                 </activityIndicatorView>
-                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bye-yx-wre">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="30"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bye-yx-wre">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wEm-eB-WWA">
-                            <rect key="frame" x="562" y="0.0" width="30" height="30"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wEm-eB-WWA">
+                            <rect key="frame" x="282" y="0.0" width="30" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="30" id="PCy-fd-AaO"/>
                             </constraints>
@@ -49,8 +47,8 @@
                                 <action selector="closeErrorClicked:" destination="-1" eventType="touchUpInside" id="Ei0-xz-XQB"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No internet connection" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oQu-ef-aM4">
-                            <rect key="frame" x="30" y="0.0" width="532" height="30"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No internet connection" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oQu-ef-aM4">
+                            <rect key="frame" x="30" y="0.0" width="252" height="30"/>
                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
@@ -73,13 +71,13 @@
             <constraints>
                 <constraint firstItem="ZW6-a0-zxE" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="2Dp-sx-bmK"/>
                 <constraint firstItem="ZW6-a0-zxE" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="5SQ-nl-SCO"/>
-                <constraint firstAttribute="trailing" secondItem="85M-hS-3E7" secondAttribute="trailing" id="76Y-EM-BNJ"/>
+                <constraint firstAttribute="trailing" secondItem="mbc-nH-8UK" secondAttribute="trailing" id="7zi-hT-3pq"/>
+                <constraint firstItem="mbc-nH-8UK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Ai2-ni-86U"/>
+                <constraint firstAttribute="bottom" secondItem="mbc-nH-8UK" secondAttribute="bottom" id="H4y-no-Og0"/>
                 <constraint firstItem="bye-yx-wre" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="J0O-Sd-MZF"/>
+                <constraint firstItem="mbc-nH-8UK" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="RnG-FI-cDv"/>
                 <constraint firstItem="bye-yx-wre" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="YQA-mo-gdG"/>
-                <constraint firstAttribute="bottom" secondItem="85M-hS-3E7" secondAttribute="bottom" id="kZT-9X-yY0"/>
                 <constraint firstAttribute="trailing" secondItem="bye-yx-wre" secondAttribute="trailing" id="nnQ-Ia-7fc"/>
-                <constraint firstItem="85M-hS-3E7" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="u0x-8N-IZH"/>
-                <constraint firstItem="85M-hS-3E7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="zJ9-as-aqS"/>
             </constraints>
             <point key="canvasLocation" x="298" y="273"/>
         </view>
