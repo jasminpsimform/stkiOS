@@ -362,12 +362,6 @@ static STKConstStringKey kSdkVersion = @"0.4.4";
 	NSString* p2WithoutSpaces = [p2 stringByReplacingOccurrencesOfString: @" " withString: @""];
 
 	NSString* route = [NSString stringWithFormat: @"pack/%@/%@/%@", categoryWithoutSpaces, p1WithoutSpaces, p2WithoutSpaces];
-
-	[self.errorManager POST: route parameters: nil progress: nil success: ^ (NSURLSessionDataTask* task, id responseObject) {
-		STKLog(@"Error sent for %@", route);
-	} failure: ^ (NSURLSessionDataTask* task, NSError* error) {
-		STKLog(@"Error was not sent for %@", route);
-	}];
 #endif
 }
 
